@@ -5,6 +5,7 @@ spring:
       maxFileSize: -1 # 每一个文件的最大值，默认值1MB，-1表示没有限制。
       maxRequestSize: -1 # 一次上传最大值，默认值为10MB， -1表示没有限制。
 
+
 wbfc:
   swaggerui:
     enable: true

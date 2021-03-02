@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.SettleBillPayRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.SettleBillPayRecord" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="settle_id" property="settleId" jdbcType="BIGINT" />
+    <result column="payment_amount" property="paymentAmount" jdbcType="DOUBLE" />
+    <result column="payment_settle_amount" property="paymentSettleAmount" jdbcType="DOUBLE" />
+    <result column="payment_late_fee_amount" property="paymentLateFeeAmount" jdbcType="DOUBLE" />
+    <result column="pay_date" property="payDate" jdbcType="TIMESTAMP" />
+    <result column="pay_id" property="payId" jdbcType="VARCHAR" />
+    <result column="sub_led_info" property="subLedInfo" jdbcType="VARCHAR" />
+    <result column="sub_led_flag" property="subLedFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, settle_id, payment_amount, payment_settle_amount, payment_late_fee_amount, pay_date,
+    sub_led_info, sub_led_flag, pay_id, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <!-- 根据结算单ID查询结算单支付记录列表 -->
+  <select id="findBySettleBillId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from settle_bill_pay_record where settle_id = #{settleId,jdbcType=BIGINT} order by pay_date
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from settle_bill_pay_record
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from settle_bill_pay_record
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.SettleBillPayRecord" >
+    insert into settle_bill_pay_record (id, settle_id, payment_amount,
+      payment_settle_amount, payment_late_fee_amount,
+      pay_date, sub_led_info, sub_led_flag, pay_id,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT}, #{paymentAmount,jdbcType=DOUBLE},
+      #{paymentSettleAmount,jdbcType=DOUBLE}, #{paymentLateFeeAmount,jdbcType=DOUBLE},
+      #{payDate,jdbcType=TIMESTAMP}, #{subLedInfo,jdbcType=VARCHAR}, #{subLedFlag,jdbcType=CHAR},#{payId,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.SettleBillPayRecord" >
+    insert into settle_bill_pay_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="settleId != null" >
+        settle_id,
+      </if>
+      <if test="paymentAmount != null" >
+        payment_amount,
+      </if>
+      <if test="paymentSettleAmount != null" >
+        payment_settle_amount,
+      </if>
+      <if test="paymentLateFeeAmount != null" >
+        payment_late_fee_amount,
+      </if>
+      <if test="payDate != null" >
+        pay_date,
+      </if>
+      <if test="subLedInfo != null" >
+        sub_led_info,
+      </if>
+      <if test="payId != null" >
+        pay_id,
+      </if>
+      <if test="subLedFlag != null" >
+        sub_led_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="settleId != null" >
+        #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentAmount != null" >
+        #{paymentAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentSettleAmount != null" >
+        #{paymentSettleAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentLateFeeAmount != null" >
+        #{paymentLateFeeAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="payDate != null" >
+        #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subLedInfo != null" >
+        #{subLedInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="payId != null" >
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="subLedFlag != null" >
+        #{subLedFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.SettleBillPayRecord" >
+    update settle_bill_pay_record
+    <set >
+      <if test="settleId != null" >
+        settle_id = #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="paymentAmount != null" >
+        payment_amount = #{paymentAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentSettleAmount != null" >
+        payment_settle_amount = #{paymentSettleAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="paymentLateFeeAmount != null" >
+        payment_late_fee_amount = #{paymentLateFeeAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="payDate != null" >
+        pay_date = #{payDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subLedInfo != null" >
+        sub_led_info = #{subLedInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="subLedFlag != null" >
+        sub_led_flag = #{subLedFlag,jdbcType=CHAR},
+      </if>
+       <if test="payId != null" >
+        pay_id = #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.SettleBillPayRecord" >
+    update settle_bill_pay_record
+    set settle_id = #{settleId,jdbcType=BIGINT},
+      payment_amount = #{paymentAmount,jdbcType=DOUBLE},
+      payment_settle_amount = #{paymentSettleAmount,jdbcType=DOUBLE},
+      payment_late_fee_amount = #{paymentLateFeeAmount,jdbcType=DOUBLE},
+      pay_date = #{payDate,jdbcType=TIMESTAMP},
+      sub_led_info = #{subLedInfo,jdbcType=VARCHAR},
+      sub_led_flag = #{subLedFlag,jdbcType=CHAR},
+      pay_id = #{payId,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.AdverMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.AdverMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="adver_space_id" property="adverSpaceId" jdbcType="BIGINT" />
+    <result column="adver_name" property="adverName" jdbcType="VARCHAR" />
+    <result column="adver_image" property="adverImage" jdbcType="VARCHAR" />
+    <result column="link_type" property="linkType" jdbcType="VARCHAR" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="link_address" property="linkAddress" jdbcType="VARCHAR" />
+    <result column="open_mode" property="openMode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, adver_space_id, adver_name, adver_image, link_type, comm_id, comm_name, sort,
+    enable_flag, create_by, create_date, update_by, update_date, remarks, del_flag,link_address
+    open_mode
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from adver_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from adver_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.AdverMage" >
+    insert into adver_mage (id, adver_space_id, adver_name,
+      adver_image, link_type, comm_id,
+      comm_name, sort, enable_flag,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,open_mode,link_address
+      )
+    values (#{id,jdbcType=BIGINT}, #{adverSpaceId,jdbcType=BIGINT}, #{adverName,jdbcType=VARCHAR},
+      #{adverImage,jdbcType=VARCHAR}, #{linkType,jdbcType=VARCHAR}, #{commId,jdbcType=BIGINT},
+      #{commName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{enableFlag,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{openMode,jdbcType=VARCHAR},#{linkAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.AdverMage" >
+    update adver_mage
+    <set >
+      <if test="adverSpaceId != null" >
+        adver_space_id = #{adverSpaceId,jdbcType=BIGINT},
+      </if>
+      <if test="adverName != null" >
+        adver_name = #{adverName,jdbcType=VARCHAR},
+      </if>
+      <if test="adverImage != null" >
+        adver_image = #{adverImage,jdbcType=VARCHAR},
+      </if>
+      <if test="linkType != null" >
+        link_type = #{linkType,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="linkAddress != null" >
+        link_address = #{linkAddress,jdbcType=CHAR},
+      </if>
+      <if test="openMode != null" >
+        open_mode = #{openMode,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.AdverMage" >
+    update adver_mage
+    set adver_space_id = #{adverSpaceId,jdbcType=BIGINT},
+      adver_name = #{adverName,jdbcType=VARCHAR},
+      adver_image = #{adverImage,jdbcType=VARCHAR},
+      link_type = #{linkType,jdbcType=VARCHAR},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.AdverMage" parameterType="com.wisea.cultivar.common.entity.tp.AdverMage" >
+    select
+    <include refid="Base_Column_List" />
+    from adver_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.portal.AdverMageListVo"
+  						parameterType="com.wisea.cultivar.common.po.tp.portal.AdverMageListPo" >
+    SELECT T1.*,T2.adver_space_name
+	FROM adver_mage T1
+	INNER JOIN adver_space_mage T2 ON T2.id = T1.adver_space_id
+	WHERE T1.del_flag = '0'
+     	  AND T1.adver_space_id = #{adverSpaceId,jdbcType=BIGINT}
+     	  <if test="enableFlag !=null and enableFlag !=''">
+     	  	AND T1.enable_flag = #{enableFlag}
+     	  </if>
+    ORDER BY T1.sort ASC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.AdverMage" >
+    update adver_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getDetail" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.portal.AdverMageGetVo">
+  	SELECT T1.*,T2.adver_space_name
+	FROM adver_mage T1
+	INNER JOIN adver_space_mage T2 ON T2.id = T1.adver_space_id
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.SambFloorMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.SambFloor">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="floor_name" property="floorName" jdbcType="VARCHAR"/>
+        <result column="samb_floor_title" property="sambFloorTitle" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+
+    <resultMap id="BaseResult" type="com.wisea.cultivar.common.vo.tp.product.SambFloorListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="floor_name" property="floorName" jdbcType="VARCHAR"/>
+        <result column="samb_floor_title" property="sambFloorTitle" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, floor_name,samb_floor_title, sort, enable_flag, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+
+    <!--  查询楼层列表信息  -->
+    <select id="findListFloor" resultMap="BaseResult"
+            parameterType="com.wisea.cultivar.common.po.tp.product.SambFloorPagePo">
+        SELECT
+        id, floor_name,samb_floor_title, sort, enable_flag, create_by, create_date, update_by, IFNULL(update_date,create_date)
+        update_date,
+        remarks, del_flag
+        from samb_floor sf
+        WHERE sf.del_flag = '0'
+        <if test="floorName != null and floorName != ''">
+            AND sf.floor_name like CONCAT('%',#{floorName},'%')
+        </if>
+        <if test="enableFlag != null and enableFlag != ''">
+            AND sf.enable_flag = #{enableFlag}
+        </if>
+        order by sf.sort asc
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from samb_floor
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from samb_floor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+    insert into samb_floor (id, floor_name, sort,
+      enable_flag, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{floorName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{enableFlag,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+        insert into samb_floor
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="floorName != null">
+                floor_name,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="enableFlag != null">
+                enable_flag,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="sambFloorTitle != null">
+                samb_floor_title,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="floorName != null">
+                #{floorName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="enableFlag != null">
+                #{enableFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="sambFloorTitle != null">
+               #{sambFloorTitle,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+        update samb_floor
+        <set>
+            <if test="floorName != null">
+                floor_name = #{floorName,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="enableFlag != null">
+                enable_flag = #{enableFlag,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="sambFloorTitle != null">
+               samb_floor_title=#{sambFloorTitle,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+    update samb_floor
+    set floor_name = #{floorName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.SambFloor"
+            parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+        select
+        <include refid="Base_Column_List"/>
+        from samb_floor
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.SambFloor"
+            parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+        select
+        <include refid="Base_Column_List"/>
+        from samb_floor
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.SambFloor">
+    update samb_floor
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

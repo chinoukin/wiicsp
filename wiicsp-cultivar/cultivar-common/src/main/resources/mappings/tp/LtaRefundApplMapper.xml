@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LtaRefundApplMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LtaRefundAppl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="lta_ord_id" property="ltaOrdId" jdbcType="BIGINT" />
+    <result column="refund_num" property="refundNum" jdbcType="VARCHAR" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="ord_amount" property="ordAmount" jdbcType="DOUBLE" />
+    <result column="refund_amount" property="refundAmount" jdbcType="DOUBLE" />
+    <result column="refund_appl_state_type" property="refundApplStateType" jdbcType="VARCHAR" />
+    <result column="handle_date" property="handleDate" jdbcType="TIMESTAMP" />
+    <result column="refund_desc" property="refundDesc" jdbcType="VARCHAR" />
+    <result column="seller_handle_remarks" property="sellerHandleRemarks" jdbcType="VARCHAR" />
+    <result column="refund_reason_type" property="refundReasonType" jdbcType="BIGINT" />
+    <result column="buy_sell_flag" property="buySellFlag" jdbcType="CHAR" />
+    <result column="handler_type" property="handlerType" jdbcType="VARCHAR" />
+    <result column="out_request_no" property="outRequestNo" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lta_ord_id, refund_num, appl_date, ord_amount, refund_amount, refund_appl_state_type,
+    handle_date, refund_desc, seller_handle_remarks, refund_reason_type, buy_sell_flag,
+    handler_type, out_request_no, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+
+  <!-- 分页查询退款申请列表 -->
+  <select id="findPageList" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaRefundApplListPo" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaRefundApplListVo">
+    select
+      lra.id,
+      lra.refund_num refundNum,
+      loi.lta_ord_numb ltaOrdNumb,
+      loi.lta_cont_numb ltaContNumb,
+      lra.appl_date applDate,
+      mi1.user_name buyerAccount,
+      mi1.id buyerId,
+      lra.refund_amount refundAmount,
+      lra.refund_appl_state_type refundApplStateType,
+      lra.handle_date handleDate
+    from
+      lta_refund_appl lra
+      inner join lta_ord_info loi on lra.lta_ord_id = loi.id
+      inner join lta_cont_info lci on lci.id = loi.lta_cont_id
+      inner join memb_info mi1 on mi1.id = lci.buyer_id
+    where 1=1
+    <if test="sellerId != null ">
+      and lci.seller_id = #{sellerId}
+    </if>
+    <if test="refundApplStateType != null and refundApplStateType != ''">
+      and lra.refund_appl_state_type = #{refundApplStateType}
+    </if>
+    <if test="startDate != null ">
+      and lra.appl_date >= #{startDate}
+    </if>
+    <if test="endDate != null ">
+      and lra.appl_date <![CDATA[ <= ]]> #{endDate}
+    </if>
+    <if test="startAmount != null ">
+      and lra.refund_amount >= #{startAmount}
+    </if>
+    <if test="endAmount != null ">
+      and lra.refund_amount <![CDATA[ <= ]]> #{endAmount}
+    </if>
+    <if test="query != null and query != ''">
+      and (
+        lra.refund_num like CONCAT('%', #{query}, '%')
+        or loi.lta_cont_numb like CONCAT('%', #{query}, '%')
+        or loi.lta_ord_numb like CONCAT('%', #{query}, '%')
+        or mi1.user_name like CONCAT('%', #{query}, '%')
+      )
+    </if>
+    order by lra.appl_date desc
+  </select>
+
+  <!-- 查询退款申请各状态数量 -->
+  <select id="findCountByState" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaRefundApplListPo" resultType="com.wisea.cultivar.common.vo.tp.StateTypeVo">
+    select
+      lra.refund_appl_state_type stateType,
+      count(lra.refund_appl_state_type) count
+    from
+      lta_refund_appl lra
+      inner join lta_ord_info loi on lra.lta_ord_id = loi.id
+      inner join lta_cont_info lci on lci.id = loi.lta_cont_id
+      inner join memb_info mi1 on mi1.id = lci.buyer_id
+    where 1=1
+    <if test="sellerId != null ">
+      and lci.seller_id = #{sellerId}
+    </if>
+    <if test="startDate != null ">
+      and lra.appl_date >= #{startDate}
+    </if>
+    <if test="endDate != null ">
+      and lra.appl_date <![CDATA[ <= ]]> #{endDate}
+    </if>
+    <if test="startAmount != null ">
+      and lra.refund_amount >= #{startAmount}
+    </if>
+    <if test="endAmount != null ">
+      and lra.refund_amount <![CDATA[ <= ]]> #{endAmount}
+    </if>
+    <if test="query != null and query != ''">
+      and (
+      lra.refund_num like CONCAT('%', #{query}, '%')
+      or loi.lta_cont_numb like CONCAT('%', #{query}, '%')
+      or loi.lta_ord_numb like CONCAT('%', #{query}, '%')
+      or mi1.user_name like CONCAT('%', #{query}, '%')
+      )
+    </if>
+    group by
+    lra.refund_appl_state_type
+  </select>
+
+  <!-- 查询退款申请详细信息 -->
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaRefundApplInfoVo" parameterType="com.wisea.cultivar.common.po.tp.LongIdPo">
+    select
+      lra.refund_num refundNum,
+      lra.refund_appl_state_type refundApplStateType,
+      loi.lta_ord_numb ltaOrdNumb,
+      loi.id ltaOrdId,
+      loi.lta_cont_id ltaContId,
+      loi.lta_cont_numb ltaContNumb,
+      lra.appl_date applDate,
+      mi1.id buyerId,
+      mi1.user_name buyerAccount,
+      loi.yf_amount yfAmount,
+      lra.refund_amount refundAmount,
+      rrm.ord_cancel_reason refundReasonType,
+      lra.refund_desc refundDesc,
+      mi2.user_name updateBy,
+      lra.handle_date handleDate,
+      lra.seller_handle_remarks sellerHandleRemarks,
+      lra.remarks remarks,
+      loi.pay_method_type payMethodType
+    from
+      lta_refund_appl lra
+      inner join lta_ord_info loi on lra.lta_ord_id = loi.id
+      inner join lta_cont_info lci on loi.lta_cont_id = lci.id
+      inner join memb_info mi1 on mi1.id = lci.buyer_id
+      left join memb_info mi2 on mi2.id = lra.update_by
+      left join ord_cancel_reason_mage rrm on rrm.id = lra.refund_reason_type
+    where
+      lra.id = #{id}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from lta_refund_appl
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lta_refund_appl
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundAppl" >
+    insert into lta_refund_appl (id, lta_ord_id, refund_num,
+      appl_date, ord_amount, refund_amount,
+      refund_appl_state_type, handle_date, refund_desc,
+      seller_handle_remarks, refund_reason_type, buy_sell_flag,
+      handler_type, out_request_no, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{ltaOrdId,jdbcType=BIGINT}, #{refundNum,jdbcType=VARCHAR},
+      #{applDate,jdbcType=TIMESTAMP}, #{ordAmount,jdbcType=DOUBLE}, #{refundAmount,jdbcType=DOUBLE},
+      #{refundApplStateType,jdbcType=VARCHAR}, #{handleDate,jdbcType=TIMESTAMP}, #{refundDesc,jdbcType=VARCHAR},
+      #{sellerHandleRemarks,jdbcType=VARCHAR}, #{refundReasonType,jdbcType=BIGINT}, #{buySellFlag,jdbcType=CHAR},
+      #{handlerType,jdbcType=VARCHAR}, #{outRequestNo,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundAppl" >
+    insert into lta_refund_appl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ltaOrdId != null" >
+        lta_ord_id,
+      </if>
+      <if test="refundNum != null" >
+        refund_num,
+      </if>
+      <if test="applDate != null" >
+        appl_date,
+      </if>
+      <if test="ordAmount != null" >
+        ord_amount,
+      </if>
+      <if test="refundAmount != null" >
+        refund_amount,
+      </if>
+      <if test="refundApplStateType != null" >
+        refund_appl_state_type,
+      </if>
+      <if test="handleDate != null" >
+        handle_date,
+      </if>
+      <if test="refundDesc != null" >
+        refund_desc,
+      </if>
+      <if test="sellerHandleRemarks != null" >
+        seller_handle_remarks,
+      </if>
+      <if test="refundReasonType != null" >
+        refund_reason_type,
+      </if>
+      <if test="buySellFlag != null" >
+        buy_sell_flag,
+      </if>
+      <if test="handlerType != null" >
+        handler_type,
+      </if>
+      <if test="outRequestNo != null" >
+        out_request_no,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ltaOrdId != null" >
+        #{ltaOrdId,jdbcType=BIGINT},
+      </if>
+      <if test="refundNum != null" >
+        #{refundNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applDate != null" >
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordAmount != null" >
+        #{ordAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="refundAmount != null" >
+        #{refundAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="refundApplStateType != null" >
+        #{refundApplStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleDate != null" >
+        #{handleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundDesc != null" >
+        #{refundDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerHandleRemarks != null" >
+        #{sellerHandleRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="refundReasonType != null" >
+        #{refundReasonType,jdbcType=BIGINT},
+      </if>
+      <if test="buySellFlag != null" >
+        #{buySellFlag,jdbcType=CHAR},
+      </if>
+      <if test="handlerType != null" >
+        #{handlerType,jdbcType=VARCHAR},
+      </if>
+      <if test="outRequestNo != null" >
+        #{outRequestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundAppl" >
+    update lta_refund_appl
+    <set >
+      <if test="ltaOrdId != null" >
+        lta_ord_id = #{ltaOrdId,jdbcType=BIGINT},
+      </if>
+      <if test="refundNum != null" >
+        refund_num = #{refundNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applDate != null" >
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordAmount != null" >
+        ord_amount = #{ordAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="refundAmount != null" >
+        refund_amount = #{refundAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="refundApplStateType != null" >
+        refund_appl_state_type = #{refundApplStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="handleDate != null" >
+        handle_date = #{handleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundDesc != null" >
+        refund_desc = #{refundDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerHandleRemarks != null" >
+        seller_handle_remarks = #{sellerHandleRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="refundReasonType != null" >
+        refund_reason_type = #{refundReasonType,jdbcType=BIGINT},
+      </if>
+      <if test="buySellFlag != null" >
+        buy_sell_flag = #{buySellFlag,jdbcType=CHAR},
+      </if>
+      <if test="handlerType != null" >
+        handler_type = #{handlerType,jdbcType=VARCHAR},
+      </if>
+      <if test="outRequestNo != null" >
+        out_request_no = #{outRequestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundAppl" >
+    update lta_refund_appl
+    set lta_ord_id = #{ltaOrdId,jdbcType=BIGINT},
+      refund_num = #{refundNum,jdbcType=VARCHAR},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      ord_amount = #{ordAmount,jdbcType=DOUBLE},
+      refund_amount = #{refundAmount,jdbcType=DOUBLE},
+      refund_appl_state_type = #{refundApplStateType,jdbcType=VARCHAR},
+      handle_date = #{handleDate,jdbcType=TIMESTAMP},
+      refund_desc = #{refundDesc,jdbcType=VARCHAR},
+      seller_handle_remarks = #{sellerHandleRemarks,jdbcType=VARCHAR},
+      refund_reason_type = #{refundReasonType,jdbcType=BIGINT},
+      buy_sell_flag = #{buySellFlag,jdbcType=CHAR},
+      handler_type = #{handlerType,jdbcType=VARCHAR},
+      out_request_no = #{outRequestNo,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 根据订单ID查询是否有待处理的申请 -->
+  <select id="findByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from lta_refund_appl ra where ra.lta_ord_id = #{id} and ra.refund_appl_state_type = '0'
+  </select>
+
+  <select id="findLtaRefundApplNum" parameterType="java.lang.String" resultType="java.lang.String">
+  	SELECT refund_num FROM lta_refund_appl WHERE refund_num LIKE CONCAT(#{refundAppl}, '%')
+  </select>
+
+  <!-- 查询退款列表（取消订单） -->
+  <select id="buyerLtaRefundList" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaBuyerRefundApplListPo" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaBuyerRefundApplListVo">
+  	SELECT
+	  t1.id,
+	  t1.refund_num,
+	  t3.lta_ord_numb  as  ordNum,
+	  t1.ord_amount,
+	  t1.refund_amount,
+	  t1.appl_date,
+	  t3.pay_method_type,
+	  t1.refund_appl_state_type
+	FROM lta_refund_appl t1
+	  LEFT JOIN lta_ord_info t3
+	    ON t3.id = t1.lta_ord_id
+	  LEFT JOIN lta_cont_info t4
+	    ON t4.id = t3.lta_cont_id
+	WHERE 1 = 1
+    <if test="startDate != null">
+    	and t1.appl_date >= #{startDate}
+    </if>
+    <if test="endDate != null">
+    	and t1.appl_date <![CDATA[ <= ]]> #{endDate}
+    </if>
+    <if test="searchKey != null and searchKey != ''">
+    	and (
+    		t1.refund_num like CONCAT('%', #{searchKey}, '%')
+    		or t3.lta_ord_numb like CONCAT('%', #{searchKey}, '%')
+    	)
+    </if>
+    <if test="refundApplStateType != null and refundApplStateType != ''">
+    	and t1.refund_appl_state_type = #{refundApplStateType,jdbcType=VARCHAR}
+    </if>
+    <if test="buyerId != null" >
+        and t4.buyer_id = #{buyerId,jdbcType=BIGINT}
+    </if>
+    order by t1.appl_date desc
+  </select>
+
+  <resultMap id="RefundAppAppMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaBuyerRefundApplListVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="refund_amount" property="refundAmount" jdbcType="DOUBLE" />
+    <result column="refund_num" property="refundNum" jdbcType="VARCHAR" />
+    <result column="refund_appl_state_type" property="refundApplStateType" jdbcType="VARCHAR" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="ord_amount" property="ordAmount" jdbcType="DOUBLE" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <collection property="ordCommRelaList" ofType="com.wisea.cultivar.common.vo.tp.trade.BuyerOrdCommRela">
+    	<result column="comm_pic_url" property="commUrl" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+
+  <!-- 小程序专供。。。。查询退款列表（取消订单） -->
+  <select id="buyerLtaRefundListApp" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaBuyerRefundApplListPo" resultMap="RefundAppAppMap">
+  	SELECT
+	  t1.id,
+	  t1.refund_num,
+	  t3.lta_ord_numb,
+	  t1.ord_amount,
+	  t1.refund_amount,
+	  t1.appl_date,
+	  t1.refund_appl_state_type,
+	  t5.comm_pic_url
+	FROM lta_refund_appl t1
+	  LEFT JOIN lta_ord_info t3
+	    ON t3.id = t1.lta_ord_id
+	  LEFT JOIN lta_ord_comm_rela t4
+	    ON t3.id = t4.lta_ord_id
+	  LEFT JOIN lta_comm_rela t5
+	    ON t5.id = t4.lta_comm_rela_id
+	WHERE t1.id in (${ordIds})
+    order by t1.appl_date desc
+  </select>
+
+  <!-- 查询退款详细信息 -->
+  <select id="buyerRefundInfo" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaBuyerRefundApplInfoVo" parameterType="java.lang.Long">
+  	SELECT
+	  t1.id,
+	  t1.lta_ord_id  as  orderId,
+	  t1.refund_amount,
+	  t1.refund_appl_state_type,
+	  t1.refund_num,
+	  t1.appl_date,
+	  t1.handle_date,
+	  t1.buy_sell_flag,
+	  t1.handler_type,
+	  t1.ord_amount,
+	  t1.seller_handle_remarks,
+	  cont.seller_id,
+	  t3.comp_name              AS sellerCompName,
+	  t4.ord_cancel_reason      AS ordCancelReason
+	FROM lta_refund_appl t1
+	  LEFT JOIN lta_ord_info t2
+	    ON t2.id = t1.lta_ord_id
+	  LEFT JOIN lta_cont_info cont
+	    ON cont.id = t2.lta_cont_id
+	  LEFT JOIN entp_data_info t3
+	    ON t3.memb_id = cont.seller_id
+	      AND t3.auth_exam_state = '1'
+	      AND t3.del_flag = '0'
+	  LEFT JOIN ord_cancel_reason_mage t4
+	    ON t4.id = t1.refund_reason_type
+	WHERE 1 = 1
+	and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据订单id查询最新一条退款信息 -->
+  <select id="selNewRefundByOrdId" resultType="com.wisea.cultivar.common.vo.tp.trade.BuyerRefundApplInfoVo" parameterType="java.lang.Long">
+  	SELECT
+	  t1.id,
+	  t1.refund_num,
+	  t1.ord_amount,
+	  t1.refund_amount,
+	  t1.appl_date,
+	  t1.handle_date,
+	  t1.refund_appl_state_type,
+	  t3.ord_cancel_reason
+	FROM lta_refund_appl t1
+	  INNER JOIN (SELECT
+	                MAX(create_date)              create_date,
+	                lta_ord_id
+	              FROM lta_refund_appl
+	              GROUP BY lta_ord_id) t2
+	    ON t1.lta_ord_id = t2.lta_ord_id
+	      AND t1.create_date = t2.create_date
+	  LEFT JOIN ord_cancel_reason_mage t3
+	    ON t3.id = t1.refund_reason_type
+	WHERE 1 = 1
+	and t1.lta_ord_id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

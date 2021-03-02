@@ -1,0 +1,652 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LtaContInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LtaContInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="lta_cont_numb" property="ltaContNumb" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="cont_start_date" property="contStartDate" jdbcType="TIMESTAMP" />
+    <result column="cont_end_date" property="contEndDate" jdbcType="TIMESTAMP" />
+    <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR" />
+    <result column="logistics_ser_type" property="logisticsSerType" jdbcType="VARCHAR" />
+    <result column="supply_comm" property="supplyComm" jdbcType="VARCHAR" />
+    <result column="draft_cont_date" property="draftContDate" jdbcType="TIMESTAMP" />
+    <result column="lta_cont_state_type" property="ltaContStateType" jdbcType="VARCHAR" />
+    <result column="cont_end_reason" property="contEndReason" jdbcType="VARCHAR" />
+    <result column="applicanter" property="applicanter" jdbcType="VARCHAR" />
+    <result column="app_date" property="appDate" jdbcType="TIMESTAMP" />
+    <result column="refuse_app_reason" property="refuseAppReason" jdbcType="VARCHAR" />
+    <result column="cancel_cont_reason" property="cancelContReason" jdbcType="VARCHAR" />
+    <result column="buy_sell_flag" property="buySellFlag" jdbcType="VARCHAR" />
+    <result column="seller_concel_reason" property="sellerConcelReason" jdbcType="VARCHAR" />
+    <result column="seller_operat_type" property="sellerOperatType" jdbcType="VARCHAR" />
+    <result column="seller_operat_remarks" property="sellerOperatRemarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.tp.LtaContInfo" extends="BaseResultMap" >
+    <result column="cont_temp" property="contTemp" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lta_cont_numb, seller_id, buyer_id, cont_start_date, cont_end_date, pay_method_type,
+    logistics_ser_type, supply_comm, draft_cont_date, lta_cont_state_type, cont_end_reason,
+    applicanter, app_date, refuse_app_reason, cancel_cont_reason, buy_sell_flag, seller_concel_reason,
+    seller_operat_type, seller_operat_remarks, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    cont_temp
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from lta_cont_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lta_cont_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LtaContInfo" >
+    insert into lta_cont_info (id, lta_cont_numb, seller_id,
+      buyer_id, cont_start_date, cont_end_date,
+      pay_method_type, logistics_ser_type, supply_comm,
+      draft_cont_date, lta_cont_state_type, cont_end_reason,
+      applicanter, app_date, refuse_app_reason,
+      cancel_cont_reason, buy_sell_flag, seller_concel_reason,
+      seller_operat_type, seller_operat_remarks,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,
+      cont_temp)
+    values (#{id,jdbcType=BIGINT}, #{ltaContNumb,jdbcType=VARCHAR}, #{sellerId,jdbcType=BIGINT},
+      #{buyerId,jdbcType=BIGINT}, #{contStartDate,jdbcType=TIMESTAMP}, #{contEndDate,jdbcType=TIMESTAMP},
+      #{payMethodType,jdbcType=VARCHAR}, #{logisticsSerType,jdbcType=VARCHAR}, #{supplyComm,jdbcType=VARCHAR},
+      #{draftContDate,jdbcType=TIMESTAMP}, #{ltaContStateType,jdbcType=VARCHAR}, #{contEndReason,jdbcType=VARCHAR},
+      #{applicanter,jdbcType=VARCHAR}, #{appDate,jdbcType=TIMESTAMP}, #{refuseAppReason,jdbcType=VARCHAR},
+      #{cancelContReason,jdbcType=VARCHAR}, #{buySellFlag,jdbcType=VARCHAR}, #{sellerConcelReason,jdbcType=VARCHAR},
+      #{sellerOperatType,jdbcType=VARCHAR}, #{sellerOperatRemarks,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{contTemp,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaContInfo" >
+    insert into lta_cont_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ltaContNumb != null" >
+        lta_cont_numb,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="contStartDate != null" >
+        cont_start_date,
+      </if>
+      <if test="contEndDate != null" >
+        cont_end_date,
+      </if>
+      <if test="payMethodType != null" >
+        pay_method_type,
+      </if>
+      <if test="logisticsSerType != null" >
+        logistics_ser_type,
+      </if>
+      <if test="supplyComm != null" >
+        supply_comm,
+      </if>
+      <if test="draftContDate != null" >
+        draft_cont_date,
+      </if>
+      <if test="ltaContStateType != null" >
+        lta_cont_state_type,
+      </if>
+      <if test="contEndReason != null" >
+        cont_end_reason,
+      </if>
+      <if test="applicanter != null" >
+        applicanter,
+      </if>
+      <if test="appDate != null" >
+        app_date,
+      </if>
+      <if test="refuseAppReason != null" >
+        refuse_app_reason,
+      </if>
+      <if test="cancelContReason != null" >
+        cancel_cont_reason,
+      </if>
+      <if test="buySellFlag != null" >
+        buy_sell_flag,
+      </if>
+      <if test="sellerConcelReason != null" >
+        seller_concel_reason,
+      </if>
+      <if test="sellerOperatType != null" >
+        seller_operat_type,
+      </if>
+      <if test="sellerOperatRemarks != null" >
+        seller_operat_remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="contTemp != null" >
+        cont_temp,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ltaContNumb != null" >
+        #{ltaContNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="contStartDate != null" >
+        #{contStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contEndDate != null" >
+        #{contEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMethodType != null" >
+        #{payMethodType,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsSerType != null" >
+        #{logisticsSerType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyComm != null" >
+        #{supplyComm,jdbcType=VARCHAR},
+      </if>
+      <if test="draftContDate != null" >
+        #{draftContDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ltaContStateType != null" >
+        #{ltaContStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="contEndReason != null" >
+        #{contEndReason,jdbcType=VARCHAR},
+      </if>
+      <if test="applicanter != null" >
+        #{applicanter,jdbcType=VARCHAR},
+      </if>
+      <if test="appDate != null" >
+        #{appDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refuseAppReason != null" >
+        #{refuseAppReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelContReason != null" >
+        #{cancelContReason,jdbcType=VARCHAR},
+      </if>
+      <if test="buySellFlag != null" >
+        #{buySellFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConcelReason != null" >
+        #{sellerConcelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOperatType != null" >
+        #{sellerOperatType,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOperatRemarks != null" >
+        #{sellerOperatRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="contTemp != null" >
+        #{contTemp,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaContInfo" >
+    update lta_cont_info
+    <set >
+      <if test="ltaContNumb != null" >
+        lta_cont_numb = #{ltaContNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="contStartDate != null" >
+        cont_start_date = #{contStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contEndDate != null" >
+        cont_end_date = #{contEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payMethodType != null" >
+        pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsSerType != null" >
+        logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+      </if>
+      <if test="supplyComm != null" >
+        supply_comm = #{supplyComm,jdbcType=VARCHAR},
+      </if>
+      <if test="draftContDate != null" >
+        draft_cont_date = #{draftContDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ltaContStateType != null" >
+        lta_cont_state_type = #{ltaContStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="contEndReason != null" >
+        cont_end_reason = #{contEndReason,jdbcType=VARCHAR},
+      </if>
+      <if test="applicanter != null" >
+        applicanter = #{applicanter,jdbcType=VARCHAR},
+      </if>
+      <if test="appDate != null" >
+        app_date = #{appDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refuseAppReason != null" >
+        refuse_app_reason = #{refuseAppReason,jdbcType=VARCHAR},
+      </if>
+      <if test="cancelContReason != null" >
+        cancel_cont_reason = #{cancelContReason,jdbcType=VARCHAR},
+      </if>
+      <if test="buySellFlag != null" >
+        buy_sell_flag = #{buySellFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConcelReason != null" >
+        seller_concel_reason = #{sellerConcelReason,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOperatType != null" >
+        seller_operat_type = #{sellerOperatType,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerOperatRemarks != null" >
+        seller_operat_remarks = #{sellerOperatRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="contTemp != null" >
+        cont_temp = #{contTemp,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 取消申请解除的操作 -->
+  <update id="updLtaContCancelClear" parameterType="com.wisea.cultivar.common.entity.tp.LtaContInfo">
+  	update lta_cont_info
+    set
+    	<if test="ltaContStateType != null" >
+        	lta_cont_state_type = #{ltaContStateType,jdbcType=VARCHAR},
+      	</if>
+    	cont_end_reason = #{contEndReason,jdbcType=VARCHAR},
+        applicanter = #{applicanter,jdbcType=VARCHAR},
+        app_date = #{appDate,jdbcType=TIMESTAMP},
+        refuse_app_reason = #{refuseAppReason,jdbcType=VARCHAR},
+        cancel_cont_reason = #{cancelContReason,jdbcType=VARCHAR},
+        buy_sell_flag = #{buySellFlag,jdbcType=VARCHAR},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 修改合同信息 -->
+  <update id="updateLtaContInfo" parameterType="com.wisea.cultivar.common.entity.tp.LtaContInfo" >
+    update lta_cont_info
+    set cont_start_date = #{contStartDate,jdbcType=TIMESTAMP},
+      cont_end_date = #{contEndDate,jdbcType=TIMESTAMP},
+      pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+      logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+      supply_comm = #{supplyComm,jdbcType=VARCHAR},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      cont_temp = #{contTemp,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LtaContInfo" >
+    update lta_cont_info
+    set lta_cont_numb = #{ltaContNumb,jdbcType=VARCHAR},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      cont_start_date = #{contStartDate,jdbcType=TIMESTAMP},
+      cont_end_date = #{contEndDate,jdbcType=TIMESTAMP},
+      pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+      logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+      supply_comm = #{supplyComm,jdbcType=VARCHAR},
+      draft_cont_date = #{draftContDate,jdbcType=TIMESTAMP},
+      lta_cont_state_type = #{ltaContStateType,jdbcType=VARCHAR},
+      cont_end_reason = #{contEndReason,jdbcType=VARCHAR},
+      applicanter = #{applicanter,jdbcType=VARCHAR},
+      app_date = #{appDate,jdbcType=TIMESTAMP},
+      refuse_app_reason = #{refuseAppReason,jdbcType=VARCHAR},
+      cancel_cont_reason = #{cancelContReason,jdbcType=VARCHAR},
+      buy_sell_flag = #{buySellFlag,jdbcType=VARCHAR},
+      seller_concel_reason = #{sellerConcelReason,jdbcType=VARCHAR},
+      seller_operat_type = #{sellerOperatType,jdbcType=VARCHAR},
+      seller_operat_remarks = #{sellerOperatRemarks,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 卖家分页查询长期合同列表  -->
+  <select id="findLtaContPage" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaContInfoPagePo"
+  			resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContInfoListVo">
+  	SELECT T1.id,T1.lta_cont_numb,T1.draft_cont_date,T1.cont_start_date,T1.cont_end_date
+		   ,T1.lta_cont_state_type,T3.comp_name AS 'buyerCompName',IFNULL(T4.ordcount,0) AS 'orderCount'
+		   ,T1.buy_sell_flag,T6.comp_name AS 'sellerCompName',T1.update_date
+	FROM lta_cont_info T1
+	LEFT JOIN memb_info T2 ON T2.id = T1.buyer_id
+	LEFT JOIN entp_data_info T3 ON T3.memb_id = T2.id
+	LEFT JOIN memb_info T5 ON T5.id = T1.seller_id
+	LEFT JOIN entp_data_info T6 ON T6.memb_id = T5.id
+	LEFT JOIN (SELECT lta_cont_id,COUNT(lta_cont_id) AS 'ordcount' FROM lta_ord_info
+							WHERE del_flag = '0'
+							GROUP BY lta_cont_id) T4 ON T4.lta_cont_id = T1.id
+	WHERE 1 = 1 and T1.del_flag = '0'
+		<if test="membId != null and membId != '' and buySellFlag != null and buySellFlag != '' and buySellFlag == '0'.toString()">
+			AND T1.buyer_id = #{membId,jdbcType=BIGINT}
+		</if>
+		<if test="membId != null and membId != '' and buySellFlag != null and buySellFlag != '' and buySellFlag == '1'.toString()">
+			AND T1.seller_id = #{membId,jdbcType=BIGINT}
+		</if>
+		<if test="key != null and key != ''">
+			<if test="buySellFlag != null and buySellFlag != '' and buySellFlag == '0'.toString()">
+				AND (T1.lta_cont_numb LIKE CONCAT('%', #{key}, '%')
+            	 OR T6.comp_name LIKE CONCAT('%', #{key}, '%')
+            	 OR T5.user_name LIKE CONCAT('%', #{key}, '%'))
+			</if>
+			<if test="buySellFlag != null and buySellFlag != '' and buySellFlag == '1'.toString()">
+				AND (T1.lta_cont_numb LIKE CONCAT('%', #{key}, '%')
+            	 OR T3.comp_name LIKE CONCAT('%', #{key}, '%')
+            	 OR T2.user_name LIKE CONCAT('%', #{key}, '%'))
+			</if>
+		</if>
+		<if test="ltaContStateType != null and ltaContStateType != ''">
+			AND T1.lta_cont_state_type = #{ltaContStateType}
+		</if>
+		<if test="contStartDate != null">
+			AND T1.cont_start_date <![CDATA[ <= ]]> #{contStartDate}
+		</if>
+		<if test="contEndDate != null">
+			AND T1.cont_end_date <![CDATA[ >= ]]> #{contEndDate}
+		</if>
+		<if test="draftContStartDate != null">
+			AND T1.draft_cont_date <![CDATA[ >= ]]> #{draftContStartDate}
+		</if>
+		<if test="draftContEndDate != null">
+			AND T1.draft_cont_date <![CDATA[ <= ]]> #{draftContEndDate}
+		</if>
+		ORDER BY T1.draft_cont_date DESC
+  </select>
+  <!-- 平台查询合同列表 -->
+  <select id="findContPageForPlat" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaContPlatPagePo"
+  			resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContPlatListVo">
+  	SELECT T1.id,T1.lta_cont_numb,T1.draft_cont_date,T1.cont_start_date,T1.cont_end_date
+		   ,T1.lta_cont_state_type,T3.comp_name AS 'buyerCompName',IFNULL(T4.ordcount,0) AS 'orderCount'
+		   ,T1.buy_sell_flag,T6.comp_name AS 'sellerCompName',T1.update_date,T2.user_name AS 'buyerUserName'
+		   ,T5.user_name AS 'sellerUserName'
+	FROM lta_cont_info T1
+	LEFT JOIN memb_info T2 ON T2.id = T1.buyer_id
+	LEFT JOIN entp_data_info T3 ON T3.memb_id = T2.id
+	LEFT JOIN memb_info T5 ON T5.id = T1.seller_id
+	LEFT JOIN entp_data_info T6 ON T6.memb_id = T5.id
+	LEFT JOIN (SELECT lta_cont_id,COUNT(lta_cont_id) AS 'ordcount' FROM lta_ord_info
+							WHERE del_flag = '0'
+							GROUP BY lta_cont_id) T4 ON T4.lta_cont_id = T1.id
+	WHERE 1 = 1 and T1.del_flag = '0'
+		<if test="key != null and key != ''">
+			AND (T1.lta_cont_numb LIKE CONCAT('%', #{key}, '%')
+            	 OR T2.user_name LIKE CONCAT('%', #{key}, '%')
+            	 OR T5.user_name LIKE CONCAT('%', #{key}, '%'))
+		</if>
+		<if test="ltaContStateType != null and ltaContStateType != ''">
+			AND T1.lta_cont_state_type = #{ltaContStateType}
+		</if>
+		<if test="draftContStartDate != null">
+			AND T1.draft_cont_date <![CDATA[ >= ]]> #{draftContStartDate}
+		</if>
+		<if test="draftContEndDate != null">
+			AND T1.draft_cont_date <![CDATA[ <= ]]> #{draftContEndDate}
+		</if>
+		ORDER BY T1.draft_cont_date DESC
+  </select>
+  <!-- 查询合同各个状态的数量 -->
+  <select id="getLtaContStateCount" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContInfoPageVo">
+  	SELECT COUNT(*) AS 'allCount',SUM(IF(lta_cont_state_type = '0',1,0)) AS 'toBeConCount',SUM(IF(lta_cont_state_type = '1',1,0)) AS 'effecCount'
+			 ,SUM(IF(lta_cont_state_type = '2',1,0)) AS 'matureCount',SUM(IF(lta_cont_state_type = '3',1,0)) AS 'endCount'
+			 ,SUM(IF(lta_cont_state_type = '4',1,0)) AS 'cancelCount',SUM(IF(lta_cont_state_type = '5',1,0)) AS 'removeCount'
+	FROM lta_cont_info
+	WHERE del_flag = '0'
+		  <if test="membId != null and membId != '' and buySellFlag != null and buySellFlag != '' and buySellFlag == '0'.toString()">
+		  	AND buyer_id = #{membId,jdbcType=BIGINT}
+		  </if>
+		  <if test="membId != null and membId != '' and buySellFlag != null and buySellFlag != '' and buySellFlag == '1'.toString()">
+		  	AND seller_id = #{membId,jdbcType=BIGINT}
+		  </if>
+  </select>
+  <!-- 通过企业名称查询采购商认证的会员ID -->
+  <select id="getMembIdByCompName" parameterType="java.lang.String" resultType="java.lang.String">
+  	SELECT memb_id FROM entp_data_info
+	WHERE del_flag = '0'
+		  AND comp_name = #{compName}
+  </select>
+  <resultMap id="LtaBaseResultMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaContInfoInitVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="lta_cont_numb" property="ltaContNumb" jdbcType="VARCHAR" />
+    <result column="cont_start_date" property="contStartDate" jdbcType="TIMESTAMP" />
+    <result column="cont_end_date" property="contEndDate" jdbcType="TIMESTAMP" />
+    <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR" />
+    <result column="logistics_ser_type" property="logisticsSerType" jdbcType="VARCHAR" />
+    <result column="supply_comm" property="supplyComm" jdbcType="VARCHAR" />
+    <result column="cont_temp" property="contTemp" jdbcType="LONGVARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <association property="sellerInfo" column="seller_id" select="getLtaContEntpInfo"/>
+    <association property="buyerInfo" column="buyer_id" select="getLtaContEntpInfo"/>
+    <collection property="fileList" column="id" select="getltaContFileList"/>
+  </resultMap>
+  <resultMap id="LtaContEntpInfoMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaContEntpInfoVo">
+  	<id column="id" property="entpId" jdbcType="BIGINT" />
+   	<result column="comp_name" property="compName" jdbcType="VARCHAR" />
+   	<result column="contacts" property="contacts" jdbcType="VARCHAR" />
+   	<result column="bd_tel" property="bdTel" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 查询合同基本信息 -->
+  <select id="getLtaContInfoById" parameterType="java.lang.Long" resultMap="LtaBaseResultMap">
+   	SELECT * FROM lta_cont_info WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+  <!--  查询合同商家信息 -->
+  <select id="getLtaContEntpInfo" parameterType="java.lang.Long" resultMap="LtaContEntpInfoMap">
+  	SELECT id AS 'entpId',contacts,bd_tel,comp_name FROM entp_data_info
+  	WHERE del_flag = '0' AND memb_id = #{membId,jdbcType=BIGINT}
+  </select>
+  <!-- 查询合同附件信息 -->
+  <select id="getltaContFileList" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContFileVo">
+  	SELECT * FROM lta_cont_file
+	WHERE del_flag = '0' AND lta_cont_id = #{contId,jdbcType=BIGINT}
+	ORDER BY create_date ASC
+  </select>
+  <resultMap id="LtaContDetailMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaContInfoDetailVo" extends="LtaBaseResultMap">
+  	<result column="draft_cont_date" property="draftContDate" jdbcType="TIMESTAMP" />
+	<result column="lta_cont_state_type" property="ltaContStateType" jdbcType="VARCHAR" />
+	<result column="buy_sell_flag" property="buySellFlag" jdbcType="VARCHAR" />
+  	<collection property="ordList" column="id" select="getLtaContOrdList"/>
+  	<collection property="examRecodList" column="id" select="getExamRecodList"/>
+  </resultMap>
+  <!-- 查询长协合同详细信息 -->
+  <select id="getLtaContDetailById" parameterType="java.lang.Long" resultMap="LtaContDetailMap">
+  	SELECT * FROM lta_cont_info WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 查询长协订单信息 -->
+  <select id="getLtaContOrdList" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContOrdBaseInfoVo">
+  	SELECT * FROM lta_ord_info
+  	WHERE del_flag = '0' AND lta_cont_id = #{contId,jdbcType=BIGINT}
+  	ORDER BY buyer_ord_date DESC
+  </select>
+  <!-- 查询长协合同操作信息 -->
+  <select id="getExamRecodList" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContExamRecdVo">
+  	SELECT * FROM lta_exam_recd
+  	WHERE del_flag = '0' AND lta_cont_id = #{contId,jdbcType=BIGINT}
+  	ORDER BY operat_date DESC
+  </select>
+  <!-- 查询合同编号，生成编号的时候排除重复 -->
+  <select id="checkLtaContNum" parameterType="java.lang.String" resultType="java.lang.String">
+  	SELECT lta_cont_numb FROM lta_cont_info WHERE lta_cont_numb LIKE CONCAT(#{applNum}, '%')
+  </select>
+
+  <!-- 买家查询合同信息，带商家信息 -->
+  <select id="buyerContAndName" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaBuyerContInfoVo">
+  	SELECT
+	  t1.id,
+	  t1.lta_cont_numb,
+	  t1.seller_id,
+	  t1.buyer_id,
+	  t1.cont_start_date,
+	  t1.cont_end_date,
+	  t1.pay_method_type,
+	  t1.logistics_ser_type,
+	  t1.lta_cont_state_type,
+	  t1.applicanter,
+	  t2.comp_name
+	FROM lta_cont_info t1
+	  LEFT JOIN entp_data_info t2
+	    ON t2.memb_id = t1.seller_id
+	WHERE 1 = 1
+	and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 导出查询处理 -->
+  <select id="findListForExport" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaContExportPo"
+  			resultType="com.wisea.cultivar.common.vo.tp.lta.LtaContInfoExportVo">
+  	SELECT T1.id,T1.lta_cont_numb,T1.draft_cont_date,T1.cont_start_date,T1.cont_end_date
+		   ,T3.comp_name AS 'buyerCompName',IFNULL(T4.ordcount,0) AS 'orderCount'
+		   ,T6.comp_name AS 'sellerCompName',T7.label AS 'ltaContStateType'
+	FROM lta_cont_info T1
+	LEFT JOIN memb_info T2 ON T2.id = T1.buyer_id
+	LEFT JOIN entp_data_info T3 ON T3.memb_id = T2.id
+	LEFT JOIN memb_info T5 ON T5.id = T1.seller_id
+	LEFT JOIN entp_data_info T6 ON T6.memb_id = T5.id
+	INNER JOIN sys_dict T7 ON(T7.`value` = T1.lta_cont_state_type AND T7.type = 'lta_cont_state_type')
+	LEFT JOIN (SELECT lta_cont_id,COUNT(lta_cont_id) AS 'ordcount' FROM lta_ord_info
+							WHERE del_flag = '0'
+							GROUP BY lta_cont_id) T4 ON T4.lta_cont_id = T1.id
+	WHERE 1 = 1
+		  AND T1.seller_id = #{membId,jdbcType=BIGINT}
+		  <if test="key != null and key != ''">
+			AND (T1.lta_cont_numb LIKE CONCAT('%', #{key}, '%')
+            	 OR T3.comp_name LIKE CONCAT('%', #{key}, '%')
+            	 OR T2.user_name LIKE CONCAT('%', #{key}, '%'))
+		</if>
+		<if test="ltaContStateType != null and ltaContStateType != ''">
+			AND T1.lta_cont_state_type = #{ltaContStateType}
+		</if>
+		<if test="contStartDate != null and contStartDate != ''">
+			AND T1.cont_start_date <![CDATA[ >= ]]> #{contStartDate}
+		</if>
+		<if test="contEndDate != null and contEndDate != ''">
+			AND T1.cont_end_date <![CDATA[ <= ]]> #{contEndDate}
+		</if>
+		<if test="draftContStartDate != null and draftContStartDate != ''">
+			AND T1.draft_cont_date <![CDATA[ >= ]]> #{draftContStartDate}
+		</if>
+		<if test="draftContEndDate != null and draftContEndDate != ''">
+			AND T1.draft_cont_date <![CDATA[ <= ]]> #{draftContEndDate}
+		</if>
+		ORDER BY T1.draft_cont_date DESC
+  </select>
+  <!-- 验证该合同是否可以申请解除 -->
+  <select id="checkLtaContStop" parameterType="java.lang.Long" resultType="java.lang.Integer">
+  	 SELECT SUM(num) FROM
+	(
+		SELECT COUNT(*) AS 'num'
+		FROM lta_ord_info T1
+		WHERE T1.lta_cont_id = #{id,jdbcType=BIGINT}
+		AND T1.pay_method_type = '0' AND T1.order_state_type NOT IN ('4','5')
+		UNION
+		SELECT COUNT(*) AS 'num'
+		FROM lta_ord_info T1
+		LEFT JOIN(
+			SELECT DISTINCT T1.ord_id,COUNT(T1.ord_id) AS 'zs',SUM(IF(T2.settle_bill_statue_type ='0',1,0)) AS 'wwc'
+			FROM settle_ord_rela T1
+			INNER JOIN settle_bill T2 ON T1.settle_id = T2.id
+			GROUP BY T1.ord_id
+		) T2 ON T2.ord_id = T1.id
+		WHERE T1.lta_cont_id = #{id,jdbcType=BIGINT}  AND (T2.zs IS NULL OR T2.wwc > 0)
+		AND T1.pay_method_type = '1' AND T1.order_state_type NOT IN ('4','5')
+	) T1
+  </select>
+  <!-- 查询要到期的合同列表  定时任务用 -->
+  <select id="findLatContListForTask" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaContEndDateTaskPo"
+  			resultType="com.wisea.cultivar.common.entity.tp.LtaContInfo">
+  	SELECT * FROM lta_cont_info
+	WHERE lta_cont_state_type = '1' AND del_flag = '0'
+      AND cont_end_date <![CDATA[ <= ]]> #{endDate}
+  </select>
+  <!-- 到期的合同设置成合同到期状态 -->
+  <update id="batchUpdLtaEndDate" parameterType="java.util.List">
+  	update lta_cont_info set lta_cont_state_type = '2'
+  	where id in
+	       <foreach collection="list" item="id" separator="," open="(" close=")">
+	           #{id}
+	       </foreach>
+  </update>
+</mapper>

@@ -1,0 +1,658 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.SettleBillInvoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.SettleBillInvo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="entp_id" property="entpId" jdbcType="BIGINT" />
+    <result column="settle_id" property="settleId" jdbcType="BIGINT" />
+    <result column="invo_type" property="invoType" jdbcType="VARCHAR" />
+    <result column="invo_form" property="invoForm" jdbcType="VARCHAR" />
+    <result column="invo_catg_type" property="invoCatgType" jdbcType="VARCHAR" />
+    <result column="invo_title" property="invoTitle" jdbcType="VARCHAR" />
+    <result column="tax_ident_num" property="taxIdentNum" jdbcType="VARCHAR" />
+    <result column="regist_address" property="registAddress" jdbcType="VARCHAR" />
+    <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_acc_num" property="bankAccNum" jdbcType="VARCHAR" />
+    <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+    <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+    <result column="appl_num" property="applNum" jdbcType="VARCHAR" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="draw_date" property="drawDate" jdbcType="TIMESTAMP" />
+    <result column="draw_amount" property="drawAmount" jdbcType="DOUBLE" />
+    <result column="invo_state" property="invoState" jdbcType="VARCHAR" />
+    <result column="exam_invo_diss_type" property="examInvoDissType" jdbcType="VARCHAR" />
+    <result column="appl_remarks" property="applRemarks" jdbcType="VARCHAR" />
+    <result column="open_invo_remarks" property="openInvoRemarks" jdbcType="VARCHAR" />
+    <result column="exam_invo_diss_remarks" property="examInvoDissRemarks" jdbcType="VARCHAR" />
+    <result column="entry_open_invo_type" property="entryOpenInvoType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="invo_content_type" property="invoContentType" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="invoInfoResultMap" type="com.wisea.transac.common.vo.SettleBillInvoInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="settle_id" property="settleId" jdbcType="BIGINT" />
+    <result column="invo_type" property="invoType" jdbcType="VARCHAR" />
+    <result column="invo_form" property="invoForm" jdbcType="VARCHAR" />
+    <result column="invo_catg_type" property="invoCatgType" jdbcType="VARCHAR" />
+    <result column="invo_title" property="invoTitle" jdbcType="VARCHAR" />
+    <result column="tax_ident_num" property="taxIdentNum" jdbcType="VARCHAR" />
+    <result column="regist_address" property="registAddress" jdbcType="VARCHAR" />
+    <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_acc_num" property="bankAccNum" jdbcType="VARCHAR" />
+    <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+    <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+    <result column="appl_num" property="applNum" jdbcType="VARCHAR" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="draw_date" property="drawDate" jdbcType="TIMESTAMP" />
+    <result column="draw_amount" property="drawAmount" jdbcType="DOUBLE" />
+    <result column="invo_state" property="invoState" jdbcType="VARCHAR" />
+    <result column="exam_invo_diss_type" property="examInvoDissType" jdbcType="VARCHAR" />
+    <result column="exam_invo_diss_remarks" property="examInvoDissRemarks" jdbcType="VARCHAR" />
+    <result column="appl_remarks" property="applRemarks" jdbcType="VARCHAR" />
+    <result column="prov" property="prov" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="cou" property="cou" jdbcType="VARCHAR" />
+    <result column="entry_open_invo_type" property="entryOpenInvoType" jdbcType="VARCHAR" />
+    <result column="open_invo_remarks" property="openInvoRemarks" jdbcType="VARCHAR" />
+    <result column="open_bill_deadline" property="openBillDeadline" jdbcType="TIMESTAMP" />
+    <result column="exam_bill_deadline" property="examBillDeadline" jdbcType="TIMESTAMP" />
+    <result column="invo_content_type" property="invoContentType" jdbcType="VARCHAR" />
+    <collection property="invoFiles" column="id" select="selectSettleBillEleInvoFiles"/>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, entp_id, settle_id, invo_type, invo_form, invo_catg_type, invo_title, tax_ident_num,
+    regist_address, regist_tel, bank_name, bank_acc_num, rece_name, address_prov, address_city,
+    address_cou, address_detail, zip_code, tel, logistics_comp_name, logistics_num, appl_num,
+    appl_date, draw_date, draw_amount, invo_state, exam_invo_diss_type, appl_remarks, open_invo_remarks,exam_invo_diss_remarks,
+    entry_open_invo_type, create_by, create_date, update_by, update_date, remarks, invo_content_type, del_flag
+  </sql>
+  <!-- 查询结算单发票详细信息 -->
+  <select id="findInfo" parameterType="com.wisea.cloud.model.po.LongIdPo" resultMap="invoInfoResultMap">
+    select
+      sbi.*,
+      max(CASE WHEN sa.`code` = sbi.address_prov THEN sa.`name` END) prov,
+      max(CASE WHEN sa.`code` = sbi.address_city THEN sa.`name` END) city,
+      max(CASE WHEN sa.`code` = sbi.address_cou THEN sa.`name` END) cou,
+      sb.seller_id sellerId,
+      mi1.login_name sellerAccount,
+      mi1.entp_name sellerName,
+      sb.buyer_id buyerId,
+      CASE WHEN mi2.login_name IS NULL THEN mi2.regist_tel ELSE mi2.login_name END buyerAccount,
+      mi2.entp_name buyerName,
+      sb.settle_bill_numb settleBillNumb,
+      sb.total_money totalMoney,
+      sb.payment_amount paymentAmount,
+      sb.open_bill_deadline openBillDeadline,
+      sb.exam_bill_deadline examBillDeadline
+	  from
+      settle_bill_invo sbi
+      inner join settle_bill sb on sb.id = sbi.settle_id
+      LEFT JOIN memb_info mi1 ON mi1.id = sb.seller_id
+      LEFT JOIN memb_info mi2 ON mi2.id = sb.buyer_id
+      LEFT JOIN sys_area sa ON sa.`code` = sbi.address_prov OR sa.`code` = sbi.address_city OR sa.`code` = sbi.address_cou
+    where
+      sbi.del_flag = '0'
+      and sbi.id = #{id}
+  </select>
+
+  <!-- 查询结算单发票详细信息 -->
+  <select id="findInfoBySettId" parameterType="com.wisea.cloud.model.po.LongIdPo" resultMap="invoInfoResultMap">
+       select
+          sbi.*,
+          max(CASE WHEN sa.`code` = sbi.address_prov THEN sa.`name` END) prov,
+          max(CASE WHEN sa.`code` = sbi.address_city THEN sa.`name` END) city,
+          max(CASE WHEN sa.`code` = sbi.address_cou THEN sa.`name` END) cou,
+          sb.seller_id sellerId,
+          mi1.login_name sellerAccount,
+          mi1.entp_name sellerName,
+          sb.buyer_id buyerId,
+          CASE WHEN mi2.login_name IS NULL THEN mi2.regist_tel ELSE mi2.login_name END buyerAccount,
+          mi2.entp_name buyerName,
+          sb.settle_bill_numb settleBillNumb,
+          sb.total_money totalMoney,
+          sb.payment_amount paymentAmount,
+          sb.open_bill_deadline openBillDeadline,
+          sb.exam_bill_deadline examBillDeadline
+       from
+          settle_bill_invo sbi
+          inner join settle_bill sb on sb.id = sbi.settle_id
+          LEFT JOIN memb_info mi1 ON mi1.id = sb.seller_id
+          LEFT JOIN memb_info mi2 ON mi2.id = sb.buyer_id
+          LEFT JOIN sys_area sa ON sa.`code` = sbi.address_prov OR sa.`code` = sbi.address_city OR sa.`code` = sbi.address_cou
+       where
+          sbi.del_flag = '0'
+       and sb.id = #{id}
+  </select>
+
+  <!-- 级联查询结算单发票文件列表 -->
+  <select id="selectSettleBillEleInvoFiles" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.trade.SettleBillEleInvoFileVo">
+    select
+      sbeif.ele_invo_url,
+      sbeif.remarks file_name
+    from
+      settle_bill_ele_invo_file sbeif
+    where
+      sbeif.settle_bill_invo_id = #{id}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from settle_bill_invo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from settle_bill_invo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.SettleBillInvo" >
+    insert into settle_bill_invo (id, entp_id, settle_id,
+      invo_type, invo_form, invo_catg_type,
+      invo_title, tax_ident_num, regist_address,
+      regist_tel, bank_name, bank_acc_num,
+      rece_name, address_prov, address_city,
+      address_cou, address_detail, zip_code,
+      tel, logistics_comp_name, logistics_num,
+      appl_num, appl_date, draw_date,
+      draw_amount, invo_state, exam_invo_diss_type,
+      appl_remarks, open_invo_remarks,exam_invo_diss_remarks, entry_open_invo_type,
+      create_by, create_date, update_by, update_date,
+      remarks, invo_content_type, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{entpId,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT},
+      #{invoType,jdbcType=VARCHAR}, #{invoForm,jdbcType=VARCHAR}, #{invoCatgType,jdbcType=VARCHAR},
+      #{invoTitle,jdbcType=VARCHAR}, #{taxIdentNum,jdbcType=VARCHAR}, #{registAddress,jdbcType=VARCHAR},
+      #{registTel,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankAccNum,jdbcType=VARCHAR},
+      #{receName,jdbcType=VARCHAR}, #{addressProv,jdbcType=VARCHAR}, #{addressCity,jdbcType=VARCHAR},
+      #{addressCou,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{logisticsCompName,jdbcType=VARCHAR}, #{logisticsNum,jdbcType=VARCHAR},
+      #{applNum,jdbcType=VARCHAR}, #{applDate,jdbcType=TIMESTAMP}, #{drawDate,jdbcType=TIMESTAMP},
+      #{drawAmount,jdbcType=DOUBLE}, #{invoState,jdbcType=VARCHAR}, #{examInvoDissType,jdbcType=VARCHAR},
+      #{applRemarks,jdbcType=VARCHAR}, #{openInvoRemarks,jdbcType=VARCHAR}, #{examInvoDissRemarks,jdbcType=VARCHAR}, #{entryOpenInvoType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},#{invoContentType,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.SettleBillInvo" >
+    insert into settle_bill_invo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entpId != null" >
+        entp_id,
+      </if>
+      <if test="settleId != null" >
+        settle_id,
+      </if>
+      <if test="invoType != null" >
+        invo_type,
+      </if>
+      <if test="invoForm != null" >
+        invo_form,
+      </if>
+      <if test="invoContentType != null" >
+        invo_content_type,
+      </if>
+      <if test="invoCatgType != null" >
+        invo_catg_type,
+      </if>
+      <if test="invoTitle != null" >
+        invo_title,
+      </if>
+      <if test="taxIdentNum != null" >
+        tax_ident_num,
+      </if>
+      <if test="registAddress != null" >
+        regist_address,
+      </if>
+      <if test="registTel != null" >
+        regist_tel,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAccNum != null" >
+        bank_acc_num,
+      </if>
+      <if test="receName != null" >
+        rece_name,
+      </if>
+      <if test="addressProv != null" >
+        address_prov,
+      </if>
+      <if test="addressCity != null" >
+        address_city,
+      </if>
+      <if test="addressCou != null" >
+        address_cou,
+      </if>
+      <if test="addressDetail != null" >
+        address_detail,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name,
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num,
+      </if>
+      <if test="applNum != null" >
+        appl_num,
+      </if>
+      <if test="applDate != null" >
+        appl_date,
+      </if>
+      <if test="drawDate != null" >
+        draw_date,
+      </if>
+      <if test="drawAmount != null" >
+        draw_amount,
+      </if>
+      <if test="invoState != null" >
+        invo_state,
+      </if>
+      <if test="examInvoDissType != null" >
+        exam_invo_diss_type,
+      </if>
+      <if test="applRemarks != null" >
+        appl_remarks,
+      </if>
+      <if test="openInvoRemarks != null" >
+        open_invo_remarks,
+      </if>
+      <if test="examInvoDissRemarks != null" >
+        exam_invo_diss_remarks,
+      </if>
+      <if test="entryOpenInvoType != null" >
+        entry_open_invo_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entpId != null" >
+        #{entpId,jdbcType=BIGINT},
+      </if>
+      <if test="settleId != null" >
+        #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="invoType != null" >
+        #{invoType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoForm != null" >
+        #{invoForm,jdbcType=VARCHAR},
+      </if>
+      <if test="invoContentType != null" >
+        #{invoContentType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoCatgType != null" >
+        #{invoCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoTitle != null" >
+        #{invoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taxIdentNum != null" >
+        #{taxIdentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddress != null" >
+        #{registAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNum != null" >
+        #{bankAccNum,jdbcType=VARCHAR},
+      </if>
+      <if test="receName != null" >
+        #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCompName != null" >
+        #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applNum != null" >
+        #{applNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applDate != null" >
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawDate != null" >
+        #{drawDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawAmount != null" >
+        #{drawAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="invoState != null" >
+        #{invoState,jdbcType=VARCHAR},
+      </if>
+      <if test="examInvoDissType != null" >
+        #{examInvoDissType,jdbcType=VARCHAR},
+      </if>
+      <if test="applRemarks != null" >
+        #{applRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="openInvoRemarks != null" >
+        #{openInvoRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="examInvoDissRemarks != null" >
+        #{examInvoDissRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="entryOpenInvoType != null" >
+        #{entryOpenInvoType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.SettleBillInvo" >
+    update settle_bill_invo
+    <set >
+      <if test="entpId != null" >
+        entp_id = #{entpId,jdbcType=BIGINT},
+      </if>
+      <if test="settleId != null" >
+        settle_id = #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="invoType != null" >
+        invo_type = #{invoType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoContentType != null" >
+        invo_content_type = #{invoContentType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoForm != null" >
+        invo_form = #{invoForm,jdbcType=VARCHAR},
+      </if>
+      <if test="invoCatgType != null" >
+        invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoTitle != null" >
+        invo_title = #{invoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taxIdentNum != null" >
+        tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddress != null" >
+        regist_address = #{registAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        regist_tel = #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNum != null" >
+        bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      </if>
+      <if test="receName != null" >
+        rece_name = #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        address_prov = #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        address_city = #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        address_cou = #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applNum != null" >
+        appl_num = #{applNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applDate != null" >
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawDate != null" >
+        draw_date = #{drawDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawAmount != null" >
+        draw_amount = #{drawAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="invoState != null" >
+        invo_state = #{invoState,jdbcType=VARCHAR},
+      </if>
+      <if test="examInvoDissType != null" >
+        exam_invo_diss_type = #{examInvoDissType,jdbcType=VARCHAR},
+      </if>
+      <if test="applRemarks != null" >
+        appl_remarks = #{applRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="openInvoRemarks != null" >
+        open_invo_remarks = #{openInvoRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="examInvoDissRemarks != null" >
+        exam_invo_diss_remarks = #{examInvoDissRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="entryOpenInvoType != null" >
+        entry_open_invo_type = #{entryOpenInvoType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.SettleBillInvo" >
+    update settle_bill_invo
+    set entp_id = #{entpId,jdbcType=BIGINT},
+      settle_id = #{settleId,jdbcType=BIGINT},
+      invo_type = #{invoType,jdbcType=VARCHAR},
+      invo_form = #{invoForm,jdbcType=VARCHAR},
+      invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      invo_title = #{invoTitle,jdbcType=VARCHAR},
+      tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      regist_address = #{registAddress,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      appl_num = #{applNum,jdbcType=VARCHAR},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      draw_date = #{drawDate,jdbcType=TIMESTAMP},
+      draw_amount = #{drawAmount,jdbcType=DOUBLE},
+      invo_state = #{invoState,jdbcType=VARCHAR},
+      exam_invo_diss_type = #{examInvoDissType,jdbcType=VARCHAR},
+      appl_remarks = #{applRemarks,jdbcType=VARCHAR},
+      open_invo_remarks = #{openInvoRemarks,jdbcType=VARCHAR},
+      exam_invo_diss_remarks = #{examInvoDissRemarks,jdbcType=VARCHAR},
+      entry_open_invo_type = #{entryOpenInvoType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      invo_content_type = #{invoContentType,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findCountByState" parameterType="com.wisea.transac.common.po.SettleBillInvoPageListPo" resultType="java.util.Map">
+    SELECT
+      sbi.invo_state stateType,
+      count(sbi.id) count
+    FROM
+      settle_bill_invo sbi
+      INNER JOIN settle_bill sb on sb.id = sbi.settle_id
+      LEFT JOIN memb_info mi ON mi.id = sb.buyer_id
+    WHERE
+      sb.seller_id = #{sellerId,jdbcType=BIGINT}
+      <if test="query != null and query != ''">
+        AND (
+          mi.entp_name LIKE CONCAT('%', #{query}, '%')
+          OR mi.login_name LIKE CONCAT('%', #{query}, '%')
+          OR mi.regist_tel LIKE CONCAT('%', #{query}, '%')
+          OR sb.settle_bill_numb LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+    GROUP BY
+      sbi.invo_state
+  </select>
+  <select id="findPageList" parameterType="com.wisea.transac.common.po.SettleBillInvoPageListPo" resultType="com.wisea.transac.common.vo.SettleBillInvoPageListVo">
+    SELECT
+      sbi.id id,
+      sbi.appl_num applNum,
+      mi.id buyerId,
+      mi.entp_name buyerName,
+      CASE WHEN mi.login_name IS NULL THEN mi.regist_tel ELSE mi.login_name END buyerAccount,
+      sb.settle_bill_numb settleBillNumb,
+      sbi.draw_amount drawAmount,
+      sbi.invo_state invoState,
+      sbi.exam_invo_diss_type examInvoDissType,
+      sb.open_bill_deadline openBillDeadline,
+      sb.exam_bill_deadline examBillDeadline
+    FROM
+      settle_bill_invo sbi
+      INNER JOIN settle_bill sb on sb.id = sbi.settle_id
+      LEFT JOIN memb_info mi ON mi.id = sb.buyer_id
+    WHERE
+      sb.seller_id = #{sellerId,jdbcType=BIGINT}
+      <if test="invoState != null and invoState != ''">
+        AND sbi.invo_state = #{invoState,jdbcType=VARCHAR}
+      </if>
+      <if test="query != null and query != ''">
+        AND (
+          mi.entp_name LIKE CONCAT('%', #{query}, '%')
+          OR mi.login_name LIKE CONCAT('%', #{query}, '%')
+          OR mi.regist_tel LIKE CONCAT('%', #{query}, '%')
+          OR sb.settle_bill_numb LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+    order by sbi.appl_date desc
+  </select>
+
+   <!-- 查询代开票数量 -->
+   <select id="notOpenInvoCount" parameterType="java.lang.Long" resultType="java.lang.String">
+    SELECT
+	  count(*)
+	from settle_bill_invo t1
+	  left join settle_bill t2
+	    on t2.id = t1.settle_id
+	where t1.del_flag = '0'
+	    and t1.invo_state = '0'
+	    and t2.seller_id = #{sellerId,jdbcType=BIGINT}
+   </select>
+
+  <!-- 查询申请开票编码 -->
+  <select id="findApplNumMaxNum" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT appl_num FROM ord_invo WHERE appl_num LIKE CONCAT(#{applNum}, '%')
+  </select>
+</mapper>

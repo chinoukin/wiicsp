@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.FeedBackMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.FeedBackMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="login_name" property="loginName" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="entp_name" property="entpName" jdbcType="VARCHAR"/>
+        <result column="problem_type" property="problemType" jdbcType="VARCHAR"/>
+        <result column="feedback_content" property="feedbackContent" jdbcType="VARCHAR"/>
+        <result column="source_type" property="sourceType" jdbcType="VARCHAR"/>
+        <result column="proces_status_type" property="procesStatusType" jdbcType="VARCHAR"/>
+        <result column="operator" property="operator" jdbcType="VARCHAR"/>
+        <result column="opreat_date" property="opreatDate" jdbcType="TIMESTAMP"/>
+        <result column="opreat_content" property="opreatContent" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, login_name, name, tel, entp_name, problem_type, feedback_content, source_type,
+    proces_status_type, operator, opreat_date, opreat_content, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from zhfw_feed_back_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from zhfw_feed_back_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.FeedBackMage">
+    insert into zhfw_feed_back_mage (id, login_name, name,
+      tel, entp_name, problem_type,
+      feedback_content, source_type, proces_status_type,
+      operator, opreat_date, opreat_content,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{entpName,jdbcType=VARCHAR}, #{problemType,jdbcType=VARCHAR},
+      #{feedbackContent,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR}, #{procesStatusType,jdbcType=VARCHAR},
+      #{operator,jdbcType=VARCHAR}, #{opreatDate,jdbcType=TIMESTAMP}, #{opreatContent,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.FeedBackMage">
+        insert into zhfw_feed_back_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loginName != null">
+                login_name,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="entpName != null">
+                entp_name,
+            </if>
+            <if test="problemType != null">
+                problem_type,
+            </if>
+            <if test="feedbackContent != null">
+                feedback_content,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="procesStatusType != null">
+                proces_status_type,
+            </if>
+            <if test="operator != null">
+                operator,
+            </if>
+            <if test="opreatDate != null">
+                opreat_date,
+            </if>
+            <if test="opreatContent != null">
+                opreat_content,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loginName != null">
+                #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="entpName != null">
+                #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="problemType != null">
+                #{problemType,jdbcType=VARCHAR},
+            </if>
+            <if test="feedbackContent != null">
+                #{feedbackContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="procesStatusType != null">
+                #{procesStatusType,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="opreatDate != null">
+                #{opreatDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="opreatContent != null">
+                #{opreatContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.FeedBackMage">
+        update zhfw_feed_back_mage
+        <set>
+            <if test="loginName != null">
+                login_name = #{loginName,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="entpName != null">
+                entp_name = #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="problemType != null">
+                problem_type = #{problemType,jdbcType=VARCHAR},
+            </if>
+            <if test="feedbackContent != null">
+                feedback_content = #{feedbackContent,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="procesStatusType != null">
+                proces_status_type = #{procesStatusType,jdbcType=VARCHAR},
+            </if>
+            <if test="operator != null">
+                operator = #{operator,jdbcType=VARCHAR},
+            </if>
+            <if test="opreatDate != null">
+                opreat_date = #{opreatDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="opreatContent != null">
+                opreat_content = #{opreatContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.FeedBackMage">
+    update zhfw_feed_back_mage
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      problem_type = #{problemType,jdbcType=VARCHAR},
+      feedback_content = #{feedbackContent,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      proces_status_type = #{procesStatusType,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      opreat_date = #{opreatDate,jdbcType=TIMESTAMP},
+      opreat_content = #{opreatContent,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPageList" resultType="com.wisea.cultivar.common.vo.FeedBackMagePageListVo"
+            parameterType="com.wisea.cultivar.common.po.FeedBackMagePageListPo">
+    select
+	  id id,
+	  login_name loginName,
+	  name name,
+	  tel tel,
+	  entp_name entpName,
+	  problem_type problemType,
+	  feedback_content feedbackContent,
+	  source_type sourceType,
+	  proces_status_type procesStatusType,
+	  operator operator,
+	  opreat_date opreatDate,
+	  opreat_content opreatContent
+	from
+	  zhfw_feed_back_mage
+	where
+	  del_flag = '0'
+  </select>
+    <select id="findInfo" resultType="com.wisea.cultivar.common.vo.FeedBackMageInfoVo" parameterType="java.lang.Long">
+    select
+	  id id,
+	  login_name loginName,
+	  name name,
+	  tel tel,
+	  entp_name entpName,
+	  problem_type problemType,
+	  feedback_content feedbackContent,
+	  source_type sourceType,
+	  proces_status_type procesStatusType,
+	  operator operator,
+	  opreat_date opreatDate,
+	  opreat_content opreatContent
+	from
+	  zhfw_feed_back_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+    <select id="findListByCond" resultType="com.wisea.cultivar.common.vo.FeedBackMagePageListVo"
+            parameterType="com.wisea.cultivar.common.po.FeedBackMagePageListPo">
+        select
+        id id,
+        login_name loginName,
+        name name,
+        tel tel,
+        entp_name entpName,
+        problem_type problemType,
+        feedback_content feedbackContent,
+        source_type sourceType,
+        proces_status_type procesStatusType,
+        operator operator,
+        opreat_date opreatDate,
+        opreat_content opreatContent,
+        create_date createDate
+        from
+        zhfw_feed_back_mage
+        <where>
+            AND del_flag = '0'
+           <!-- <if test="loginName != null and loginName != '' ">
+                AND instr(login_name,#{loginName}) != 0
+            </if>-->
+            <if test="loginNameAndnameAndtel != '' and loginNameAndnameAndtel != null">
+                AND CONCAT(login_name,name,tel) LIKE CONCAT('%',#{loginNameAndnameAndtel},'%')
+            </if>
+            <if test="startCreateDate!=null and endCreateDate!=null">
+                and create_date between #{startCreateDate} and #{endCreateDate}
+            </if>
+            <if test="procesStatusType != '' and procesStatusType != null">
+                and proces_status_type=#{procesStatusType}
+            </if>
+            order by update_date desc
+        </where>
+    </select>
+</mapper>

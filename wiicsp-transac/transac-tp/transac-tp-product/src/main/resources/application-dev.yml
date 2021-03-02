@@ -1,0 +1,26 @@
+product:
+  elasticIpAddress: 192.168.20.33
+  elasticPort: 39200
+  index-name: transac-dev
+  user: elastic
+  password: xdj69bkrxgw8jmhjl4ghqnhr
+
+logging: # 日志输出配置
+  level:
+    com.wisea.transac.common.dao: trace
+
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: http://192.168.20.5:2105/eureka/ # 指向配置eureka地址
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务-商品平台
+  mss:
+    security: TRANSAC-OPERATION # mss远程 安全服务(用户、菜单、角色)
+    system: TRANSAC-OPERATION # mss 系统服务(行政区划、数据字典)
+    files: TRANSAC-OPERATION # mss文件服务
+    seller: TRANSAC-SELLER
+    tp-system: TRANSAC-TP-SYSTEM

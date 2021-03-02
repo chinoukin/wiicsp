@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.SerListMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.SerListMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="ser_list_no" property="serListNo" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="INTEGER" />
+    <result column="total_price" property="totalPrice" jdbcType="DOUBLE" />
+    <result column="conter" property="conter" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="ser_date" property="serDate" jdbcType="TIMESTAMP" />
+    <result column="ser_area_prov" property="serAreaProv" jdbcType="VARCHAR" />
+    <result column="ser_area_city" property="serAreaCity" jdbcType="VARCHAR" />
+    <result column="ser_area_cou" property="serAreaCou" jdbcType="VARCHAR" />
+    <result column="ser_area_address" property="serAreaAddress" jdbcType="VARCHAR" />
+    <result column="leaving_message" property="leavingMessage" jdbcType="VARCHAR" />
+    <result column="ser_list_state_type" property="serListStateType" jdbcType="VARCHAR" />
+    <result column="subscribe_date" property="subscribeDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="ser_list_cancel_reason" property="serListCancelReason" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, comm_pub_id, ser_list_no, num, total_price, conter, cont_tel, ser_date,
+    ser_area_prov, ser_area_city, ser_area_cou, ser_area_address, leaving_message, ser_list_state_type,
+    subscribe_date, create_by, create_date, update_by, update_date, remarks, del_flag,price,ser_list_cancel_reason
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ser_list_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ser_list_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.SerListMage" >
+    insert into ser_list_mage (id, memb_id, comm_pub_id,
+      ser_list_no, num, total_price,
+      conter, cont_tel, ser_date,
+      ser_area_prov, ser_area_city, ser_area_cou,
+      ser_area_address, leaving_message, ser_list_state_type,
+      subscribe_date, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag,price,ser_list_cancel_reason)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT},
+      #{serListNo,jdbcType=VARCHAR}, #{num,jdbcType=INTEGER}, #{totalPrice,jdbcType=DOUBLE},
+      #{conter,jdbcType=VARCHAR}, #{contTel,jdbcType=VARCHAR}, #{serDate,jdbcType=TIMESTAMP},
+      #{serAreaProv,jdbcType=VARCHAR}, #{serAreaCity,jdbcType=VARCHAR}, #{serAreaCou,jdbcType=VARCHAR},
+      #{serAreaAddress,jdbcType=VARCHAR}, #{leavingMessage,jdbcType=VARCHAR}, #{serListStateType,jdbcType=VARCHAR},
+      #{subscribeDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR},#{price,jdbcType=DOUBLE}, #{serListCancelReason,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.SerListMage" >
+    insert into ser_list_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="serListNo != null" >
+        ser_list_no,
+      </if>
+      <if test="num != null" >
+        num,
+      </if>
+      <if test="totalPrice != null" >
+        total_price,
+      </if>
+      <if test="conter != null" >
+        conter,
+      </if>
+      <if test="contTel != null" >
+        cont_tel,
+      </if>
+      <if test="serDate != null" >
+        ser_date,
+      </if>
+      <if test="serAreaProv != null" >
+        ser_area_prov,
+      </if>
+      <if test="serAreaCity != null" >
+        ser_area_city,
+      </if>
+      <if test="serAreaCou != null" >
+        ser_area_cou,
+      </if>
+      <if test="serAreaAddress != null" >
+        ser_area_address,
+      </if>
+      <if test="leavingMessage != null" >
+        leaving_message,
+      </if>
+      <if test="serListStateType != null" >
+        ser_list_state_type,
+      </if>
+      <if test="subscribeDate != null" >
+        subscribe_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="serListCancelReason != null" >
+        ser_list_cancel_reason,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="serListNo != null" >
+        #{serListNo,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        #{num,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="conter != null" >
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serDate != null" >
+        #{serDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serAreaProv != null" >
+        #{serAreaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="serAreaCity != null" >
+        #{serAreaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="serAreaCou != null" >
+        #{serAreaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="serAreaAddress != null" >
+        #{serAreaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="leavingMessage != null" >
+        #{leavingMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="serListStateType != null" >
+        #{serListStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeDate != null" >
+        #{subscribeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="serListCancelReason != null" >
+        #{serListCancelReason,VARCHAR=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.SerListMage" >
+    update ser_list_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="serListNo != null" >
+        ser_list_no = #{serListNo,jdbcType=VARCHAR},
+      </if>
+      <if test="num != null" >
+        num = #{num,jdbcType=INTEGER},
+      </if>
+      <if test="totalPrice != null" >
+        total_price = #{totalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="conter != null" >
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="serDate != null" >
+        ser_date = #{serDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="serAreaProv != null" >
+        ser_area_prov = #{serAreaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="serAreaCity != null" >
+        ser_area_city = #{serAreaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="serAreaCou != null" >
+        ser_area_cou = #{serAreaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="serAreaAddress != null" >
+        ser_area_address = #{serAreaAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="leavingMessage != null" >
+        leaving_message = #{leavingMessage,jdbcType=VARCHAR},
+      </if>
+      <if test="serListStateType != null" >
+        ser_list_state_type = #{serListStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="subscribeDate != null" >
+        subscribe_date = #{subscribeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="serListCancelReason != null" >
+        ser_list_cancel_reason = #{serListCancelReason,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.SerListMage" >
+    update ser_list_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      ser_list_no = #{serListNo,jdbcType=VARCHAR},
+      num = #{num,jdbcType=INTEGER},
+      total_price = #{totalPrice,jdbcType=DOUBLE},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      ser_date = #{serDate,jdbcType=TIMESTAMP},
+      ser_area_prov = #{serAreaProv,jdbcType=VARCHAR},
+      ser_area_city = #{serAreaCity,jdbcType=VARCHAR},
+      ser_area_cou = #{serAreaCou,jdbcType=VARCHAR},
+      ser_area_address = #{serAreaAddress,jdbcType=VARCHAR},
+      leaving_message = #{leavingMessage,jdbcType=VARCHAR},
+      ser_list_state_type = #{serListStateType,jdbcType=VARCHAR},
+      subscribe_date = #{subscribeDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      price = #{price,jdbcType=DOUBLE},
+      ser_list_cancel_reason = #{serListCancelReason,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.SerListMagePageListVo" parameterType="com.wisea.cultivar.plant.po.SerListMagePageListPo" >
+    select
+      s.id,
+	  s.memb_id membId,
+	  s.comm_pub_id commPubId,
+	  s.ser_list_no serListNo,
+	  s.num num,
+	  s.total_price totalPrice,
+	  s.conter conter,
+	  s.cont_tel contTel,
+	  s.ser_date serDate,
+      area.name serAreaProv,
+      area1.name serAreaCity,
+      area2.name serAreaCou,
+	  s.ser_area_address serAreaAddress,
+	  s.leaving_message leavingMessage,
+	  s.ser_list_state_type serListStateType,
+	  s.subscribe_date subscribeDate,
+      ifnull(si.shop_name,ifnull(zm.entp_name,zm.cont_name)) entpName,
+      cp.comm_title commTitle,
+      s.price price,
+      s.ser_list_cancel_reason  serListCancelReason,
+      zmum.meas_unit_name     measUnitName
+	from
+	  ser_list_mage s left join zhfw_comm_pub_info cp on s.comm_pub_id = cp.id
+	  left join zhfw_level_spec_quote zlsq on cp.id = zlsq.comm_pub_id and zlsq.del_flag='0'
+      left join zhfw_meas_unit_mage zmum on  zlsq.meas_unit_id = zmum.id
+	  left join sys_area area on s.ser_area_prov = area.code
+      left join sys_area area1 on s.ser_area_city = area1.code
+      left join sys_area area2 on s.ser_area_cou = area2.code
+	  left  join shop_info si on s.memb_id = si.memb_id
+       left join zhfw_memb_info zm on cp.memb_id = zm.id
+	where
+	  s.del_flag = '0'
+    <if test="membId!=null and membId!=''">
+      AND s.memb_id = #{membId,jdbcType=BIGINT}
+    </if>
+    <if test="commTitle!=null and commTitle!=''">
+      /*产品名称和商家名称*/
+      AND (cp.comm_title like CONCAT('%',#{commTitle},'%') or si.shop_name like CONCAT('%',#{commTitle},'%'))
+    </if>
+    <if test="serListStateType!=null and serListStateType!=''">
+      AND s.ser_list_state_type =
+      #{serListStateType,jdbcType=VARCHAR}
+    </if>
+    order by s.create_date desc
+  </select>
+  <!--查询服务单详情-->
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.SerListMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  s.memb_id membId,
+	  s.comm_pub_id commPubId,
+	  s.ser_list_no serListNo,
+	  s.num num,
+	  s.total_price totalPrice,
+	  s.conter conter,
+	  s.cont_tel contTel,
+	  s.ser_date serDate,
+	  area.name serAreaProv,
+	  area1.name serAreaCity,
+	  area2.name serAreaCou,
+	  s.ser_area_address serAreaAddress,
+	  s.leaving_message leavingMessage,
+	  s.ser_list_state_type serListStateType,
+	  s.subscribe_date subscribeDate,
+	  s.price price,
+      s.ser_list_cancel_reason  serListCancelReason,
+      z.comm_title commTitle,
+      ifnull(si.shop_name,ifnull(zm.entp_name,zm.cont_name)) entpName,
+      zm.regist_tel registTel,
+      zcpi.memb_id  businessId,
+      zmum.meas_unit_name   measUnitName
+	from
+	  ser_list_mage s left join zhfw_comm_pub_info z on s.comm_pub_id = z.id
+	  left join zhfw_level_spec_quote zlsq on z.id = zlsq.comm_pub_id and zlsq.del_flag='0'
+      left join zhfw_meas_unit_mage zmum on  zlsq.meas_unit_id = zmum.id
+	  left join sys_area area on s.ser_area_prov = area.code
+      left join sys_area area1 on s.ser_area_city = area1.code
+      left join sys_area area2 on s.ser_area_cou = area2.code
+	  left join zhfw_comm_pub_info zcpi on s.comm_pub_id= zcpi.id
+	  left join zhfw_memb_info zm on zcpi.memb_id = zm.id
+	  left  join shop_info si on zcpi.memb_id = si.memb_id
+	where
+	  s.del_flag = '0'
+	  and s.id = #{id}
+  </select>
+  <select id="getSerListStateType" resultType="com.wisea.cultivar.plant.vo.SerListStateTypeCountVo" parameterType="java.lang.Long" >
+       select s.value serListStateType, ifnull(sm.count,0) count   from sys_dict s left join ( select
+	  count(1) count, ser_list_state_type serListStateType
+	from
+	  ser_list_mage
+	where
+	  del_flag = '0'
+	  and memb_id = #{membId,jdbcType=BIGINT} group by ser_list_state_type) sm on s.value = sm.serListStateType where s.type='ser_list_state_type'
+  </select>
+  <!--根据服务单状态 待确认或者待服务 查询-->
+  <select id="findCancelBySerListStateType" resultType="com.wisea.cultivar.plant.vo.SerListMageInfoVo"  >
+    select
+      id id,
+      subscribe_date subscribeDate,
+      ser_date serDate
+	  from
+      ser_list_mage
+	  where
+      del_flag = '0'
+      and (ser_list_state_type = '0' or ser_list_state_type = '1')
+  </select>
+  <!--根据服务单状态查询-->
+  <select id="findBySerListStateType" resultType="com.wisea.cultivar.plant.vo.SerListMageInfoVo" parameterType="java.lang.String" >
+    select
+      id id,
+      subscribe_date subscribeDate,
+      ser_date serDate
+	  from
+      ser_list_mage
+	  where
+      del_flag = '0'
+      and ser_list_state_type = #{serListStateType}
+  </select>
+
+  <select id="findRecordPageList" resultType="com.wisea.cultivar.plant.vo.SerListMagePageListVo" parameterType="com.wisea.cultivar.plant.po.SerListMagePageListPo" >
+    select
+    s.id,
+    s.memb_id membId,
+    s.comm_pub_id commPubId,
+    s.ser_list_no serListNo,
+    s.num num,
+    s.total_price totalPrice,
+    s.conter conter,
+    s.cont_tel contTel,
+    s.ser_date serDate,
+    s.ser_area_prov serAreaProv,
+    s.ser_area_city serAreaCity,
+    s.ser_area_cou serAreaCou,
+    s.ser_area_address serAreaAddress,
+    s.leaving_message leavingMessage,
+    s.ser_list_state_type serListStateType,
+    s.subscribe_date subscribeDate,
+    zcpi.comm_title commTitle,
+    zcpi.comm_send_prov commSendProv,
+    zcpi.comm_send_city commSendCity,
+    zcpi.comm_send_cou commSendCou,
+    zcpi.comm_send_address commSendAddress,
+    zcvm.comm_variet_name commVarietName,
+    zmi.entp_name entpName,
+    s.price price
+    from
+    ser_list_mage s
+    left join zhfw_comm_pub_info zcpi on s.comm_pub_id=zcpi.id
+    left join zhfw_comm_variet_mage zcvm on zcvm.id=zcpi.comm_variet_id
+    left join zhfw_memb_info zmi on zmi.id=s.memb_id
+    left join (select zlsq.comm_pub_id,zmum.meas_unit_name from  zhfw_level_spec_quote zlsq
+    left join zhfw_meas_unit_mage zmum on zlsq.meas_unit_id=zmum.id) z on z.comm_pub_id=s.id
+    <where>
+      s.del_flag = '0'
+      and s.ser_list_state_type='4'
+      and s.memb_id=#{membId}
+      <if test="serListId!=null and serListId!=''">
+        AND s.id = #{serListId}
+      </if>
+    </where>
+   order by s.update_date desc
+  </select>
+    <select id="findSerListNo" resultType="java.lang.Long">
+    SELECT
+	ser_list_no
+    FROM
+	ser_list_mage
+    WHERE
+	CAST(ser_list_no AS INT) NOT BETWEEN 0 AND 1000000000
+    ORDER by  ser_list_no DESC
+    LIMIT 1
+    </select>
+</mapper>

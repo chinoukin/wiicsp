@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.FreightSetMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="freight_formwork_id" property="freightFormworkId" jdbcType="BIGINT" />
+    <result column="valua_type" property="valuaType" jdbcType="VARCHAR" />
+    <result column="start_count" property="startCount" jdbcType="INTEGER" />
+    <result column="start_weight" property="startWeight" jdbcType="DOUBLE" />
+    <result column="freight" property="freight" jdbcType="DOUBLE" />
+    <result column="more_count" property="moreCount" jdbcType="INTEGER" />
+    <result column="more_weight" property="moreWeight" jdbcType="DOUBLE" />
+    <result column="more_freight" property="moreFreight" jdbcType="DOUBLE" />
+    <result column="supt_distrib_area_type" property="suptDistribAreaType" jdbcType="VARCHAR" />
+    <result column="supt_distrib_area" property="suptDistribArea" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, freight_formwork_id, valua_type, start_count, start_weight, freight, more_count,
+    more_weight, more_freight, supt_distrib_area_type, supt_distrib_area, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from freight_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from freight_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    insert into freight_set (id, freight_formwork_id, valua_type,
+      start_count, start_weight, freight,
+      more_count, more_weight, more_freight,
+      supt_distrib_area_type, supt_distrib_area, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{freightFormworkId,jdbcType=BIGINT}, #{valuaType,jdbcType=VARCHAR},
+      #{startCount,jdbcType=INTEGER}, #{startWeight,jdbcType=DOUBLE}, #{freight,jdbcType=DOUBLE},
+      #{moreCount,jdbcType=INTEGER}, #{moreWeight,jdbcType=DOUBLE}, #{moreFreight,jdbcType=DOUBLE},
+      #{suptDistribAreaType,jdbcType=VARCHAR}, #{suptDistribArea,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    insert into freight_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="freightFormworkId != null" >
+        freight_formwork_id,
+      </if>
+      <if test="valuaType != null" >
+        valua_type,
+      </if>
+      <if test="startCount != null" >
+        start_count,
+      </if>
+      <if test="startWeight != null" >
+        start_weight,
+      </if>
+      <if test="freight != null" >
+        freight,
+      </if>
+      <if test="moreCount != null" >
+        more_count,
+      </if>
+      <if test="moreWeight != null" >
+        more_weight,
+      </if>
+      <if test="moreFreight != null" >
+        more_freight,
+      </if>
+      <if test="suptDistribAreaType != null" >
+        supt_distrib_area_type,
+      </if>
+      <if test="suptDistribArea != null" >
+        supt_distrib_area,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="freightFormworkId != null" >
+        #{freightFormworkId,jdbcType=BIGINT},
+      </if>
+      <if test="valuaType != null" >
+        #{valuaType,jdbcType=VARCHAR},
+      </if>
+      <if test="startCount != null" >
+        #{startCount,jdbcType=INTEGER},
+      </if>
+      <if test="startWeight != null" >
+        #{startWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="freight != null" >
+        #{freight,jdbcType=DOUBLE},
+      </if>
+      <if test="moreCount != null" >
+        #{moreCount,jdbcType=INTEGER},
+      </if>
+      <if test="moreWeight != null" >
+        #{moreWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="moreFreight != null" >
+        #{moreFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="suptDistribAreaType != null" >
+        #{suptDistribAreaType,jdbcType=VARCHAR},
+      </if>
+      <if test="suptDistribArea != null" >
+        #{suptDistribArea,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    update freight_set
+    <set >
+      <if test="freightFormworkId != null" >
+        freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT},
+      </if>
+      <if test="valuaType != null" >
+        valua_type = #{valuaType,jdbcType=VARCHAR},
+      </if>
+      <if test="startCount != null" >
+        start_count = #{startCount,jdbcType=INTEGER},
+      </if>
+      <if test="startWeight != null" >
+        start_weight = #{startWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="freight != null" >
+        freight = #{freight,jdbcType=DOUBLE},
+      </if>
+      <if test="moreCount != null" >
+        more_count = #{moreCount,jdbcType=INTEGER},
+      </if>
+      <if test="moreWeight != null" >
+        more_weight = #{moreWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="moreFreight != null" >
+        more_freight = #{moreFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="suptDistribAreaType != null" >
+        supt_distrib_area_type = #{suptDistribAreaType,jdbcType=VARCHAR},
+      </if>
+      <if test="suptDistribArea != null" >
+        supt_distrib_area = #{suptDistribArea,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    update freight_set
+    set freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT},
+      valua_type = #{valuaType,jdbcType=VARCHAR},
+      start_count = #{startCount,jdbcType=INTEGER},
+      start_weight = #{startWeight,jdbcType=DOUBLE},
+      freight = #{freight,jdbcType=DOUBLE},
+      more_count = #{moreCount,jdbcType=INTEGER},
+      more_weight = #{moreWeight,jdbcType=DOUBLE},
+      more_freight = #{moreFreight,jdbcType=DOUBLE},
+      supt_distrib_area_type = #{suptDistribAreaType,jdbcType=VARCHAR},
+      supt_distrib_area = #{suptDistribArea,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.FreightSetListVo" parameterType="com.wisea.cultivar.common.po.tp.FreightSetPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from freight_set
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.FreightSetListVo" parameterType="com.wisea.cultivar.common.po.tp.FreightSetListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from freight_set
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    update freight_set
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="countById" resultType="Integer" parameterType="java.lang.Long" >
+    select
+      count(id)
+    from freight_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <update id="updateAllDelFlagByFormworkId" parameterType="java.lang.Long">
+    UPDATE freight_set
+    SET del_flag = "1"
+    WHERE freight_formwork_id = #{id}
+    AND del_flag = "0"
+  </update>
+  <select id="findForListByFormworkId" resultType="com.wisea.cultivar.common.vo.tp.FreightSetListVo" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from freight_set
+    where del_flag = '0'
+    and freight_formwork_id = #{id}
+    order by supt_distrib_area_type desc
+  </select>
+
+  <!-- 根据省份count 以及 模板ids 查询 运费设置信息 -->
+  <select id="selectIfSent" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    select
+    <include refid="Base_Column_List" />
+    from freight_set
+    where supt_distrib_area like CONCAT('%',#{suptDistribArea},'%')
+    AND freight_formwork_id  in (${freightFormworkIds})
+    AND supt_distrib_area_type != '2'
+    AND del_flag = '0'
+  </select>
+
+  <!-- 根据运费模板ID查询运费设置信息 -->
+  <select id="selectFreightSetInfo" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.entity.tp.FreightSet" >
+    select
+    <include refid="Base_Column_List" />
+    from freight_set
+    where freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT}
+    and supt_distrib_area like CONCAT('%',#{suptDistribArea},'%')
+    AND del_flag = '0'
+  </select>
+</mapper>

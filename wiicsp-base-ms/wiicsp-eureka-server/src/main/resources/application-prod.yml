@@ -1,0 +1,18 @@
+server:
+  port: 2105
+
+spring:
+  application:
+    name: wiicsp-eureka-server
+
+eureka:
+  server:
+    enableSelfPreservation: false
+    eviction-interval-timer-in-ms: 5000
+  instance:
+    hostname: 127.0.0.1
+  client:
+    registerWithEureka: false
+    fetchRegistry: false
+    serviceUrl:
+      defaultZone: http://192.168.60.186:${server.port}/eureka/

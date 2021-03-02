@@ -1,0 +1,45 @@
+spring:
+  profiles:
+    include: cmn
+  redis:
+    host: 192.168.20.233 # Redis服务器地址
+    database: 42 # Redis数据库索引(默认为0)
+    timeout: 20000 # 连接超时时间（毫秒）
+  redisson:
+    enable: true
+    address: redis://${spring.redis.host}:${spring.redis.port:6379}
+
+wbfc:
+  datasource: #数据源配置
+    model: dyn
+    multiple: true
+    names: transac-maria1,transac-maria2,transac-maria3 #多个用逗号隔开
+    transac-maria1:
+      type: com.alibaba.druid.pool.DruidDataSource # 使用druid连接池作为数据源
+      url: jdbc:mysql://192.168.20.236:3306/wiicsp-transac?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+      username: dbuser
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    transac-maria2:
+      type: com.alibaba.druid.pool.DruidDataSource # 使用druid连接池作为数据源
+      url: jdbc:mysql://192.168.20.25:3306/wiicsp-transac?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+      username: dbuser
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    transac-maria3:
+      type: com.alibaba.druid.pool.DruidDataSource # 使用druid连接池作为数据源
+      url: jdbc:mysql://192.168.20.27:3306/wiicsp-transac?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+      username: dbuser
+      password: 123456
+      driver-class-name: com.mysql.cj.jdbc.Driver
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:2105/eureka/ # 指向配置eureka地址
+  instance:
+    preferIpAddress: true # 使用ip地址注册，否则会由于机器没有配置域名发生找不到地址的错误
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} # 地址格式=ip:端口
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG

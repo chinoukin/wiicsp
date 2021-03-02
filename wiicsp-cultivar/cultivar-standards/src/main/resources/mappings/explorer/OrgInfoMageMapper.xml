@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.explorer.mapper.OrgInfoMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.explorer.entity.OrgInfoMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="org_type" jdbcType="VARCHAR" property="orgType" />
+    <result column="org_name" jdbcType="VARCHAR" property="orgName" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+      <result column="area_prov" jdbcType="VARCHAR" property="areaProv" />
+      <result column="area_city" jdbcType="VARCHAR" property="areaCity" />
+      <result column="area_cou" jdbcType="VARCHAR" property="areaCou" />
+    <result column="org_address" jdbcType="VARCHAR" property="orgAddress" />
+    <result column="org_introduce" jdbcType="VARCHAR" property="orgIntroduce" />
+    <result column="org_leader" jdbcType="VARCHAR" property="orgLeader" />
+    <result column="org_leader_position" jdbcType="VARCHAR" property="orgLeaderPosition" />
+    <result column="conter" jdbcType="VARCHAR" property="conter" />
+    <result column="cont_tel" jdbcType="VARCHAR" property="contTel" />
+    <result column="wd" jdbcType="DOUBLE" property="wd" />
+    <result column="jd" jdbcType="DOUBLE" property="jd" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, org_type, org_name, area_code,area_prov,area_city,area_cou, org_address, org_introduce, org_leader, org_leader_position,
+    conter, cont_tel, wd, jd, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from org_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from org_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.explorer.entity.OrgInfoMage">
+    insert into org_info_mage (id, org_type, org_name,
+      area_code, area_prov,area_city,area_cou,org_address, org_introduce,
+      org_leader, org_leader_position, conter,
+      cont_tel, wd, jd, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{orgType,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR},#{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+       #{orgAddress,jdbcType=VARCHAR}, #{orgIntroduce,jdbcType=VARCHAR},
+      #{orgLeader,jdbcType=VARCHAR}, #{orgLeaderPosition,jdbcType=VARCHAR}, #{conter,jdbcType=VARCHAR},
+      #{contTel,jdbcType=VARCHAR}, #{wd,jdbcType=DOUBLE}, #{jd,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.explorer.entity.OrgInfoMage">
+    insert into org_info_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orgType != null">
+        org_type,
+      </if>
+      <if test="orgName != null">
+        org_name,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+        <if test="areaProv != null">
+            area_prov,
+        </if>
+        <if test="areaCity != null">
+            area_city,
+        </if>
+        <if test="areaCou != null">
+            area_cou,
+        </if>
+      <if test="orgAddress != null">
+        org_address,
+      </if>
+      <if test="orgIntroduce != null">
+        org_introduce,
+      </if>
+      <if test="orgLeader != null">
+        org_leader,
+      </if>
+      <if test="orgLeaderPosition != null">
+        org_leader_position,
+      </if>
+      <if test="conter != null">
+        conter,
+      </if>
+      <if test="contTel != null">
+        cont_tel,
+      </if>
+      <if test="wd != null">
+        wd,
+      </if>
+      <if test="jd != null">
+        jd,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgType != null">
+        #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaProv != null">
+            #{areaProv,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCity != null">
+            #{areaCity,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCou != null">
+            #{areaCou,jdbcType=VARCHAR},
+        </if>
+      <if test="orgAddress != null">
+        #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIntroduce != null">
+        #{orgIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLeader != null">
+        #{orgLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLeaderPosition != null">
+        #{orgLeaderPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null">
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null">
+        #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="jd != null">
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.explorer.entity.OrgInfoMage">
+    update org_info_mage
+    <set>
+      <if test="orgType != null">
+        org_type = #{orgType,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null">
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaProv != null">
+            area_prov =  #{areaProv,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCity != null">
+            area_city =   #{areaCity,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCou != null">
+            area_cou =   #{areaCou,jdbcType=VARCHAR},
+        </if>
+      <if test="orgAddress != null">
+        org_address = #{orgAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="orgIntroduce != null">
+        org_introduce = #{orgIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLeader != null">
+        org_leader = #{orgLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="orgLeaderPosition != null">
+        org_leader_position = #{orgLeaderPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null">
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null">
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="jd != null">
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.explorer.entity.OrgInfoMage">
+    update org_info_mage
+    set org_type = #{orgType,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+          area_prov =  #{areaProv,jdbcType=VARCHAR},
+          area_city =   #{areaCity,jdbcType=VARCHAR},
+          area_cou =   #{areaCou,jdbcType=VARCHAR},
+      org_address = #{orgAddress,jdbcType=VARCHAR},
+      org_introduce = #{orgIntroduce,jdbcType=VARCHAR},
+      org_leader = #{orgLeader,jdbcType=VARCHAR},
+      org_leader_position = #{orgLeaderPosition,jdbcType=VARCHAR},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      wd = #{wd,jdbcType=DOUBLE},
+      jd = #{jd,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.explorer.po.OrgInfoMagePagePo" resultType="com.wisea.cultivar.explorer.vo.OrgInfoMageListVo">
+      SELECT T.*,
+      T2.`name` AS 'areaProv', T3.`name` AS 'areaCity',T4.`name` AS  'areaCou' FROM org_info_mage T
+      LEFT JOIN sys_area T2 ON T.area_prov = T2.`code`
+      LEFT JOIN sys_area T3 ON T.area_city = T3.`code`
+      LEFT JOIN sys_area T4 ON T.area_cou = T4.`code`
+        where T.del_flag = '0'
+    <include refid="query_where"/>
+    order by T.create_date DESC
+  </select>
+  <sql id="query_where">
+    <if test="orgType != null and orgType != '' ">
+      and  T.org_type = #{orgType,jdbcType=VARCHAR}
+    </if>
+    <if test="orgName != null and orgName != '' ">
+      and  T.org_name like CONCAT('%', #{orgName,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="coordinatesFlag != null and coordinatesFlag != ''">
+      <if test="coordinatesFlag == 1">
+        and T.jd is not null and wd is not null and LENGTH(T.jd) &gt; 0 and LENGTH(T.wd) &gt; 0
+      </if>
+      <if test="coordinatesFlag == 2">
+        and T.jd is null and wd is null and LENGTH(T.jd) &lt; 0 and LENGTH(T.wd) &lt; 0
+      </if>
+    </if>
+
+    <if test=" exportList != null and exportList.size > 0">
+      and T.id in
+      <foreach item="item" collection="exportList" separator="," open="(" close=")" index="index">
+        #{item}
+      </foreach>
+    </if>
+
+  </sql>
+  <select id="findList" parameterType="com.wisea.cultivar.explorer.po.OrgInfoMageListPo" resultType="com.wisea.cultivar.explorer.vo.OrgInfoMageListVo">
+      SELECT T.*,
+      T2.`name` AS 'areaProv', T3.`name` AS 'areaCity',T4.`name` AS  'areaCou' FROM org_info_mage T
+      LEFT JOIN sys_area T2 ON T.area_prov = T2.`code`
+      LEFT JOIN sys_area T3 ON T.area_city = T3.`code`
+      LEFT JOIN sys_area T4 ON T.area_cou = T4.`code`
+      where T.del_flag = '0'
+    <include refid="query_where"/>
+    order by T.create_date DESC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.explorer.entity.OrgInfoMage">
+    update org_info_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

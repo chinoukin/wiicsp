@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>transac-operation</artifactId>
+    <packaging>jar</packaging>
+
+    <name>transac-operation</name>
+    <description>果品交易服务-交易服务-基础框架-用户权限认证服务、系统服务、文件服务等</description>
+
+    <parent>
+        <groupId>com.wisea</groupId>
+        <artifactId>wiicsp-transac</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>transac-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-security</artifactId>
+            <version>${wbf-cloud.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.codingapi</groupId>
+                    <artifactId>transaction-springcloud</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-files</artifactId>
+            <version>${wbf-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-system</artifactId>
+            <version>${wbf-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-tencentim</artifactId>
+            <version>${wbf-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-backup</artifactId>
+            <version>${wbf-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-seata</artifactId>
+            <version>${wbf-cloud.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.47</version>
+        </dependency>
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>2.4</version>
+            <classifier>jdk15</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv</artifactId>
+            <version>1.4.3</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>flycapture</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>libdc1394</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>libfreenect</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>libfreenect2</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>librealsense</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>videoinput</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>artoolkitplus</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>flandmark</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>leptonica</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.bytedeco.javacpp-presets</groupId>
+                    <artifactId>tesseract</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacpp</artifactId>
+            <version>1.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>opencv</artifactId>
+            <version>3.4.3-1.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.0.2-1.4.3</version>
+        </dependency>
+        <!-- 	<dependency> -->
+        <!-- 	    <groupId>org.bytedeco</groupId> -->
+        <!-- 	    <artifactId>javacpp</artifactId> -->
+        <!-- 	    <version>1.4.3</version> -->
+        <!-- 	</dependency> -->
+        <!--     <dependency> -->
+        <!--         <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--         <artifactId>ffmpeg-platform</artifactId> -->
+        <!--         <version>4.0.2-1.4.3</version> -->
+        <!--     </dependency> -->
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--       <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>linux-armhf</classifier> -->
+        <!--     </dependency> -->
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--       <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>linux-ppc64le</classifier> -->
+        <!--     </dependency> -->
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.0.2-1.4.3</version>
+            <classifier>linux-x86</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.0.2-1.4.3</version>
+            <classifier>linux-x86_64</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.0.2-1.4.3</version>
+            <classifier>windows-x86</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.bytedeco.javacpp-presets</groupId>
+            <artifactId>ffmpeg</artifactId>
+            <version>4.0.2-1.4.3</version>
+            <classifier>windows-x86_64</classifier>
+        </dependency>
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--        <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>macosx-x86_64</classifier> -->
+        <!--     </dependency> -->
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--        <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>android-arm</classifier> -->
+        <!--     </dependency> -->
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--        <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>android-arm64</classifier> -->
+        <!--     </dependency> -->
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--        <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>android-x86</classifier> -->
+        <!--     </dependency> -->
+        <!--     <dependency> -->
+        <!--       <groupId>org.bytedeco.javacpp-presets</groupId> -->
+        <!--        <artifactId>ffmpeg</artifactId> -->
+        <!--       <version>4.0.2-1.4.3</version> -->
+        <!--       <classifier>android-x86_64</classifier> -->
+        <!--     </dependency> -->
+    </dependencies>
+    <profiles>
+        <profile>
+            <id>ci</id>
+        </profile>
+        <profile>
+            <id>boot</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>repackage</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>lib-boot</id>
+        </profile>
+    </profiles>
+
+
+</project>

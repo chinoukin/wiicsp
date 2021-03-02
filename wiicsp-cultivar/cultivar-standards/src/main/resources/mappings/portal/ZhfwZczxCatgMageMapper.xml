@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.portal.mapper.ZhfwZczxCatgMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.portal.entity.ZhfwZczxCatgMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="p_catg_name" jdbcType="VARCHAR" property="pCatgName" />
+    <result column="catg_name" jdbcType="VARCHAR" property="catgName" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, p_catg_name, catg_name, sort, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_zczx_catg_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getOne" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_zczx_catg_mage
+    where id = #{delId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from zhfw_zczx_catg_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.portal.entity.ZhfwZczxCatgMage">
+    insert into zhfw_zczx_catg_mage (id, pid, p_catg_name,
+      catg_name, sort, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{pCatgName,jdbcType=VARCHAR},
+      #{catgName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.portal.entity.ZhfwZczxCatgMage">
+    insert into zhfw_zczx_catg_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pCatgName != null">
+        p_catg_name,
+      </if>
+      <if test="catgName != null">
+        catg_name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pCatgName != null">
+        #{pCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null">
+        #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.portal.entity.ZhfwZczxCatgMage">
+    update zhfw_zczx_catg_mage
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pCatgName != null">
+        p_catg_name = #{pCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null">
+        catg_name = #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.portal.entity.ZhfwZczxCatgMage">
+    update zhfw_zczx_catg_mage
+    set pid = #{pid,jdbcType=BIGINT},
+      p_catg_name = #{pCatgName,jdbcType=VARCHAR},
+      catg_name = #{catgName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.portal.po.ZhfwZczxCatgMagePagePo" resultType="com.wisea.cultivar.portal.vo.ZhfwZczxCatgMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_zczx_catg_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.portal.po.ZhfwZczxCatgMageListPo" resultType="com.wisea.cultivar.portal.vo.ZhfwZczxCatgMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_zczx_catg_mage
+    where del_flag = '0'
+    <if test="catgName!=null and catgName!=''"> and instr(catg_name,#{catgName})</if>
+  </select>
+  <select id="findTree" parameterType="com.wisea.cultivar.portal.po.ZhfwZczxCatgMageListPo" resultType="com.wisea.cultivar.portal.vo.ZhfwZczxCatgMageTreeVo">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_zczx_catg_mage
+    where del_flag = '0'
+    <if test="catgName!=null and catgName!=''"> and instr(catg_name,#{catgName})</if>
+  </select>
+
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.portal.entity.ZhfwZczxCatgMage">
+    update zhfw_zczx_catg_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteByPid">
+    update zhfw_zczx_catg_mage
+    set del_flag = '1'
+    where pid = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByPrimaryKey">
+    update zhfw_zczx_catg_mage
+    set del_flag = '1'
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findZhfwZczxCatgMagePidByid" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_zczx_catg_mage
+    where pid = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

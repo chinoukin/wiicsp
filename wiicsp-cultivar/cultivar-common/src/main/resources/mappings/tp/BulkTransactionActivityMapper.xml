@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.BulkTransactionActivityMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="trans_price" property="transPrice" jdbcType="DOUBLE" />
+    <result column="trans_subject" property="transSubject" jdbcType="VARCHAR" />
+    <result column="trans_date" property="transDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, img_url, comm_name, trans_price, trans_subject, trans_date, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from bulk_transaction_activity
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from bulk_transaction_activity
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    insert into bulk_transaction_activity (id, img_url, comm_name, trans_price,
+      trans_subject, trans_date, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT},#{imgUrl,jdbcType=VARCHAR}, #{commName,jdbcType=VARCHAR}, #{transPrice,jdbcType=DOUBLE},
+      #{transSubject,jdbcType=VARCHAR}, #{transDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    insert into bulk_transaction_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="imgUrl != null" >
+        img_url,
+      </if>
+      <if test="commName != null" >
+        comm_name,
+      </if>
+      <if test="transPrice != null" >
+        trans_price,
+      </if>
+      <if test="transSubject != null" >
+        trans_subject,
+      </if>
+      <if test="transDate != null" >
+        trans_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="imgUrl != null" >
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commName != null" >
+        #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="transPrice != null" >
+        #{transPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="transSubject != null" >
+        #{transSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="transDate != null" >
+        #{transDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    update bulk_transaction_activity
+    <set >
+   	  <if test="imgUrl != null" >
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="transPrice != null" >
+        trans_price = #{transPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="transSubject != null" >
+        trans_subject = #{transSubject,jdbcType=VARCHAR},
+      </if>
+      <if test="transDate != null" >
+        trans_date = #{transDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    update bulk_transaction_activity
+    set comm_name = #{commName,jdbcType=VARCHAR},
+      img_url = #{imgUrl,jdbcType=VARCHAR},
+      trans_price = #{transPrice,jdbcType=DOUBLE},
+      trans_subject = #{transSubject,jdbcType=VARCHAR},
+      trans_date = #{transDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.portal.BulkTransactionActivityListVo"
+  						parameterType="com.wisea.cultivar.common.po.tp.portal.BulkTransactionActivityPageListPo" >
+    SELECT *
+	FROM bulk_transaction_activity
+	WHERE del_flag = '0'
+		<if test="key != null and key != ''">
+	      AND comm_name LIKE CONCAT('%', #{key}, '%')
+		</if>
+	ORDER BY trans_date DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" parameterType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    select
+    <include refid="Base_Column_List" />
+    from bulk_transaction_activity
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.BulkTransactionActivity" >
+    update bulk_transaction_activity
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="batchDelLogic" parameterType="java.util.List">
+  	update bulk_transaction_activity
+    set del_flag = '1'
+    where id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+    </foreach>
+  </update>
+  <select id="findListNotAuth" resultType="com.wisea.cultivar.common.vo.tp.portal.BulkTransactionActivityListVo">
+  	SELECT *
+	FROM bulk_transaction_activity
+	WHERE del_flag = '0'
+	ORDER BY trans_date DESC
+  </select>
+</mapper>

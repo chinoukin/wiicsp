@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LtaCommPackMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LtaCommPack" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="lta_comm_rela_id" property="ltaCommRelaId" jdbcType="BIGINT" />
+    <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT" />
+    <result column="spec" property="spec" jdbcType="DOUBLE" />
+    <result column="pack_instr" property="packInstr" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lta_comm_rela_id, meas_unit_id, spec, pack_instr, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+    <!-- 批量修改长协商品数据 -->
+    <update id="updateLtaCommPackDelFlag" parameterType="java.lang.Long">
+        UPDATE
+        lta_comm_pack
+        SET
+        del_flag = '1'
+        <where>
+          lta_comm_rela_id = #{id}
+        </where>
+    </update>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into lta_comm_pack (id, lta_comm_rela_id, meas_unit_id, spec, pack_instr, create_by, create_date, update_by,
+        update_date, remarks, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.ltaCommRelaId,jdbcType=BIGINT},
+            #{item.measUnitId,jdbcType=BIGINT},#{item.spec,jdbcType=DOUBLE}, #{item.packInstr,jdbcType=VARCHAR},
+            #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
+    <!-- 根据长协商品ID删除包装规格 -->
+    <delete id="delByLtaCommRelaId" parameterType="java.lang.Long">
+        DELETE FROM lta_comm_pack WHERE lta_comm_rela_id = #{id}
+    </delete>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from lta_comm_pack
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lta_comm_pack
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommPack" >
+    insert into lta_comm_pack (id, lta_comm_rela_id, meas_unit_id,
+      spec, pack_instr, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{ltaCommRelaId,jdbcType=BIGINT}, #{measUnitId,jdbcType=BIGINT},
+      #{spec,jdbcType=DOUBLE}, #{packInstr,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommPack" >
+    insert into lta_comm_pack
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ltaCommRelaId != null" >
+        lta_comm_rela_id,
+      </if>
+      <if test="measUnitId != null" >
+        meas_unit_id,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="packInstr != null" >
+        pack_instr,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ltaCommRelaId != null" >
+        #{ltaCommRelaId,jdbcType=BIGINT},
+      </if>
+      <if test="measUnitId != null" >
+        #{measUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=DOUBLE},
+      </if>
+      <if test="packInstr != null" >
+        #{packInstr,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommPack" >
+    update lta_comm_pack
+    <set >
+      <if test="ltaCommRelaId != null" >
+        lta_comm_rela_id = #{ltaCommRelaId,jdbcType=BIGINT},
+      </if>
+      <if test="measUnitId != null" >
+        meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=DOUBLE},
+      </if>
+      <if test="packInstr != null" >
+        pack_instr = #{packInstr,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommPack" >
+    update lta_comm_pack
+    set lta_comm_rela_id = #{ltaCommRelaId,jdbcType=BIGINT},
+      meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+      spec = #{spec,jdbcType=DOUBLE},
+      pack_instr = #{packInstr,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

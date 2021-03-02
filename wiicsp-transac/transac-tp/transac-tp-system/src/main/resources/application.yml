@@ -1,0 +1,43 @@
+server:
+  port: 8944
+#  servlet:
+#    context-path: /tp/system
+spring:
+  application:
+    name: transac-tp-system
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务-系统设置服务
+  quartz:
+    auto-resume:
+      enabled: false
+    timer:
+      job: transac.tp.system.timer.job # 任务分组
+      trigger: transac.tp.system.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": transac_tp_system_scheduler
+management:
+  endpoint:
+    logviewer:
+      enabled: true # 开启实时日志节点
+yspay:
+  entpreg:
+    legalCertType: 00 #企业法人证件类型
+    notifyType: 2 #通知方式，此通知为商户号审核通知，通知内容包含帐号信息，为空的情况下将不发送通知，支持通知方式1、邮箱，2手机短信，3、邮箱+手机短信
+    certType: 00 #开户人证件类型，目前只支持00,00为身份证
+    merFlag: 11 #商户属性。11为普通商户，12为代理商户，不填的情况下默认为普通商户
+    industry: 58 #行业类 别
+    settleType: 1 #结算方式，0:平台内账户1:银行卡账户.结算方式为0时银行卡信息只涉及提现，为1时涉及到提现以及清算
+    orgNo: 6690000044 #机构号
+    bankCardType: debit #debit借记卡，credit贷记卡，unit单位结算卡
+
+
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG
+    org.quartz: debug
+    com.codingapi: debug

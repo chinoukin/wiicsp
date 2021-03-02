@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.TradAreaMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.TradAreaMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT" />
+    <result column="p_catg_name" property="pCatgName" jdbcType="VARCHAR" />
+    <result column="catg_name" property="catgName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="if_display_type" property="ifDisplayType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <resultMap id="TradAreaMageListVoWithPic" type="com.wisea.transac.common.vo.system.TradAreaMageListVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT" />
+    <result column="p_catg_name" property="pCatgName" jdbcType="VARCHAR" />
+    <result column="catg_name" property="catgName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="if_display_type" property="ifDisplayType" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <collection property="pictures" column="id" javaType="ArrayList"
+                ofType="com.wisea.transac.common.vo.TradAreaPictureMagePageListVo"
+                select="findPics">
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, whole_sale_market_id, p_catg_name, catg_name, sort, if_display_type, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from trad_area_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from trad_area_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.TradAreaMage" >
+    insert into trad_area_mage (id, whole_sale_market_id, p_catg_name,
+      catg_name, sort, if_display_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{wholeSaleMarketId,jdbcType=BIGINT}, #{pCatgName,jdbcType=VARCHAR},
+      #{catgName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{ifDisplayType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.TradAreaMage" >
+    insert into trad_area_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        whole_sale_market_id,
+      </if>
+      <if test="pCatgName != null" >
+        p_catg_name,
+      </if>
+      <if test="catgName != null" >
+        catg_name,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="ifDisplayType != null" >
+        if_display_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        #{wholeSaleMarketId,jdbcType=BIGINT},
+      </if>
+      <if test="pCatgName != null" >
+        #{pCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null" >
+        #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="ifDisplayType != null" >
+        #{ifDisplayType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.TradAreaMage" >
+    update trad_area_mage
+    <set >
+      <if test="wholeSaleMarketId != null" >
+        whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      </if>
+      <if test="pCatgName != null" >
+        p_catg_name = #{pCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null" >
+        catg_name = #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="ifDisplayType != null" >
+        if_display_type = #{ifDisplayType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.TradAreaMage" >
+    update trad_area_mage
+    set whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      p_catg_name = #{pCatgName,jdbcType=VARCHAR},
+      catg_name = #{catgName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      if_display_type = #{ifDisplayType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.transac.common.vo.system.TradAreaMageListVo" parameterType="com.wisea.transac.common.po.system.TradAreaMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from trad_area_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultMap="TradAreaMageListVoWithPic"
+          parameterType="com.wisea.transac.common.po.system.TradAreaMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from trad_area_mage
+    where del_flag = '0'
+    <if test="wholeSaleMarketId!=null">
+      and whole_sale_market_id = #{wholeSaleMarketId}
+    </if>
+    <if test="ifDisplayType!=null and ifDisplayType!=''">
+      and if_display_type = #{ifDisplayType}
+    </if>
+    order by sort desc
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.transac.common.entity.TradAreaMage" >
+    update trad_area_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPics" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.TradAreaPictureMagePageListVo">
+    select * from trad_area_picture_mage
+    where del_flag = '0'
+    and trad_area_id = #{tradAreaId}
+    order by sort desc
+  </select>
+
+  <update id="deleteByMarketId" parameterType="java.lang.Long">
+     update trad_area_mage set del_flag = '1' where del_flag = '0' and whole_sale_market_id = #{marketId}
+  </update>
+
+  <select id="countStallsByTradAreaId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(*)
+    from stalls_mage
+    where trad_area_id = #{tradAreaId}
+      and del_flag = '0'
+  </select>
+
+  <!-- 根据档口id查询商品数量 -->
+  <select id="stallsMageIdCount" parameterType="com.wisea.transac.common.po.system.StallsMageCount" resultType="java.lang.Long">
+    SELECT
+    count(DISTINCT cpi.id)
+    FROM
+    comm_pub_info cpi
+    WHERE
+    cpi.del_flag = '0'
+    <if test="stallsMageIds != null and stallsMageIds.size != 0">
+      and cpi.stalls_mage_id IN
+      <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+        ${id}
+      </foreach>
+    </if>
+  </select>
+
+</mapper>

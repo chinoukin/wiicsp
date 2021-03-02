@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include
+    resource="org/springframework/boot/logging/logback/base.xml" />
+
+  <!-- 定义日志文件的存储地址 如果变量没定义就是用:后的默认值 只有scope=context的才能在代码中访问到 -->
+  <property name="LOG_HOME" value="${BOOT_LOGHOME:-logs}" scope="context" />
+  <conversionRule conversionWord="msg" converterClass="com.wisea.cloud.common.logger.ArgumentJsonFormatLayout"/>
+</configuration>

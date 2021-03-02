@@ -1,0 +1,21 @@
+product:
+  elasticIpAddress: es-es-http.default.svc.cluster.local
+  elasticPort: 9200
+  index-name: transac-index
+  user: elastic
+  password: pzm8qr4z2sslmgjjgpcgqpb8
+
+logging: # 日志输出配置
+  level:
+    com.wisea.transac.common.dao: trace
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务-商品平台
+  mssurl:
+    tp-system: http://transac-tp-system
+    seller: http://transac-seller
+    security: http://transac-operation
+    system: http://transac-operation
+    files: http://transac-operation

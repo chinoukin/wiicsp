@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.YjMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.YjMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="arch_id" property="archId" jdbcType="BIGINT" />
+    <result column="memb_info" property="membInfo" jdbcType="BIGINT" />
+    <result column="yj_tel" property="yjTel" jdbcType="VARCHAR" />
+    <result column="massge_push_flag" property="massgePushFlag" jdbcType="CHAR" />
+    <result column="massge_sys_push_flag" property="massgeSysPushFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, arch_id, memb_info, yj_tel, massge_push_flag, massge_sys_push_flag, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <!-- 通过档案ID查询预警设置 -->
+  <select id="getInfoByArchId"  resultMap="BaseResultMap" parameterType="java.lang.Long">
+   select
+    <include refid="Base_Column_List" />
+    from yj_mage
+    where arch_id = #{archId,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from yj_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from yj_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.YjMage" >
+    insert into yj_mage (id, arch_id, memb_info,
+      yj_tel, massge_push_flag, massge_sys_push_flag,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{archId,jdbcType=BIGINT}, #{membInfo,jdbcType=BIGINT},
+      #{yjTel,jdbcType=VARCHAR}, #{massgePushFlag,jdbcType=CHAR}, #{massgeSysPushFlag,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.YjMage" >
+    insert into yj_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="archId != null" >
+        arch_id,
+      </if>
+      <if test="membInfo != null" >
+        memb_info,
+      </if>
+      <if test="yjTel != null" >
+        yj_tel,
+      </if>
+      <if test="massgePushFlag != null" >
+        massge_push_flag,
+      </if>
+      <if test="massgeSysPushFlag != null" >
+        massge_sys_push_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="archId != null" >
+        #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="membInfo != null" >
+        #{membInfo,jdbcType=BIGINT},
+      </if>
+      <if test="yjTel != null" >
+        #{yjTel,jdbcType=VARCHAR},
+      </if>
+      <if test="massgePushFlag != null" >
+        #{massgePushFlag,jdbcType=CHAR},
+      </if>
+      <if test="massgeSysPushFlag != null" >
+        #{massgeSysPushFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.YjMage" >
+    update yj_mage
+    <set >
+      <if test="archId != null" >
+        arch_id = #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="membInfo != null" >
+        memb_info = #{membInfo,jdbcType=BIGINT},
+      </if>
+      <if test="yjTel != null" >
+        yj_tel = #{yjTel,jdbcType=VARCHAR},
+      </if>
+      <if test="massgePushFlag != null" >
+        massge_push_flag = #{massgePushFlag,jdbcType=CHAR},
+      </if>
+      <if test="massgeSysPushFlag != null" >
+        massge_sys_push_flag = #{massgeSysPushFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.YjMage" >
+    update yj_mage
+    set arch_id = #{archId,jdbcType=BIGINT},
+      memb_info = #{membInfo,jdbcType=BIGINT},
+      yj_tel = #{yjTel,jdbcType=VARCHAR},
+      massge_push_flag = #{massgePushFlag,jdbcType=CHAR},
+      massge_sys_push_flag = #{massgeSysPushFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getSendMsgInfoForYjmage" resultType="com.wisea.cultivar.plant.po.oritrapla.YjMagePadinfoPo" parameterType="java.lang.Long">
+  	SELECT puj.id,abinfo.memb_id, puj.report_time,puj.pad_id,puj.pad_name,
+  		   puj.cxsj_time,mm.massif_name,abinfo.massif_id,puj.arch_id
+	FROM pad_yj_info puj
+	INNER JOIN arch_basic_info abinfo ON abinfo.id = puj.arch_id
+	INNER JOIN massif_mage mm ON mm.id = abinfo.massif_id
+	WHERE puj.id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

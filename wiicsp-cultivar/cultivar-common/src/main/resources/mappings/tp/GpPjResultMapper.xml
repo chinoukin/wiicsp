@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.GpPjResultMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR" />
+    <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR" />
+    <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR" />
+    <result column="ss_date" property="ssDate" jdbcType="VARCHAR" />
+    <result column="comp_eval" property="compEval" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <resultMap id="BaseResult" type="com.wisea.cultivar.common.vo.tp.product.GpPjResultListVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR" />
+    <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR" />
+    <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR" />
+    <result column="ss_date" property="ssDate" jdbcType="VARCHAR" />
+    <result column="comp_eval" property="compEval" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <resultMap id="ResultMap" type="com.wisea.cultivar.common.vo.tp.product.GpPjResultPjZbVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR" />
+    <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR" />
+    <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR" />
+    <result column="ss_date" property="ssDate" jdbcType="VARCHAR" />
+    <result column="comp_eval" property="compEval" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <collection property="pjZbList" ofType="com.wisea.cultivar.common.po.tp.product.PjZbList">
+        <result column="pj_jg_id" property="pjJgId" jdbcType="BIGINT" />
+        <result column="pj_cs_id" property="pjCsId" jdbcType="BIGINT" />
+        <result column="pj_zb" property="pjZb" jdbcType="VARCHAR" />
+        <result column="pj_val" property="pjVal" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+
+    <resultMap id="ResMap" type="com.wisea.cultivar.common.vo.tp.product.GpPjResultVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR" />
+    <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR" />
+    <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR" />
+    <result column="ss_date" property="ssDate" jdbcType="VARCHAR" />
+    <result column="comp_eval" property="compEval" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <collection property="pjZbList" ofType="com.wisea.cultivar.common.po.tp.product.PjZbList">
+        <result column="pj_zb" property="pjZb" jdbcType="VARCHAR" />
+        <result column="pj_val" property="pjVal" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_id, comm_variet_id, comm_local_prov, comm_local_city, comm_local_cou,ss_date,
+    comp_eval, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <!-- 验证品种是否重复 -->
+    <select id="checkPjResultCommVariet" resultMap="BaseResultMap">
+        SELECT
+        id,comm_variet_id
+        from gp_pj_result gpr
+        WHERE gpr.del_flag = '0'
+        AND gpr.comm_variet_id = #{commVarietId}
+        <if test="id != null and id != ''">
+            AND gpr.id NOT IN (#{id})
+        </if>
+    </select>
+    <!-- 返回首页大宗单品页的水果指标信息 -->
+    <select id="findPjmxCsList" parameterType="com.wisea.cultivar.common.po.tp.product.GpPjResultMagePo" resultMap="ResMap">
+        select
+        gpr.id, gpr.comm_id, gpr.comm_variet_id, comm_local_prov, comm_local_city, comm_local_cou,ss_date,
+        comp_eval, IFNULL(gpr.update_date,gpr.create_date) AS update_date, gpr.remarks,
+        pz.pj_zb,pz.pj_val
+        from gp_pj_result gpr
+        LEFT JOIN pj_zb pz ON pz.pj_jg_id = gpr.id AND pz.del_flag= '0'
+        where gpr.del_flag = '0'
+        <if test="commId != null and commId != '' ">
+            AND gpr.comm_id = #{commId}
+        </if>
+    </select>
+    <!-- 根据id查询详情 -->
+    <select id="findById" parameterType="com.wisea.cultivar.common.po.tp.product.SambFloorCommGetPo" resultMap="ResultMap">
+        select
+        gpr.id, gpr.comm_id, gpr.comm_variet_id, comm_local_prov, comm_local_city, comm_local_cou,ss_date,
+        comp_eval, IFNULL(gpr.update_date,gpr.create_date) AS update_date, gpr.remarks,pz.pj_jg_id,
+        pz.pj_cs_id,pz.pj_zb,pz.pj_val
+        from
+        gp_pj_result gpr
+        LEFT JOIN pj_zb pz ON pz.pj_jg_id = gpr.id AND pz.del_flag= '0'
+        where gpr.id = #{id,jdbcType=BIGINT}
+    </select>
+  <!-- 查询列表信息   -->
+  <select id="findListGpPjResult" resultMap="BaseResult" parameterType="com.wisea.cultivar.common.po.tp.product.GpPjResultListPo">
+    select
+    id, comm_id, comm_variet_id, comm_local_prov, comm_local_city, comm_local_cou,ss_date,
+    comp_eval, IFNULL(update_date,create_date) AS update_date, remarks
+    from gp_pj_result gpr
+    where gpr.del_flag = '0'
+    <if test="commId != null and commId != '' ">
+      AND gpr.comm_id = #{commId}
+    </if>
+    <if test="commVarietId != null and commVarietId != '' ">
+      AND gpr.comm_variet_id = #{commVarietId}
+    </if>
+    <if test="stratTime != null ">
+      AND gpr.create_date >= #{stratTime}
+    </if>
+    <if test="endTime != null ">
+      AND gpr.create_date &lt;= #{endTime}
+    </if>
+    order by gpr.update_date desc
+  </select>
+
+  <!-- 查询列表信息distin   -->
+  <select id="findListGpPjResultDistin" resultMap="BaseResult" parameterType="com.wisea.cultivar.common.po.tp.product.GpPjResultListPo">
+    select
+    	DISTINCT(comm_id)
+    from gp_pj_result gpr
+    where gpr.del_flag = '0'
+    order by gpr.update_date desc
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from gp_pj_result
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from gp_pj_result
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    insert into gp_pj_result (id, comm_id, comm_variet_id,
+      comm_local_prov, comm_local_city, comm_local_cou,
+      ss_date, comp_eval,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{commVarietId,jdbcType=BIGINT},
+      #{commLocalProv,jdbcType=VARCHAR}, #{commLocalCity,jdbcType=VARCHAR}, #{commLocalCou,jdbcType=VARCHAR},
+      #{ssDate,jdbcType=VARCHAR}, #{compEval,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    insert into gp_pj_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id,
+      </if>
+      <if test="commLocalProv != null" >
+        comm_local_prov,
+      </if>
+      <if test="commLocalCity != null" >
+        comm_local_city,
+      </if>
+      <if test="commLocalCou != null" >
+        comm_local_cou,
+      </if>
+      <if test="ssDate != null" >
+        ss_date,
+      </if>
+      <if test="compEval != null" >
+        comp_eval,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="commLocalProv != null" >
+        #{commLocalProv,jdbcType=VARCHAR},
+      </if>
+      <if test="commLocalCity != null" >
+        #{commLocalCity,jdbcType=VARCHAR},
+      </if>
+      <if test="commLocalCou != null" >
+        #{commLocalCou,jdbcType=VARCHAR},
+      </if>
+      <if test="ssDate != null" >
+        #{ssDate,jdbcType=VARCHAR},
+      </if>
+      <if test="compEval != null" >
+        #{compEval,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    update gp_pj_result
+    <set >
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="commLocalProv != null" >
+        comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+      </if>
+      <if test="commLocalCity != null" >
+        comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+      </if>
+      <if test="commLocalCou != null" >
+        comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+      </if>
+      <if test="ssDate != null" >
+        ss_date = #{ssDate,jdbcType=VARCHAR},
+      </if>
+      <if test="compEval != null" >
+        comp_eval = #{compEval,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    update gp_pj_result
+    set comm_id = #{commId,jdbcType=BIGINT},
+      comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+      comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+      comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+      ss_date = #{ssDate,jdbcType=VARCHAR},
+      comp_eval = #{compEval,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.GpPjResult" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    select
+    <include refid="Base_Column_List" />
+    from gp_pj_result
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.GpPjResult" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    select
+    <include refid="Base_Column_List" />
+    from gp_pj_result
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.GpPjResult" >
+    update gp_pj_result
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByPrimaryKey" parameterType="java.lang.Long" >
+    update gp_pj_result
+    set del_flag = '1'
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

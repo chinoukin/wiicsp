@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.standards.mapper.FarmingStageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.standards.entity.FarmingStage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="farming_cycle_id" jdbcType="BIGINT" property="farmingCycleId" />
+    <result column="farm_work_type_id" jdbcType="BIGINT" property="farmWorkTypeId" />
+    <result column="start_days" jdbcType="INTEGER" property="startDays" />
+    <result column="end_days" jdbcType="INTEGER" property="endDays" />
+    <result column="farming_require" jdbcType="VARCHAR" property="farmingRequire" />
+    <result column="video_url" jdbcType="VARCHAR" property="videoUrl" />
+    <result column="us_agricultural_materials" jdbcType="VARCHAR" property="usAgriculturalMaterials" />
+    <result column="cycle_interval" jdbcType="CHAR" property="cycleInterval" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, farming_cycle_id, farm_work_type_id, start_days, end_days, farming_require, video_url,
+    us_agricultural_materials, cycle_interval, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from farming_stage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from farming_stage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.standards.entity.FarmingStage">
+    insert into farming_stage (id, farming_cycle_id, farm_work_type_id,
+      start_days, end_days, farming_require,
+      video_url, us_agricultural_materials, cycle_interval,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{farmingCycleId,jdbcType=BIGINT}, #{farmWorkTypeId,jdbcType=BIGINT},
+      #{startDays,jdbcType=INTEGER}, #{endDays,jdbcType=INTEGER}, #{farmingRequire,jdbcType=VARCHAR},
+      #{videoUrl,jdbcType=VARCHAR}, #{usAgriculturalMaterials,jdbcType=VARCHAR}, #{cycleInterval,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.standards.entity.FarmingStage">
+    insert into farming_stage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="farmingCycleId != null">
+        farming_cycle_id,
+      </if>
+      <if test="farmWorkTypeId != null">
+        farm_work_type_id,
+      </if>
+      <if test="startDays != null">
+        start_days,
+      </if>
+      <if test="endDays != null">
+        end_days,
+      </if>
+      <if test="farmingRequire != null">
+        farming_require,
+      </if>
+      <if test="videoUrl != null">
+        video_url,
+      </if>
+      <if test="usAgriculturalMaterials != null">
+        us_agricultural_materials,
+      </if>
+      <if test="cycleInterval != null">
+        cycle_interval,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="farmingCycleId != null">
+        #{farmingCycleId,jdbcType=BIGINT},
+      </if>
+      <if test="farmWorkTypeId != null">
+        #{farmWorkTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="startDays != null">
+        #{startDays,jdbcType=INTEGER},
+      </if>
+      <if test="endDays != null">
+        #{endDays,jdbcType=INTEGER},
+      </if>
+      <if test="farmingRequire != null">
+        #{farmingRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usAgriculturalMaterials != null">
+        #{usAgriculturalMaterials,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleInterval != null">
+        #{cycleInterval,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.standards.entity.FarmingStage">
+    update farming_stage
+    <set>
+      <if test="farmingCycleId != null">
+        farming_cycle_id = #{farmingCycleId,jdbcType=BIGINT},
+      </if>
+      <if test="farmWorkTypeId != null">
+        farm_work_type_id = #{farmWorkTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="startDays != null">
+        start_days = #{startDays,jdbcType=INTEGER},
+      </if>
+      <if test="endDays != null">
+        end_days = #{endDays,jdbcType=INTEGER},
+      </if>
+      <if test="farmingRequire != null">
+        farming_require = #{farmingRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null">
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usAgriculturalMaterials != null">
+        us_agricultural_materials = #{usAgriculturalMaterials,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleInterval != null">
+        cycle_interval = #{cycleInterval,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.standards.entity.FarmingStage">
+    update farming_stage
+    set farming_cycle_id = #{farmingCycleId,jdbcType=BIGINT},
+      farm_work_type_id = #{farmWorkTypeId,jdbcType=BIGINT},
+      start_days = #{startDays,jdbcType=INTEGER},
+      end_days = #{endDays,jdbcType=INTEGER},
+      farming_require = #{farmingRequire,jdbcType=VARCHAR},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      us_agricultural_materials = #{usAgriculturalMaterials,jdbcType=VARCHAR},
+      cycle_interval = #{cycleInterval,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getAllStage" parameterType="java.util.List"
+          resultType="com.wisea.cultivar.standards.entity.FarmingStage">
+    SELECT id from farming_stage
+    <where>
+      AND farming_cycle_id IN
+      <foreach collection="list" item="item" separator="," open="(" close=")">
+        #{item.id}
+      </foreach>
+      AND del_flag = '0'
+    </where>
+  </select>
+  <select id="findPage" parameterType="com.wisea.cultivar.standards.po.FarmingStagePagePo" resultType="com.wisea.cultivar.standards.vo.FarmingStageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from farming_stage
+    where del_flag = '0'
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.standards.po.FarmingStageListPo" resultType="com.wisea.cultivar.standards.vo.FarmingStageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from farming_stage
+    where del_flag = '0'
+  </select>
+  <select id="findFarmingCycleIdList" parameterType="com.wisea.cultivar.standards.po.FarmingStageListPo" resultType="com.wisea.cultivar.standards.vo.FarmingStageListVo">
+    SELECT
+      fs.id,
+      fs.farming_cycle_id,
+      fs.farm_work_type_id,
+      fs.start_days,
+      fs.end_days,
+      fs.farming_require,
+      fs.video_url,
+      fs.us_agricultural_materials,
+      fs.cycle_interval,
+      fs.create_by,
+      fs.create_date,
+      fs.update_by,
+      fs.update_date,
+      fs.remarks,
+      fs.del_flag,
+      fwtd.NAME as farm_work_type_name
+    FROM
+      farming_stage fs
+      LEFT JOIN farm_work_type_dict fwtd ON fwtd.id = fs.farm_work_type_id
+    WHERE
+      fs.del_flag = '0'
+      AND fs.farming_cycle_id = #{farmingCycleId}
+    ORDER BY
+      fs.start_days ASC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.standards.entity.FarmingStage">
+    update farming_stage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteAll" parameterType="java.util.List">
+    UPDATE farming_stage
+    <set>
+      del_flag = '1'
+    </set>
+    <where>
+      AND farming_cycle_id IN
+      <foreach collection="list" item="item" separator=","
+               index="index" open="(" close=")">
+        #{item.id}
+      </foreach>
+      AND del_flag = '0'
+    </where>
+  </update>
+</mapper>

@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.standards.mapper.StagePictureMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.standards.entity.StagePicture">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="farming_stage_id" jdbcType="BIGINT" property="farmingStageId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="sort_index" jdbcType="INTEGER" property="sortIndex" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, farming_stage_id, url, sort_index, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from stage_picture
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from stage_picture
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.standards.entity.StagePicture">
+    insert into stage_picture (id, farming_stage_id, url,
+      sort_index, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{farmingStageId,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR},
+      #{sortIndex,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.standards.entity.StagePicture">
+    insert into stage_picture
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="farmingStageId != null">
+        farming_stage_id,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="sortIndex != null">
+        sort_index,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="farmingStageId != null">
+        #{farmingStageId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sortIndex != null">
+        #{sortIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.standards.entity.StagePicture">
+    update stage_picture
+    <set>
+      <if test="farmingStageId != null">
+        farming_stage_id = #{farmingStageId,jdbcType=BIGINT},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sortIndex != null">
+        sort_index = #{sortIndex,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.standards.entity.StagePicture">
+    update stage_picture
+    set farming_stage_id = #{farmingStageId,jdbcType=BIGINT},
+      url = #{url,jdbcType=VARCHAR},
+      sort_index = #{sortIndex,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteAllStage" parameterType="java.util.List">
+    UPDATE stage_picture
+    <set>
+      del_flag = '1'
+    </set>
+    <where>
+      AND farming_stage_id IN
+      <foreach collection="list" item="item" separator=","
+               index="index" open="(" close=")">
+        #{item.id}
+      </foreach>
+      AND del_flag = '0'
+    </where>
+
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.standards.po.StagePicturePagePo" resultType="com.wisea.cultivar.standards.vo.StagePictureListVo">
+    select
+    <include refid="Base_Column_List" />
+    from stage_picture
+    where del_flag = '0'
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.standards.po.StagePictureListPo" resultType="com.wisea.cultivar.standards.vo.StagePictureListVo">
+    select
+    <include refid="Base_Column_List" />
+    from stage_picture
+    where del_flag = '0'
+  </select>
+  <select id="findFarmingStageIdList" parameterType="com.wisea.cultivar.standards.po.StagePictureListPo" resultType="com.wisea.cultivar.standards.vo.StagePictureListVo">
+    select
+    <include refid="Base_Column_List" />
+    from stage_picture
+    where del_flag = '0'
+    and farming_stage_id = #{farmingStageId}
+  </select>
+  <select id="getAllPicture" parameterType="java.util.List"
+          resultType="com.wisea.cultivar.standards.entity.StagePicture">
+    SELECT id FROM stage_picture
+    <where>
+      AND farming_stage_id IN
+      <foreach collection="list" item="item" separator="," open="(" close=")" index="index">
+        #{item.id}
+      </foreach>
+      AND del_flag = '0'
+    </where>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.standards.entity.StagePicture">
+    update stage_picture
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

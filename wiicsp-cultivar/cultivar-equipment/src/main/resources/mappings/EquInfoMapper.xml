@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.equipment.dao.EquInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.equipment.entity.EquInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="equ_name" property="equName" jdbcType="VARCHAR" />
+    <result column="equ_entp_id" property="equEntpId" jdbcType="BIGINT" />
+    <result column="equ_model_id" property="equModelId" jdbcType="BIGINT" />
+    <result column="equ_num" property="equNum" jdbcType="VARCHAR" />
+    <result column="psn" property="psn" jdbcType="VARCHAR" />
+    <result column="ext_first" property="extFirst" jdbcType="VARCHAR" />
+    <result column="ext_second" property="extSecond" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, equ_name, equ_entp_id, equ_model_id, equ_num, psn, ext_first, ext_second, create_by, 
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 分页查询设备列表 -->
+  <select id="findPageList" parameterType="com.wisea.equipment.po.EquInfoListPo" resultType="com.wisea.equipment.vo.EquInfoListVo">
+    select
+      ei.id id,
+      ei.equ_name equName,
+      ei.equ_num equNum,
+      eem.equ_entp_name equEntpName,
+      emm.equ_model equModel,
+      ei.psn psn,
+      ei.ext_first extFirst,
+      ei.ext_second extSecond
+    from
+      equ_info ei
+      inner join equ_entp_mage eem on ei.equ_entp_id = eem.id
+      inner join equ_model_mage emm on ei.equ_model_id = emm.id
+    where
+      ei.del_flag = '0'
+      <if test="equName != null and equName != ''">
+        and ei.equ_name like CONCAT('%', #{equName}, '%')
+      </if>
+      <if test="equNum != null and equNum != ''">
+        and ei.equ_num like CONCAT('%', #{equNum}, '%')
+      </if>
+      <if test="equEntpName != null and equEntpName != ''">
+        and eem.equ_entp_name like CONCAT('%', #{equEntpName}, '%')
+      </if>
+      <if test="equModel != null and equModel != ''">
+        and emm.equ_model like CONCAT('%', #{equModel}, '%')
+      </if>
+  </select>
+
+  <!-- 根据设备编号查询设备 -->
+  <select id="selectByEquNum" parameterType="com.wisea.equipment.po.EquInfoPo" resultMap="BaseResultMap">
+    select
+      *
+    from
+      equ_info ei
+    where
+      ei.del_flag = '0'
+      and ei.equ_num = #{equNum,jdbcType=VARCHAR}
+      and ei.equ_entp_id = #{equEntpId,jdbcType=BIGINT}
+      <if test="id != null">
+        and id != #{id,jdbcType=BIGINT}
+      </if>
+  </select>
+
+  <!-- 查询设备详细信息 -->
+  <select id="findInfo" parameterType="com.wisea.cloud.model.po.LongIdPo" resultType="com.wisea.equipment.vo.EquInfoVo">
+    select
+      ei.id id,
+      ei.equ_name equName,
+      ei.equ_num equNum,
+      ei.equ_entp_id equEntpId,
+      eem.equ_entp_name equEntpName,
+      ei.equ_model_id equModelId,
+      emm.equ_model equModel,
+      ei.psn psn,
+      ei.ext_first extFirst,
+      ei.ext_second extSecond
+    from
+      equ_info ei
+      inner join equ_entp_mage eem on ei.equ_entp_id = eem.id
+      inner join equ_model_mage emm on ei.equ_model_id = emm.id
+    where
+      ei.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findInfoByEntpIdAndNum" resultType="com.wisea.equipment.vo.EquInfoVo">
+    select
+      ei.id id,
+      ei.equ_name equName,
+      ei.equ_num equNum,
+      ei.equ_entp_id equEntpId,
+      eem.equ_entp_name equEntpName,
+      ei.equ_model_id equModelId,
+      emm.equ_model equModel,
+      ei.psn psn,
+      ei.ext_first extFirst,
+      ei.ext_second extSecond
+    from
+      equ_info ei
+        inner join equ_entp_mage eem on ei.equ_entp_id = eem.id
+        inner join equ_model_mage emm on ei.equ_model_id = emm.id
+    where
+      eem.equ_entp_name = #{equEntpName,jdbcType=VARCHAR} and ei.equ_num = #{equNum,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 根据设备厂商和编号查询设备 -->
+  <select id="findByEntpIdAndNum" resultMap="BaseResultMap">
+    select * from equ_info ei where ei.equ_entp_id = #{equEntpId,jdbcType=BIGINT} and ei.equ_num = #{equNum,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from equ_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from equ_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.equipment.entity.EquInfo" >
+    insert into equ_info (id, equ_name, equ_entp_id, 
+      equ_model_id, equ_num, psn, 
+      ext_first, ext_second, create_by, 
+      create_date, update_by, update_date, 
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{equName,jdbcType=VARCHAR}, #{equEntpId,jdbcType=BIGINT}, 
+      #{equModelId,jdbcType=BIGINT}, #{equNum,jdbcType=VARCHAR}, #{psn,jdbcType=VARCHAR},
+      #{extFirst,jdbcType=VARCHAR}, #{extSecond,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.equipment.entity.EquInfo" >
+    insert into equ_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="equName != null" >
+        equ_name,
+      </if>
+      <if test="equEntpId != null" >
+        equ_entp_id,
+      </if>
+      <if test="equModelId != null" >
+        equ_model_id,
+      </if>
+      <if test="equNum != null" >
+        equ_num,
+      </if>
+      <if test="psn != null" >
+        psn,
+      </if>
+      <if test="extFirst != null" >
+        ext_first,
+      </if>
+      <if test="extSecond != null" >
+        ext_second,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="equName != null" >
+        #{equName,jdbcType=VARCHAR},
+      </if>
+      <if test="equEntpId != null" >
+        #{equEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="equModelId != null" >
+        #{equModelId,jdbcType=BIGINT},
+      </if>
+      <if test="equNum != null" >
+        #{equNum,jdbcType=VARCHAR},
+      </if>
+      <if test="psn != null" >
+        #{psn,jdbcType=VARCHAR},
+      </if>
+      <if test="extFirst != null" >
+        #{extFirst,jdbcType=VARCHAR},
+      </if>
+      <if test="extSecond != null" >
+        #{extSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.equipment.entity.EquInfo" >
+    update equ_info
+    <set >
+      <if test="equName != null" >
+        equ_name = #{equName,jdbcType=VARCHAR},
+      </if>
+      <if test="equEntpId != null" >
+        equ_entp_id = #{equEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="equModelId != null" >
+        equ_model_id = #{equModelId,jdbcType=BIGINT},
+      </if>
+      <if test="equNum != null" >
+        equ_num = #{equNum,jdbcType=VARCHAR},
+      </if>
+      <if test="psn != null" >
+        psn = #{psn,jdbcType=VARCHAR},
+      </if>
+      <if test="extFirst != null" >
+        ext_first = #{extFirst,jdbcType=VARCHAR},
+      </if>
+      <if test="extSecond != null" >
+        ext_second = #{extSecond,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.equipment.entity.EquInfo" >
+    update equ_info
+    set equ_name = #{equName,jdbcType=VARCHAR},
+      equ_entp_id = #{equEntpId,jdbcType=BIGINT},
+      equ_model_id = #{equModelId,jdbcType=BIGINT},
+      equ_num = #{equNum,jdbcType=VARCHAR},
+      psn = #{psn,jdbcType=VARCHAR},
+      ext_first = #{extFirst,jdbcType=VARCHAR},
+      ext_second = #{extSecond,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

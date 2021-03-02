@@ -1,0 +1,221 @@
+server:
+  port: 8940
+
+spring:
+  profiles:
+    active: dev #标明默认激活的配置文件
+  application:
+    name: wiicsp-gateway
+  servlet:
+    multipart:
+      resolveLazily: true # 延迟文件解析
+      maxFileSize: -1 # 每一个文件的最大值，默认值1MB，-1表示没有限制。
+      maxRequestSize: -1 # 一次上传最大值，默认值为10MB， -1表示没有限制。
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true #当访问http://网关地址/服务名称（大写）/**地址会自动转发到http://服务名称（大写）/**地址，如果为false就不会自动转发
+#          lowerCaseServiceId: true # 为true表示服务名称（小写）
+      routes:
+        - id: TRANSAC-OPERATION # 用户服务 系统服务 文件服务
+          uri: lb://TRANSAC-OPERATION
+          predicates:
+            - Path=/transac/security/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-TRANSAC-OPERATION # websocket用户服务
+          uri: lb:ws://TRANSAC-OPERATION
+          predicates:
+            - Path=/transac/security/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: TRANSAC-SYSTEM # 系统服务
+          uri: lb://TRANSAC-OPERATION
+          predicates:
+            - Path=/transac/system/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-TRANSAC-SYSTEM # websocket系统服务
+          uri: lb:ws://TRANSAC-OPERATION
+          predicates:
+            - Path=/transac/system/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: TRANSAC-FILES # 文件服务
+          uri: lb://TRANSAC-OPERATION
+          predicates:
+            - Path=/transac/files/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-TRANSAC-FILES # websocket文件服务
+          uri: lb:ws://TRANSAC-OPERATION
+          predicates:
+            - Path=/transac/files/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: TRANSAC-TP-TRADE # 交易平台-交易服务
+          uri: lb://TRANSAC-TP-TRADE
+          predicates:
+            - Path=/transac/tp/trade/**
+          filters:
+            - StripPrefix=3
+        - id: WEBSOCKET-TRANSAC-TP-TRADE # websocket交易平台-交易服务
+          uri: lb:ws://TRANSAC-TP-TRADE
+          predicates:
+            - Path=/transac/tp/trade/websocket/**
+          filters:
+            - StripPrefix=3
+        - id: TRANSAC-TP-SYSTEM # 交易平台-系统服务(系统设置、物流模板、会员管理、地址管理)
+          uri: lb://TRANSAC-TP-SYSTEM
+          predicates:
+            - Path=/transac/tp/system/**
+          filters:
+            - StripPrefix=3
+        - id: WEBSOCKET-TRANSAC-TP-SYSTEM # websocket交易平台-系统服务(系统设置、物流模板、会员管理、地址管理)
+          uri: lb:ws:/transac//TRANSAC-TP-SYSTEM
+          predicates:
+            - Path=/transac/tp/system/websocket/**
+          filters:
+            - StripPrefix=3
+        - id: TRANSAC-TP-PRODUCT # 交易平台-商品服务(商品管理、搜索引擎)
+          uri: lb://TRANSAC-TP-PRODUCT
+          predicates:
+            - Path=/transac/tp/product/**
+          filters:
+            - StripPrefix=3
+        - id: WEBSOCKET-TRANSAC-TP-PRODUCT # websocket交易平台-商品服务(商品管理、搜索引擎)
+          uri: lb:ws://TRANSAC-TP-PRODUCT
+          predicates:
+            - Path=/transac/tp/product/websocket/**
+          filters:
+            - StripPrefix=3
+        - id: TRANSAC-SELLER # 卖家
+          uri: lb://TRANSAC-SELLER
+          predicates:
+            - Path=/transac/seller/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-TRANSAC-SELLER # websocket卖家
+          uri: lb:ws://TRANSAC-SELLER
+          predicates:
+            - Path=/transac/seller/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-OPERATION # 用户服务 系统服务 文件服务
+          uri: lb://CULTIVAR-OPERATION
+          predicates:
+            - Path=/cultivar/security/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-OPERATION # websocket用户服务
+          uri: lb:ws://CULTIVAR-OPERATION
+          predicates:
+            - Path=/cultivar/security/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-SYSTEM # 系统服务
+          uri: lb://CULTIVAR-OPERATION
+          predicates:
+            - Path=/cultivar/system/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-SYSTEM # websocket系统服务
+          uri: lb:ws://CULTIVAR-OPERATION
+          predicates:
+            - Path=/cultivar/system/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-FILES # 文件服务
+          uri: lb://CULTIVAR-OPERATION
+          predicates:
+            - Path=/cultivar/files/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-FILES # websocket文件服务
+          uri: lb:ws://CULTIVAR-OPERATION
+          predicates:
+            - Path=/cultivar/files/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-STANDARDS # 产业标准管理系统
+          uri: lb://CULTIVAR-STANDARDS
+          predicates:
+            - Path=/cultivar/standards/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-STANDARDS # websocket产业标准管理系统
+          uri: lb:ws://CULTIVAR-STANDARDS
+          predicates:
+            - Path=/cultivar/standards/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-EQUIPMENT # 设备服务
+          uri: lb://CULTIVAR-EQUIPMENT
+          predicates:
+            - Path=/cultivar/equipment/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-EQUIPMENT # websocket设备服务
+          uri: lb:ws://CULTIVAR-EQUIPMENT
+          predicates:
+            - Path=/cultivar/equipment/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-PLANT # 种植服务
+          uri: lb://CULTIVAR-PLANT
+          predicates:
+            - Path=/cultivar/plant/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-PLANT # websocket种植服务
+          uri: lb:ws://CULTIVAR-PLANT
+          predicates:
+            - Path=/cultivar/plant/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-DATA-DASHBOARD # 大数据服务
+          uri: lb://CULTIVAR-DATA-DASHBOARD
+          predicates:
+            - Path=/cultivar/data/**
+          filters:
+            - StripPrefix=2
+        - id: WEBSOCKET-CULTIVAR-BIG-DATA # websocket大数据服务
+          uri: lb:ws://CULTIVAR-DATA-DASHBOARD
+          predicates:
+            - Path=/cultivar/data/websocket/**
+          filters:
+            - StripPrefix=2
+        - id: CULTIVAR-ORIGIN # 产地管理-主服务
+          uri: lb://CULTIVAR-ORIGIN
+          predicates:
+            - Path=/cultivar/origin/main/**
+          filters:
+            - StripPrefix=3
+        - id: WEBSOCKET-CULTIVAR-ORIGIN-MAIN # websocket产地管理-主服务
+          uri: lb:ws://CULTIVAR-ORIGIN-MAIN
+          predicates:
+            - Path=/cultivar/origin/main/websocket/**
+          filters:
+            - StripPrefix=3
+#关闭基于HTTP basic的认证
+# 网关的话，有三层的超时时间，一个是zuul的，一个是ribbon的，还有一个是hystrix的。
+#hystrix的超时设置AbstractRibbonCommand这个类没有暴露设置hystrix的Setter方法出来，所以无法通过继承的方式来扩展。
+#因此要自定义ribbon超时的话，需要这个超时时间是小于hystrix的，不然就提前被hystrix超时了，无法起到效果
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 800000 # 时间要大于ribbon的超时 否则会报警告
+
+ribbon:
+  ReadTimeout: 200000
+  ConnectTimeout: 20000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: true

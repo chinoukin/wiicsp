@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.PlantationSensorMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.PlantationSensor" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="plantation_id" property="plantationId" jdbcType="BIGINT" />
+    <result column="install_position" property="installPosition" jdbcType="VARCHAR" />
+    <result column="equ_manufact" property="equManufact" jdbcType="VARCHAR" />
+    <result column="equ_entp_id" property="equEntpId" jdbcType="BIGINT" />
+    <result column="equ_num" property="equNum" jdbcType="VARCHAR" />
+    <result column="equ_type" property="equType" jdbcType="VARCHAR" />
+    <result column="equ_model_id" property="equModelId" jdbcType="BIGINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, plantation_id, install_position, equ_manufact, equ_entp_id, equ_num, equ_type, equ_model_id, sort, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据种植园ID查询物联网传感器 -->
+  <select id="findByPlantationId" resultMap="BaseResultMap">
+    select * from plantation_sensor ps where ps.plantation_id = #{plantationId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据种植园ID，删除种植园物联网设备 -->
+  <delete id="deleteByPlantationId">
+    delete from plantation_sensor where plantation_id = #{plantationId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from plantation_sensor
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from plantation_sensor
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.PlantationSensor" >
+    insert into plantation_sensor (id, plantation_id, install_position,
+      equ_manufact, equ_entp_id, equ_num, equ_type, equ_model_id,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{plantationId,jdbcType=BIGINT}, #{installPosition,jdbcType=VARCHAR},
+      #{equManufact,jdbcType=VARCHAR}, #{equEntpId,jdbcType=BIGINT}, #{equNum,jdbcType=VARCHAR},
+      #{equType,jdbcType=VARCHAR}, #{equModelId,jdbcType=BIGINT}, #{sort,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.PlantationSensor" >
+    insert into plantation_sensor
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="plantationId != null" >
+        plantation_id,
+      </if>
+      <if test="installPosition != null" >
+        install_position,
+      </if>
+      <if test="equManufact != null" >
+        equ_manufact,
+      </if>
+      <if test="equEntpId != null" >
+        equ_entp_id,
+      </if>
+      <if test="equNum != null" >
+        equ_num,
+      </if>
+      <if test="equType != null" >
+        equ_type,
+      </if>
+      <if test="equModelId != null" >
+        equ_model_id,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="plantationId != null" >
+        #{plantationId,jdbcType=BIGINT},
+      </if>
+      <if test="installPosition != null" >
+        #{installPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="equManufact != null" >
+        #{equManufact,jdbcType=VARCHAR},
+      </if>
+      <if test="equEntpId != null" >
+        #{equEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="equNum != null" >
+        #{equNum,jdbcType=VARCHAR},
+      </if>
+      <if test="equType != null" >
+        #{equType,jdbcType=VARCHAR},
+      </if>
+      <if test="equModelId != null" >
+        #{equModelId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.PlantationSensor" >
+    update plantation_sensor
+    <set >
+      <if test="plantationId != null" >
+        plantation_id = #{plantationId,jdbcType=BIGINT},
+      </if>
+      <if test="installPosition != null" >
+        install_position = #{installPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="equManufact != null" >
+        equ_manufact = #{equManufact,jdbcType=VARCHAR},
+      </if>
+      <if test="equEntpId != null" >
+        equ_entp_id = #{equEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="equNum != null" >
+        equ_num = #{equNum,jdbcType=VARCHAR},
+      </if>
+      <if test="equType != null" >
+        equ_type = #{equType,jdbcType=VARCHAR},
+      </if>
+      <if test="equModelId != null" >
+        equ_model_id = #{equModelId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.PlantationSensor" >
+    update plantation_sensor
+    set plantation_id = #{plantationId,jdbcType=BIGINT},
+      install_position = #{installPosition,jdbcType=VARCHAR},
+      equ_manufact = #{equManufact,jdbcType=VARCHAR},
+      equ_entp_id = #{equEntpId,jdbcType=BIGINT},
+      equ_num = #{equNum,jdbcType=VARCHAR},
+      equ_type = #{equType,jdbcType=VARCHAR},
+      equ_model_id = #{equModelId,jdbcType=BIGINT},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

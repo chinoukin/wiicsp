@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.InformationMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="info_title" property="infoTitle" jdbcType="VARCHAR"/>
+        <result column="read_flag" property="readFlag" jdbcType="CHAR"/>
+        <result column="push_date_time" property="pushDateTime" jdbcType="TIMESTAMP"/>
+        <result column="arch_type" property="archType" jdbcType="VARCHAR" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <result column="org_name" property="orgName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.plant.entity.oritrapla.Information" extends="BaseResultMap">
+        <result column="content" property="content" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, memb_id, info_title,read_flag,push_date_time,arch_type, create_by, create_date, update_by, update_date, remarks, del_flag
+    </sql>
+    <sql id="Blob_Column_List">
+        content
+    </sql>
+    <!-- 批量修改 -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+            update information
+            <set >
+                <if test="item.readFlag != null" >
+                    read_flag = #{item.readFlag,jdbcType=CHAR}
+                </if>
+            </set>
+            where id = #{item.id,jdbcType=BIGINT}
+        </foreach>
+    </update>
+    <!-- 查询系统消息列表 -->
+    <select id="findList" resultMap="ResultMapWithBLOBs" parameterType="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        SELECT
+        im.id,
+        memb_id,
+        info_title,
+        read_flag,
+        push_date_time,
+        arch_type,
+        im.create_by,
+        im.create_date,
+        im.update_by,
+        im.update_date,
+        im.remarks,
+        im.del_flag,
+        content,
+        mi.org_name
+        FROM information im
+        LEFT JOIN zhfw_memb_info mi ON mi.id = im.memb_id
+        WHERE im.del_flag = "0"
+        <if test="readFlag != null and readFlag != ''">
+            AND im.read_flag = #{readFlag}
+        </if>
+        AND im.memb_id = #{membId}
+        order by im.create_date desc
+    </select>
+    <!-- 查询系统消息未读状总数 -->
+    <select id="platformMessageSum" resultType ="java.lang.Integer">
+        SELECT
+          COUNT(*)
+	    FROM
+	      information im
+        WHERE
+          im.del_flag = '0'
+          AND im.memb_id = #{id}
+          AND im.read_flag = '0'
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from information
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from information
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        insert into information (id, memb_id, info_title,
+        read_flag,push_date_time,arch_type,create_by, create_date, update_by,
+        update_date, remarks, del_flag,
+        content)
+        values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{infoTitle,jdbcType=VARCHAR},#{readFlag,jdbcType=CHAR},
+        #{pushDateTime,jdbcType=TIMESTAMP},#{archType,jdbcType=VARCHAR},#{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+        #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+        #{content,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        insert into information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="infoTitle != null">
+                info_title,
+            </if>
+            <if test="readFlag != null">
+                read_flag,
+            </if>
+            <if test="pushDateTime != null">
+                push_date_time,
+            </if>
+            <if test="archType != null" >
+                arch_type,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="infoTitle != null">
+                #{infoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="readFlag != null">
+                #{readFlag,jdbcType=CHAR},
+            </if>
+            <if test="pushDateTime != null">
+                #{pushDateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="archType != null" >
+                #{archType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        update information
+        <set>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="infoTitle != null">
+                info_title = #{infoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="readFlag != null">
+                read_flag = #{readFlag,jdbcType=CHAR},
+            </if>
+            <if test="pushDateTime != null">
+                push_date_time = #{pushDateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="archType != null" >
+                arch_type = #{archType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date =  #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks =  #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag =  #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        update information
+        set memb_id = #{membId,jdbcType=BIGINT},
+        info_title = #{infoTitle,jdbcType=VARCHAR},
+        read_flag = #{readFlag,jdbcType=VARCHAR},
+        push_date_time = #{pushDateTime,jdbcType=VARCHAR},
+        arch_type = #{archType,jdbcType=VARCHAR},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        del_flag = #{delFlag,jdbcType=CHAR},
+        content = #{content,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.Information">
+        update information
+        set memb_id = #{membId,jdbcType=BIGINT},
+        info_title = #{infoTitle,jdbcType=VARCHAR},
+        read_flag = #{readFlag,jdbcType=VARCHAR},
+        push_date_time = #{pushDateTime,jdbcType=VARCHAR},
+        arch_type = #{archType,jdbcType=VARCHAR},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        del_flag = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

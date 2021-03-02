@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.wisea</groupId>
+	<artifactId>wiicsp-transac</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>wiicsp-transac</name>
+	<description>新盟风控果品产业互联网综合服务平台-交易服务</description>
+
+	<parent>
+		<artifactId>wiicsp</artifactId>
+		<groupId>com.wisea</groupId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+
+	<profiles>
+		<profile>
+			<id>full-build</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<modules>
+				<module>transac-common</module>
+				<module>transac-model</module>
+				<module>transac-operation</module>
+				<module>transac-seller</module>
+				<module>transac-tp</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>ci</id>
+			<modules>
+				<module>transac-common</module>
+				<module>transac-model</module>
+				<module>transac-tp</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>lib-boot</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>1.6.0</version>
+						<executions>
+							<execution>
+								<id>init-docker-image</id>
+								<phase>package</phase>
+								<goals>
+									<goal>java</goal>
+								</goals>
+								<configuration>
+									<mainClass>com.wisea.cloud.common.docker.DockerLibImage</mainClass>
+									<arguments>
+										<argument>http://192.168.20.205:8000/wbfc-lib-all.txt</argument>
+										<argument>transac-common-${project.version}</argument>
+									</arguments>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

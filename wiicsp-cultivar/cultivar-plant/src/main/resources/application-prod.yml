@@ -1,0 +1,14 @@
+wbfc:
+  mssurl:
+    security: http://cultivar-operation
+    system: http://cultivar-operation
+    files: http://cultivar-operation
+    equipment: http://cultivar-equipment
+  tencent-im:
+    enabled: true
+    sdkAppId: 1400459109
+    key: 5b2a460fc20eaa8ffad4e804e8f17345f59b5aa7fe820be5979f598257072cd6
+
+oritrapla:
+  qrcodeFix: http://203.86.72.244/suyh5/archivesDetail?str=
+  initPassword: 123456

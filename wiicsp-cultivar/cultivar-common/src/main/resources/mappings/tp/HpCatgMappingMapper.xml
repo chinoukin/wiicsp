@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.HpCatgMappingMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hp_catg_id" property="hpCatgId" jdbcType="BIGINT" />
+    <result column="mapping_type" property="mappingType" jdbcType="VARCHAR" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="search_key" property="searchKey" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+    <resultMap id="BaseRes" type="com.wisea.cultivar.common.vo.tp.product.HpCatgMappingGetVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="hp_catg_id" property="hpCatgId" jdbcType="BIGINT" />
+    <result column="mapping_type" property="mappingType" jdbcType="VARCHAR" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="search_key" property="searchKey" jdbcType="VARCHAR" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, hp_catg_id, mapping_type, comm_id, comm_variet_id, search_key, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+
+    <!-- 根据分类id查询详情 -->
+    <select id="findById" parameterType="com.wisea.cultivar.common.po.tp.product.HpCatgMappingGetPo" resultMap="BaseRes">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        hp_catg_mapping hcm
+        where hcm.hp_catg_id = #{id,jdbcType=BIGINT}
+    </select>
+    <!-- 验证名称是否重复 -->
+    <select id="insertCheckHpCatgMapper" resultMap="BaseResultMap">
+        SELECT
+        id, hp_catg_id, mapping_type, comm_id, comm_variet_id, search_key
+        from hp_catg_mapping hcm
+        WHERE hcm.del_flag = '0'
+        AND hcm.hp_catg_id = #{hpCatgId}
+        <if test="id != null and id != ''">
+            AND hcm.id NOT IN (#{id})
+        </if>
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from hp_catg_mapping
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hp_catg_mapping
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    insert into hp_catg_mapping (id, hp_catg_id, mapping_type,
+      comm_id, comm_variet_id, search_key,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{hpCatgId,jdbcType=BIGINT}, #{mappingType,jdbcType=VARCHAR},
+      #{commId,jdbcType=BIGINT}, #{commVarietId,jdbcType=BIGINT}, #{searchKey,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    insert into hp_catg_mapping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="hpCatgId != null" >
+        hp_catg_id,
+      </if>
+      <if test="mappingType != null" >
+        mapping_type,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id,
+      </if>
+      <if test="searchKey != null" >
+        search_key,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="hpCatgId != null" >
+        #{hpCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="mappingType != null" >
+        #{mappingType,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="searchKey != null" >
+        #{searchKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    update hp_catg_mapping
+    <set >
+      <if test="hpCatgId != null" >
+        hp_catg_id = #{hpCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="mappingType != null" >
+        mapping_type = #{mappingType,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="searchKey != null" >
+        search_key = #{searchKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    update hp_catg_mapping
+    set hp_catg_id = #{hpCatgId,jdbcType=BIGINT},
+      mapping_type = #{mappingType,jdbcType=VARCHAR},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      search_key = #{searchKey,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    select
+    <include refid="Base_Column_List" />
+    from hp_catg_mapping
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    select
+    <include refid="Base_Column_List" />
+    from hp_catg_mapping
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.HpCatgMapping" >
+    update hp_catg_mapping
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

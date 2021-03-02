@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.StallsVideoMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.StallsVideoMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="stalls_mage_id" property="stallsMageId" jdbcType="BIGINT"/>
+        <result column="belong_stalls" property="belongStalls" jdbcType="VARCHAR"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="acc_url" property="accUrl" jdbcType="VARCHAR"/>
+        <result column="set_as_cover_flag" property="setAsCoverFlag" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , stalls_mage_id, belong_stalls, name, acc_url, set_as_cover_flag, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from stalls_video_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from stalls_video_mage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.StallsVideoMage">
+        insert into stalls_video_mage (id, stalls_mage_id, belong_stalls,
+                                       name, acc_url, set_as_cover_flag,
+                                       create_by, create_date, update_by,
+                                       update_date, remarks, del_flag)
+        values (#{id,jdbcType=BIGINT}, #{stallsMageId,jdbcType=BIGINT}, #{belongStalls,jdbcType=VARCHAR},
+                #{name,jdbcType=VARCHAR}, #{accUrl,jdbcType=VARCHAR}, #{setAsCoverFlag,jdbcType=CHAR},
+                #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+                #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.StallsVideoMage">
+        insert into stalls_video_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="stallsMageId != null">
+                stalls_mage_id,
+            </if>
+            <if test="belongStalls != null">
+                belong_stalls,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="accUrl != null">
+                acc_url,
+            </if>
+            <if test="setAsCoverFlag != null">
+                set_as_cover_flag,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="stallsMageId != null">
+                #{stallsMageId,jdbcType=BIGINT},
+            </if>
+            <if test="belongStalls != null">
+                #{belongStalls,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="accUrl != null">
+                #{accUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="setAsCoverFlag != null">
+                #{setAsCoverFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.StallsVideoMage">
+        update stalls_video_mage
+        <set>
+            <if test="stallsMageId != null">
+                stalls_mage_id = #{stallsMageId,jdbcType=BIGINT},
+            </if>
+            <if test="belongStalls != null">
+                belong_stalls = #{belongStalls,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="accUrl != null">
+                acc_url = #{accUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="setAsCoverFlag != null">
+                set_as_cover_flag = #{setAsCoverFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.StallsVideoMage">
+        update stalls_video_mage
+        set stalls_mage_id    = #{stallsMageId,jdbcType=BIGINT},
+            belong_stalls     = #{belongStalls,jdbcType=VARCHAR},
+            name              = #{name,jdbcType=VARCHAR},
+            acc_url           = #{accUrl,jdbcType=VARCHAR},
+            set_as_cover_flag = #{setAsCoverFlag,jdbcType=CHAR},
+            create_by         = #{createBy,jdbcType=VARCHAR},
+            create_date       = #{createDate,jdbcType=TIMESTAMP},
+            update_by         = #{updateBy,jdbcType=VARCHAR},
+            update_date       = #{updateDate,jdbcType=TIMESTAMP},
+            remarks           = #{remarks,jdbcType=VARCHAR},
+            del_flag          = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findPageList" resultType="com.wisea.transac.common.vo.seller.StallsVideoMagePageListVo"
+            parameterType="com.wisea.transac.common.po.seller.StallsVideoMagePageListPo">
+        select
+        id id,
+        stalls_mage_id stallsMageId,
+        belong_stalls belongStalls,
+        name name,
+        acc_url accUrl,
+        set_as_cover_flag setAsCoverFlag,
+        remarks remarks
+        from
+        stalls_video_mage
+        where
+        del_flag = '0'
+        and stalls_mage_id = #{stallsMageId}
+        <if test="remarks!=null">
+            and remarks = #{remarks}
+        </if>
+    </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.seller.StallsVideoMageInfoVo"
+            parameterType="java.lang.Long">
+        select id                id,
+               stalls_mage_id    stallsMageId,
+               belong_stalls     belongStalls,
+               name              name,
+               acc_url           accUrl,
+               set_as_cover_flag setAsCoverFlag
+        from stalls_video_mage
+        where del_flag = '0'
+          and id = #{id}
+    </select>
+    <select id="findShopVideoByShopId"
+            parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.seller.StallsVideoMageInfoVo">
+        select svm.*
+        from stalls_video_mage svm,
+             stalls_mage sm
+        where svm.del_flag = '0'
+          and sm.del_flag = '0'
+          and sm.id = svm.stalls_mage_id
+          and sm.shop_id = #{shopId}
+        order by svm.set_as_cover_flag asc
+
+    </select>
+    <select id="findShopVideoByStallsId"
+            parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.seller.StallsVideoMageInfoVo">
+        select *
+        from stalls_video_mage
+        where del_flag = '0'
+          and stalls_mage_id = #{stallsId}
+        order by set_as_cover_flag asc
+
+    </select>
+</mapper>

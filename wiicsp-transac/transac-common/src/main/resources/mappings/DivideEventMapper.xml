@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.DivideEventMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.DivideEvent" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="VARCHAR" />
+    <result column="divide_detail" property="divideDetail" jdbcType="VARCHAR" />
+    <result column="div_start_time" property="divStartTime" jdbcType="TIMESTAMP" />
+    <result column="exe_state" property="exeState" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="sfsfk_flag" property="sfsfkFlag" jdbcType="CHAR" />
+    <result column="ord_date_id" property="ordDateId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_id, divide_detail, div_start_time, exe_state, create_by, create_date, update_by,
+    update_date, remarks, del_flag, sfsfk_flag, ord_date_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from divide_event
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from divide_event
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.DivideEvent" >
+    insert into divide_event (id, ord_id, divide_detail,
+      div_start_time, exe_state, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag, sfsfk_flag, ord_date_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=VARCHAR}, #{divideDetail,jdbcType=VARCHAR},
+      #{divStartTime,jdbcType=TIMESTAMP}, #{exeState,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{sfsfkFlag,jdbcType=CHAR}, #{ordDateId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.DivideEvent" >
+    insert into divide_event
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="divideDetail != null" >
+        divide_detail,
+      </if>
+      <if test="divStartTime != null" >
+        div_start_time,
+      </if>
+      <if test="exeState != null" >
+        exe_state,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="sfsfkFlag != null" >
+        sfsfk_flag,
+      </if>
+      <if test="ordDateId != null" >
+        ord_date_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=VARCHAR},
+      </if>
+      <if test="divideDetail != null" >
+        #{divideDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="divStartTime != null" >
+        #{divStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exeState != null" >
+        #{exeState,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="sfsfkFlag != null" >
+        #{sfsfkFlag,jdbcType=CHAR},
+      </if>
+      <if test="ordDateId != null" >
+        #{ordDateId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.DivideEvent" >
+    update divide_event
+    <set >
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=VARCHAR},
+      </if>
+      <if test="divideDetail != null" >
+        divide_detail = #{divideDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="divStartTime != null" >
+        div_start_time = #{divStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="exeState != null" >
+        exe_state = #{exeState,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="sfsfkFlag != null" >
+        sfsfk_flag = #{sfsfkFlag,jdbcType=CHAR},
+      </if>
+      <if test="ordDateId != null" >
+        ord_date_id = #{ordDateId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.DivideEvent" >
+    update divide_event
+    set ord_id = #{ordId,jdbcType=VARCHAR},
+      divide_detail = #{divideDetail,jdbcType=VARCHAR},
+      div_start_time = #{divStartTime,jdbcType=TIMESTAMP},
+      exe_state = #{exeState,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      sfsfk_flag = #{sfsfkFlag,jdbcType=CHAR},
+      ord_date_id = #{ordDateId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询所有可以分账的信息 -->
+  <select id="selOutOfDivide" resultType="com.wisea.transac.common.entity.DivideEvent">
+     SELECT *
+        FROM divide_event
+        WHERE div_start_time &lt; NOW()
+            AND (exe_state = '0'
+                  OR exe_state = '2')
+            and del_flag = '0'
+  </select>
+
+  <!-- 根据支付ID查询分账信息 -->
+  <select id="selByOrdDateId" resultType="com.wisea.transac.common.entity.DivideEvent">
+    SELECT *
+        FROM divide_event
+    where ord_date_id = #{ordDateId,jdbcType=VARCHAR}
+  </select>
+</mapper>

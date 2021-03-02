@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.OrdOpreateInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.OrdOpreateInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="opreat_date" property="opreatDate" jdbcType="TIMESTAMP" />
+    <result column="pay_state_type" property="payStateType" jdbcType="VARCHAR" />
+    <result column="order_state_type" property="orderStateType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_id, operator, opreat_date, pay_state_type, order_state_type, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 批量插入订单操作记录 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into ord_opreate_info (id, ord_id, operator,
+      opreat_date, pay_state_type, order_state_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.ordId,jdbcType=BIGINT}, #{item.operator,jdbcType=VARCHAR},
+      #{item.opreatDate,jdbcType=TIMESTAMP}, #{item.payStateType,jdbcType=VARCHAR}, #{item.orderStateType,jdbcType=VARCHAR},
+      #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+      #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ord_opreate_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ord_opreate_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.OrdOpreateInfo" >
+    insert into ord_opreate_info (id, ord_id, operator,
+      opreat_date, pay_state_type, order_state_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT}, #{operator,jdbcType=VARCHAR},
+      #{opreatDate,jdbcType=TIMESTAMP}, #{payStateType,jdbcType=VARCHAR}, #{orderStateType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.OrdOpreateInfo" >
+    insert into ord_opreate_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="opreatDate != null" >
+        opreat_date,
+      </if>
+      <if test="payStateType != null" >
+        pay_state_type,
+      </if>
+      <if test="orderStateType != null" >
+        order_state_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="opreatDate != null" >
+        #{opreatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStateType != null" >
+        #{payStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStateType != null" >
+        #{orderStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.OrdOpreateInfo" >
+    update ord_opreate_info
+    <set >
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="opreatDate != null" >
+        opreat_date = #{opreatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStateType != null" >
+        pay_state_type = #{payStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStateType != null" >
+        order_state_type = #{orderStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.OrdOpreateInfo" >
+    update ord_opreate_info
+    set ord_id = #{ordId,jdbcType=BIGINT},
+      operator = #{operator,jdbcType=VARCHAR},
+      opreat_date = #{opreatDate,jdbcType=TIMESTAMP},
+      pay_state_type = #{payStateType,jdbcType=VARCHAR},
+      order_state_type = #{orderStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.OrdOpreateInfoListVo" parameterType="com.wisea.cultivar.common.po.tp.OrdOpreateInfoPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from ord_opreate_info
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.OrdOpreateInfoListVo" parameterType="com.wisea.cultivar.common.po.tp.OrdOpreateInfoListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from ord_opreate_info
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.OrdOpreateInfo" >
+    update ord_opreate_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

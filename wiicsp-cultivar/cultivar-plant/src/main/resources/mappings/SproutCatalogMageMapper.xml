@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.SproutCatalogMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.SproutCatalogMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sprout_catalog_name" property="sproutCatalogName" jdbcType="VARCHAR" />
+    <result column="sprout_year" property="sproutYear" jdbcType="INTEGER" />
+    <result column="oil_tea_variet_id" property="oilTeaVarietId" jdbcType="BIGINT" />
+    <result column="sdlz_no" property="sdlzNo" jdbcType="VARCHAR" />
+    <result column="fit_area" property="fitArea" jdbcType="VARCHAR" />
+    <result column="acre_plant_cg" property="acrePlantCg" jdbcType="DOUBLE" />
+    <result column="breed_entp" property="breedEntp" jdbcType="VARCHAR" />
+    <result column="features" property="features" jdbcType="VARCHAR" />
+    <result column="plant_mode" property="plantMode" jdbcType="VARCHAR" />
+    <result column="sprout_catalog_state_type" property="sproutCatalogStateType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sprout_catalog_name, sprout_year, oil_tea_variet_id, sdlz_no, fit_area, acre_plant_cg,
+    breed_entp, features, plant_mode, sprout_catalog_state_type, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sprout_catalog_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sprout_catalog_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.SproutCatalogMage" >
+    insert into sprout_catalog_mage (id, sprout_catalog_name, sprout_year,
+      oil_tea_variet_id, sdlz_no, fit_area,
+      acre_plant_cg, breed_entp, features,
+      plant_mode, sprout_catalog_state_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{sproutCatalogName,jdbcType=VARCHAR}, #{sproutYear,jdbcType=INTEGER},
+      #{oilTeaVarietId,jdbcType=BIGINT}, #{sdlzNo,jdbcType=VARCHAR}, #{fitArea,jdbcType=VARCHAR},
+      #{acrePlantCg,jdbcType=DOUBLE}, #{breedEntp,jdbcType=VARCHAR}, #{features,jdbcType=VARCHAR},
+      #{plantMode,jdbcType=VARCHAR}, #{sproutCatalogStateType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.SproutCatalogMage" >
+    insert into sprout_catalog_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sproutCatalogName != null" >
+        sprout_catalog_name,
+      </if>
+      <if test="sproutYear != null" >
+        sprout_year,
+      </if>
+      <if test="oilTeaVarietId != null" >
+        oil_tea_variet_id,
+      </if>
+      <if test="sdlzNo != null" >
+        sdlz_no,
+      </if>
+      <if test="fitArea != null" >
+        fit_area,
+      </if>
+      <if test="acrePlantCg != null" >
+        acre_plant_cg,
+      </if>
+      <if test="breedEntp != null" >
+        breed_entp,
+      </if>
+      <if test="features != null" >
+        features,
+      </if>
+      <if test="plantMode != null" >
+        plant_mode,
+      </if>
+      <if test="sproutCatalogStateType != null" >
+        sprout_catalog_state_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sproutCatalogName != null" >
+        #{sproutCatalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="sproutYear != null" >
+        #{sproutYear,jdbcType=INTEGER},
+      </if>
+      <if test="oilTeaVarietId != null" >
+        #{oilTeaVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="sdlzNo != null" >
+        #{sdlzNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fitArea != null" >
+        #{fitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="acrePlantCg != null" >
+        #{acrePlantCg,jdbcType=DOUBLE},
+      </if>
+      <if test="breedEntp != null" >
+        #{breedEntp,jdbcType=VARCHAR},
+      </if>
+      <if test="features != null" >
+        #{features,jdbcType=VARCHAR},
+      </if>
+      <if test="plantMode != null" >
+        #{plantMode,jdbcType=VARCHAR},
+      </if>
+      <if test="sproutCatalogStateType != null" >
+        #{sproutCatalogStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.SproutCatalogMage" >
+    update sprout_catalog_mage
+    <set >
+      <if test="sproutCatalogName != null" >
+        sprout_catalog_name = #{sproutCatalogName,jdbcType=VARCHAR},
+      </if>
+      <if test="sproutYear != null" >
+        sprout_year = #{sproutYear,jdbcType=INTEGER},
+      </if>
+      <if test="oilTeaVarietId != null" >
+        oil_tea_variet_id = #{oilTeaVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="sdlzNo != null" >
+        sdlz_no = #{sdlzNo,jdbcType=VARCHAR},
+      </if>
+      <if test="fitArea != null" >
+        fit_area = #{fitArea,jdbcType=VARCHAR},
+      </if>
+      <if test="acrePlantCg != null" >
+        acre_plant_cg = #{acrePlantCg,jdbcType=DOUBLE},
+      </if>
+      <if test="breedEntp != null" >
+        breed_entp = #{breedEntp,jdbcType=VARCHAR},
+      </if>
+      <if test="features != null" >
+        features = #{features,jdbcType=VARCHAR},
+      </if>
+      <if test="plantMode != null" >
+        plant_mode = #{plantMode,jdbcType=VARCHAR},
+      </if>
+      <if test="sproutCatalogStateType != null" >
+        sprout_catalog_state_type = #{sproutCatalogStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.SproutCatalogMage" >
+    update sprout_catalog_mage
+    set sprout_catalog_name = #{sproutCatalogName,jdbcType=VARCHAR},
+      sprout_year = #{sproutYear,jdbcType=INTEGER},
+      oil_tea_variet_id = #{oilTeaVarietId,jdbcType=BIGINT},
+      sdlz_no = #{sdlzNo,jdbcType=VARCHAR},
+      fit_area = #{fitArea,jdbcType=VARCHAR},
+      acre_plant_cg = #{acrePlantCg,jdbcType=DOUBLE},
+      breed_entp = #{breedEntp,jdbcType=VARCHAR},
+      features = #{features,jdbcType=VARCHAR},
+      plant_mode = #{plantMode,jdbcType=VARCHAR},
+      sprout_catalog_state_type = #{sproutCatalogStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findOilPageList" resultType="com.wisea.cultivar.plant.vo.OilTeaVarietMagePageListVo" parameterType="java.lang.Integer" >
+    select
+      o.id id,
+      o.oil_tea_variet_name oilTeaVarietName,
+      o.oil_tea_variet_no oilTeaVarietNo,
+      o.acre_plant_cg acrePlantCg,
+      o.fit_are fitAre
+	from
+	  sprout_main_thrust_info i LEFT JOIN sprout_catalog_mage m ON m.id = i.sprout_catalog_mage_id
+	  LEFT JOIN oil_tea_variet_mage o ON i.oil_tea_variet_id = o.id
+	where
+	  m.del_flag = '0' AND m.sprout_year=#{year} AND m.sprout_catalog_state_type='1'
+  </select>
+<!--  <select id="findInfo" resultType="OilTeaVarietMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  o.id id,
+	  o.url url,
+	  o.oil_tea_variet_no oilTeaVarietNo,
+	  o.breed_entp breedEntp,
+	  o.acre_plant_cg acrePlantCg,
+	  o.fit_are fitAre,
+	  o.features features,
+	  o.plant_mode plantMode
+	from
+	  sprout_catalog_mage s LEFT JOIN oil_tea_variet_mage o ON s.oil_tea_variet_id = o.id
+	where
+	  s.del_flag = '0'
+	  and s.id = #{id}
+  </select>-->
+
+  <select id="findByYear" resultType="com.wisea.cultivar.plant.vo.SproutCatalogMageInfoVo">
+    select
+	  sprout_catalog_name sproutCatalogName,
+	  sprout_year sproutYear
+	from
+	  sprout_catalog_mage
+	where
+	  del_flag = '0' AND sprout_catalog_state_type='1'
+	  order by sprout_year desc limit 1
+  </select>
+</mapper>

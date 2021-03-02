@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.PjcsmxSetMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pjcs_id" property="pjcsId" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="if_requ" property="ifRequ" jdbcType="CHAR" />
+    <result column="if_search" property="ifSearch" jdbcType="CHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pjcs_id, comm_id, if_requ, if_search, sort, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+    <resultMap id="BaseResult" type="com.wisea.cultivar.common.vo.tp.product.PjcsmxMageListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="pjcs_id" property="pjcsId" jdbcType="BIGINT"/>
+        <result column="if_requ" property="ifRequ" jdbcType="CHAR"/>
+        <result column="if_search" property="ifSearch" jdbcType="CHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="comm_attri_name" property="commAttriName" jdbcType="VARCHAR" />
+        <result column="comm_attri_column" property="commAttriColumn" jdbcType="VARCHAR" />
+        <result column="comm_attri_type" property="commAttriType" jdbcType="VARCHAR" />
+        <result column="length" property="length" jdbcType="INTEGER" />
+        <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+        <result column="dict_val" property="dictTest" jdbcType="VARCHAR" />
+        <result column="cam.remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="cam.del_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="decimal_dig" property="decimalDig" jdbcType="INTEGER" />
+        <result column="max_val" property="maxVal" jdbcType="DOUBLE" />
+        <result column="min_val" property="minVal" jdbcType="DOUBLE" />
+    </resultMap>
+    <!--根据商品id查商品属性设置-->
+    <select id="getAttriIdByCommId" resultMap="BaseResult" parameterType="java.util.ArrayList">
+        SELECT
+        ps.id as 'id',ps.pjcs_id,ps.if_requ,ps.sort,ps.if_search,
+        pm.comm_attri_name,pm.comm_attri_column,pm.effe_inval_state,
+        pm.comm_attri_type,pm.length,pm.dict_val,pm.decimal_dig,pm.max_val,pm.min_val
+        from pjcsmx_set ps
+        LEFT JOIN pjcsmx_mage pm ON pm.id = ps.pjcs_id
+        LEFT JOIN comm_mage cm ON cm.id = ps.comm_id
+        WHERE ps.del_flag = '0'
+        <if test="list != null and list.size > 0">
+            and ps.comm_id in
+            <foreach collection="list" item ="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+    </select>
+    <!--通过属性ID去查询所对应的属性列表-->
+    <select id="findCommAttSetListByAttriId" parameterType="java.util.List"
+            resultType="com.wisea.cultivar.common.vo.tp.product.PjcsmxMageListVo">
+        SELECT
+        id,comm_attri_name,comm_attri_column,effe_inval_state, sort,
+        comm_attri_type,length,dict_val,decimal_dig,max_val,min_val
+        FROM pjcsmx_mage
+        <where>
+            <if test="list != null and list.size() &gt; 0">
+                AND id in
+                <foreach collection="list" item="item" separator="," open="(" close=")" index="index">
+                    #{item.pjcsId}
+                </foreach>
+            </if>
+            AND effe_inval_state != '1' AND del_flag != '1'
+        </where>
+    </select>
+    <!--通过商品ID去查询属性ID-->
+<!--    <select id="getAttriIdByCommId" parameterType="CommAttriMageGetPo"-->
+<!--            resultType="PjcsmxSetGetVo">-->
+<!--        SELECT pjcs_id,if_requ,sort,if_search,create_date AS createDate-->
+<!--        FROM pjcsmx_set-->
+<!--        <where>-->
+<!--            AND del_flag != '1' ORDER BY sort ASC-->
+<!--        </where>-->
+<!--    </select>-->
+    <!--查询商品分类设置属性对象-->
+    <select id="editCommAttriSet" parameterType="com.wisea.cultivar.common.po.tp.CommAttriSetGetPo"
+            resultType="com.wisea.cultivar.common.vo.tp.product.PjcsmxSetGetVo">
+        SELECT
+        t1.id,
+        t2.comm_attri_name AS commAttriName,#属性名称
+        t3.id AS commId,#商品分类
+        t1.if_requ,
+        t1.if_search,
+        t1.sort
+        FROM
+        pjcsmx_set AS t1
+        LEFT JOIN pjcsmx_mage AS t2 ON t1.pjcs_id = t2.id
+        LEFT JOIN comm_mage AS t3 ON t3.id = t1.comm_id
+        <where>
+            t1.id = #{id} AND t1.del_flag != '1'
+        </where>
+    </select>
+    <!--如果等于NULL的话直接用当前商品分类ID去查询-->
+    <select id="findDecideByCommId" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.tp.PjcsmxSet">
+        SELECT
+            pjcs_id
+        FROM
+            pjcsmx_set
+        WHERE
+            comm_id = #{commId} AND del_flag != '1'
+    </select>
+    <!--如果不等于NULL的话直接用当前商品分类ID去查询-->
+    <select id="findAttriByCommId" parameterType="java.util.List"
+            resultType="com.wisea.cultivar.common.entity.tp.PjcsmxSet">
+        SELECT
+        pjcs_id
+        FROM
+        pjcsmx_set
+        WHERE
+        comm_id IN
+        (
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        AND del_flag != '1'
+    </select>
+    <!--查询商品评价模型列表-->
+    <select id="commAttriSetList" parameterType="com.wisea.cultivar.common.po.tp.product.PjcsmxSetPagePo"
+            resultType="com.wisea.cultivar.common.vo.tp.product.PjcsmxSetListVo">
+        SELECT
+        t1.id,
+        t2.comm_attri_name AS commAttriName,#属性名称
+        t2.comm_attri_column AS commAttriColumn,#属性字段
+        t3.comm_catg_name AS commCatgName,#商品分类
+        t1.if_requ,
+        t1.if_search,
+        t1.sort,
+        t1.create_date
+        FROM
+        pjcsmx_set AS t1
+        LEFT JOIN pjcsmx_mage AS t2 ON t1.pjcs_id = t2.id
+        LEFT JOIN comm_mage AS t3 ON t3.id = t1.comm_id
+        where t1.del_flag != '1'
+        <if test="commAttriName != null and commAttriName != '' ">
+            AND instr(t2.comm_attri_name,#{commAttriName}) != 0
+        </if>
+        <if test="ifRequ != null and ifRequ != '' ">
+            AND instr(t1.if_requ,#{ifRequ}) != 0
+        </if>
+        <if test="classifyId!=null and classifyId != '' ">
+            AND t1.comm_id = #{classifyId}
+        </if>
+        ORDER BY t1.sort ASC
+    </select>
+<!--  校验商品评价模型参数  -->
+    <select id="selectCommAttriById" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.tp.PjcsmxSet">
+        SELECT pjcs_id
+        FROM pjcsmx_set
+        WHERE pjcs_id = #{id} AND del_flag != '1'
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from pjcsmx_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pjcsmx_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    insert into pjcsmx_set (id, pjcs_id, comm_id,
+      if_requ, if_search, sort, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{pjcsId,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT},
+      #{ifRequ,jdbcType=CHAR}, #{ifSearch,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    insert into pjcsmx_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pjcsId != null" >
+        pjcs_id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="ifRequ != null" >
+        if_requ,
+      </if>
+      <if test="ifSearch != null" >
+        if_search,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pjcsId != null" >
+        #{pjcsId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="ifRequ != null" >
+        #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="ifSearch != null" >
+        #{ifSearch,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    update pjcsmx_set
+    <set >
+      <if test="pjcsId != null" >
+        pjcs_id = #{pjcsId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="ifRequ != null" >
+        if_requ = #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="ifSearch != null" >
+        if_search = #{ifSearch,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    update pjcsmx_set
+    set pjcs_id = #{pjcsId,jdbcType=BIGINT},
+      comm_id = #{commId,jdbcType=BIGINT},
+      if_requ = #{ifRequ,jdbcType=CHAR},
+      if_search = #{ifSearch,jdbcType=CHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    select
+    <include refid="Base_Column_List" />
+    from pjcsmx_set
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    select
+    <include refid="Base_Column_List" />
+    from pjcsmx_set
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxSet" >
+    update pjcsmx_set
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

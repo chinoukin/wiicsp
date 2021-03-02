@@ -1,0 +1,32 @@
+logging: # 日志输出配置
+  level:
+    com.wisea.transac.common.dao: debug
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务-商家平台
+  mssurl:
+    security: http://transac-operation
+    system: http://transac-operation
+    files: http://transac-operation
+    tp-product: http://transac-tp-product
+seata:
+  enabled: true #开启seata分布式事务
+  application-id: ${spring.application.name} #client 服务名称
+  tx-service-group: seata-server-group #该名称必须和 service.vgroup-mapping 下相同
+  enable-auto-data-source-proxy: false #关闭数据源自动代理，框架已经集成，包括多数据源
+  service:
+    vgroup-mapping:
+      seata-server-group: seata-server #服务发现组件上的 seata-server 服务名
+  registry:
+    type: redis
+    redis:
+      serverAddr: 192.168.20.233:6379
+      cluster: seata-server
+      db: 31
+      timeout: ${spring.redis.timeout}
+#人脸核身 独立H5 配置
+H5-Face:
+  appid: TIDAlj7H
+  secret: NIYdilcmUedy5ZXl3stIVSn5nPWlbbbBsiAi6rvaH779CiXHrqYI5Ps1SnZQxUnp

@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.IncomeDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.IncomeDetail" >
+    <result column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="trade_no" property="tradeNo" jdbcType="VARCHAR" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <result column="finish_date" property="finishDate" jdbcType="TIMESTAMP" />
+    <result column="comm_total_price" property="commTotalPrice" jdbcType="DOUBLE" />
+    <result column="split_income" property="splitIncome" jdbcType="DOUBLE" />
+    <result column="settle_bill_numb" property="settleBillNumb" jdbcType="VARCHAR" />
+    <result column="ord_freight" property="ordFreight" jdbcType="DOUBLE" />
+    <result column="refund_price" property="refundPrice" jdbcType="DOUBLE" />
+    <result column="oper_ser_charge" property="operSerCharge" jdbcType="DOUBLE" />
+    <result column="js_ser_cost" property="jsSerCost" jdbcType="DOUBLE" />
+    <result column="ord_source_type" property="ordSourceType" jdbcType="VARCHAR" />
+    <result column="sett_ord_id" property="settOrdId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.IncomeDetail" >
+    insert into income_detail (id, memb_id,buyer_id, trade_no,
+      ord_num, finish_date, comm_total_price,
+      split_income, settle_bill_numb, ord_freight,
+      refund_price, oper_ser_charge, js_ser_cost,
+      ord_source_type, sett_ord_id, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT},#{tradeNo,jdbcType=VARCHAR},
+      #{ordNum,jdbcType=VARCHAR}, #{finishDate,jdbcType=TIMESTAMP}, #{commTotalPrice,jdbcType=DOUBLE},
+      #{splitIncome,jdbcType=DOUBLE}, #{settleBillNumb,jdbcType=VARCHAR}, #{ordFreight,jdbcType=DOUBLE},
+      #{refundPrice,jdbcType=DOUBLE}, #{operSerCharge,jdbcType=DOUBLE}, #{jsSerCost,jdbcType=DOUBLE},
+      #{ordSourceType,jdbcType=VARCHAR}, #{settOrdId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.IncomeDetail" >
+    insert into income_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="tradeNo != null" >
+        trade_no,
+      </if>
+      <if test="ordNum != null" >
+        ord_num,
+      </if>
+      <if test="finishDate != null" >
+        finish_date,
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price,
+      </if>
+      <if test="splitIncome != null" >
+        split_income,
+      </if>
+      <if test="settleBillNumb != null" >
+        settle_bill_numb,
+      </if>
+      <if test="ordFreight != null" >
+        ord_freight,
+      </if>
+      <if test="refundPrice != null" >
+        refund_price,
+      </if>
+      <if test="operSerCharge != null" >
+        oper_ser_charge,
+      </if>
+      <if test="jsSerCost != null" >
+        js_ser_cost,
+      </if>
+      <if test="ordSourceType != null" >
+        ord_source_type,
+      </if>
+      <if test="settOrdId != null" >
+        sett_ord_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="tradeNo != null" >
+        #{tradeNo,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNum != null" >
+        #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="finishDate != null" >
+        #{finishDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commTotalPrice != null" >
+        #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="splitIncome != null" >
+        #{splitIncome,jdbcType=DOUBLE},
+      </if>
+      <if test="settleBillNumb != null" >
+        #{settleBillNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="ordFreight != null" >
+        #{ordFreight,jdbcType=DOUBLE},
+      </if>
+      <if test="refundPrice != null" >
+        #{refundPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="operSerCharge != null" >
+        #{operSerCharge,jdbcType=DOUBLE},
+      </if>
+      <if test="jsSerCost != null" >
+        #{jsSerCost,jdbcType=DOUBLE},
+      </if>
+      <if test="ordSourceType != null" >
+        #{ordSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="settOrdId != null" >
+        #{settOrdId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 查询收支明细列表 -->
+  <select id="findIncomeList" resultType="com.wisea.transac.common.vo.trade.IncomeListVo" parameterType="com.wisea.transac.common.po.trade.IncomeListPo">
+    SELECT
+	  t1.id,
+	  t1.trade_no,
+	  t1.ord_num,
+	  t1.finish_date,
+	  t1.comm_total_price,
+	  t1.split_income,
+	  t1.settle_bill_numb,
+	  t1.oper_ser_charge,
+	  t1.sett_ord_id,
+	  t2.login_name,
+	  t2.entp_name
+	FROM income_detail t1
+	  LEFT JOIN memb_info t2
+	    ON t2.id = t1.buyer_id
+	where t1.del_flag = '0'
+	<if test="sellerId != null and sellerId !=''">
+	   and t1.memb_id = #{sellerId,jdbcType=BIGINT}
+	</if>
+	<if test="startDate != null">
+        and t1.finish_date >= #{startDate,jdbcType=BIGINT}
+    </if>
+    <if test="endDate != null">
+      and t1.finish_date <![CDATA[<]]> #{endDate,jdbcType=BIGINT}
+    </if>
+    <if test="searchKey != null and searchKey != ''">
+       and (t1.trade_no like concat('%',#{searchKey},'%')
+        or t1.ord_num like concat('%',#{searchKey},'%')
+        or t1.settle_bill_numb like concat('%',#{searchKey},'%')
+        )
+    </if>
+	order by t1.finish_date
+  </select>
+</mapper>

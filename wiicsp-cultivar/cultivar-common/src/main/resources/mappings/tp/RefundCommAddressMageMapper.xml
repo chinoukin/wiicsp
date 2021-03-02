@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.RefundCommAddressMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.RefundCommAddressMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="recer_name" property="recerName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, address_prov, address_city, address_cou, address, zip_code, recer_name,
+    tel, default_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 查询退货地址列表 -->
+  <select id="findListBySellerId" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.RefundCommAddressListVo">
+    select
+      rcam.id id,
+      rcam.address_prov addressProv,
+      rcam.address_city addressCity,
+      rcam.address_cou addressCou,
+      max(CASE WHEN sa.`code` = rcam.address_prov THEN sa.`name` END) addressProvName,
+      max(CASE WHEN sa.`code` = rcam.address_city THEN sa.`name` END) addressCityName,
+      max(CASE WHEN sa.`code` = rcam.address_cou THEN sa.`name` END) addressCouName,
+      rcam.address address,
+      rcam.zip_code zipCode,
+      rcam.recer_name recerName,
+      rcam.tel tel,
+      rcam.default_flag defaultFlag
+    from
+      refund_comm_address_mage rcam
+      LEFT JOIN sys_area sa ON sa.`code` = rcam.address_prov OR sa.`code` = rcam.address_city OR sa.`code` = rcam.address_cou
+    where
+      rcam.del_flag != '1'
+      and rcam.memb_id = #{membId}
+    group by
+      rcam.id
+  </select>
+
+  <!-- 设置会员的退货地址为不是默认 -->
+  <update id="updateDefaultFlagByMemberId" parameterType="java.lang.Long">
+    update refund_comm_address_mage set default_flag = '1' where memb_id = #{membId}
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from refund_comm_address_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from refund_comm_address_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.RefundCommAddressMage" >
+    insert into refund_comm_address_mage (id, memb_id, address_prov,
+      address_city, address_cou, address,
+      zip_code, recer_name, tel,
+      default_flag, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{addressProv,jdbcType=VARCHAR},
+      #{addressCity,jdbcType=VARCHAR}, #{addressCou,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{zipCode,jdbcType=VARCHAR}, #{recerName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+      #{defaultFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.RefundCommAddressMage" >
+    insert into refund_comm_address_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="addressProv != null" >
+        address_prov,
+      </if>
+      <if test="addressCity != null" >
+        address_city,
+      </if>
+      <if test="addressCou != null" >
+        address_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="recerName != null" >
+        recer_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="addressProv != null" >
+        #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recerName != null" >
+        #{recerName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.RefundCommAddressMage" >
+    update refund_comm_address_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="addressProv != null" >
+        address_prov = #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        address_city = #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        address_cou = #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="recerName != null" >
+        recer_name = #{recerName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag = #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.RefundCommAddressMage" >
+    update refund_comm_address_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      recer_name = #{recerName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

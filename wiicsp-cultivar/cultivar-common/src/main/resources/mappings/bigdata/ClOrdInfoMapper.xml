@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.ClOrdInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.ClOrdInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="dcl" property="dcl" jdbcType="INTEGER" />
+    <result column="dbz" property="dbz" jdbcType="INTEGER" />
+    <result column="ztz" property="ztz" jdbcType="INTEGER" />
+    <result column="ywc" property="ywc" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dcl, dbz, ztz, ywc, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from cl_ord_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cl_ord_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.ClOrdInfo" >
+    insert into cl_ord_info (id, dcl, dbz,
+      ztz, ywc, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{dcl,jdbcType=INTEGER}, #{dbz,jdbcType=INTEGER},
+      #{ztz,jdbcType=INTEGER}, #{ywc,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.ClOrdInfo" >
+    insert into cl_ord_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="dcl != null" >
+        dcl,
+      </if>
+      <if test="dbz != null" >
+        dbz,
+      </if>
+      <if test="ztz != null" >
+        ztz,
+      </if>
+      <if test="ywc != null" >
+        ywc,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="dcl != null" >
+        #{dcl,jdbcType=INTEGER},
+      </if>
+      <if test="dbz != null" >
+        #{dbz,jdbcType=INTEGER},
+      </if>
+      <if test="ztz != null" >
+        #{ztz,jdbcType=INTEGER},
+      </if>
+      <if test="ywc != null" >
+        #{ywc,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.ClOrdInfo" >
+    update cl_ord_info
+    <set >
+      <if test="dcl != null" >
+        dcl = #{dcl,jdbcType=INTEGER},
+      </if>
+      <if test="dbz != null" >
+        dbz = #{dbz,jdbcType=INTEGER},
+      </if>
+      <if test="ztz != null" >
+        ztz = #{ztz,jdbcType=INTEGER},
+      </if>
+      <if test="ywc != null" >
+        ywc = #{ywc,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.ClOrdInfo" >
+    update cl_ord_info
+    set dcl = #{dcl,jdbcType=INTEGER},
+      dbz = #{dbz,jdbcType=INTEGER},
+      ztz = #{ztz,jdbcType=INTEGER},
+      ywc = #{ywc,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.ClOrdInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.ClOrdInfoPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from cl_ord_info
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.ClOrdInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.ClOrdInfoListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from cl_ord_info
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.ClOrdInfo" >
+    update cl_ord_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

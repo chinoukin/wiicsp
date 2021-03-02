@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.MerchantMembMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.MerchantMembMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="merchant_id" property="merchantId" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchant_id, memb_id, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from merchant_memb_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from merchant_memb_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.MerchantMembMage" >
+    insert into merchant_memb_mage (id, merchant_id, memb_id,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{merchantId,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.MerchantMembMage" >
+    insert into merchant_memb_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.MerchantMembMage" >
+    update merchant_memb_mage
+    <set >
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.MerchantMembMage" >
+    update merchant_memb_mage
+    set merchant_id = #{merchantId,jdbcType=BIGINT},
+      memb_id = #{membId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.MerchantMembMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  merchant_id merchantId,
+	  memb_id membId
+	from
+	  merchant_memb_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <!-- 商家APP查询会员管理列表 -->
+  <select id="findMerchantMembMageList" parameterType="com.wisea.transac.common.po.seller.SellerMembManagerPagePo" resultType="com.wisea.transac.common.vo.seller.SellerMembMagePageListVo">
+  	SELECT mmm.id,mmm.merchant_id,mmm.memb_id,m.login_name,m.regist_tel,m.logo_url,m.memb_type,
+			 IFNULL(p.real_name,grtab1.legal_person_name) AS 'realName',IFNULL(p.id_card_num,grtab1.legal_person_num) AS 'idCardNum',grtab1.entp_name,T1.ordNum,T1.tradVolume
+	FROM merchant_memb_mage mmm
+	INNER JOIN memb_info m ON m.id = mmm.memb_id
+	LEFT JOIN real_person_auth p ON p.memb_id = mmm.memb_id AND p.entp_auth_state_type = '0'
+	LEFT JOIN (SELECT e.* FROM (
+					SELECT tab1.memb_id,tab1.id	 FROM (SELECT e.* FROM entp_auth e
+						INNER JOIN memb_info m ON m.id = e.memb_id AND m.del_flag = '0'
+						WHERE e.del_flag = '0' AND (e.auth_state_type = '3' OR e.entp_auth_state_type = '0')
+						ORDER BY e.auth_date DESC LIMIT 10000000000) tab1
+						GROUP BY tab1.memb_id,tab1.id
+					) T1
+					INNER JOIN entp_auth e ON e.id = T1.id
+			   ) grtab1 ON grtab1.memb_id = mmm.memb_id
+	<choose>
+		<when test="localityMembType != null and localityMembType != '' and localityMembType == '0'.toString()">
+		LEFT JOIN(
+			SELECT buyer_id,COUNT(id) AS 'ordNum',ROUND(SUM(payable_amount),2) AS 'tradVolume'
+			FROM locality_order_info
+			WHERE del_flag = '0' AND base_order_state_type != '5'  AND seller_id = #{id}
+			GROUP BY buyer_id
+		) T1 ON T1.buyer_id = mmm.memb_id
+		</when>
+		<otherwise>
+		LEFT JOIN(
+			SELECT buyer_id,COUNT(id) AS 'ordNum',ROUND(SUM(payable_amount),2) AS 'tradVolume'
+			FROM order_info
+			WHERE del_flag = '0' AND order_state_type != '5'  AND seller_id = #{id}
+			GROUP BY buyer_id
+		) T1 ON T1.buyer_id = mmm.memb_id
+		</otherwise>
+	</choose>
+	WHERE mmm.merchant_id = #{id} and mmm.del_flag = '0'
+		  <if test="key != null and key != ''">
+		  AND (e.entp_name LIKE CONCAT('%', #{key}, '%')
+		  	   OR m.login_name LIKE CONCAT('%', #{key}, '%')
+		  	   OR m.regist_tel LIKE CONCAT('%', #{key}, '%') )
+		  </if>
+  </select>
+  <!-- 获取会员信息并且验证是否可以添加 -->
+  <select id="getSellerMembCheck" parameterType="com.wisea.transac.common.po.seller.SellerMembMageAddPo" resultType="com.wisea.transac.common.vo.seller.SellerMembMageAddVo">
+  	SELECT m.id AS 'membId',IFNULL(p.real_name,grtab1.legal_person_name) AS 'realName',IFNULL(p.id_card_num,grtab1.legal_person_num) AS 'idCardNum',grtab1.entp_name,grtab1.entp_short_name,pur.id AS 'purId',mmm.id AS 'merMembId'
+	FROM memb_info m
+	LEFT JOIN real_person_auth p ON p.memb_id = m.id AND p.entp_auth_state_type = '0' AND p.del_flag = '0'
+	LEFT JOIN (SELECT e.* FROM (
+					SELECT tab1.memb_id,tab1.id	 FROM (SELECT e.* FROM entp_auth e
+						INNER JOIN memb_info m ON m.id = e.memb_id AND m.del_flag = '0'
+						WHERE e.del_flag = '0' AND (e.auth_state_type = '3' OR e.entp_auth_state_type = '0')
+						ORDER BY e.auth_date DESC LIMIT 10000000000) tab1
+						GROUP BY tab1.memb_id,tab1.id
+					) T1
+					INNER JOIN entp_auth e ON e.id = T1.id
+			   ) grtab1 ON grtab1.memb_id = m.id
+	LEFT JOIN purchase_staff_mage pur ON pur.purchase_staff_id = m.id AND pur.del_flag = '0' AND pur.purchase_team_state IN ('0','1')
+	LEFT JOIN merchant_memb_mage mmm ON mmm.memb_id = m.id AND mmm.del_flag= '0' AND mmm.merchant_id = #{merchantId}
+	WHERE m.del_flag = '0'
+	AND m.entp_auth_state_type = '0'
+	AND (m.login_name = #{key} OR m.regist_tel = #{key})
+  </select>
+  <!-- 统计新增会员人数的处理 -->
+  <select id="sellerMembMageStatic" parameterType="com.wisea.transac.common.po.memb.MarketMembAddTjPo" resultType="com.wisea.transac.common.vo.memb.EchartStaticVo">
+  	SELECT <choose>
+			  	<when test="flag != null and flag == '0'.toString()">
+			  		DAY(mmm.create_date)
+			  	</when>
+			  	<otherwise>
+			  		MONTH(mmm.create_date)
+			  	</otherwise>
+			</choose>
+  			AS 'index',COUNT(mmm.id) AS 'num'
+	FROM merchant_memb_mage mmm
+	INNER JOIN entp_auth e ON e.memb_id = mmm.merchant_id
+	WHERE mmm.del_flag = '0'
+		  AND e.del_flag = '0' AND e.auth_state_type = '3'
+		  AND e.whole_sale_market_id = #{marketId}
+		 <if test="year != null and year != ''">
+		  AND YEAR(mmm.create_date) = #{year}
+		 </if>
+		 <if test="month != null and month != ''">
+		  AND MONTH(mmm.create_date) = #{month}
+		 </if>
+	GROUP BY
+		<choose>
+		  	<when test="flag != null and flag == '0'.toString()">
+		  		DAY(mmm.create_date)
+		  	</when>
+		  	<otherwise>
+		  		MONTH(mmm.create_date)
+		  	</otherwise>
+		</choose>
+  </select>
+  <!-- 市场运营中会员消费统计的处理 -->
+  <select id="sellerMembConsumeTj" parameterType="com.wisea.transac.common.po.memb.MarketMembAddTjPo" resultType="java.lang.Double">
+  	SELECT ROUND(IFNULL(T1.tradVolume,0),2)
+	FROM merchant_memb_mage mmm
+	INNER JOIN entp_auth e ON e.memb_id = mmm.merchant_id
+	RIGHT JOIN(
+			SELECT o.buyer_id,SUM(o.payable_amount) AS 'tradVolume'
+			FROM order_info o
+			INNER JOIN entp_auth e ON e.memb_id = o.seller_id
+			WHERE o.del_flag = '0' AND o.order_state_type != '5'
+				  AND e.del_flag = '0' AND e.auth_state_type = '3'
+		 		  AND e.whole_sale_market_id = #{marketId}
+		 		  <if test="year != null and year != ''">
+				  	AND YEAR(o.create_date) = #{year}
+				  </if>
+				  <if test="month != null and month != ''">
+				    AND MONTH(o.create_date) = #{month}
+				  </if>
+			GROUP BY o.buyer_id
+		) T1 ON T1.buyer_id = mmm.memb_id
+	WHERE mmm.del_flag = '0'
+		  AND e.del_flag = '0' AND e.auth_state_type = '3'
+		  AND e.whole_sale_market_id = #{marketId}
+	ORDER BY T1.tradVolume
+  </select>
+  <!-- 根据会议ID查询是否已经添加 -->
+  <select id="findByIds" resultMap="BaseResultMap">
+    SELECT *
+        from merchant_memb_mage
+    where del_flag = '0'
+        and merchant_id = #{merchantId,jdbcType=BIGINT}
+        and memb_id = #{membId,jdbcType=BIGINT}
+  </select>
+
+   <select id="findListByIds" resultMap="BaseResultMap">
+    SELECT *
+        from merchant_memb_mage
+    where del_flag = '0'
+        and merchant_id = #{merchantId,jdbcType=BIGINT}
+        and memb_id = #{membId,jdbcType=BIGINT}
+  </select>
+
+
+  <!-- 查询该商家会员总数 -->
+   <select id="selMembCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT
+      count(*) as membCount
+    from merchant_memb_mage t1
+    where t1.del_flag = '0'
+    and t1.merchant_id = #{merchantId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 查询该商家有订单会员总数 -->
+  <select id="selOrdMembCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT
+	  count(DISTINCT(t2.buyer_id)) as membCount
+	from merchant_memb_mage t1
+	  inner join order_info t2
+	    on t1.memb_id = t2.buyer_id
+	      and t1.merchant_id = t2.seller_id
+	where t1.del_flag = '0'
+	and t1.merchant_id = #{merchantId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 查询该商家会员订单数据 -->
+  <select id="selOrdStatic" resultType="com.wisea.transac.common.vo.trade.StatisMembOrdVo" parameterType="java.lang.Long">
+    SELECT count(*)  as ordCount,
+	  ROUND(SUM(t2.comm_total_price),2)  as ordAmount
+	from merchant_memb_mage t1
+	  inner join order_info t2
+	    on t1.memb_id = t2.buyer_id
+	      and t1.merchant_id = t2.seller_id
+    where t1.del_flag = '0'
+    and t1.merchant_id = #{merchantId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 采购商排名 -->
+  <select id="cgsOrdStatic" parameterType="com.wisea.transac.common.po.trade.StaticOrderPo" resultType="com.wisea.transac.common.vo.trade.CgsOrderVo">
+    SELECT
+	  t4.regist_tel,
+	  t4.entp_name,
+	  ROUND(SUM(t2.payable_amount) - SUM(IFNULL(t3.refund_amount,0)),2)    ordAmount,
+	  COUNT(t2.id)     ordCount
+	FROM merchant_memb_mage t1
+	  LEFT JOIN order_info t2
+	    ON t1.memb_id = t2.buyer_id
+	  LEFT JOIN refund_appl t3
+	    ON t3.ord_id = t2.id
+	      AND t3.refund_appl_state_type = '2'
+	  LEFT JOIN memb_info t4
+	    ON t4.id = t1.memb_id
+	WHERE t1.del_flag = '0'
+	    AND t2.order_state_type != '5'
+	<if test="sellerId != null and sellerId != ''">
+	   and t1.merchant_id = #{sellerId,jdbcType=BIGINT}
+	</if>
+	<if test="startDate != null">
+      and t2.refer_ord_date >= #{startDate,jdbcType=BIGINT}
+    </if>
+    <if test="endDate != null">
+      and t2.refer_ord_date  <![CDATA[ < ]]> #{endDate,jdbcType=BIGINT}
+    </if>
+	GROUP BY t1.memb_id
+	ORDER BY ordAmount desc
+  </select>
+
+    <!-- 供应商排名 -->
+  <select id="gysOrdStatic" parameterType="com.wisea.transac.common.po.trade.StaticOrderPo" resultType="com.wisea.transac.common.vo.trade.CgsOrderVo">
+    SELECT
+      t4.regist_tel,
+      t4.entp_name,
+      ROUND(SUM(t2.payable_amount) - SUM(IFNULL(t3.refund_amount,0)),2)    ordAmount,
+      COUNT(t2.id)     ordCount
+    FROM merchant_memb_mage t1
+      LEFT JOIN order_info t2
+        ON t1.memb_id = t2.seller_id
+      LEFT JOIN refund_appl t3
+        ON t3.ord_id = t2.id
+          AND t3.refund_appl_state_type = '2'
+      LEFT JOIN memb_info t4
+        ON t4.id = t1.memb_id
+    WHERE t1.del_flag = '0'
+        AND t2.order_state_type != '5'
+    <if test="sellerId != null and sellerId != ''">
+       and t1.merchant_id = = #{merchantId,jdbcType=BIGINT}
+    </if>
+    <if test="startDate != null">
+      and t2.refer_ord_date >= #{startDate,jdbcType=BIGINT}
+    </if>
+    <if test="endDate != null">
+      and t2.refer_ord_date  <![CDATA[ < ]]> #{endDate,jdbcType=BIGINT}
+    </if>
+    GROUP BY t1.merchant_id
+    ORDER BY ordAmount
+  </select>
+</mapper>

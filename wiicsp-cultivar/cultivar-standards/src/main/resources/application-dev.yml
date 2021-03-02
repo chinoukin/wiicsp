@@ -1,0 +1,53 @@
+#spring:
+#  datasource: #spring boot数据源配置
+#    type: com.alibaba.druid.pool.DruidDataSource # 使用druid连接池作为数据源
+#    url: jdbc:mysql://192.168.20.229:3306/wiicsp-cultivar?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+#    username: dbuser
+#    password: dbus24^*
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    druid: # 初始化大小，最小，最大
+#      state-view:
+#        enabled: true # 开启监控页面
+#        loginUsername: root # 账户
+#        loginPassword: 123456 # 密码
+#        resetEnable: false # 是否能够重置数据
+#  redis:
+#    host: 192.168.20.249 # Redis服务器地址
+#    database: 25 # Redis数据库索引(默认为0)
+#    timeout: 20000 # 连接超时时间（毫秒）
+#    redisson:
+#      enable: true
+#      address: redis://${spring.redis.host}:${spring.redis.port:6379}
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      #defaultZone: http://192.168.1.150:2105/eureka/ # 指向配置eureka地址
+#      defaultZone: http://192.168.20.5:2105/eureka/ # 指向配置eureka地址
+#  instance:
+#    preferIpAddress: true # 使用ip地址注册，否则会由于机器没有配置域名发生找不到地址的错误
+#    instance-id: ${spring.cloud.client.ip-address}:${server.port} # 地址格式=ip:端口
+wbfc:
+  #  weixin:
+  #    appId: wx0d8afc941e7e2579
+  #    appSecret: 25250c9b630e72d98f0b2ad362553f76
+  #    httpStr: https://api.weixin.qq.com/sns/jscode2session
+#  mss:
+#    security: CULTIVAR-OPERATION # mss远程 安全服务(用户、菜单、角色)
+#    system: CULTIVAR-SYSTEM # mss 系统服务(行政区划、数据字典)
+#    files: CULTIVAR-FILES # mss文件服务
+  mss:
+    plant: CULTIVAR-PLANT # mss远程 种植服务
+    equipment: CULTIVAR-EQUIPMENT # 设备服务
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-种植综合服务-综合服务(资源、农资农技、种苗、标准、门户、总后台) #标题
+  tencent-im:
+    enabled: true
+    sdkAppId: 1400459109
+    key: 5b2a460fc20eaa8ffad4e804e8f17345f59b5aa7fe820be5979f598257072cd6
+
+# tx-manager 配置
+#tx-lcn:
+#  client:
+#    manager-address: 192.168.20.5:9503

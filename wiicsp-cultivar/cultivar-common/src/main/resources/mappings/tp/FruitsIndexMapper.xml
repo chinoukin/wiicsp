@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.FruitsIndexMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fi_date" property="fiDate" jdbcType="TIMESTAMP" />
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="price_index" property="priceIndex" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fi_date, comm_name, price_index, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from fruits_index
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fruits_index
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    insert into fruits_index (id, fi_date, comm_name,
+      price_index, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{fiDate,jdbcType=TIMESTAMP}, #{commName,jdbcType=VARCHAR},
+      #{priceIndex,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    insert into fruits_index
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fiDate != null" >
+        fi_date,
+      </if>
+      <if test="commName != null" >
+        comm_name,
+      </if>
+      <if test="priceIndex != null" >
+        price_index,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fiDate != null" >
+        #{fiDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commName != null" >
+        #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceIndex != null" >
+        #{priceIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    update fruits_index
+    <set >
+      <if test="fiDate != null" >
+        fi_date = #{fiDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="priceIndex != null" >
+        price_index = #{priceIndex,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    update fruits_index
+    set fi_date = #{fiDate,jdbcType=TIMESTAMP},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      price_index = #{priceIndex,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.portal.FruitsIndexPageListVo"
+  					    parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsIndexPageListPo" >
+    SELECT T1.*
+	FROM fruits_index T1
+	WHERE T1.del_flag = '0'
+		  <if test="commName != null and commName !=''">
+	       	AND T1.comm_name LIKE CONCAT('%', #{commName}, '%')
+	      </if>
+          <if test="startDate != null">
+          	AND T1.fi_date <![CDATA[ >= ]]> #{startDate}
+          </if>
+          <if test="endDate != null">
+          	AND T1.fi_date <![CDATA[ <= ]]> #{endDate}
+          </if>
+    ORDER BY T1.fi_date  DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.FruitsIndex" parameterType="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    select
+    <include refid="Base_Column_List" />
+    from fruits_index
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.FruitsIndex" >
+    update fruits_index
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 验证同一天只能有一种水果 -->
+  <select id="checkFruits" parameterType="java.util.List"
+  				resultType="com.wisea.cultivar.common.entity.tp.FruitsIndex">
+  	SELECT T1.*
+	FROM fruits_index T1
+	WHERE T1.del_flag = '0'
+		AND (
+			<foreach collection="list" item="item1" separator="OR" open="(" close=")">
+		        T1.comm_name = #{item1.commName} AND T1.fi_date = #{item1.fiDate}
+		    </foreach>
+		)
+  </select>
+  <insert id="batchIns" parameterType="java.util.List">
+  	insert into fruits_index (id, fi_date, comm_name,
+      price_index, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+    	(#{item.id,jdbcType=BIGINT}, #{item.fiDate,jdbcType=TIMESTAMP}, #{item.commName,jdbcType=VARCHAR},
+      #{item.priceIndex,jdbcType=DOUBLE}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+  <!-- 批量删除处理 -->
+  <update id="batchDelLogic" parameterType="java.util.List">
+  	update fruits_index
+    set del_flag = '1'
+    where id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+    </foreach>
+  </update>
+  <!-- 获取商品的数量 -->
+  <select id="getCommNames" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsIndexEchartsPo"
+  							resultType="java.lang.String">
+  	SELECT T1.comm_name
+	FROM (SELECT * FROM fruits_index  WHERE del_flag = '0'
+	      AND fi_date <![CDATA[ <= ]]> #{nowDate} ORDER BY fi_date DESC limit 999999) T1
+	GROUP BY T1.comm_name
+  </select>
+  <select id="findEchatsList" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsIndexEchartsPo"
+  							  resultType="com.wisea.cultivar.common.vo.tp.portal.FruitsIndexDetailVo">
+  	SELECT *
+	FROM fruits_index
+	WHERE del_flag = '0'
+		  AND fi_date <![CDATA[ <= ]]> #{nowDate}
+		  <if test="commNamelist != null and commNamelist.size != 0">
+      		AND comm_name IN
+			  <foreach collection="commNamelist" item="commName" separator="," open="(" close=")">
+		        #{commName}
+		      </foreach>
+	      </if>
+	ORDER BY fi_date ASC
+  </select>
+  <select id="forIndexFruitsIndex" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsIndexForIndexPo"
+  			resultType="com.wisea.cultivar.common.vo.tp.portal.FruitsIndexForIndexVo">
+  	SELECT T3.id,T3.fi_date,T3.comm_name,T3.price_index AS 'price',T4.price_index AS 'compValue'
+	FROM (
+	SELECT T1.id,T1.comm_name
+	FROM (SELECT * FROM fruits_index
+		  WHERE del_flag = '0'
+		  <if test="startDate != null">
+     	  	AND fi_date <![CDATA[ >= ]]> #{startDate}
+     	  </if>
+     	  <if test="endDate != null">
+     	  	AND fi_date <![CDATA[ <= ]]> #{endDate}
+     	  </if>
+		  ORDER BY fi_date DESC LIMIT  10000000) AS T1
+	GROUP BY T1.comm_name
+	) AS T2
+	INNER JOIN fruits_index T3 ON T2.id= T3.id
+	LEFT JOIN fruits_index T4 ON T4.comm_name = T2.comm_name AND T4.fi_date = DATE_SUB(T3.fi_date,INTERVAL 1 DAY) AND T4.del_flag = '0'
+  </select>
+</mapper>

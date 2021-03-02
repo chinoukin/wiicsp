@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.CategoryMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.CategoryMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="category_url" property="categoryUrl" jdbcType="VARCHAR" />
+    <result column="glwl_sl" property="glwlSl" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <select id="findCategoryAndVarietiesList" resultType="com.wisea.cultivar.common.vo.bigdata.CategoryAndVarietiesListVo">
+    select
+      cm.id,
+      cm.category_name,
+      vm.varieties_num
+    from
+      varieties_mage vm
+      left join category_mage cm on cm.id = vm.category_id
+    where
+      vm.del_flag = '0'
+  </select>
+
+  <sql id="Base_Column_List" >
+    id, category_name, category_url, glwl_sl, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from category_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from category_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.CategoryMage" >
+    insert into category_mage (id, category_name, category_url,
+      glwl_sl, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR}, #{categoryUrl,jdbcType=VARCHAR},
+      #{glwlSl,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.CategoryMage" >
+    insert into category_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="categoryUrl != null" >
+        category_url,
+      </if>
+      <if test="glwlSl != null" >
+        glwl_sl,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUrl != null" >
+        #{categoryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="glwlSl != null" >
+        #{glwlSl,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.CategoryMage" >
+    update category_mage
+    <set >
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryUrl != null" >
+        category_url = #{categoryUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="glwlSl != null" >
+        glwl_sl = #{glwlSl,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.CategoryMage" >
+    update category_mage
+    set category_name = #{categoryName,jdbcType=VARCHAR},
+      category_url = #{categoryUrl,jdbcType=VARCHAR},
+      glwl_sl = #{glwlSl,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.CategoryMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.CategoryMagePagePo" >
+   select
+      cm.id,
+      cm.category_name,
+      cm.category_url,
+      (SELECT COUNT(id) from varieties_mage WHERE del_flag='0' AND category_id=cm.id) glwl_sl
+    from category_mage cm
+    where cm.del_flag = '0'
+    <if test="categoryName != null and categoryName != ''">
+     AND cm.category_name LIKE CONCAT('%', #{categoryName}, '%')
+    </if>
+     ORDER BY cm.update_date DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.CategoryMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.CategoryMageListPo" >
+     select
+      cm.id,
+      cm.category_name,
+      cm.category_url,
+      (SELECT COUNT(id) from varieties_mage WHERE del_flag='0' AND category_id=cm.id) glwl_sl
+    from category_mage cm
+    where cm.del_flag = '0'
+    <if test="categoryName != null and categoryName != ''">
+     AND cm.category_name LIKE CONCAT('%', #{categoryName}, '%')
+    </if>
+     ORDER BY cm.update_date DESC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.CategoryMage" >
+    update category_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="cheakRepetition" resultType="com.wisea.cultivar.common.entity.bigdata.CategoryMage" parameterType="com.wisea.cultivar.common.entity.bigdata.CategoryMage">
+    select
+    <include refid="Base_Column_List" />
+    from category_mage
+    where del_flag = '0'
+     <if test="categoryName != null and categoryName != ''">
+      and category_name =  #{categoryName}
+     </if>
+     <if test="id != null and id != ''">
+      and id != #{id}
+     </if>
+  </select>
+</mapper>

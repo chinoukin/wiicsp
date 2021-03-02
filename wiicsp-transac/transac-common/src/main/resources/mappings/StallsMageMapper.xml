@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.StallsMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.StallsMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="shop_id" property="shopId" jdbcType="BIGINT"/>
+        <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT"/>
+        <result column="stalls_name" property="stallsName" jdbcType="VARCHAR"/>
+        <result column="stalls_house_num" property="stallsHouseNum" jdbcType="VARCHAR"/>
+        <result column="contacts" property="contacts" jdbcType="VARCHAR"/>
+        <result column="cont_tel" property="contTel" jdbcType="VARCHAR"/>
+        <result column="business_date" property="businessDate" jdbcType="VARCHAR"/>
+        <result column="business_time" property="businessTime" jdbcType="VARCHAR"/>
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR"/>
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR"/>
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR"/>
+        <result column="back_ground_url" property="backGroundUrl" jdbcType="VARCHAR"/>
+        <result column="trad_area_id" property="tradAreaId" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+
+    <resultMap id="StalsMagePageListPoWithVideo" type="com.wisea.transac.common.vo.seller.StallsMagePageListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="shop_id" property="shopId" jdbcType="BIGINT"/>
+        <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT"/>
+        <result column="stalls_name" property="stallsName" jdbcType="VARCHAR"/>
+        <result column="stalls_house_num" property="stallsHouseNum" jdbcType="VARCHAR"/>
+        <result column="contacts" property="contacts" jdbcType="VARCHAR"/>
+        <result column="cont_tel" property="contTel" jdbcType="VARCHAR"/>
+        <result column="business_date" property="businessDate" jdbcType="VARCHAR"/>
+        <result column="business_time" property="businessTime" jdbcType="VARCHAR"/>
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR"/>
+        <result column="areaProvName" property="areaProvName" jdbcType="VARCHAR"/>
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR"/>
+        <result column="areaCityName" property="areaCityName" jdbcType="VARCHAR"/>
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR"/>
+        <result column="areaCouName" property="areaCouName" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR"/>
+        <result column="back_ground_url" property="backGroundUrl" jdbcType="VARCHAR"/>
+        <collection property="videos" column="id" javaType="ArrayList"
+                    ofType="com.wisea.transac.common.vo.seller.StallsVideoMagePageListVo"
+                    select="findVideo">
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , shop_id, whole_sale_market_id, stalls_name, stalls_house_num, contacts, cont_tel,
+    business_date, business_time, area_prov, area_city, area_cou, address, sort, effe_inval_state,
+    back_ground_url,trad_area_id, create_by, create_date, update_by, update_date, remarks, del_flag
+    </sql>
+
+    <!-- 根据商户ID查询商户档口列表 -->
+    <select id="findByMembId" parameterType="java.lang.Long"
+            resultType="com.wisea.transac.common.vo.seller.StallsMageListVo">
+        select sm.id,
+               sm.stalls_name stallsName,
+               sm.shop_id     shopId
+        from stalls_mage sm
+                 inner join shop_info si on si.id = sm.shop_id
+        where sm.del_flag = '0'
+          and si.merchant_id = #{membId}
+    </select>
+
+    <!-- 根据ids档口列表 -->
+    <select id="findByIds" parameterType="java.util.List" resultType="com.wisea.transac.common.vo.seller.StallsMageListVo">
+        select
+        sm.id,
+        sm.stalls_name stallsName
+        from
+        stalls_mage sm
+        where
+        sm.del_flag = '0'
+        and sm.id in
+        <foreach collection="list" item="id" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from stalls_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from stalls_mage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.StallsMage">
+        insert into stalls_mage (id, shop_id, whole_sale_market_id,
+                                 stalls_name, stalls_house_num, contacts,
+                                 cont_tel, business_date, business_time,
+                                 area_prov, area_city, area_cou,
+                                 address, sort, effe_inval_state,
+                                 back_ground_url, trad_area_id, create_by, create_date,
+                                 update_by, update_date, remarks,
+                                 del_flag)
+        values (#{id,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT}, #{wholeSaleMarketId,jdbcType=BIGINT},
+                #{stallsName,jdbcType=VARCHAR}, #{stallsHouseNum,jdbcType=VARCHAR}, #{contacts,jdbcType=VARCHAR},
+                #{contTel,jdbcType=VARCHAR}, #{businessDate,jdbcType=VARCHAR}, #{businessTime,jdbcType=VARCHAR},
+                #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+                #{address,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{effeInvalState,jdbcType=VARCHAR},
+                #{backGroundUrl,jdbcType=VARCHAR}, #{tradAreaId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR},
+                #{createDate,jdbcType=TIMESTAMP},
+                #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+                #{delFlag,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.StallsMage">
+        insert into stalls_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="shopId != null">
+                shop_id,
+            </if>
+            <if test="wholeSaleMarketId != null">
+                whole_sale_market_id,
+            </if>
+            <if test="stallsName != null">
+                stalls_name,
+            </if>
+            <if test="stallsHouseNum != null">
+                stalls_house_num,
+            </if>
+            <if test="contacts != null">
+                contacts,
+            </if>
+            <if test="contTel != null">
+                cont_tel,
+            </if>
+            <if test="businessDate != null">
+                business_date,
+            </if>
+            <if test="businessTime != null">
+                business_time,
+            </if>
+            <if test="areaProv != null">
+                area_prov,
+            </if>
+            <if test="areaCity != null">
+                area_city,
+            </if>
+            <if test="areaCou != null">
+                area_cou,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="effeInvalState != null">
+                effe_inval_state,
+            </if>
+            <if test="backGroundUrl != null">
+                back_ground_url,
+            </if>
+            <if test="tradAreaId != null">
+                trad_area_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="shopId != null">
+                #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="wholeSaleMarketId != null">
+                #{wholeSaleMarketId,jdbcType=BIGINT},
+            </if>
+            <if test="stallsName != null">
+                #{stallsName,jdbcType=VARCHAR},
+            </if>
+            <if test="stallsHouseNum != null">
+                #{stallsHouseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="contTel != null">
+                #{contTel,jdbcType=VARCHAR},
+            </if>
+            <if test="businessDate != null">
+                #{businessDate,jdbcType=VARCHAR},
+            </if>
+            <if test="businessTime != null">
+                #{businessTime,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null">
+                #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null">
+                #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null">
+                #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="effeInvalState != null">
+                #{effeInvalState,jdbcType=VARCHAR},
+            </if>
+            <if test="backGroundUrl != null">
+                #{backGroundUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="tradAreaId != null">
+                #{tradAreaId},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.StallsMage">
+        update stalls_mage
+        <set>
+            <if test="shopId != null">
+                shop_id = #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="wholeSaleMarketId != null">
+                whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+            </if>
+            <if test="stallsName != null">
+                stalls_name = #{stallsName,jdbcType=VARCHAR},
+            </if>
+            <if test="stallsHouseNum != null">
+                stalls_house_num = #{stallsHouseNum,jdbcType=VARCHAR},
+            </if>
+            <if test="contacts != null">
+                contacts = #{contacts,jdbcType=VARCHAR},
+            </if>
+            <if test="contTel != null">
+                cont_tel = #{contTel,jdbcType=VARCHAR},
+            </if>
+            <if test="businessDate != null">
+                business_date = #{businessDate,jdbcType=VARCHAR},
+            </if>
+            <if test="businessTime != null">
+                business_time = #{businessTime,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null">
+                area_prov = #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null">
+                area_city = #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null">
+                area_cou = #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="effeInvalState != null">
+                effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+            </if>
+            <if test="backGroundUrl != null">
+                back_ground_url = #{backGroundUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="tradAreaId != null">
+                trad_area_id = #{tradAreaId},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.StallsMage">
+        update stalls_mage
+        set shop_id              = #{shopId,jdbcType=BIGINT},
+            whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+            stalls_name          = #{stallsName,jdbcType=VARCHAR},
+            stalls_house_num     = #{stallsHouseNum,jdbcType=VARCHAR},
+            contacts             = #{contacts,jdbcType=VARCHAR},
+            cont_tel             = #{contTel,jdbcType=VARCHAR},
+            business_date        = #{businessDate,jdbcType=VARCHAR},
+            business_time        = #{businessTime,jdbcType=VARCHAR},
+            area_prov            = #{areaProv,jdbcType=VARCHAR},
+            area_city            = #{areaCity,jdbcType=VARCHAR},
+            area_cou             = #{areaCou,jdbcType=VARCHAR},
+            address              = #{address,jdbcType=VARCHAR},
+            sort                 = #{sort,jdbcType=INTEGER},
+            effe_inval_state     = #{effeInvalState,jdbcType=VARCHAR},
+            back_ground_url      = #{backGroundUrl,jdbcType=VARCHAR},
+            trad_area_id         = #{tradAreaId},
+            create_by            = #{createBy,jdbcType=VARCHAR},
+            create_date          = #{createDate,jdbcType=TIMESTAMP},
+            update_by            = #{updateBy,jdbcType=VARCHAR},
+            update_date          = #{updateDate,jdbcType=TIMESTAMP},
+            remarks              = #{remarks,jdbcType=VARCHAR},
+            del_flag             = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findPageList" resultMap="StalsMagePageListPoWithVideo"
+            parameterType="com.wisea.transac.common.po.seller.StallsMagePageListPo">
+        select distinct sm.id                       id,
+        sm.shop_id                  shopId,
+        sm.whole_sale_market_id     wholeSaleMarketId,
+        sm.stalls_name              stallsName,
+        sm.stalls_house_num         stallsHouseNum,
+        sm.contacts                 contacts,
+        sm.cont_tel                 contTel,
+        sm.business_date            businessDate,
+        sm.business_time            businessTime,
+        sm.area_prov                areaProv,
+        prov.name                   areaProvName,
+        sm.area_city                areaCity,
+        city.name                   areaCityName,
+        sm.area_cou                 areaCou,
+        cou.name                    areaCouName,
+        sm.address                  address,
+        sm.sort                     sort,
+        sm.effe_inval_state         effeInvalState,
+        sm.back_ground_url          backGroundUrl,
+        sm.trad_area_id             tradAreaId,
+        wsmm.whole_sale_market_name wholeSaleMarketName
+        from stalls_mage sm
+        left join whole_sale_market_mage wsmm on wsmm.id = sm.whole_sale_market_id
+        left join sys_area prov on prov.code = sm.area_prov
+        left join sys_area city on city.code = sm.area_city
+        left join sys_area cou on cou.code = sm.area_cou
+        left join stalls_staff_rela_mage ssrm on ssrm.stalls_mage_id = sm.id
+        LEFT JOIN sale_staff_info_mage ssim ON ssim.sale_staff_id = ssrm.staff_info_mage_id AND ssrm.rela_state_type = '0'
+        <if test="tradAreaId!=null">
+            left join trad_area_mage tam on tam.whole_sale_market_id = sm.whole_sale_market_id
+        </if>
+        <if test="tradAreaIds!=null">
+            left join trad_area_mage tam on tam.whole_sale_market_id = sm.whole_sale_market_id
+        </if>
+        <if test="tradAreaId!=null and commId!=null">
+            left join trad_area_comm_rela_mage tacrm on tacrm.trad_area_id = tam.id
+            left join comm_pub_info cpi on cpi.stalls_mage_id = sm.id and cpi.comm_sale_set_id = tacrm.comm_sale_set_id
+        </if>
+        where
+           sm.del_flag = '0'
+           and wsmm.del_flag = '0'
+        <if test="effeInvalState != null and effeInvalState != ''">
+            and sm.effe_inval_state = #{effeInvalState}
+        </if>
+        <if test="saleId!=null and saleId!=''">
+            and ssim.sale_staff_id = #{saleId}
+        </if>
+        <if test="shopId!=null">
+            and sm.shop_id = #{shopId}
+        </if>
+        <if test="wholeSaleMarketId!=null">
+            and sm.whole_sale_market_id = #{wholeSaleMarketId}
+        </if>
+        <if test="tradAreaId!=null">
+            and sm.trad_area_id = #{tradAreaId}
+            and tam.del_flag = '0'
+        </if>
+        <if test="tradAreaIds != null and tradAreaIds.size != 0">
+            and tam.del_flag = '0'
+            and sm.trad_area_id IN
+            <foreach collection="tradAreaIds" item="id" open="(" close=")" separator=",">
+                ${id}
+            </foreach>
+        </if>
+        <if test="tradAreaId!=null and commId!=null">
+            and tacrm.comm_sale_set_id = #{commId}
+            and tacrm.del_flag = '0'
+            and cpi.del_flag = '0'
+        </if>
+        order by sm.sort desc
+    </select>
+
+    <select id="findAll" resultType="com.wisea.transac.common.vo.seller.StallsMagePageListVo" parameterType="com.wisea.transac.common.po.seller.StallsMagePo">
+        select
+        id id,
+        shop_id shopId,
+        whole_sale_market_id wholeSaleMarketId,
+        stalls_name stallsName,
+        stalls_house_num stallsHouseNum,
+        contacts contacts,
+        cont_tel contTel,
+        business_date businessDate,
+        business_time businessTime,
+        area_prov areaProv,
+        area_city areaCity,
+        area_cou areaCou,
+        address address,
+        sort sort,
+        effe_inval_state effeInvalState,
+        back_ground_url backGroundUrl,
+        trad_area_id tradAreaId
+        from
+        stalls_mage
+        where
+        del_flag = '0'
+        <if test="shopId!=null">
+            and shop_id = #{shopId}
+        </if>
+        <if test="wholeSaleMarketId!=null">
+            and whole_sale_market_id = #{wholeSaleMarketId}
+        </if>
+        order by sort desc
+    </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.seller.StallsMageInfoVo" parameterType="java.lang.Long">
+        select sm.id                       id,
+               sm.shop_id                  shopId,
+               sm.whole_sale_market_id     wholeSaleMarketId,
+               wsmm.whole_sale_market_name wholeSaleMarketName,
+               sm.stalls_name              stallsName,
+               sm.stalls_house_num         stallsHouseNum,
+               sm.contacts                 contacts,
+               sm.cont_tel                 contTel,
+               sm.business_date            businessDate,
+               sm.business_time            businessTime,
+               sm.area_prov                areaProv,
+               prov.name                   areaProvName,
+               sm.area_city                areaCity,
+               city.name                   areaCityName,
+               sm.area_cou                 areaCou,
+               cou.name                    areaCouName,
+               sm.address                  address,
+               sm.sort                     sort,
+               sm.effe_inval_state         effeInvalState,
+               sm.back_ground_url          backGroundUrl,
+               sm.trad_area_id             tradAreaId,
+               tam.catg_name               tradAreaName
+        from stalls_mage sm
+                 left join trad_area_mage tam on tam.id = sm.trad_area_id
+                 left join sys_area prov on sm.area_prov = prov.code
+                 left join sys_area city on sm.area_city = city.code
+                 left join sys_area cou on sm.area_cou = cou.code
+                 left join whole_sale_market_mage wsmm on wsmm.id = sm.whole_sale_market_id
+        where sm.del_flag = '0'
+          and tam.del_flag = '0'
+          and wsmm.del_flag = '0'
+          and sm.id = #{id}
+    </select>
+
+    <select id="findVideo" parameterType="java.lang.Long"
+            resultType="com.wisea.transac.common.vo.seller.StallsVideoMagePageListVo">
+        select svm.*
+        from stalls_video_mage svm
+        where svm.del_flag = '0'
+          and svm.stalls_mage_id = #{stallId}
+        order by svm.set_as_cover_flag asc
+    </select>
+
+    <!-- 查询档口下所有商品的总销量   -->
+    <select id="salesVolumSumByStallsId" resultType="com.wisea.transac.common.vo.seller.StallsMageSelesVo" parameterType="java.lang.Long">
+        SELECT
+            IFNULL(SUM(lsq.sales_volume),0) salesVolume
+        FROM
+            comm_pub_info cpi
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id
+        WHERE
+            cpi.del_flag = '0'
+            AND cpi.comm_state_type = '0'
+            AND cpi.stalls_mage_id = #{id}
+    </select>
+
+    <resultMap id="StalsMageList" type="com.wisea.transac.common.vo.seller.StallsMagePageListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+    </resultMap>
+    <!-- 查询交易区下所有的档口id   -->
+    <select id="findByTradAreaId" resultType="com.wisea.transac.common.vo.seller.StallsMagePageListVo" parameterType="java.lang.Long">
+        SELECT
+            id
+        FROM
+            stalls_mage sm
+        WHERE
+            sm.del_flag = '0'
+            AND sm.trad_area_id = #{id}
+    </select>
+</mapper>

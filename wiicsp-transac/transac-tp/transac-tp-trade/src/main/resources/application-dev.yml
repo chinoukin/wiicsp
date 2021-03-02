@@ -1,0 +1,35 @@
+payconfig:
+  yspay:
+    partnerId: denghaoji
+    partnerName: 重庆洪九果品股份有限公司
+    privateKeyPassword: denghaoji
+    privateKeyPath: cert/hjgp.pfx #加密
+    publicKeyPath: cert/yspay.cer #解密
+    appid: wx0d8afc941e7e2579
+    appSecret: 25250c9b630e72d98f0b2ad362553f76
+    baseNotifyUrl: http://wiseadev.free.idcfengye.com/transac
+    entpRegNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/entpAuthenticate/notify
+    notifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/pay/notify
+    refundNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/refund/notify
+    divisionNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/division/notify
+    scanReportNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/scanReport/notify
+    returnUrl: http://wiseadev.free.idcfengye.com
+    subject: 洪九果品
+    trade-safeguard:
+      enabled: true
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务(买家买家操作流程、支付功能) #标题
+  mss:
+    cultivar-bigdata: CULTIVAR-DATA-DASHBOARD
+    tp-product: TRANSAC-TP-PRODUCT
+    security: TRANSAC-OPERATION # mss远程 安全服务(用户、菜单、角色)
+    system: TRANSAC-OPERATION # mss 系统服务(行政区划、数据字典)
+    files: TRANSAC-OPERATION # mss文件服务
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG
+    org.quartz: debug

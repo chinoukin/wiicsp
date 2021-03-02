@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LtaCommRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LtaCommRela" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+    <result column="comm_num" property="commNum" jdbcType="VARCHAR" />
+    <result column="comm_hh" property="commHh" jdbcType="VARCHAR" />
+    <result column="comm_pic_url" property="commPicUrl" jdbcType="VARCHAR" />
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="BIGINT" />
+    <result column="comm_catg_id" property="commCatgId" jdbcType="BIGINT" />
+    <result column="comm_vari_id" property="commVariId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="lta_comm_state_type" property="ltaCommStateType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+    <resultMap id="BaseMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaCommRelaGetVo" >
+        <id column="lcr.id" property="id" jdbcType="BIGINT" />
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR" />
+        <result column="comm_hh" property="commHh" jdbcType="VARCHAR" />
+        <result column="comm_pic_url" property="commPicUrl" jdbcType="VARCHAR" />
+        <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+        <result column="brand_id" property="brandId" jdbcType="BIGINT" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+        <result column="comm_catg_id" property="commCatgId" jdbcType="BIGINT" />
+        <result column="comm_vari_id" property="commVariId" jdbcType="BIGINT" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="lta_comm_state_type" property="ltaCommStateType" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <collection property="ltaCommPackPos" ofType="com.wisea.cultivar.common.po.tp.lta.LtaCommPackPo">
+            <result column="lta_comm_rela_id" property="ltaCommRelaId" jdbcType="BIGINT"/>
+            <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT"/>
+            <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR"/>
+            <result column="spec" property="spec" jdbcType="DOUBLE"/>
+            <result column="pack_instr" property="packInstr" jdbcType="VARCHAR"/>
+        </collection>
+  </resultMap>
+
+    <resultMap id="ListResultMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaCommRelaListVo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR" />
+        <result column="comm_hh" property="commHh" jdbcType="VARCHAR" />
+        <result column="comm_pic_url" property="commPicUrl" jdbcType="VARCHAR" />
+        <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+        <result column="brand_id" property="brandId" jdbcType="BIGINT" />
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+        <result column="comm_catg_id" property="commCatgId" jdbcType="BIGINT" />
+        <result column="comm_vari_id" property="commVariId" jdbcType="BIGINT" />
+        <result column="level" property="level" jdbcType="VARCHAR" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="lta_comm_state_type" property="ltaCommStateType" jdbcType="VARCHAR" />
+        <collection property="ltaCommPackPos" ofType="com.wisea.cultivar.common.vo.tp.lta.LtaCommPackListVo">
+            <result column="lcp_id" property="id" jdbcType="BIGINT"/>
+            <result column="lta_comm_rela_id" property="ltaCommRelaId" jdbcType="BIGINT"/>
+            <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT"/>
+            <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR"/>
+            <result column="spec" property="spec" jdbcType="DOUBLE"/>
+            <result column="pack_instr" property="packInstr" jdbcType="VARCHAR"/>
+        </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_num,memb_id, comm_hh, comm_pic_url, comm_name, brand_id, comm_catg_id, comm_vari_id,
+    level,lta_comm_state_type, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+    <sql id="commonSql">
+        SELECT
+        DISTINCT lcr.id
+        FROM
+        lta_comm_rela lcr
+        WHERE lcr.del_flag = '0'
+        <if test="search != null and search != ''">
+            AND (
+            lcr.comm_num LIKE CONCAT('%', #{search}, '%')
+            OR lcr.comm_hh LIKE CONCAT('%', #{search}, '%')
+            OR lcr.comm_name LIKE CONCAT('%', #{search}, '%')
+            OR lcr.brand_id LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="searchInput != null and searchInput != ''">
+            AND (
+            lcr.comm_catg_id LIKE CONCAT('%', #{searchInput}, '%')
+            OR lcr.comm_vari_id LIKE CONCAT('%', #{searchInput}, '%')
+            OR lcr.level LIKE CONCAT('%', #{searchInput}, '%')
+            )
+        </if>
+        <if test="membId != null and membId != ''">
+            AND lcr.memb_id = #{membId}
+        </if>
+        <if test="commId != null and commId != ''">
+            AND lcr.comm_id = #{commId}
+        </if>
+        <choose>
+            <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+                ORDER BY #{pageInfo.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY lcr.create_date DESC
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="findListSubQueryCount" resultType="java.lang.String">
+        <include refid="commonSql"></include>
+    </select>
+    <!-- 分页查询商品信息 -->
+    <select id="findListSubQuery" resultMap="ListResultMap" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaCommRelaPagePo">
+        SELECT
+        b.*
+        FROM (
+        <include refid="commonSql"></include>
+        LIMIT ${page.limit}) a,
+        ( SELECT
+        DISTINCT (lcr.id),comm_num,memb_id, comm_hh, comm_pic_url, comm_name, brand_id, comm_catg_id, comm_vari_id,
+        level,lcr.remarks,lta_comm_state_type,lcr.create_date,bm.brand_name,mum.meas_unit_name,lcp.id as 'lcp_id',lcp.lta_comm_rela_id,lcp.spec,lcp.pack_instr
+        FROM
+        lta_comm_rela lcr
+        LEFT JOIN lta_comm_pack lcp ON lcp.lta_comm_rela_id = lcr.id AND lcp.del_flag = '0'
+        LEFT JOIN meas_unit_mage mum ON mum.id = lcp.meas_unit_id
+        LEFT JOIN brand_mage bm ON bm.id = lcr.brand_id
+        WHERE lcr.del_flag = '0'
+        <if test="search != null and search != ''">
+            AND (
+            lcr.comm_num LIKE CONCAT('%', #{search}, '%')
+            OR lcr.comm_hh LIKE CONCAT('%', #{search}, '%')
+            OR lcr.comm_name LIKE CONCAT('%', #{search}, '%')
+            OR lcr.brand_id LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="searchInput != null and searchInput != ''">
+            AND (
+            lcr.comm_catg_id LIKE CONCAT('%', #{searchInput}, '%')
+            OR lcr.comm_vari_id LIKE CONCAT('%', #{searchInput}, '%')
+            OR lcr.level LIKE CONCAT('%', #{searchInput}, '%')
+            )
+        </if>
+        <if test="membId != null and membId != ''">
+            AND lcr.memb_id = #{membId}
+        </if>
+        <if test="commId != null and commId != ''">
+            AND lcr.comm_id = #{commId}
+        </if>
+        <choose>
+            <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+                ORDER BY #{pageInfo.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY lcr.create_date DESC
+            </otherwise>
+        </choose>
+        ) b
+        where a.id = b.id
+        ORDER BY b.create_date DESC
+    </select>
+    <!-- 编辑商品信息 -->
+    <select id="findById" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaCommRelaGetPo" resultMap="BaseMap">
+      SELECT lcr.id AS 'lcr.id',memb_id, comm_num, comm_hh, comm_pic_url, comm_name, brand_id, comm_catg_id, comm_vari_id,
+        level,lta_comm_state_type,lcr.remarks,bm.brand_name,mum.meas_unit_name,lcp.lta_comm_rela_id,lcp.meas_unit_id,lcp.spec,lcp.pack_instr
+      FROM lta_comm_rela lcr
+      LEFT JOIN lta_comm_pack lcp ON lcp.lta_comm_rela_id = lcr.id AND lcp.del_flag = '0'
+      LEFT JOIN meas_unit_mage mum ON mum.id = lcp.meas_unit_id
+      LEFT JOIN brand_mage bm ON bm.id = lcr.brand_id
+      where lcr.id = #{id,jdbcType=BIGINT}
+    </select>
+    <!-- 查询长协商品的最大编号 -->
+    <select id="findLtaCommRelaMaxNum" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT comm_num FROM lta_comm_rela WHERE comm_num LIKE CONCAT(#{commNum}, '%')
+    </select>
+
+  <!-- 根据发布商品ID查询对应商品分类ID -->
+  <select id="getCommIdMap" parameterType="java.util.List" resultType="java.util.Map">
+    select
+      lcr.id,
+      lcr.comm_catg_id
+    from
+      lta_comm_rela lcr
+    where lcr.id in
+      <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from lta_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lta_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommRela" >
+    insert into lta_comm_rela (id, memb_id,comm_num, comm_hh,
+      comm_pic_url, comm_name, brand_id,
+      comm_catg_id, comm_vari_id, level,lta_comm_state_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT},#{membId,jdbcType=BIGINT}, #{commNum,jdbcType=VARCHAR}, #{commHh,jdbcType=VARCHAR},
+      #{commPicUrl,jdbcType=VARCHAR}, #{commName,jdbcType=VARCHAR}, #{brandId,jdbcType=BIGINT},
+      #{commCatgId,jdbcType=BIGINT}, #{commVariId,jdbcType=BIGINT}, #{level,jdbcType=VARCHAR},#{ltaCommStateType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommRela" >
+    insert into lta_comm_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="commNum != null" >
+        comm_num,
+      </if>
+      <if test="commHh != null" >
+        comm_hh,
+      </if>
+      <if test="commPicUrl != null" >
+        comm_pic_url,
+      </if>
+      <if test="commName != null" >
+        comm_name,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="commCatgId != null" >
+        comm_catg_id,
+      </if>
+      <if test="commVariId != null" >
+        comm_vari_id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="ltaCommStateType != null" >
+        lta_comm_state_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commNum != null" >
+        #{commNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commHh != null" >
+        #{commHh,jdbcType=VARCHAR},
+      </if>
+      <if test="commPicUrl != null" >
+        #{commPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commName != null" >
+        #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=BIGINT},
+      </if>
+      <if test="commCatgId != null" >
+        #{commCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="commVariId != null" >
+        #{commVariId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="ltaCommStateType != null" >
+        #{ltaCommStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommRela" >
+    update lta_comm_rela
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=VARCHAR},
+      </if>
+      <if test="commNum != null" >
+        comm_num = #{commNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commHh != null" >
+        comm_hh = #{commHh,jdbcType=VARCHAR},
+      </if>
+      <if test="commPicUrl != null" >
+        comm_pic_url = #{commPicUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=BIGINT},
+      </if>
+      <if test="commCatgId != null" >
+        comm_catg_id = #{commCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="commVariId != null" >
+        comm_vari_id = #{commVariId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="ltaCommStateType != null" >
+        lta_comm_state_type = #{ltaCommStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LtaCommRela" >
+    update lta_comm_rela
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_num = #{commNum,jdbcType=VARCHAR},
+      comm_hh = #{commHh,jdbcType=VARCHAR},
+      comm_pic_url = #{commPicUrl,jdbcType=VARCHAR},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=BIGINT},
+      comm_catg_id = #{commCatgId,jdbcType=BIGINT},
+      comm_vari_id = #{commVariId,jdbcType=BIGINT},
+      level = #{level,jdbcType=VARCHAR},
+      lta_comm_state_type = #{ltaCommStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

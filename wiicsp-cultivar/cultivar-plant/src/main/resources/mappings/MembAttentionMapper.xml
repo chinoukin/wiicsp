@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.MembAttentionMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.MembAttention" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="memb_attention_type" property="membAttentionType" jdbcType="VARCHAR" />
+    <result column="memb_attention_id" property="membAttentionId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, memb_attention_type, memb_attention_id, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_attention
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from memb_attention
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.MembAttention" >
+    insert into memb_attention (id, memb_id, memb_attention_type,
+      memb_attention_id, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{membAttentionType,jdbcType=VARCHAR},
+      #{membAttentionId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.MembAttention" >
+    insert into memb_attention
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="membAttentionType != null" >
+        memb_attention_type,
+      </if>
+      <if test="membAttentionId != null" >
+        memb_attention_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="membAttentionType != null" >
+        #{membAttentionType,jdbcType=VARCHAR},
+      </if>
+      <if test="membAttentionId != null" >
+        #{membAttentionId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.MembAttention" >
+    update memb_attention
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="membAttentionType != null" >
+        memb_attention_type = #{membAttentionType,jdbcType=VARCHAR},
+      </if>
+      <if test="membAttentionId != null" >
+        memb_attention_id = #{membAttentionId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.MembAttention" >
+    update memb_attention
+    set memb_id = #{membId,jdbcType=BIGINT},
+      memb_attention_type = #{membAttentionType,jdbcType=VARCHAR},
+      memb_attention_id = #{membAttentionId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.MembAttentionPageListVo" parameterType="com.wisea.cultivar.plant.po.MembAttentionPageListPo" >
+    select
+      ma.id id,
+	  ma.memb_id membId,
+	  ma.memb_attention_type membAttentionType,
+	  ma.memb_attention_id membAttentionId,
+	  IFNULL(zmi.cont_name, zmi.login_name) as userName,
+	  zmi.org_name orgName,
+      zmi.logo_url logoUrl,
+      si.shop_name entpName,
+      if((zmi.acct_status='0' or zmi.del_flag='1' or ea.del_flag='1'),0,1) as status,
+      sa1.name areaProv,
+      sa2.name areaCity,
+      sa3.name areaCou,
+      ea.address address,
+      IFNULL(ea.conter,rpa.real_name) conter,
+      IFNULL(ea.cont_tel,rpa.cont_tel) contTel,
+      si.id shopId
+	from
+	  memb_attention ma left join zhfw_memb_info  zmi on ma.memb_attention_id=zmi.id
+	  left join shop_info si on zmi.id=si.memb_id
+	  left join real_person_auth rpa on rpa.memb_id=zmi.id
+	  left join entp_auth ea on zmi.id=ea.memb_id
+	  left join sys_area sa1 on  sa1.code=ea.area_prov
+      left join sys_area sa2 on  sa2.code=ea.area_city
+      left join sys_area sa3 on  sa3.code=ea.area_cou
+    where
+	  ma.del_flag = '0'
+	  <if test="membId !=null and membId !=''">
+        and ma.memb_id=#{membId}
+      </if>
+    <if test="membAttentionType !=null and membAttentionType !=''">
+      and ma.memb_attention_type=#{membAttentionType}
+    </if>
+    order by ma.create_date desc
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.MembAttentionInfoVo" parameterType="java.lang.Long" >
+    select
+	  memb_id membId,
+	  memb_attention_type membAttentionType,
+	  memb_attention_id membAttentionId
+	from
+	  memb_attention
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+  <!-- 条件查询 -->
+  <select id="findInfoByConditions" resultType="com.wisea.cultivar.plant.vo.MembAttentionInfoVo" parameterType="com.wisea.cultivar.plant.entity.MembAttention" >
+    select
+      id,
+	  memb_id membId,
+	  memb_attention_type membAttentionType,
+	  memb_attention_id membAttentionId
+	from
+	  memb_attention
+	where
+	  del_flag = '0'
+	<if test="membId != null">
+      and memb_id = #{membId}
+    </if>
+    <if test="membAttentionType != null">
+      and memb_attention_type = #{membAttentionType}
+    </if>
+    <if test="membAttentionId != null">
+      and memb_attention_id = #{membAttentionId}
+    </if>
+  </select>
+    <select id="findListByMemberIdAndMembAttentionId" resultType="com.wisea.cultivar.plant.vo.MembAttentionInfoVo">
+      select
+      id,
+      memb_id membId,
+      memb_attention_type membAttentionType,
+      memb_attention_id membAttentionId
+      from
+      memb_attention
+      where
+      del_flag = '0'
+      <if test="membId != null">
+        and memb_id = #{membId}
+      </if>
+      <if test="membAttentionType != null">
+        and memb_attention_type = #{membAttentionType}
+      </if>
+      <if test="membAttentionId != null">
+        and memb_attention_id = #{membAttentionId}
+      </if>
+    </select>
+</mapper>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.GoodsRecallMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.GoodsRecall" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="goods_num" property="goodsNum" jdbcType="VARCHAR" />
+    <result column="recall_prov" property="recallProv" jdbcType="VARCHAR" />
+    <result column="recall_city" property="recallCity" jdbcType="VARCHAR" />
+    <result column="recall_county" property="recallCounty" jdbcType="VARCHAR" />
+    <result column="goods_date" property="goodsDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goods_name, goods_num, recall_prov, recall_city, recall_county, goods_date, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!--根据批次号湖南省返回-->
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.bigdata.GoodsRecallInfoVo"  >
+    select
+	  goods_name goodsName,
+	  goods_num goodsNum,
+	  recall_city recallCity,
+	  goods_date goodsDate
+	from
+	  goods_recall
+	where
+	  del_flag = '0'
+	  and recall_prov = '湖南省'
+	  group by goods_num
+	  order by goods_date desc
+  </select>
+    <!--根据批次号黔西南布依族苗族自治州返回-->
+    <select id="findCeHengInfo" resultType="com.wisea.cultivar.common.vo.bigdata.GoodsRecallInfoVo"  >
+    select
+	  goods_name goodsName,
+	  goods_num goodsNum,
+	  recall_county recallCity,
+	  goods_date goodsDate
+	from
+	  goods_recall
+	where
+	  del_flag = '0'
+	  and recall_city = '黔西南布依族苗族自治州'
+	  group by goods_num
+	  order by goods_date desc
+  </select>
+  <!--统计召回总数量-->
+  <select id="totalStatistics" resultType="java.lang.Long" >
+    select
+	  count(1)
+	from
+	  goods_recall
+	where
+	  del_flag = '0'
+	  and recall_prov='湖南省'
+  </select>
+
+    <!--统计黔西南布依族苗族自治州下（册亨县平级）召回总数量-->
+    <select id="ceHengtotalStatistics" resultType="java.lang.Long" >
+    select
+	  count(1)
+	from
+	  goods_recall
+	where
+	  del_flag = '0'
+	  and recall_city='黔西南布依族苗族自治州'
+  </select>
+  <!--按照城市统计湖南省召回数量-->
+  <select id="groupStatistics" resultType="com.wisea.cultivar.common.vo.bigdata.CityAndQuantity" parameterType="java.lang.String" >
+    select sa.name cityName, ifnull(gr.count,0)  quantity
+    from sys_area sa
+    left join (select count(1) count, recall_city  from goods_recall where  del_flag = '0'  group by recall_city) gr
+    on sa.name = gr.recall_city
+    where sa.parent_id = #{parentId} order by code
+  </select>
+    <!--按照县统计黔西南布依族苗族自治州召回数量-->
+    <select id="groupCeHengStatistics" resultType="com.wisea.cultivar.common.vo.bigdata.CityAndQuantity" parameterType="java.lang.String" >
+    select sa.name cityName, ifnull(gr.count,0)  quantity
+    from sys_area sa
+    left join (select count(1) count, recall_county  from goods_recall where  del_flag = '0'  group by recall_county) gr
+    on sa.name = gr.recall_county
+    where sa.parent_id = #{parentId} order by code
+  </select>
+    <!--按照湖南省的id-->
+    <select id="getParentId" resultType="java.lang.String"  >
+    select id
+    from sys_area
+    where name='湖南省'
+  </select>
+
+    <!--按照湖南省的id-->
+    <select id="getCeHengParentId" resultType="java.lang.String"  >
+    select id
+    from sys_area
+    where name='黔西南布依族苗族自治州'
+  </select>
+</mapper>

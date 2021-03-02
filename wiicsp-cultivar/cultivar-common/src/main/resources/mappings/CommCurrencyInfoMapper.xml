@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.CommCurrencyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" extends="BaseResultMap" >
+    <result column="comm_currency_content" property="commCurrencyContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    comm_currency_content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zhfw_comm_currency_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zhfw_comm_currency_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" >
+    insert into zhfw_comm_currency_info (id, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, comm_currency_content)
+    values (#{id,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{commCurrencyContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" >
+    insert into zhfw_comm_currency_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="commCurrencyContent != null" >
+        comm_currency_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="commCurrencyContent != null" >
+        #{commCurrencyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" >
+    update zhfw_comm_currency_info
+    <set >
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="commCurrencyContent != null" >
+        comm_currency_content = #{commCurrencyContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" >
+    update zhfw_comm_currency_info
+    set create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      comm_currency_content = #{commCurrencyContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.ZhfwCommCurrencyInfo" >
+    update zhfw_comm_currency_info
+    set create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.common.vo.CommCurrencyInfoPageListVo" parameterType="com.wisea.cultivar.common.po.CommCurrencyInfoPageListPo" >
+    select
+	  id id
+	from
+	  zhfw_comm_currency_info
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.CommCurrencyInfoInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+      comm_currency_content
+	from
+	  zhfw_comm_currency_info
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <select id="findDetail" resultType="com.wisea.cultivar.common.vo.CommCurrencyInfoInfoVo" >
+    select
+	  id id,
+      comm_currency_content
+	from
+	  zhfw_comm_currency_info
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findEntpCommPubExamType" resultType="com.wisea.cultivar.common.vo.EntpCommPubExamTypeVo">
+    select c.id,c.entp_comm_pub_exam_type entpCommPubExamType from zhfw_comm_currency_info c where del_flag = '0'
+  </select>
+  <update id="updateEntpCommPubExamType">
+    update zhfw_comm_currency_info set entp_comm_pub_exam_type=#{entpCommPubExamType} where id=#{id}
+  </update>
+  <insert id="insertEntpCommPubExamType">
+    insert into zhfw_comm_currency_info(entp_comm_pub_exam_type) values (#{entpCommPubExamType})
+  </insert>
+</mapper>

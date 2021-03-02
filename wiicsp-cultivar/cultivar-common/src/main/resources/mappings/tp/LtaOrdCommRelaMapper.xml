@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LtaOrdCommRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LtaOrdCommRela" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="lta_ord_id" property="ltaOrdId" jdbcType="BIGINT" />
+    <result column="lta_comm_rela_id" property="ltaCommRelaId" jdbcType="BIGINT" />
+    <result column="lta_comm_pack_id" property="ltaCommPackId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="sl_num" property="slNum" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="platf_cost" property="platfCost" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lta_ord_id, lta_comm_rela_id, lta_comm_pack_id, level, spec, sl_num, price, platf_cost, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据订单ID查询长期协议订单商品列表 -->
+  <select id="findListByOrdId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from lta_ord_comm_rela locr where locr.lta_ord_id = #{ltaOrdId}
+  </select>
+
+  <!-- 批量更新长期协议订单商品信息 -->
+  <update id="batchUpdate" parameterType="java.util.List">
+    UPDATE
+      lta_ord_comm_rela
+    SET
+      price = CASE id
+      <foreach collection="list" index="index" item="item" separator=" ">
+        WHEN #{item.id} THEN #{item.price}
+      </foreach>
+      END,
+      platf_cost = CASE id
+      <foreach collection="list" index="index" item="item" separator=" ">
+        WHEN #{item.id} THEN #{item.platfCost}
+      </foreach>
+      END,
+      update_date = CASE id
+      <foreach collection="list" index="index" item="item" separator=" ">
+        WHEN #{item.id} THEN #{item.updateDate}
+      </foreach>
+      END,
+      update_by = CASE id
+      <foreach collection="list" index="index" item="item" separator=" ">
+        WHEN #{item.id} THEN #{item.updateBy}
+      </foreach>
+      END
+    WHERE
+      id IN
+      <foreach collection="list" item="item" separator="," open="(" close=")">
+        #{item.id}
+      </foreach>
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from lta_ord_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lta_ord_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LtaOrdCommRela" >
+    insert into lta_ord_comm_rela (id, lta_ord_id, lta_comm_rela_id,
+      lta_comm_pack_id, level, spec,
+      sl_num, price, platf_cost, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{ltaOrdId,jdbcType=BIGINT}, #{ltaCommRelaId,jdbcType=BIGINT},
+      #{ltaCommPackId,jdbcType=BIGINT}, #{level,jdbcType=VARCHAR}, #{spec,jdbcType=VARCHAR},
+      #{slNum,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{platfCost,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaOrdCommRela" >
+    insert into lta_ord_comm_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ltaOrdId != null" >
+        lta_ord_id,
+      </if>
+      <if test="ltaCommRelaId != null" >
+        lta_comm_rela_id,
+      </if>
+      <if test="ltaCommPackId != null" >
+        lta_comm_pack_id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="slNum != null" >
+        sl_num,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="platfCost != null" >
+        platf_cost,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ltaOrdId != null" >
+        #{ltaOrdId,jdbcType=BIGINT},
+      </if>
+      <if test="ltaCommRelaId != null" >
+        #{ltaCommRelaId,jdbcType=BIGINT},
+      </if>
+      <if test="ltaCommPackId != null" >
+        #{ltaCommPackId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="slNum != null" >
+        #{slNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="platfCost != null" >
+        #{platfCost,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaOrdCommRela" >
+    update lta_ord_comm_rela
+    <set >
+      <if test="ltaOrdId != null" >
+        lta_ord_id = #{ltaOrdId,jdbcType=BIGINT},
+      </if>
+      <if test="ltaCommRelaId != null" >
+        lta_comm_rela_id = #{ltaCommRelaId,jdbcType=BIGINT},
+      </if>
+      <if test="ltaCommPackId != null" >
+        lta_comm_pack_id = #{ltaCommPackId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="slNum != null" >
+        sl_num = #{slNum,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="platfCost != null" >
+        platf_cost = #{platfCost,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LtaOrdCommRela" >
+    update lta_ord_comm_rela
+    set lta_ord_id = #{ltaOrdId,jdbcType=BIGINT},
+      lta_comm_rela_id = #{ltaCommRelaId,jdbcType=BIGINT},
+      lta_comm_pack_id = #{ltaCommPackId,jdbcType=BIGINT},
+      level = #{level,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      sl_num = #{slNum,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      platf_cost = #{platfCost,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+      insert into lta_ord_comm_rela (id, lta_ord_id, lta_comm_rela_id,
+        lta_comm_pack_id, level, spec,
+        sl_num, price, platf_cost, create_by,
+        create_date, update_by, update_date,
+        remarks, del_flag)
+      values
+      <foreach collection="list" item="item" separator=",">
+         (#{item.id,jdbcType=BIGINT}, #{item.ltaOrdId,jdbcType=BIGINT}, #{item.ltaCommRelaId,jdbcType=BIGINT},
+        #{item.ltaCommPackId,jdbcType=BIGINT}, #{item.level,jdbcType=VARCHAR}, #{item.spec,jdbcType=VARCHAR},
+        #{item.slNum,jdbcType=INTEGER}, #{item.price,jdbcType=DOUBLE}, #{item.platfCost,jdbcType=DOUBLE}, #{item.createBy,jdbcType=VARCHAR},
+        #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+        #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+      </foreach>
+  </insert>
+
+   <!-- 提交退货申请详情页 -->
+  <select id="commitLtaRefundCommInvo" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaRefundCommApplCitVo"
+            parameterType="java.lang.Long">
+  	SELECT
+	  t1.id,
+	  t1.lta_ord_id      as       ordId,
+	  t1.lta_comm_rela_id,
+	  t1.lta_comm_pack_id,
+	  t1.sl_num              AS COUNT,
+	  t1.price,
+	  t1.level,
+	  t1.platf_cost,
+	  t6.comm_name,
+	  t6.comm_num,
+	  t6.comm_hh,
+	  t6.comm_pic_url    as   commUrl,
+	  t7.pack_instr,
+	  t7.spec,
+	  t8.meas_unit_name,
+	  t5.seller_id,
+	  t2.lta_ord_numb    as   ordNum,
+	  t5.buyer_id,
+	  t2.confirm_date,
+	  t2.order_state_type,
+	  t2.rece_name,
+	  t2.tel,
+	  t2.freight,
+	  t2.pay_method_type,
+	  t2.rece_address_city,
+	  t2.rece_address_cou,
+	  t2.rece_address_detail,
+	  t2.rece_address_prov,
+	  t2.rece_address_street,
+	  max(CASE WHEN sa.`code` = t2.rece_address_prov THEN sa.`name` END) receAddressProvName,
+      max(CASE WHEN sa.`code` = t2.rece_address_city THEN sa.`name` END) receAddressCityName,
+      max(CASE WHEN sa.`code` = t2.rece_address_cou THEN sa.`name` END) receAddressCouName,
+      max(CASE WHEN sa.`code` = t2.rece_address_street THEN sa.`name` END) receAddressCouStreetName,
+	  t3.comp_name           AS sellerCompName,
+	  (t1.sl_num - IFNULL(t4.refundCount, 0)) AS subCount
+	FROM lta_ord_comm_rela t1
+	  LEFT JOIN lta_ord_info t2
+	    ON t2.id = t1.lta_ord_id
+	  LEFT JOIN sys_area sa ON sa.`code` = t2.rece_address_prov
+	     OR sa.`code` = t2.rece_address_city OR sa.`code` = t2.rece_address_cou
+	     OR sa.`code` = t2.rece_address_street
+	  LEFT JOIN lta_comm_rela t6
+	    ON t6.id = t1.lta_comm_rela_id
+	  left join lta_comm_pack t7
+	    on t7.id = t1.lta_comm_pack_id
+	  left join meas_unit_mage t8
+	    on t8.id = t7.meas_unit_id
+	  left join lta_cont_info t5
+	    on t5.id = t2.lta_cont_id
+	  LEFT JOIN entp_data_info t3
+	    ON t3.memb_id = t5.seller_id
+	      AND t3.auth_exam_state = '1'
+	      AND t3.del_flag = '0'
+	  LEFT JOIN (SELECT
+	               SUM(refund_counts)         refundCount,
+	               lta_ord_comm_id
+	             FROM lta_refund_comm_appl
+	             WHERE del_flag = '0'
+	                 AND (refund_comm_state IN('0','1','2','3'))
+	             GROUP BY lta_ord_comm_id) t4
+	    ON t1.id = t4.lta_ord_comm_id
+	WHERE 1 = 1
+	and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 根据订单ID查询订单商品列表 -->
+    <select id="findByIds" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        *
+        from
+        lta_ord_comm_rela ocr
+        where
+        ocr.lta_ord_id in (${ordIds})
+    </select>
+</mapper>

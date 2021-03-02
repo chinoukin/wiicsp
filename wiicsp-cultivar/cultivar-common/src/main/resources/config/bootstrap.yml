@@ -1,0 +1,13 @@
+spring:
+  profiles:
+    active: dev #标明默认激活的配置文件
+
+management:
+  #  endpoint:
+  #    database:
+  #      enabled: true # 开启数据库监控节点
+  #    logviewer:
+  #      enabled: true # 开启实时日志节点
+  health:
+    elasticsearch:
+      enabled: false # 排除elastic健康监控 虽然backup工程引用了es的包，但配置是在页面进行的 这里启动不需要连接

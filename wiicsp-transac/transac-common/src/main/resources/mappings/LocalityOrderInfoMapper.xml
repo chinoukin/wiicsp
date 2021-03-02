@@ -1,0 +1,955 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.LocalityOrderInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.LocalityOrderInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="purchase_id" property="purchaseId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="consignee_name" property="consigneeName" jdbcType="VARCHAR" />
+    <result column="consignee_tel" property="consigneeTel" jdbcType="VARCHAR" />
+    <result column="self_mention_address_name" property="selfMentionAddressName" jdbcType="VARCHAR" />
+    <result column="zt_start_date" property="ztStartDate" jdbcType="TIMESTAMP" />
+    <result column="zt_end_date" property="ztEndDate" jdbcType="TIMESTAMP" />
+    <result column="zt_address_prov" property="ztAddressProv" jdbcType="VARCHAR" />
+    <result column="zt_address_city" property="ztAddressCity" jdbcType="VARCHAR" />
+    <result column="zt_address_cou" property="ztAddressCou" jdbcType="VARCHAR" />
+    <result column="zt_address" property="ztAddress" jdbcType="VARCHAR" />
+    <result column="zt_contacts_name" property="ztContactsName" jdbcType="VARCHAR" />
+    <result column="zt_tel" property="ztTel" jdbcType="VARCHAR" />
+    <result column="comm_total_price" property="commTotalPrice" jdbcType="DOUBLE" />
+    <result column="base_order_state_type" property="baseOrderStateType" jdbcType="VARCHAR" />
+    <result column="refer_ord_date" property="referOrdDate" jdbcType="TIMESTAMP" />
+    <result column="seller_sure_date" property="sellerSureDate" jdbcType="TIMESTAMP" />
+    <result column="pay_ord_date" property="payOrdDate" jdbcType="TIMESTAMP" />
+    <result column="comm_total_count" property="commTotalCount" jdbcType="INTEGER" />
+    <result column="ord_cancel_reason_id" property="ordCancelReasonId" jdbcType="BIGINT" />
+    <result column="ord_cancel_date" property="ordCancelDate" jdbcType="TIMESTAMP" />
+    <result column="ord_remarks" property="ordRemarks" jdbcType="VARCHAR" />
+    <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR" />
+    <result column="zt_complete_date" property="ztCompleteDate" jdbcType="TIMESTAMP" />
+    <result column="payable_amount" property="payableAmount" jdbcType="DOUBLE" />
+    <result column="zq_ser_cost" property="zqSerCost" jdbcType="DOUBLE" />
+    <result column="platf_cost" property="platfCost" jdbcType="DOUBLE" />
+    <result column="settle_bill_generate_type" property="settleBillGenerateType" jdbcType="VARCHAR" />
+    <result column="auth_zt_name" property="authZtName" jdbcType="VARCHAR" />
+    <result column="purchase_staff_name" property="purchaseStaffName" jdbcType="VARCHAR" />
+    <result column="seller_confirm_closing_date" property="sellerConfirmClosingDate" jdbcType="TIMESTAMP" />
+    <result column="buy_pay_closing_date" property="buyPayClosingDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="base_id" property="baseId" jdbcType="BIGINT" />
+    <result column="zt_address_type" property="ztAddressType" jdbcType="VARCHAR" />
+    <result column="stalls_address" property="stallsAddress" jdbcType="VARCHAR" />
+    <result column="zt_num" property="ztNum" jdbcType="VARCHAR" />
+  </resultMap>
+
+   <resultMap type="com.wisea.transac.common.vo.trade.BuyerOrderInfoListVo" id="BuyerListMap">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="purchase_id" property="purchaseId" jdbcType="BIGINT" />
+    <result column="consignee_tel" property="consigneeTel" jdbcType="VARCHAR" />
+    <result column="base_id" property="baseId" jdbcType="BIGINT" />
+    <result column="zt_num" property="ztNum" jdbcType="VARCHAR" />
+    <result column="zt_address_type" property="ztAddressType" jdbcType="VARCHAR" />
+    <result column="self_mention_address_name" property="selfMentionAddressName" jdbcType="VARCHAR" />
+    <result column="zt_start_date" property="ztStartDate" jdbcType="TIMESTAMP" />
+    <result column="zt_end_date" property="ztEndDate" jdbcType="TIMESTAMP" />
+    <result column="zt_address" property="ztAddress" jdbcType="VARCHAR" />
+    <result column="zt_business_hours" property="ztBusinessHours" jdbcType="VARCHAR" />
+    <result column="zt_contacts_name" property="ztContactsName" jdbcType="VARCHAR" />
+    <result column="zt_tel" property="ztTel" jdbcType="VARCHAR" />
+    <result column="stalls_address" property="stallsAddress" jdbcType="VARCHAR" />
+    <result column="comm_total_price" property="commTotalPrice" jdbcType="DOUBLE" />
+    <result column="base_order_state_type" property="baseOrderStateType" jdbcType="VARCHAR" />
+    <result column="comm_total_count" property="commTotalCount" jdbcType="INTEGER" />
+    <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR" />
+    <result column="zt_complete_date" property="ztCompleteDate" jdbcType="TIMESTAMP" />
+    <result column="payable_amount" property="payableAmount" jdbcType="DOUBLE" />
+    <result column="zq_ser_cost" property="zqSerCost" jdbcType="DOUBLE" />
+    <result column="purchase_staff_name" property="purchaseStaffName" jdbcType="VARCHAR" />
+    <result column="prov" property="prov" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="cou" property="cou" jdbcType="VARCHAR" />
+    <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+    <result column="ordInvoId" property="ordInvoId" jdbcType="BIGINT" />
+    <result column="invo_state" property="invoState" jdbcType="VARCHAR" />
+    <collection property="ordCommRelaList" ofType="com.wisea.transac.common.po.trade.BuyerOrdCommRela">
+      <id column="ordCommId" property="ordCommId" jdbcType="BIGINT" />
+      <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+      <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+      <result column="comm_url" property="commUrl" jdbcType="VARCHAR" />
+      <result column="dimensions_type" property="dimensionsType" jdbcType="VARCHAR" />
+      <result column="count" property="count" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_num, buyer_id, purchase_id, seller_id, consignee_name, consignee_tel, self_mention_address_name,
+    zt_start_date, zt_end_date, zt_address_prov, zt_address_city, zt_address_cou, zt_address,
+    zt_contacts_name, zt_tel, comm_total_price, base_order_state_type, refer_ord_date,
+    seller_sure_date, pay_ord_date, comm_total_count, ord_cancel_reason_id, ord_cancel_date,
+    ord_remarks, pay_method_type, zt_complete_date, payable_amount, zq_ser_cost, platf_cost,
+    settle_bill_generate_type, auth_zt_name, purchase_staff_name, seller_confirm_closing_date,
+    buy_pay_closing_date, create_by, create_date, update_by, update_date, remarks, del_flag, base_id,
+    zt_address_type, stalls_address, zt_num
+  </sql>
+
+  <!-- 商家（后台）查询订单列表 -->
+  <select id="findMerchantOrderList" parameterType="com.wisea.transac.common.po.trade.LocalityOrderInfoListPo" resultType="com.wisea.transac.common.vo.trade.MerchantOrderInfoListVo" resultMap="listResultMap">
+    SELECT
+      oi.id id,
+      oi.ord_num ordNum,
+      oi.refer_ord_date referOrdDate,
+      oi.payable_amount payableAmount,
+      oi.comm_total_count commTotalCount,
+      oi.base_order_state_type orderStateType,
+      oi.comm_total_price commTotalPrice,
+      oi.pay_ord_date payOrdDate
+    FROM
+      locality_order_info oi
+      INNER JOIN memb_info mi1 ON mi1.id = oi.seller_id
+      INNER JOIN memb_info mi2 ON mi2.id = oi.buyer_id
+    WHERE 1 = 1
+      AND oi.seller_id = #{sellerId}
+      <if test="orderStateType != null and orderStateType != ''">
+        AND oi.base_order_state_type = #{orderStateType}
+      </if>
+      <if test="query != null and query != ''">
+        AND (
+        oi.ord_num LIKE CONCAT('%', #{query}, '%')
+        OR oi.auth_zt_name LIKE CONCAT('%', #{query}, '%')
+        OR oi.purchase_staff_name LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+    ORDER BY
+      oi.refer_ord_date DESC
+  </select>
+  <resultMap id="listResultMap" type="com.wisea.transac.common.vo.trade.MerchantOrderInfoListVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <collection property="ordCommRelas" column="{id=id}" select="selectOrdCommRelas"/>
+  </resultMap>
+  <!-- 级联查询订单商量列表 -->
+  <select id="selectOrdCommRelas" parameterType="java.util.Map" resultType="com.wisea.transac.common.vo.trade.OrdCommRelaVo">
+    select
+      ocr.id id,
+      ocr.comm_pub_id commPubId,
+      ocr.comm_name commName,
+      ocr.comm_art_num commArtNum,
+      ocr.count count_,
+      ocr.meas_unit_name measUnitName,
+      ocr.comm_spec commSpec,
+      ocr.comm_url commUrl,
+      ocr.price price,
+      ocr.dimensions_type dimensionsType,
+      ocr.net_weight netWeight,
+      ocr.comm_total_weight commTotalWeight,
+      ocr.unit_weight_price unitWeightPrice,
+      round(ocr.comm_total_weight * ocr.unit_weight_price, 2) priceCount,
+      ra.id refundApplId
+    from
+      locality_ord_comm_rela ocr
+      LEFT JOIN locality_refund_appl ra ON ra.ord_id = ocr.ord_id and (ra.refund_appl_state_type = '0' OR ra.refund_appl_state_type = '2')
+    where
+      ocr.ord_id = #{id}
+  </select>
+  <!-- 查询各个订单状态数量 -->
+  <select id="findCountByState" parameterType="com.wisea.transac.common.po.trade.LocalityOrderInfoListPo" resultType="com.wisea.transac.common.vo.StateTypeVo">
+    select
+      oi.base_order_state_type stateType,
+      COUNT(oi.base_order_state_type) count_
+    from
+      locality_order_info oi
+    where 1=1
+      and oi.seller_id = #{sellerId}
+      <if test="query != null and query != ''">
+        and (
+        oi.ord_num LIKE CONCAT('%', #{query}, '%')
+        or oi.auth_zt_name LIKE CONCAT('%', #{query}, '%')
+        or oi.purchase_staff_name LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+    group by
+      oi.base_order_state_type
+  </select>
+
+  <!-- 查询订单详细信息 -->
+  <select id="findOrderInfo" parameterType="com.wisea.transac.common.po.trade.OrderInfoPo" resultType="com.wisea.transac.common.vo.trade.OrderInfoVo" resultMap="infoResultMap">
+    select
+      oi.id,
+      oi.ord_num ordNum,
+      oi.base_id,
+      oi.base_order_state_type orderStateType,
+      oi.pay_method_type payMethodType,
+      oi.buyer_id buyerId,
+      mi3.login_name buyerAccount,
+      mi3.entp_name buyerName,
+      oi.purchase_id purchaseId,
+      mi.login_name purchaseAccount,
+      mi.regist_tel purchaseRegistTel,
+      oi.purchase_staff_name purchaseStaffName,
+      oi.auth_zt_name authZtName,
+      oi.seller_id sellerId,
+      mi2.login_name sellerAccount,
+      mi2.entp_name sellerName,
+      oi.comm_total_price commTotalPrice,
+      oi.payable_amount payableAmount,
+      oi.platf_cost platfCost,
+      oi.zq_ser_cost zqSerCost,
+      round(oi.payable_amount - IFNULL(oi.platf_cost, 0), 2) sellerReceivableAmount,
+      oi.refer_ord_date referOrdDate,
+      oi.seller_sure_date sellerSureDate,
+      oi.pay_ord_date payOrdDate,
+      oi.seller_confirm_closing_date sellerConfirmClosingDate,
+      oi.buy_pay_closing_date buyPayClosingDate,
+      oi.zt_address_type ztAddressType,
+      oi.self_mention_address_name selfMentionAddressName,
+      max(CASE WHEN sa.`code` = oi.zt_address_prov THEN sa.`name` END) ztAddressProv,
+      max(CASE WHEN sa.`code` = oi.zt_address_city THEN sa.`name` END) ztAddressCity,
+      max(CASE WHEN sa.`code` = oi.zt_address_cou THEN sa.`name` END) ztAddressCou,
+      oi.zt_address ztAddress,
+      oi.stalls_address stallsAddress,
+      oi.zt_contacts_name ztContactsName,
+      oi.zt_complete_date,
+      oi.zt_tel ztTel,
+      oi.zt_num ztNum,
+      oi.zt_start_date ztStartDate,
+      oi.zt_end_date ztEndDate,
+      oi.ord_cancel_date ordCancelDate,
+      ocrm.ord_cancel_reason ordCancelReason,
+      ra.id refundApplId,
+      ra.refund_appl_state_type refundApplStateType,
+      ra.refund_num,
+      oi.ord_remarks ordRemarks
+    from
+      locality_order_info oi
+      inner join memb_info mi3 on mi3.id = oi.buyer_id
+      inner join memb_info mi2 on mi2.id = oi.seller_id
+      inner join memb_info mi on mi.id = oi.purchase_id
+      left join ord_cancel_reason_mage ocrm on ocrm.id = oi.ord_cancel_reason_id
+      left join locality_refund_appl ra on ra.ord_id = oi.id and oi.base_order_state_type = '5' and ra.refund_appl_state_type = '2'
+      LEFT JOIN sys_area sa ON sa.`code` = oi.zt_address_prov OR sa.`code` = oi.zt_address_city OR sa.`code` = oi.zt_address_cou
+    where
+      oi.id = #{id}
+  </select>
+  <resultMap id="infoResultMap" type="com.wisea.transac.common.vo.trade.OrderInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <association property="ordInvo" column="id" select="selectOrdInvo"/>
+    <collection property="ordCommRelas" column="{id=id}" select="selectOrdCommRelas"/>
+    <collection property="ordOpreateInfos" column="id" select="selectOrdOpreateInfos"/>
+  </resultMap>
+  <!-- 级联查询订单操作列表 -->
+  <select id="selectOrdOpreateInfos" resultType="com.wisea.transac.common.vo.trade.OpreateInfoVo">
+    select
+      ooi.operator operator,
+      ooi.opreat_date opreatDate,
+      ooi.opreat_content opreatContent
+    from
+      locality_ord_opreate_info ooi
+    where
+      ooi.ord_id = #{id}
+    order by
+      ooi.create_date desc
+  </select>
+  <!-- 级联查询订单发票信息 -->
+  <select id="selectOrdInvo" resultType="com.wisea.transac.common.vo.trade.OrdInvoVo" resultMap="ordInvoResultMap">
+    select
+      oiv.id id,
+      oiv.ord_id ordId,
+      oiv.invo_type invoType,
+      oiv.invo_catg_type invoCatgType,
+      oiv.invo_form invoForm,
+      oiv.invo_title invoTitle,
+      oiv.invo_content_type invoContentType,
+      oiv.tax_ident_num taxIdentNum,
+      oiv.regist_address registAddress,
+      oiv.regist_tel registTel,
+      oiv.bank_name bankName,
+      oiv.bank_acc_num bankAccNum,
+      oiv.rece_name receName,
+      oiv.consignee_tel consigneeTel,
+      max(CASE WHEN sa.`code` = oiv.address_prov THEN sa.`name` END) addressProv,
+      max(CASE WHEN sa.`code` = oiv.address_city THEN sa.`name` END) addressCity,
+      max(CASE WHEN sa.`code` = oiv.address_cou THEN sa.`name` END) addressCou,
+      oiv.address_detail addressDetail,
+      oiv.zip_code zipCode,
+      oiv.appl_num applNum,
+      oiv.appl_date applDate,
+      oiv.draw_date drawDate,
+      oiv.draw_amount drawAmount,
+      oiv.invo_state invoState,
+      oiv.appl_remarks applRemarks,
+      oiv.open_invo_remarks openInvoRemarks,
+      oiv.logistics_comp_name logisticsCompName,
+      oiv.logistics_num logisticsNum,
+      oiv.entry_open_invo_type entryOpenInvoType
+    from
+      locality_ord_invo oiv
+      LEFT JOIN sys_area sa ON sa.`code` = oiv.address_prov OR sa.`code` = oiv.address_city OR sa.`code` = oiv.address_cou
+    where oiv.ord_id = #{id}
+  </select>
+  <resultMap id="ordInvoResultMap" type="com.wisea.transac.common.vo.trade.OrdInvoVo">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <collection property="invoFiles" column="id" select="selectInvoFiles"/>
+  </resultMap>
+  <!-- 查询订单发票文件列表 -->
+  <select id="selectInvoFiles" resultType="com.wisea.transac.common.vo.EleInvoFileInfoVo">
+    select eif.ele_invo_url eleInvoUrl, eif.remarks fileName from locality_ele_invo_file eif where eif.ord_invo_id = #{id}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from locality_order_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from locality_order_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.LocalityOrderInfo" >
+    insert into locality_order_info (id, ord_num, buyer_id,
+      purchase_id, seller_id, consignee_name,
+      consignee_tel, self_mention_address_name, zt_start_date,
+      zt_end_date, zt_address_prov, zt_address_city,
+      zt_address_cou, zt_address, zt_contacts_name,
+      zt_tel, comm_total_price, base_order_state_type,
+      refer_ord_date, seller_sure_date, pay_ord_date,
+      comm_total_count, ord_cancel_reason_id, ord_cancel_date,
+      ord_remarks, pay_method_type, zt_complete_date,
+      payable_amount, zq_ser_cost, platf_cost,
+      settle_bill_generate_type, auth_zt_name, purchase_staff_name,
+      seller_confirm_closing_date, buy_pay_closing_date,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag, base_id, zt_address_type, stalls_address, zt_num
+      )
+    values (#{id,jdbcType=BIGINT}, #{ordNum,jdbcType=VARCHAR}, #{buyerId,jdbcType=BIGINT},
+      #{purchaseId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{consigneeName,jdbcType=VARCHAR},
+      #{consigneeTel,jdbcType=VARCHAR}, #{selfMentionAddressName,jdbcType=VARCHAR}, #{ztStartDate,jdbcType=TIMESTAMP},
+      #{ztEndDate,jdbcType=TIMESTAMP}, #{ztAddressProv,jdbcType=VARCHAR}, #{ztAddressCity,jdbcType=VARCHAR},
+      #{ztAddressCou,jdbcType=VARCHAR}, #{ztAddress,jdbcType=VARCHAR}, #{ztContactsName,jdbcType=VARCHAR},
+      #{ztTel,jdbcType=VARCHAR}, #{commTotalPrice,jdbcType=DOUBLE}, #{baseOrderStateType,jdbcType=VARCHAR},
+      #{referOrdDate,jdbcType=TIMESTAMP}, #{sellerSureDate,jdbcType=TIMESTAMP}, #{payOrdDate,jdbcType=TIMESTAMP},
+      #{commTotalCount,jdbcType=INTEGER}, #{ordCancelReasonId,jdbcType=BIGINT}, #{ordCancelDate,jdbcType=TIMESTAMP},
+      #{ordRemarks,jdbcType=VARCHAR}, #{payMethodType,jdbcType=VARCHAR}, #{ztCompleteDate,jdbcType=TIMESTAMP},
+      #{payableAmount,jdbcType=DOUBLE}, #{zqSerCost,jdbcType=DOUBLE}, #{platfCost,jdbcType=DOUBLE},
+      #{settleBillGenerateType,jdbcType=VARCHAR}, #{authZtName,jdbcType=VARCHAR}, #{purchaseStaffName,jdbcType=VARCHAR},
+      #{sellerConfirmClosingDate,jdbcType=TIMESTAMP}, #{buyPayClosingDate,jdbcType=TIMESTAMP},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{baseId,jdbcType=BIGINT},
+      #{ztAddressType,jdbcType=VARCHAR}, #{stallsAddress,jdbcType=VARCHAR}, #{ztNum,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.LocalityOrderInfo" >
+    insert into locality_order_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordNum != null" >
+        ord_num,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="purchaseId != null" >
+        purchase_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="consigneeName != null" >
+        consignee_name,
+      </if>
+      <if test="consigneeTel != null" >
+        consignee_tel,
+      </if>
+      <if test="selfMentionAddressName != null" >
+        self_mention_address_name,
+      </if>
+      <if test="ztStartDate != null" >
+        zt_start_date,
+      </if>
+      <if test="ztEndDate != null" >
+        zt_end_date,
+      </if>
+      <if test="ztAddressProv != null" >
+        zt_address_prov,
+      </if>
+      <if test="ztAddressCity != null" >
+        zt_address_city,
+      </if>
+      <if test="ztAddressCou != null" >
+        zt_address_cou,
+      </if>
+      <if test="ztAddress != null" >
+        zt_address,
+      </if>
+      <if test="ztContactsName != null" >
+        zt_contacts_name,
+      </if>
+      <if test="ztTel != null" >
+        zt_tel,
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price,
+      </if>
+      <if test="baseOrderStateType != null" >
+        base_order_state_type,
+      </if>
+      <if test="referOrdDate != null" >
+        refer_ord_date,
+      </if>
+      <if test="sellerSureDate != null" >
+        seller_sure_date,
+      </if>
+      <if test="payOrdDate != null" >
+        pay_ord_date,
+      </if>
+      <if test="commTotalCount != null" >
+        comm_total_count,
+      </if>
+      <if test="ordCancelReasonId != null" >
+        ord_cancel_reason_id,
+      </if>
+      <if test="ordCancelDate != null" >
+        ord_cancel_date,
+      </if>
+      <if test="ordRemarks != null" >
+        ord_remarks,
+      </if>
+      <if test="payMethodType != null" >
+        pay_method_type,
+      </if>
+      <if test="ztCompleteDate != null" >
+        zt_complete_date,
+      </if>
+      <if test="payableAmount != null" >
+        payable_amount,
+      </if>
+      <if test="zqSerCost != null" >
+        zq_ser_cost,
+      </if>
+      <if test="platfCost != null" >
+        platf_cost,
+      </if>
+      <if test="settleBillGenerateType != null" >
+        settle_bill_generate_type,
+      </if>
+      <if test="authZtName != null" >
+        auth_zt_name,
+      </if>
+      <if test="purchaseStaffName != null" >
+        purchase_staff_name,
+      </if>
+      <if test="sellerConfirmClosingDate != null" >
+        seller_confirm_closing_date,
+      </if>
+      <if test="buyPayClosingDate != null" >
+        buy_pay_closing_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="baseId != null" >
+        base_id,
+      </if>
+      <if test="ztAddressType != null" >
+        zt_address_type,
+      </if>
+      <if test="stallsAddress != null" >
+        stalls_address,
+      </if>
+      <if test="ztNum != null" >
+        zt_num,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordNum != null" >
+        #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseId != null" >
+        #{purchaseId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="consigneeName != null" >
+        #{consigneeName,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTel != null" >
+        #{consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="selfMentionAddressName != null" >
+        #{selfMentionAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="ztStartDate != null" >
+        #{ztStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ztEndDate != null" >
+        #{ztEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ztAddressProv != null" >
+        #{ztAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddressCity != null" >
+        #{ztAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddressCou != null" >
+        #{ztAddressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddress != null" >
+        #{ztAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ztContactsName != null" >
+        #{ztContactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="ztTel != null" >
+        #{ztTel,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalPrice != null" >
+        #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="baseOrderStateType != null" >
+        #{baseOrderStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="referOrdDate != null" >
+        #{referOrdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerSureDate != null" >
+        #{sellerSureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payOrdDate != null" >
+        #{payOrdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commTotalCount != null" >
+        #{commTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordCancelReasonId != null" >
+        #{ordCancelReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="ordCancelDate != null" >
+        #{ordCancelDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordRemarks != null" >
+        #{ordRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethodType != null" >
+        #{payMethodType,jdbcType=VARCHAR},
+      </if>
+      <if test="ztCompleteDate != null" >
+        #{ztCompleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payableAmount != null" >
+        #{payableAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="zqSerCost != null" >
+        #{zqSerCost,jdbcType=DOUBLE},
+      </if>
+      <if test="platfCost != null" >
+        #{platfCost,jdbcType=DOUBLE},
+      </if>
+      <if test="settleBillGenerateType != null" >
+        #{settleBillGenerateType,jdbcType=VARCHAR},
+      </if>
+      <if test="authZtName != null" >
+        #{authZtName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseStaffName != null" >
+        #{purchaseStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConfirmClosingDate != null" >
+        #{sellerConfirmClosingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyPayClosingDate != null" >
+        #{buyPayClosingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="baseId != null" >
+        #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="ztAddressType != null" >
+        #{ztAddressType,jdbcType=VARCHAR},
+      </if>
+      <if test="stallsAddress != null" >
+        #{stallsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ztNum != null" >
+        #{ztNum,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.LocalityOrderInfo" >
+    update locality_order_info
+    <set >
+      <if test="ordNum != null" >
+        ord_num = #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseId != null" >
+        purchase_id = #{purchaseId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="consigneeName != null" >
+        consignee_name = #{consigneeName,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTel != null" >
+        consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="selfMentionAddressName != null" >
+        self_mention_address_name = #{selfMentionAddressName,jdbcType=VARCHAR},
+      </if>
+      <if test="ztStartDate != null" >
+        zt_start_date = #{ztStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ztEndDate != null" >
+        zt_end_date = #{ztEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ztAddressProv != null" >
+        zt_address_prov = #{ztAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddressCity != null" >
+        zt_address_city = #{ztAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddressCou != null" >
+        zt_address_cou = #{ztAddressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddress != null" >
+        zt_address = #{ztAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ztContactsName != null" >
+        zt_contacts_name = #{ztContactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="ztTel != null" >
+        zt_tel = #{ztTel,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price = #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="baseOrderStateType != null" >
+        base_order_state_type = #{baseOrderStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="referOrdDate != null" >
+        refer_ord_date = #{referOrdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerSureDate != null" >
+        seller_sure_date = #{sellerSureDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payOrdDate != null" >
+        pay_ord_date = #{payOrdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commTotalCount != null" >
+        comm_total_count = #{commTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="ordCancelReasonId != null" >
+        ord_cancel_reason_id = #{ordCancelReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="ordCancelDate != null" >
+        ord_cancel_date = #{ordCancelDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordRemarks != null" >
+        ord_remarks = #{ordRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="payMethodType != null" >
+        pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+      </if>
+      <if test="ztCompleteDate != null" >
+        zt_complete_date = #{ztCompleteDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payableAmount != null" >
+        payable_amount = #{payableAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="zqSerCost != null" >
+        zq_ser_cost = #{zqSerCost,jdbcType=DOUBLE},
+      </if>
+      <if test="platfCost != null" >
+        platf_cost = #{platfCost,jdbcType=DOUBLE},
+      </if>
+      <if test="settleBillGenerateType != null" >
+        settle_bill_generate_type = #{settleBillGenerateType,jdbcType=VARCHAR},
+      </if>
+      <if test="authZtName != null" >
+        auth_zt_name = #{authZtName,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseStaffName != null" >
+        purchase_staff_name = #{purchaseStaffName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerConfirmClosingDate != null" >
+        seller_confirm_closing_date = #{sellerConfirmClosingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buyPayClosingDate != null" >
+        buy_pay_closing_date = #{buyPayClosingDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="baseId != null" >
+        base_id = #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="ztAddressType != null" >
+        zt_address_type = #{ztAddressType,jdbcType=VARCHAR},
+      </if>
+      <if test="stallsAddress != null" >
+        stalls_address = #{stallsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ztNum != null" >
+        zt_num = #{ztNum,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.LocalityOrderInfo" >
+    update locality_order_info
+    set ord_num = #{ordNum,jdbcType=VARCHAR},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      purchase_id = #{purchaseId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      consignee_name = #{consigneeName,jdbcType=VARCHAR},
+      consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      self_mention_address_name = #{selfMentionAddressName,jdbcType=VARCHAR},
+      zt_start_date = #{ztStartDate,jdbcType=TIMESTAMP},
+      zt_end_date = #{ztEndDate,jdbcType=TIMESTAMP},
+      zt_address_prov = #{ztAddressProv,jdbcType=VARCHAR},
+      zt_address_city = #{ztAddressCity,jdbcType=VARCHAR},
+      zt_address_cou = #{ztAddressCou,jdbcType=VARCHAR},
+      zt_address = #{ztAddress,jdbcType=VARCHAR},
+      zt_contacts_name = #{ztContactsName,jdbcType=VARCHAR},
+      zt_tel = #{ztTel,jdbcType=VARCHAR},
+      comm_total_price = #{commTotalPrice,jdbcType=DOUBLE},
+      base_order_state_type = #{baseOrderStateType,jdbcType=VARCHAR},
+      refer_ord_date = #{referOrdDate,jdbcType=TIMESTAMP},
+      seller_sure_date = #{sellerSureDate,jdbcType=TIMESTAMP},
+      pay_ord_date = #{payOrdDate,jdbcType=TIMESTAMP},
+      comm_total_count = #{commTotalCount,jdbcType=INTEGER},
+      ord_cancel_reason_id = #{ordCancelReasonId,jdbcType=BIGINT},
+      ord_cancel_date = #{ordCancelDate,jdbcType=TIMESTAMP},
+      ord_remarks = #{ordRemarks,jdbcType=VARCHAR},
+      pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+      zt_complete_date = #{ztCompleteDate,jdbcType=TIMESTAMP},
+      payable_amount = #{payableAmount,jdbcType=DOUBLE},
+      zq_ser_cost = #{zqSerCost,jdbcType=DOUBLE},
+      platf_cost = #{platfCost,jdbcType=DOUBLE},
+      settle_bill_generate_type = #{settleBillGenerateType,jdbcType=VARCHAR},
+      auth_zt_name = #{authZtName,jdbcType=VARCHAR},
+      purchase_staff_name = #{purchaseStaffName,jdbcType=VARCHAR},
+      seller_confirm_closing_date = #{sellerConfirmClosingDate,jdbcType=TIMESTAMP},
+      buy_pay_closing_date = #{buyPayClosingDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      zt_address_type = #{ztAddressType,jdbcType=VARCHAR},
+      stalls_address = #{stallsAddress,jdbcType=VARCHAR},
+      zt_num = #{ztNum,jdbcType=VARCHAR},
+      base_id = #{baseId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询订单分页信息 -->
+  <select id="findBuyerPage" parameterType="com.wisea.transac.common.po.trade.BuyerOrderInfoListPo"
+        resultMap="BuyerListMap">
+      SELECT DISTINCT
+        (t1.id)
+        FROM locality_order_info t1
+      LEFT JOIN locality_ord_comm_rela t2
+        ON t2.ord_id = t1.id
+      LEFT JOIN entp_auth t3
+        ON t3.memb_id = t1.seller_id
+          and t3.auth_state_type = '3' and t3.del_flag != '1'
+      left join sys_area s1
+        on s1.code = t1.zt_address_prov
+      left join sys_area s2
+        on s2.code = t1.zt_address_cou
+      left join sys_area s3
+        on s3.code = t1.zt_address_city
+      where 1=1
+      <if test="ordIds != null and ordIds !=''">
+        and t1.id in (${ordIds})
+      </if>
+      <if test="orderStateType !=null and orderStateType !=''">
+        and t1.base_order_state_type = #{orderStateType,jdbcType=VARCHAR}
+      </if>
+      <if test="buyerId != null and buyerId !=''">
+        and t1.buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="purchaseId != null and purchaseId !=''">
+        and t1.purchase_id = #{purchaseId,jdbcType=BIGINT}
+      </if>
+      <if test="searchKey != null and searchKey !=''">
+        and (t3.entp_name like concat('%',#{searchKey},'%')
+            or t1.self_mention_address_name like concat('%',#{searchKey},'%')
+            or t2.comm_name like concat('%',#{searchKey},'%')
+            or t1.ord_num like concat('%',#{searchKey},'%')
+            or t1.consignee_name like concat('%',#{searchKey},'%'))
+      </if>
+      order by t1.refer_ord_date desc
+  </select>
+
+  <!-- 查询买家订单列表 -->
+  <select id="findBuyerList" parameterType="com.wisea.transac.common.po.trade.BuyerOrderInfoListPo"
+        resultMap="BuyerListMap">
+    SELECT
+	  t1.id,
+	  t1.ord_num,
+	  t1.zt_num,
+	  t1.purchase_id,
+	  t1.zt_address_type,
+	  t1.base_id,
+	  t1.base_order_state_type,
+	  t1.self_mention_address_name,
+	  t1.zt_address,
+	  s1.name                      AS prov,
+	  s2.name                      AS cou,
+	  s3.name                      AS city,
+	  t1.zt_contacts_name,
+	  t1.zt_tel,
+	  t1.stalls_address,
+	  t1.zt_complete_date,
+	  t1.zt_start_date,
+	  t1.zt_end_date,
+	  t1.payable_amount,
+	  t1.comm_total_count,
+	  t1.zq_ser_cost,
+	  t1.pay_method_type,
+	  t1.purchase_staff_name,
+	  t1.consignee_tel,
+	  t1.seller_id,
+	  t3.entp_name,
+	  t4.id                        AS ordInvoId,
+	  t4.invo_state,
+	  t2.id                        AS ordCommId,
+	  t2.comm_url,
+	  t2.dimensions_type,
+	  t2.count,
+	  t2.comm_name,
+	  t2.comm_pub_id
+	FROM locality_order_info t1
+	  LEFT JOIN locality_ord_comm_rela t2
+	    ON t2.ord_id = t1.id
+	  JOIN memb_info t3
+	    ON t3.id = t1.seller_id
+	  LEFT JOIN locality_ord_invo t4
+	    ON t4.ord_id = t1.id
+	  LEFT JOIN sys_area s1
+	    ON s1.code = t1.zt_address_prov
+	  LEFT JOIN sys_area s2
+	    ON s2.code = t1.zt_address_cou
+	  LEFT JOIN sys_area s3
+	    ON s3.code = t1.zt_address_city
+	WHERE 1 = 1
+     <if test="ordIds != null and ordIds !=''">
+        and t1.id in(${ordIds})
+     </if>
+        and t1.del_flag = '0'
+      <if test="buyerId != null and buyerId !=''">
+        and t1.buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="purchaseId != null and purchaseId !=''">
+        and t1.purchase_id = #{purchaseId,jdbcType=BIGINT}
+      </if>
+        order by t1.refer_ord_date desc
+  </select>
+  <select id="findListByBaseId" resultType="com.wisea.transac.common.vo.seller.ProcurDynamicVo" parameterType="java.lang.Long">
+            SELECT count(1) buyerSum, auth_zt_name authZtName,GROUP_CONCAT(id) ordId
+            FROM locality_order_info
+            WHERE
+            del_flag = '0'
+            and base_id = #{baseId}
+            and base_order_state_type = '2'
+            GROUP BY
+            buyer_id
+            ORDER BY sum(comm_total_price) desc
+            LIMIT 5
+  </select>
+
+  <!-- 查询订单角标 -->
+  <select id="orderNumb" resultType="com.wisea.transac.common.vo.StateTypeVo"
+            parameterType="com.wisea.transac.common.po.trade.BuyerOrderInfoListPo">
+    SELECT
+      COUNT(*)                 count,
+      base_order_state_type as stateType
+    FROM locality_order_info
+    where 1 = 1
+    <if test="buyerId != null and buyerId !=''">
+        and buyer_id = #{buyerId,jdbcType=BIGINT}
+      </if>
+      <if test="purchaseId != null and purchaseId !=''">
+        and purchase_id = #{purchaseId,jdbcType=BIGINT}
+      </if>
+    AND del_flag = '0'
+    GROUP BY base_order_state_type
+  </select>
+
+  <!-- 根据IDS查询所有订单 -->
+    <select id="findOrderByIds" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        from locality_order_info
+        where id in(${ordIds})
+    </select>
+</mapper>

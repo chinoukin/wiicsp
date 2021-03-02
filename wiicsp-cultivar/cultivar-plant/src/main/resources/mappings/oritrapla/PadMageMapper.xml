@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.PadMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.PadMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="pad_name" property="padName" jdbcType="VARCHAR"/>
+        <result column="pad_url" property="padUrl" jdbcType="VARCHAR"/>
+        <result column="pad_type" property="padType" jdbcType="VARCHAR"/>
+        <result column="pad_ssl" property="padSsl" jdbcType="DOUBLE"/>
+        <result column="pathogeny" property="pathogeny" jdbcType="VARCHAR"/>
+        <result column="symptom" property="symptom" jdbcType="VARCHAR"/>
+        <result column="pathogenic_conditions" property="pathogenicConditions" jdbcType="VARCHAR"/>
+        <result column="agr_control" property="agrControl" jdbcType="VARCHAR"/>
+        <result column="phy_control" property="phyControl" jdbcType="VARCHAR"/>
+        <result column="biology_control" property="biologyControl" jdbcType="VARCHAR"/>
+        <result column="chemistry_control" property="chemistryControl" jdbcType="VARCHAR"/>
+        <result column="organic_control" property="organicControl" jdbcType="VARCHAR"/>
+        <result column="vulnerable_months" property="vulnerableMonths" jdbcType="VARCHAR"/>
+        <result column="max_temperature" property="maxTemperature" jdbcType="DOUBLE"/>
+        <result column="min_temperature" property="minTemperature" jdbcType="DOUBLE"/>
+        <result column="max_humidity" property="maxHumidity" jdbcType="DOUBLE"/>
+        <result column="min_humidity" property="minHumidity" jdbcType="DOUBLE"/>
+        <result column="bf_time" property="bfTime" jdbcType="DOUBLE"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, comm_id, pad_name, pad_url, pad_type, pad_ssl, pathogeny, symptom, pathogenic_conditions,
+    agr_control, phy_control, biology_control, chemistry_control, organic_control, vulnerable_months,
+    max_temperature, min_temperature, max_humidity, min_humidity, bf_time, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pad_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pad_mage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadMage">
+        insert into pad_mage (id, comm_id, pad_name,
+                              pad_url, pad_type, pad_ssl,
+                              pathogeny, symptom, pathogenic_conditions,
+                              agr_control, phy_control, biology_control,
+                              chemistry_control, organic_control, vulnerable_months,
+                              max_temperature, min_temperature, max_humidity,
+                              min_humidity, bf_time, create_by,
+                              create_date, update_by, update_date,
+                              remarks, del_flag)
+        values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{padName,jdbcType=VARCHAR},
+                #{padUrl,jdbcType=VARCHAR}, #{padType,jdbcType=VARCHAR}, #{padSsl,jdbcType=DOUBLE},
+                #{pathogeny,jdbcType=VARCHAR}, #{symptom,jdbcType=VARCHAR}, #{pathogenicConditions,jdbcType=VARCHAR},
+                #{agrControl,jdbcType=VARCHAR}, #{phyControl,jdbcType=VARCHAR}, #{biologyControl,jdbcType=VARCHAR},
+                #{chemistryControl,jdbcType=VARCHAR}, #{organicControl,jdbcType=VARCHAR},
+                #{vulnerableMonths,jdbcType=VARCHAR},
+                #{maxTemperature,jdbcType=DOUBLE}, #{minTemperature,jdbcType=DOUBLE}, #{maxHumidity,jdbcType=DOUBLE},
+                #{minHumidity,jdbcType=DOUBLE}, #{bfTime,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+                #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+                #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+    </insert>
+    <select id="healthCheck" parameterType="com.wisea.cultivar.plant.po.oritrapla.HealthCheckPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadMageListVo">
+
+        select *
+        from pad_mage
+        where del_flag = '0'
+        and (
+            (max_temperature <![CDATA[>= ]]> #{temperature} and min_temperature <![CDATA[<= ]]> #{temperature})
+                and (max_humidity <![CDATA[>= ]]> #{humidity} and  min_humidity <![CDATA[<= ]]> #{humidity})
+        )
+        and comm_id = #{commId}
+
+    </select>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadMage">
+        insert into pad_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="padName != null">
+                pad_name,
+            </if>
+            <if test="padUrl != null">
+                pad_url,
+            </if>
+            <if test="padType != null">
+                pad_type,
+            </if>
+            <if test="padSsl != null">
+                pad_ssl,
+            </if>
+            <if test="pathogeny != null">
+                pathogeny,
+            </if>
+            <if test="symptom != null">
+                symptom,
+            </if>
+            <if test="pathogenicConditions != null">
+                pathogenic_conditions,
+            </if>
+            <if test="agrControl != null">
+                agr_control,
+            </if>
+            <if test="phyControl != null">
+                phy_control,
+            </if>
+            <if test="biologyControl != null">
+                biology_control,
+            </if>
+            <if test="chemistryControl != null">
+                chemistry_control,
+            </if>
+            <if test="organicControl != null">
+                organic_control,
+            </if>
+            <if test="vulnerableMonths != null">
+                vulnerable_months,
+            </if>
+            <if test="maxTemperature != null">
+                max_temperature,
+            </if>
+            <if test="minTemperature != null">
+                min_temperature,
+            </if>
+            <if test="maxHumidity != null">
+                max_humidity,
+            </if>
+            <if test="minHumidity != null">
+                min_humidity,
+            </if>
+            <if test="bfTime != null">
+                bf_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="views != null">
+                views,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null">
+                #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="padName != null">
+                #{padName,jdbcType=VARCHAR},
+            </if>
+            <if test="padUrl != null">
+                #{padUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="padType != null">
+                #{padType,jdbcType=VARCHAR},
+            </if>
+            <if test="padSsl != null">
+                #{padSsl,jdbcType=DOUBLE},
+            </if>
+            <if test="pathogeny != null">
+                #{pathogeny,jdbcType=VARCHAR},
+            </if>
+            <if test="symptom != null">
+                #{symptom,jdbcType=VARCHAR},
+            </if>
+            <if test="pathogenicConditions != null">
+                #{pathogenicConditions,jdbcType=VARCHAR},
+            </if>
+            <if test="agrControl != null">
+                #{agrControl,jdbcType=VARCHAR},
+            </if>
+            <if test="phyControl != null">
+                #{phyControl,jdbcType=VARCHAR},
+            </if>
+            <if test="biologyControl != null">
+                #{biologyControl,jdbcType=VARCHAR},
+            </if>
+            <if test="chemistryControl != null">
+                #{chemistryControl,jdbcType=VARCHAR},
+            </if>
+            <if test="organicControl != null">
+                #{organicControl,jdbcType=VARCHAR},
+            </if>
+            <if test="vulnerableMonths != null">
+                #{vulnerableMonths,jdbcType=VARCHAR},
+            </if>
+            <if test="maxTemperature != null">
+                #{maxTemperature,jdbcType=DOUBLE},
+            </if>
+            <if test="minTemperature != null">
+                #{minTemperature,jdbcType=DOUBLE},
+            </if>
+            <if test="maxHumidity != null">
+                #{maxHumidity,jdbcType=DOUBLE},
+            </if>
+            <if test="minHumidity != null">
+                #{minHumidity,jdbcType=DOUBLE},
+            </if>
+            <if test="bfTime != null">
+                #{bfTime,jdbcType=DOUBLE},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="views != null">
+                #{views},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadMage">
+        update pad_mage
+        <set>
+            <if test="commId != null">
+                comm_id = #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="padName != null">
+                pad_name = #{padName,jdbcType=VARCHAR},
+            </if>
+            <if test="padUrl != null">
+                pad_url = #{padUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="padType != null">
+                pad_type = #{padType,jdbcType=VARCHAR},
+            </if>
+            <if test="padSsl != null">
+                pad_ssl = #{padSsl,jdbcType=DOUBLE},
+            </if>
+            <if test="pathogeny != null">
+                pathogeny = #{pathogeny,jdbcType=VARCHAR},
+            </if>
+            <if test="symptom != null">
+                symptom = #{symptom,jdbcType=VARCHAR},
+            </if>
+            <if test="pathogenicConditions != null">
+                pathogenic_conditions = #{pathogenicConditions,jdbcType=VARCHAR},
+            </if>
+            <if test="agrControl != null">
+                agr_control = #{agrControl,jdbcType=VARCHAR},
+            </if>
+            <if test="phyControl != null">
+                phy_control = #{phyControl,jdbcType=VARCHAR},
+            </if>
+            <if test="biologyControl != null">
+                biology_control = #{biologyControl,jdbcType=VARCHAR},
+            </if>
+            <if test="chemistryControl != null">
+                chemistry_control = #{chemistryControl,jdbcType=VARCHAR},
+            </if>
+            <if test="organicControl != null">
+                organic_control = #{organicControl,jdbcType=VARCHAR},
+            </if>
+            <if test="vulnerableMonths != null">
+                vulnerable_months = #{vulnerableMonths,jdbcType=VARCHAR},
+            </if>
+            <if test="maxTemperature != null">
+                max_temperature = #{maxTemperature,jdbcType=DOUBLE},
+            </if>
+            <if test="minTemperature != null">
+                min_temperature = #{minTemperature,jdbcType=DOUBLE},
+            </if>
+            <if test="maxHumidity != null">
+                max_humidity = #{maxHumidity,jdbcType=DOUBLE},
+            </if>
+            <if test="minHumidity != null">
+                min_humidity = #{minHumidity,jdbcType=DOUBLE},
+            </if>
+            <if test="bfTime != null">
+                bf_time = #{bfTime,jdbcType=DOUBLE},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadMage">
+        update pad_mage
+        set comm_id               = #{commId,jdbcType=BIGINT},
+            pad_name              = #{padName,jdbcType=VARCHAR},
+            pad_url               = #{padUrl,jdbcType=VARCHAR},
+            pad_type              = #{padType,jdbcType=VARCHAR},
+            pad_ssl               = #{padSsl,jdbcType=DOUBLE},
+            pathogeny             = #{pathogeny,jdbcType=VARCHAR},
+            symptom               = #{symptom,jdbcType=VARCHAR},
+            pathogenic_conditions = #{pathogenicConditions,jdbcType=VARCHAR},
+            agr_control           = #{agrControl,jdbcType=VARCHAR},
+            phy_control           = #{phyControl,jdbcType=VARCHAR},
+            biology_control       = #{biologyControl,jdbcType=VARCHAR},
+            chemistry_control     = #{chemistryControl,jdbcType=VARCHAR},
+            organic_control       = #{organicControl,jdbcType=VARCHAR},
+            vulnerable_months     = #{vulnerableMonths,jdbcType=VARCHAR},
+            max_temperature       = #{maxTemperature,jdbcType=DOUBLE},
+            min_temperature       = #{minTemperature,jdbcType=DOUBLE},
+            max_humidity          = #{maxHumidity,jdbcType=DOUBLE},
+            min_humidity          = #{minHumidity,jdbcType=DOUBLE},
+            bf_time               = #{bfTime,jdbcType=DOUBLE},
+            create_by             = #{createBy,jdbcType=VARCHAR},
+            create_date           = #{createDate,jdbcType=TIMESTAMP},
+            update_by             = #{updateBy,jdbcType=VARCHAR},
+            update_date           = #{updateDate,jdbcType=TIMESTAMP},
+            remarks               = #{remarks,jdbcType=VARCHAR},
+            del_flag              = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findPage" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadMageListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.PadMagePagePo">
+        SELECT
+        pm.*,
+        cmp.pid AS commLevel1Id,
+        cmp.id AS commLevel2Id
+        FROM
+        pad_mage pm
+        LEFT JOIN zhfw_comm_mage cm ON pm.comm_id = cm.id
+        LEFT JOIN zhfw_comm_mage cmp ON cm.pid = cmp.id
+        WHERE
+        pm.del_flag = '0'
+        <if test="padName!=null and padName!=''">
+            and pm.pad_name like CONCAT('%', #{padName}, '%')
+        </if>
+        <if test="commId!=null and commId!=''">
+            and pm.comm_id = #{commId}
+        </if>
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadMageListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.PadMageListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from pad_mage
+        where del_flag = '0'
+        <if test="padName!=null and padName!=''">
+            and pad_name like #{padName}
+        </if>
+        <if test="commId!=null and commId!=''">
+            and comm_id = #{commId}
+        </if>
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadMage">
+        update pad_mage
+        set del_flag    = '1',
+            update_by   = #{updateBy,jdbcType=VARCHAR},
+            update_date = #{updateDate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateViewsByKey" parameterType="java.lang.Long">
+    update pad_mage set views=views+1 where id=#{id}
+  </update>
+    <select id="findById" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadMageGetVo" parameterType="java.lang.Long">
+        SELECT
+        pm.*,
+        cmp.pid AS commLevel1Id,
+        cmp.id AS commLevel2Id
+        FROM
+        pad_mage pm
+        LEFT JOIN zhfw_comm_mage cm ON pm.comm_id = cm.id
+        LEFT JOIN zhfw_comm_mage cmp ON cm.pid = cmp.id
+        where pm.id = #{id,jdbcType=BIGINT}
+    </select>
+</mapper>

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.SettleOrdRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.SettleOrdRela" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="settle_id" property="settleId" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+    <result column="ord_type" property="ordType" jdbcType="VARCHAR" />
+    <result column="ord_source_type" property="ordSourceType" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, settle_id, ord_id, ord_type,ord_source_type, amount, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+
+  <!-- 批量插入结算单-订单中间表 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into settle_ord_rela (id, settle_id, ord_id,
+    ord_type, ord_source_type, amount, create_by,
+    create_date, update_by, update_date,
+    remarks, del_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.settleId,jdbcType=BIGINT}, #{item.ordId,jdbcType=BIGINT},
+      #{item.ordType,jdbcType=VARCHAR}, #{item.ordSourceType,jdbcType=VARCHAR}, #{item.amount,jdbcType=DOUBLE},
+      #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+      #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from settle_ord_rela
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from settle_ord_rela
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.SettleOrdRela" >
+    insert into settle_ord_rela (id, settle_id, ord_id,
+      ord_type, ord_source_type, amount, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT},
+      #{ordType,jdbcType=VARCHAR}, #{ordSourceType,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.SettleOrdRela" >
+    insert into settle_ord_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="settleId != null" >
+        settle_id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="ordType != null" >
+        ord_type,
+      </if>
+      <if test="ordSourceType != null" >
+        ord_source_type,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="settleId != null" >
+        #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="ordType != null" >
+        #{ordType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordSourceType != null" >
+        #{ordSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.SettleOrdRela" >
+    update settle_ord_rela
+    <set >
+      <if test="settleId != null" >
+        settle_id = #{settleId,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="ordType != null" >
+        ord_type = #{ordType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordSourceType != null" >
+        ord_source_type = #{ordSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.SettleOrdRela" >
+    update settle_ord_rela
+    set settle_id = #{settleId,jdbcType=BIGINT},
+      ord_id = #{ordId,jdbcType=BIGINT},
+      ord_type = #{ordType,jdbcType=VARCHAR},
+      ord_source_type = #{ordSourceType,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.SettleOrdRelaListVo" parameterType="com.wisea.cultivar.common.po.tp.SettleOrdRelaPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from settle_ord_rela
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.SettleOrdRelaListVo" parameterType="com.wisea.cultivar.common.po.tp.SettleOrdRelaListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from settle_ord_rela
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.SettleOrdRela" >
+    update settle_ord_rela
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="statOrdBySettleIdAndOrdType" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.tp.SettleOrdStatVo">
+    SELECT
+        ord_type as ordType,
+        COUNT( id ) as `count`,
+        IFNULL(SUM( amount ),0)  as amount
+    FROM
+        settle_ord_rela
+    WHERE
+      del_flag != "1"
+    and settle_id = #{settleId}
+        <if test="ordType!=null and ordType!=''">
+          and ord_type = #{ordType}
+        </if>
+    GROUP BY
+        ord_type
+  </select>
+
+  <select id="existOrd" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    SELECT
+        count( 1 )
+    FROM
+        settle_ord_rela
+    WHERE
+        ord_id = #{ordId}
+  </select>
+
+  <!-- 根据账期id查询订单信息 -->
+  <select id="findOrdBySettle" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.SettleBillOrdInfoVo">
+  	SELECT
+	CASE WHEN edi.comp_name IS NULL THEN mb.user_name ELSE edi.comp_name END buyerName,
+	t1.ord_id,
+	t1.ord_source_type
+	FROM settle_ord_rela t1
+	  LEFT JOIN lta_ord_info t2
+	    ON t2.id = t1.ord_id
+	  LEFT JOIN lta_cont_info cont
+	    ON t2.lta_cont_id = cont.id
+      LEFT JOIN memb_info mb
+	    ON cont.buyer_id = mb.id
+	  LEFT JOIN entp_data_info edi
+	    ON edi.memb_id = mb.id
+	  AND edi.auth_exam_state = '1' AND edi.del_flag != '1'
+	WHERE 1 = 1
+	    AND t1.ord_source_type = '2'
+	    AND t2.pay_method_type = '1'
+    <if test="settleId != null and settleId != ''">
+		and t1.settle_id = #{settleId}
+	</if>
+	UNION ALL
+	SELECT
+	CASE WHEN edi.comp_name IS NULL THEN mb.user_name ELSE edi.comp_name END buyerName,
+	t1.ord_id,
+	t1.ord_source_type
+	FROM settle_ord_rela t1
+	  LEFT JOIN order_info t2
+	    ON t2.id = t1.ord_id
+	  LEFT JOIN memb_info mb
+	    ON t2.buyer_id = mb.id
+	  LEFT JOIN entp_data_info edi
+	    ON edi.memb_id = mb.id
+	  AND edi.auth_exam_state = '1' AND edi.del_flag != '1'
+	WHERE 1 = 1
+	    AND t1.ord_source_type != '2'
+	    AND t2.pay_method_type = '1'
+	<if test="settleId != null and settleId != ''">
+		and t1.settle_id = #{settleId}
+	</if>
+  </select>
+  <!-- 根据订单id查询账期 -->
+	<select id="findSettleByOrd" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+	    <include refid="Base_Column_List" />
+	  from settle_ord_rela
+	  where ord_id = #{ordId}
+	</select>
+</mapper>

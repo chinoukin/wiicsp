@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.ShopInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.ShopInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="merchant_id" property="merchantId" jdbcType="BIGINT"/>
+        <result column="shop_name" property="shopName" jdbcType="VARCHAR"/>
+        <result column="back_ground_url" property="backGroundUrl" jdbcType="VARCHAR"/>
+        <result column="shop_signature" property="shopSignature" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, merchant_id, shop_name, back_ground_url, shop_signature, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from shop_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from shop_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.ShopInfo">
+    insert into shop_info (id, merchant_id, shop_name,
+      back_ground_url, shop_signature, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{merchantId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR},
+      #{backGroundUrl,jdbcType=VARCHAR}, #{shopSignature,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.ShopInfo">
+        insert into shop_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="merchantId != null">
+                merchant_id,
+            </if>
+            <if test="shopName != null">
+                shop_name,
+            </if>
+            <if test="backGroundUrl != null">
+                back_ground_url,
+            </if>
+            <if test="shopSignature != null">
+                shop_signature,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="merchantId != null">
+                #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="shopName != null">
+                #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="backGroundUrl != null">
+                #{backGroundUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="shopSignature != null">
+                #{shopSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.ShopInfo">
+        update shop_info
+        <set>
+            <if test="merchantId != null">
+                merchant_id = #{merchantId,jdbcType=BIGINT},
+            </if>
+            <if test="shopName != null">
+                shop_name = #{shopName,jdbcType=VARCHAR},
+            </if>
+            <if test="backGroundUrl != null">
+                back_ground_url = #{backGroundUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="shopSignature != null">
+                shop_signature = #{shopSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.ShopInfo">
+    update shop_info
+    set merchant_id = #{merchantId,jdbcType=BIGINT},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      back_ground_url = #{backGroundUrl,jdbcType=VARCHAR},
+      shop_signature = #{shopSignature,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPageList" resultType="com.wisea.transac.common.vo.seller.ShopInfoPageListVo"
+            parameterType="com.wisea.transac.common.po.seller.ShopInfoPageListPo">
+    select
+	  id id,
+	  merchant_id merchantId,
+	  shop_name shopName,
+	  back_ground_url backGroundUrl,
+	  shop_signature shopSignature
+	from
+	  shop_info
+	where
+	  del_flag = '0'
+	  <if test="merchantId!=null">
+	    and merchant_id = #{merchantId}
+      </if>
+  </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.seller.ShopInfoInfoVo" parameterType="java.lang.Long">
+    select
+	  id id,
+	  merchant_id merchantId,
+	  shop_name shopName,
+	  back_ground_url backGroundUrl,
+	  shop_signature shopSignature,
+	  create_date createDate,
+      remarks
+	from
+	  shop_info
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+    <select id="findInfoByMerchantId" resultType="com.wisea.transac.common.vo.seller.ShopInfoInfoVo" parameterType="java.lang.Long">
+        select
+            id id,
+            merchant_id merchantId,
+            shop_name shopName,
+            back_ground_url backGroundUrl,
+            shop_signature shopSignature,
+            create_date createDate,
+            remarks
+        from
+            shop_info
+        where
+            del_flag = '0'
+          and merchant_id = #{merchantId}
+    </select>
+
+    <select id="findTotalAmountAndTotalCountBySellerId"
+            parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.seller.SellerTotalAmountAndTotalCountVo">
+    select ifnull(sum(payable_amount), 0) totalAmount,
+           count(distinct id)             totalCount
+    from order_info
+    where del_flag = '0'
+      and order_state_type = '4'
+      and seller_id = #{sellerId};
+  </select>
+    <select id="findCustomerCountByMerchantId"
+            parameterType="java.lang.Long" resultType="java.lang.Long">
+          select count(*)
+        from merchant_memb_mage
+        where del_flag = '0'
+          and merchant_id = #{merchantId};
+    </select>
+    <select id="findFollowCountByMerchantId"
+            parameterType="java.lang.Long" resultType="java.lang.Long">
+        select count(distinct fm.memb_id)
+        from follow_merchant fm,
+             shop_info si
+        where fm.del_flag = '0'
+          and si.del_flag = '0'
+          and si.id = fm.shop_id
+          and si.merchant_id = #{merchantId};
+    </select>
+
+
+    <select id="countByMerchantIdAndShopName" resultType="java.lang.Integer"
+            parameterType="com.wisea.transac.common.entity.ShopInfo">
+        select count(*)
+        from shop_info
+        where del_flag = '0'
+        <if test="merchantId!=null and merchantId!=''">
+            and merchant_id = #{merchantId}
+        </if>
+        and shop_name = #{shopName}
+
+    </select>
+</mapper>

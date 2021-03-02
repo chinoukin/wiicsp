@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.FollowMerchantMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.FollowMerchant" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+      <result column="base_id" property="baseId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, shop_id, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from follow_merchant
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from follow_merchant
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.FollowMerchant" >
+    insert into follow_merchant (id, memb_id, shop_id,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,base_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{shopId,jdbcType=BIGINT},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{baseId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.FollowMerchant" >
+    insert into follow_merchant
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.FollowMerchant" >
+    update follow_merchant
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="baseId != null">
+        base_id = #{baseId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.FollowMerchant" >
+    update follow_merchant
+    set memb_id = #{membId,jdbcType=BIGINT},
+      shop_id = #{shopId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      base_id = #{baseId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.FollowMerchantPageListVo" parameterType="com.wisea.transac.common.po.FollowMerchantPageListPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  shop_id shopId
+	from
+	  follow_merchant
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.FollowMerchantInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  shop_id shopId
+	from
+	  follow_merchant
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+
+  <select id="findExist" resultType="com.wisea.transac.common.entity.FollowMerchant" parameterType="com.wisea.transac.common.po.FollowMerchantPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  shop_id shopId,
+	  del_flag delFlag
+	from
+	  follow_merchant
+	where
+	   memb_id = #{membId}
+	  and shop_id = #{shopId}
+      <choose>
+          <when test="flag != null and flag != ''">
+          </when>
+          <otherwise>
+              and del_flag = '0'
+          </otherwise>
+      </choose>
+  </select>
+
+    <select id="findBaseExist" resultType="com.wisea.transac.common.entity.FollowMerchant" parameterType="com.wisea.transac.common.po.seller.FollowMerchantBasePo">
+        select
+          id id,
+          memb_id membId,
+          shop_id shopId,
+          base_id baseId,
+          del_flag delFlag
+        from
+          follow_merchant
+        where
+           memb_id = #{membId}
+          and base_id = #{baseId}
+        <choose>
+            <when test="flag != null and flag != ''">
+            </when>
+            <otherwise>
+                and del_flag = '0'
+            </otherwise>
+        </choose>
+    </select>
+
+  <select id="findminiPageList" resultType="com.wisea.transac.common.vo.seller.FollowMerchantminiPageListVo" parameterType="com.wisea.transac.common.po.seller.FollowMerchantminiPageListPo" >
+    select
+	  fm.id id,
+	  fm.memb_id membId,
+	  fm.shop_id shopId,
+      si.shop_name,
+      si.back_ground_url,
+      si.shop_signature
+	from
+	  follow_merchant fm
+   LEFT JOIN shop_info si on si.id = fm.shop_id
+	where
+	  fm.del_flag = '0'
+	and fm.memb_id = #{membId}
+    <if test="shopName!= null and shopName !=''">
+      and si.shop_name LIKE CONCAT('%',#{shopName},'%')
+    </if>
+    and fm.base_id is null
+	ORDER BY fm.update_date desc
+  </select>
+  <select id="findLocalityPageList" resultType="com.wisea.transac.common.vo.seller.FindLocalityPageListVo" parameterType="com.wisea.transac.common.po.seller.FindLocalityPageListPo">
+      SELECT fm.id id,
+      fm.memb_id membId,
+      bi.id baseId,
+      bi.base_name baseName,
+      bi.base_content baseContent,
+      bp.url baseUrl
+      FROM follow_merchant fm
+      LEFT JOIN base_info bi ON bi.id = fm.base_id
+      LEFT JOIN base_picture bp on fm.base_id = bp.base_id AND bp.del_flag ='0'  AND (bp.base_picture_type ='0' or bp.base_picture_type ='1')
+      AND bp.sort = (SELECT
+      min( bpi.sort ) AS sort
+      FROM
+      base_picture bpi
+      WHERE
+      bpi.del_flag = '0'
+      AND bpi.base_id = bp.base_id
+      AND (bpi.base_picture_type ='0' or bpi.base_picture_type ='1')
+      GROUP BY
+      bpi.base_id)
+      WHERE fm.del_flag='0'
+      and fm.memb_id = #{membId}
+      <if test="baseName!= null and baseName !=''">
+        and bi.base_name LIKE CONCAT('%',#{baseName},'%')
+      </if>
+      AND fm.shop_id is null
+      ORDER BY fm.update_date desc
+  </select>
+
+  <select id="findSumByUserId" resultType="java.lang.Long" parameterType="com.wisea.transac.common.po.seller.FocusPo">
+   select
+	  count(id)
+	from
+	  follow_merchant
+	where
+	  del_flag = '0'
+	  and memb_id = #{id}
+  </select>
+
+    <select id="findBaseByBaseIdAndMembId" resultType="com.wisea.transac.common.entity.FollowMerchant" parameterType="com.wisea.transac.common.po.seller.FollowMerchantBasePo">
+        select
+            id id,
+            memb_id membId,
+            base_id baseId
+        from
+            follow_merchant
+        where
+            memb_id = #{membId}
+          and base_id = #{baseId}
+          and del_flag = '0'
+    </select>
+
+</mapper>

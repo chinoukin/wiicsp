@@ -1,0 +1,724 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.JyOrdMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.JyOrdMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="entp_id" property="entpId" jdbcType="BIGINT" />
+    <result column="main_sub_entp_flag" property="mainSubEntpFlag" jdbcType="VARCHAR" />
+    <result column="sale_org" property="saleOrg" jdbcType="VARCHAR" />
+    <result column="ord_type" property="ordType" jdbcType="VARCHAR" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <result column="dj_date" property="djDate" jdbcType="TIMESTAMP" />
+    <result column="cgs_name" property="cgsName" jdbcType="VARCHAR" />
+    <result column="bm" property="bm" jdbcType="VARCHAR" />
+    <result column="ywy" property="ywy" jdbcType="VARCHAR" />
+    <result column="bz" property="bz" jdbcType="VARCHAR" />
+    <result column="wl_code" property="wlCode" jdbcType="VARCHAR" />
+    <result column="wl_name" property="wlName" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="category_name" property="categoryName" jdbcType="VARCHAR" />
+    <result column="form" property="form" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="main_unit" property="mainUnit" jdbcType="VARCHAR" />
+    <result column="main_ct" property="mainCt" jdbcType="DOUBLE" />
+    <result column="zp" property="zp" jdbcType="VARCHAR" />
+    <result column="zhsjj" property="zhsjj" jdbcType="DOUBLE" />
+    <result column="wsje" property="wsje" jdbcType="DOUBLE" />
+    <result column="jshe" property="jshe" jdbcType="DOUBLE" />
+    <result column="jh_send_date" property="jhSendDate" jdbcType="TIMESTAMP" />
+    <result column="zck_sl" property="zckSl" jdbcType="DOUBLE" />
+    <result column="qsz_sl" property="qszSl" jdbcType="DOUBLE" />
+    <result column="tsz_sl" property="tszSl" jdbcType="DOUBLE" />
+    <result column="dckz_sl" property="dckzSl" jdbcType="DOUBLE" />
+    <result column="kpz_sl" property="kpzSl" jdbcType="DOUBLE" />
+    <result column="zgysz_sl" property="zgyszSl" jdbcType="DOUBLE" />
+    <result column="zgys_je" property="zgysJe" jdbcType="DOUBLE" />
+    <result column="ysz_sl" property="yszSl" jdbcType="DOUBLE" />
+    <result column="ys_je" property="ysJe" jdbcType="DOUBLE" />
+    <result column="sk_je" property="skJe" jdbcType="DOUBLE" />
+    <result column="ys_ye" property="ysYe" jdbcType="DOUBLE" />
+    <result column="cbjsz_sl" property="cbjszSl" jdbcType="DOUBLE" />
+    <result column="dr_date" property="drDate" jdbcType="TIMESTAMP" />
+    <result column="ord_pc_num" property="ordPcNum" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, entp_id, main_sub_entp_flag, sale_org, ord_type, ord_num, dj_date, cgs_name, bm, ywy, bz, wl_code,
+    wl_name, category_id, category_name, form, spec, main_unit, main_ct, zp, zhsjj, wsje, jshe, jh_send_date, zck_sl,
+    qsz_sl, tsz_sl, dckz_sl, kpz_sl, zgysz_sl, zgys_je, ysz_sl, ys_je, sk_je, ys_ye,
+    cbjsz_sl, dr_date, ord_pc_num, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+
+  <!-- getTotalOrderSales -->
+  <select id="getTotalOrderSales" resultType="com.wisea.cultivar.common.vo.bigdata.TotalOrderSalesVo">
+    SELECT
+      DATE_FORMAT(jom.dj_date, '%Y') year,
+      ROUND(SUM(CASE WHEN jom.wl_code LIKE '03%' OR jom.wl_code LIKE '09%' THEN jom.ys_je ELSE 0 END), 2) domesticTotalOrderSales,
+      ROUND(SUM(CASE WHEN jom.wl_code LIKE '02%' THEN jom.ys_je ELSE 0 END), 2) foreignTotalOrderSales
+    FROM
+      jy_ord_mage jom
+    WHERE
+      jom.del_flag = '0'
+    GROUP BY
+      DATE_FORMAT(jom.dj_date, '%Y')
+  </select>
+
+  <!-- findOrdNums -->
+  <select id="findOrdNums" resultType="java.lang.String">
+    select
+      distinct ord_num
+    from
+      jy_ord_mage
+    where
+      del_flag = '0'
+  </select>
+
+  <!-- 国内/国外单品交易排行列表 -->
+  <select id="transactionRanking" parameterType="com.wisea.cultivar.common.po.bigdata.HeadquartersTransactionRankingPo" resultType="com.wisea.cultivar.common.vo.bigdata.HeadquartersTransactionRankingVo">
+    SELECT
+      jom.category_id categoryId,
+      cm.category_name categoryName,
+      ROUND(SUM(CASE WHEN jom.ys_je IS NULL THEN 0 ELSE jom.ys_je END), 2) salesAmount,
+      ROUND(SUM(CASE WHEN jom.main_ct IS NULL THEN 0 ELSE jom.main_ct END), 2) salesCount
+    FROM
+      jy_ord_mage jom
+      LEFT JOIN category_mage cm ON cm.id = jom.category_id
+    WHERE
+      jom.del_flag = '0'
+      <if test="homeAbroadType != null">
+        <choose>
+          <when test="homeAbroadType == '0'.toString()">
+            AND (jom.wl_code LIKE '03%' OR jom.wl_code LIKE '09%')
+          </when>
+          <when test="homeAbroadType == '1'.toString()">
+            AND jom.wl_code LIKE '02%'
+          </when>
+        </choose>
+      </if>
+      <if test="year != null and year != ''">
+        AND DATE_FORMAT(jom.dj_date, '%Y') = #{year}
+      </if>
+    GROUP BY
+      jom.category_id
+    ORDER BY
+      salesAmount DESC
+  </select>
+
+  <!-- 国内/国外品类交易走势分析 -->
+  <select id="categoryTransactionTrends" parameterType="com.wisea.cultivar.common.po.bigdata.HeadquartersCategoryTransactionTrendsPo" resultType="com.wisea.cultivar.common.vo.bigdata.HeadquartersCategoryTransactionTrendsVo">
+    SELECT
+      <if test="showType == '0'.toString()">
+        DATE_FORMAT(jom.dj_date, '%y') yearOrMonth,
+      </if>
+      <if test="showType == '1'.toString()">
+        DATE_FORMAT(jom.dj_date, '%y-%m') yearOrMonth,
+      </if>
+      ROUND(SUM(CASE WHEN jom.ys_je IS NULL THEN 0 ELSE jom.ys_je END), 2) salesAmount,
+      ROUND(SUM(CASE WHEN jom.main_ct IS NULL THEN 0 ELSE jom.main_ct END), 2) salesCount
+    FROM
+      jy_ord_mage jom
+    WHERE
+      jom.del_flag = '0'
+      AND jom.category_id = #{categoryId}
+      <if test="year != null and year != '' and showType == '1'.toString()">
+        and DATE_FORMAT(jom.dj_date, '%Y') = #{year}
+      </if>
+      <if test="homeAbroadType != null">
+          <choose>
+              <when test="homeAbroadType == '0'.toString()">
+                  AND (jom.wl_code LIKE '03%' OR jom.wl_code LIKE '09%')
+              </when>
+              <when test="homeAbroadType == '1'.toString()">
+                  AND jom.wl_code LIKE '02%'
+              </when>
+          </choose>
+      </if>
+    GROUP BY
+      <if test="showType == '0'.toString()">
+        DATE_FORMAT(jom.dj_date, '%y')
+      </if>
+      <if test="showType == '1'.toString()">
+        DATE_FORMAT(jom.dj_date, '%y-%m')
+      </if>
+    ORDER BY
+      yearOrMonth
+  </select>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into jy_ord_mage
+    (id, entp_id, main_sub_entp_flag, sale_org,
+    ord_type, ord_num, dj_date,
+    cgs_name, bm, ywy, bz,
+    wl_code, wl_name, category_id, category_name, form,
+    spec, main_unit, main_ct,
+    zp, zhsjj, wsje, jshe,
+    jh_send_date, zck_sl, qsz_sl,
+    tsz_sl, dckz_sl, kpz_sl,
+    zgysz_sl, zgys_je, ysz_sl,
+    ys_je, sk_je, ys_ye, cbjsz_sl,
+    dr_date, ord_pc_num, create_by,
+    create_date, update_by, update_date,
+    remarks, del_flag)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.entpId,jdbcType=BIGINT}, #{item.mainSubEntpFlag,jdbcType=VARCHAR}, #{item.saleOrg,jdbcType=VARCHAR},
+      #{item.ordType,jdbcType=VARCHAR}, #{item.ordNum,jdbcType=VARCHAR}, #{item.djDate,jdbcType=TIMESTAMP},
+      #{item.cgsName,jdbcType=VARCHAR}, #{item.bm,jdbcType=VARCHAR}, #{item.ywy,jdbcType=VARCHAR}, #{item.bz,jdbcType=VARCHAR},
+      #{item.wlCode,jdbcType=VARCHAR}, #{item.wlName,jdbcType=VARCHAR}, #{item.categoryId,jdbcType=BIGINT}, #{item.categoryName,jdbcType=VARCHAR}, #{item.form,jdbcType=VARCHAR},
+      #{item.spec,jdbcType=VARCHAR}, #{item.mainUnit,jdbcType=VARCHAR}, #{item.mainCt,jdbcType=DOUBLE},
+      #{item.zp,jdbcType=VARCHAR}, #{item.zhsjj,jdbcType=DOUBLE}, #{item.wsje,jdbcType=DOUBLE}, #{item.jshe,jdbcType=DOUBLE},
+      #{item.jhSendDate,jdbcType=TIMESTAMP}, #{item.zckSl,jdbcType=DOUBLE}, #{item.qszSl,jdbcType=DOUBLE},
+      #{item.tszSl,jdbcType=DOUBLE}, #{item.dckzSl,jdbcType=DOUBLE}, #{item.kpzSl,jdbcType=DOUBLE},
+      #{item.zgyszSl,jdbcType=DOUBLE}, #{item.zgysJe,jdbcType=DOUBLE}, #{item.yszSl,jdbcType=DOUBLE},
+      #{item.ysJe,jdbcType=DOUBLE}, #{item.skJe,jdbcType=DOUBLE}, #{item.ysYe,jdbcType=DOUBLE}, #{item.cbjszSl,jdbcType=DOUBLE},
+      #{item.drDate,jdbcType=TIMESTAMP}, #{item.ordPcNum,jdbcType=VARCHAR}, #{item.createBy,jdbcType=VARCHAR},
+      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+      #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <!--  查询订单年份列表  -->
+  <select id="getOrdYears" resultType="java.lang.String">
+    SELECT
+      DATE_FORMAT(jom.dj_date, '%Y')
+    FROM
+      jy_ord_mage jom
+    GROUP BY
+	  DATE_FORMAT(jom.dj_date,'%Y')
+    ORDER BY
+	  DATE_FORMAT(jom.dj_date,'%Y') DESC
+  </select>
+
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from jy_ord_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from jy_ord_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.JyOrdMage" >
+    insert into jy_ord_mage (id, entp_id, main_sub_entp_flag, sale_org,
+      ord_type, ord_num, dj_date,
+      cgs_name, bm, ywy, bz,
+      wl_code, wl_name, category_id, category_name, form,
+      spec, main_unit, main_ct,
+      zp, zhsjj, wsje, jshe,
+      jh_send_date, zck_sl, qsz_sl,
+      tsz_sl, dckz_sl, kpz_sl,
+      zgysz_sl, zgys_je, ysz_sl,
+      ys_je, sk_je, ys_ye, cbjsz_sl,
+      dr_date, ord_pc_num, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{entpId,jdbcType=BIGINT}, #{mainSubEntpFlag,jdbcType=VARCHAR}, #{saleOrg,jdbcType=VARCHAR},
+      #{ordType,jdbcType=VARCHAR}, #{ordNum,jdbcType=VARCHAR}, #{djDate,jdbcType=TIMESTAMP},
+      #{cgsName,jdbcType=VARCHAR}, #{bm,jdbcType=VARCHAR}, #{ywy,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR},
+      #{wlCode,jdbcType=VARCHAR}, #{wlName,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT}, #{categoryName,jdbcType=VARCHAR}, #{form,jdbcType=VARCHAR},
+      #{spec,jdbcType=VARCHAR}, #{mainUnit,jdbcType=VARCHAR}, #{mainCt,jdbcType=DOUBLE},
+      #{zp,jdbcType=VARCHAR}, #{zhsjj,jdbcType=DOUBLE}, #{wsje,jdbcType=DOUBLE}, #{jshe,jdbcType=DOUBLE},
+      #{jhSendDate,jdbcType=TIMESTAMP}, #{zckSl,jdbcType=DOUBLE}, #{qszSl,jdbcType=DOUBLE},
+      #{tszSl,jdbcType=DOUBLE}, #{dckzSl,jdbcType=DOUBLE}, #{kpzSl,jdbcType=DOUBLE},
+      #{zgyszSl,jdbcType=DOUBLE}, #{zgysJe,jdbcType=DOUBLE}, #{yszSl,jdbcType=DOUBLE},
+      #{ysJe,jdbcType=DOUBLE}, #{skJe,jdbcType=DOUBLE}, #{ysYe,jdbcType=DOUBLE}, #{cbjszSl,jdbcType=DOUBLE},
+      #{drDate,jdbcType=TIMESTAMP}, #{ordPcNum,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.JyOrdMage" >
+    insert into jy_ord_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entpId != null" >
+        entp_id,
+      </if>
+      <if test="mainSubEntpFlag != null" >
+        main_sub_entp_flag,
+      </if>
+      <if test="saleOrg != null" >
+        sale_org,
+      </if>
+      <if test="ordType != null" >
+        ord_type,
+      </if>
+      <if test="ordNum != null" >
+        ord_num,
+      </if>
+      <if test="djDate != null" >
+        dj_date,
+      </if>
+      <if test="cgsName != null" >
+        cgs_name,
+      </if>
+      <if test="bm != null" >
+        bm,
+      </if>
+      <if test="ywy != null" >
+        ywy,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+      <if test="wlCode != null" >
+        wl_code,
+      </if>
+      <if test="wlName != null" >
+        wl_name,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="categoryName != null" >
+        category_name,
+      </if>
+      <if test="form != null" >
+        form,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="mainUnit != null" >
+        main_unit,
+      </if>
+      <if test="mainCt != null" >
+        main_ct,
+      </if>
+      <if test="zp != null" >
+        zp,
+      </if>
+      <if test="zhsjj != null" >
+        zhsjj,
+      </if>
+      <if test="wsje != null" >
+        wsje,
+      </if>
+      <if test="jshe != null" >
+        jshe,
+      </if>
+      <if test="jhSendDate != null" >
+        jh_send_date,
+      </if>
+      <if test="zckSl != null" >
+        zck_sl,
+      </if>
+      <if test="qszSl != null" >
+        qsz_sl,
+      </if>
+      <if test="tszSl != null" >
+        tsz_sl,
+      </if>
+      <if test="dckzSl != null" >
+        dckz_sl,
+      </if>
+      <if test="kpzSl != null" >
+        kpz_sl,
+      </if>
+      <if test="zgyszSl != null" >
+        zgysz_sl,
+      </if>
+      <if test="zgysJe != null" >
+        zgys_je,
+      </if>
+      <if test="yszSl != null" >
+        ysz_sl,
+      </if>
+      <if test="ysJe != null" >
+        ys_je,
+      </if>
+      <if test="skJe != null" >
+        sk_je,
+      </if>
+      <if test="ysYe != null" >
+        ys_ye,
+      </if>
+      <if test="cbjszSl != null" >
+        cbjsz_sl,
+      </if>
+      <if test="drDate != null" >
+        dr_date,
+      </if>
+      <if test="ordPcNum != null" >
+        ord_pc_num,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entpId != null" >
+        #{entpId,jdbcType=BIGINT},
+      </if>
+      <if test="mainSubEntpFlag != null" >
+        #{mainSubEntpFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrg != null" >
+        #{saleOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="ordType != null" >
+        #{ordType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNum != null" >
+        #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="djDate != null" >
+        #{djDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cgsName != null" >
+        #{cgsName,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null" >
+        #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="ywy != null" >
+        #{ywy,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="wlCode != null" >
+        #{wlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wlName != null" >
+        #{wlName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="form != null" >
+        #{form,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="mainUnit != null" >
+        #{mainUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="mainCt != null" >
+        #{mainCt,jdbcType=DOUBLE},
+      </if>
+      <if test="zp != null" >
+        #{zp,jdbcType=VARCHAR},
+      </if>
+      <if test="zhsjj != null" >
+        #{zhsjj,jdbcType=DOUBLE},
+      </if>
+      <if test="wsje != null" >
+        #{wsje,jdbcType=DOUBLE},
+      </if>
+      <if test="jshe != null" >
+        #{jshe,jdbcType=DOUBLE},
+      </if>
+      <if test="jhSendDate != null" >
+        #{jhSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zckSl != null" >
+        #{zckSl,jdbcType=DOUBLE},
+      </if>
+      <if test="qszSl != null" >
+        #{qszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="tszSl != null" >
+        #{tszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="dckzSl != null" >
+        #{dckzSl,jdbcType=DOUBLE},
+      </if>
+      <if test="kpzSl != null" >
+        #{kpzSl,jdbcType=DOUBLE},
+      </if>
+      <if test="zgyszSl != null" >
+        #{zgyszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="zgysJe != null" >
+        #{zgysJe,jdbcType=DOUBLE},
+      </if>
+      <if test="yszSl != null" >
+        #{yszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="ysJe != null" >
+        #{ysJe,jdbcType=DOUBLE},
+      </if>
+      <if test="skJe != null" >
+        #{skJe,jdbcType=DOUBLE},
+      </if>
+      <if test="ysYe != null" >
+        #{ysYe,jdbcType=DOUBLE},
+      </if>
+      <if test="cbjszSl != null" >
+        #{cbjszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="drDate != null" >
+        #{drDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordPcNum != null" >
+        #{ordPcNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.JyOrdMage" >
+    update jy_ord_mage
+    <set >
+      <if test="entpId != null" >
+        entp_id = #{entpId,jdbcType=BIGINT},
+      </if>
+      <if test="mainSubEntpFlag != null" >
+        main_sub_entp_flag = #{mainSubEntpFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="saleOrg != null" >
+        sale_org = #{saleOrg,jdbcType=VARCHAR},
+      </if>
+      <if test="ordType != null" >
+        ord_type = #{ordType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordNum != null" >
+        ord_num = #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="djDate != null" >
+        dj_date = #{djDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cgsName != null" >
+        cgs_name = #{cgsName,jdbcType=VARCHAR},
+      </if>
+      <if test="bm != null" >
+        bm = #{bm,jdbcType=VARCHAR},
+      </if>
+      <if test="ywy != null" >
+        ywy = #{ywy,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="wlCode != null" >
+        wl_code = #{wlCode,jdbcType=VARCHAR},
+      </if>
+      <if test="wlName != null" >
+        wl_name = #{wlName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="categoryName != null" >
+        category_name = #{categoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="form != null" >
+        form = #{form,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="mainUnit != null" >
+        main_unit = #{mainUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="mainCt != null" >
+        main_ct = #{mainCt,jdbcType=DOUBLE},
+      </if>
+      <if test="zp != null" >
+        zp = #{zp,jdbcType=VARCHAR},
+      </if>
+      <if test="zhsjj != null" >
+        zhsjj = #{zhsjj,jdbcType=DOUBLE},
+      </if>
+      <if test="wsje != null" >
+        wsje = #{wsje,jdbcType=DOUBLE},
+      </if>
+      <if test="jshe != null" >
+        jshe = #{jshe,jdbcType=DOUBLE},
+      </if>
+      <if test="jhSendDate != null" >
+        jh_send_date = #{jhSendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="zckSl != null" >
+        zck_sl = #{zckSl,jdbcType=DOUBLE},
+      </if>
+      <if test="qszSl != null" >
+        qsz_sl = #{qszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="tszSl != null" >
+        tsz_sl = #{tszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="dckzSl != null" >
+        dckz_sl = #{dckzSl,jdbcType=DOUBLE},
+      </if>
+      <if test="kpzSl != null" >
+        kpz_sl = #{kpzSl,jdbcType=DOUBLE},
+      </if>
+      <if test="zgyszSl != null" >
+        zgysz_sl = #{zgyszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="zgysJe != null" >
+        zgys_je = #{zgysJe,jdbcType=DOUBLE},
+      </if>
+      <if test="yszSl != null" >
+        ysz_sl = #{yszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="ysJe != null" >
+        ys_je = #{ysJe,jdbcType=DOUBLE},
+      </if>
+      <if test="skJe != null" >
+        sk_je = #{skJe,jdbcType=DOUBLE},
+      </if>
+      <if test="ysYe != null" >
+        ys_ye = #{ysYe,jdbcType=DOUBLE},
+      </if>
+      <if test="cbjszSl != null" >
+        cbjsz_sl = #{cbjszSl,jdbcType=DOUBLE},
+      </if>
+      <if test="drDate != null" >
+        dr_date = #{drDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ordPcNum != null" >
+        ord_pc_num = #{ordPcNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.JyOrdMage" >
+    update jy_ord_mage
+    set entp_id = #{entpId,jdbcType=BIGINT},
+      main_sub_entp_flag = #{mainSubEntpFlag,jdbcType=VARCHAR},
+      sale_org = #{saleOrg,jdbcType=VARCHAR},
+      ord_type = #{ordType,jdbcType=VARCHAR},
+      ord_num = #{ordNum,jdbcType=VARCHAR},
+      dj_date = #{djDate,jdbcType=TIMESTAMP},
+      cgs_name = #{cgsName,jdbcType=VARCHAR},
+      bm = #{bm,jdbcType=VARCHAR},
+      ywy = #{ywy,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=VARCHAR},
+      wl_code = #{wlCode,jdbcType=VARCHAR},
+      wl_name = #{wlName,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      category_name = #{categoryName,jdbcType=VARCHAR},
+      form = #{form,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=VARCHAR},
+      main_unit = #{mainUnit,jdbcType=VARCHAR},
+      main_ct = #{mainCt,jdbcType=DOUBLE},
+      zp = #{zp,jdbcType=VARCHAR},
+      zhsjj = #{zhsjj,jdbcType=DOUBLE},
+      wsje = #{wsje,jdbcType=DOUBLE},
+      jshe = #{jshe,jdbcType=DOUBLE},
+      jh_send_date = #{jhSendDate,jdbcType=TIMESTAMP},
+      zck_sl = #{zckSl,jdbcType=DOUBLE},
+      qsz_sl = #{qszSl,jdbcType=DOUBLE},
+      tsz_sl = #{tszSl,jdbcType=DOUBLE},
+      dckz_sl = #{dckzSl,jdbcType=DOUBLE},
+      kpz_sl = #{kpzSl,jdbcType=DOUBLE},
+      zgysz_sl = #{zgyszSl,jdbcType=DOUBLE},
+      zgys_je = #{zgysJe,jdbcType=DOUBLE},
+      ysz_sl = #{yszSl,jdbcType=DOUBLE},
+      ys_je = #{ysJe,jdbcType=DOUBLE},
+      sk_je = #{skJe,jdbcType=DOUBLE},
+      ys_ye = #{ysYe,jdbcType=DOUBLE},
+      cbjsz_sl = #{cbjszSl,jdbcType=DOUBLE},
+      dr_date = #{drDate,jdbcType=TIMESTAMP},
+      ord_pc_num = #{ordPcNum,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.JyOrdMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.JyOrdMagePagePo" >
+    select
+      <include refid="Base_Column_List" />
+    from
+      jy_ord_mage
+    where
+      del_flag = '0'
+      <if test="djDate != null">
+        and DATE_FORMAT(dj_date, '%y-%m-%d') = DATE_FORMAT(#{djDate}, '%y-%m-%d')
+      </if>
+      <if test="drDate != null">
+        and DATE_FORMAT(dr_date, '%y-%m-%d') = DATE_FORMAT(#{drDate}, '%y-%m-%d')
+      </if>
+      <if test="queryInput != null and queryInput != ''">
+        and (
+            sale_org like CONCAT('%', #{queryInput}, '%')
+            or cgs_name like CONCAT('%', #{queryInput}, '%')
+        )
+      </if>
+    order by
+      update_date desc
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.JyOrdMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.JyOrdMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from jy_ord_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.JyOrdMage" >
+    update jy_ord_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

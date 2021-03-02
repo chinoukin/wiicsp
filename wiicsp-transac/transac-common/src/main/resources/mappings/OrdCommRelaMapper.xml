@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.OrdCommRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.OrdCommRela" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="import_bill_id" property="importBillId" jdbcType="BIGINT" />
+    <result column="level_spec_quote_id" property="levelSpecQuoteId" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="comm_art_num" property="commArtNum" jdbcType="VARCHAR" />
+    <result column="comm_url" property="commUrl" jdbcType="VARCHAR" />
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="comm_spec" property="commSpec" jdbcType="VARCHAR" />
+    <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR" />
+    <result column="comm_total_weight" property="commTotalWeight" jdbcType="DOUBLE" />
+    <result column="unit_weight_price" property="unitWeightPrice" jdbcType="DOUBLE" />
+    <result column="net_weight" property="netWeight" jdbcType="DOUBLE" />
+    <result column="dimensions_type" property="dimensionsType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_id, comm_pub_id, import_bill_id,level_spec_quote_id, count, price, comm_art_num, comm_url, comm_name,
+    comm_spec, meas_unit_name, comm_total_weight, unit_weight_price, net_weight, dimensions_type, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+    <!-- 热卖商品统计 -->
+    <select id="statisCommHot" resultType="com.wisea.transac.common.vo.product.CommStaticsVo"
+            parameterType="com.wisea.transac.common.po.product.CommStatisPo">
+        SELECT
+        cpi.comm_title AS 'commName'
+        <if test="seleckey != null and seleckey == '1'.toString()">
+            ,cast(sum(ocr.comm_total_weight)/1000 as decimal(18,2)) AS 'saleCount'
+        </if>
+        <if test="seleckey != null and seleckey == '0'.toString()">
+            ,cast(sum(oi.comm_total_price) as decimal (18,2)) AS 'saleNum'
+        </if>
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id
+        LEFT JOIN ord_comm_rela ocr ON ocr.comm_pub_id = cpi.id
+        LEFT JOIN order_info oi ON oi.id  = ocr.ord_id
+        LEFT JOIN stalls_mage AS sm ON cpi.stalls_mage_id = sm.id
+        WHERE cpi.del_flag = '0'
+        AND oi.order_state_type IN ('0', '1', '2', '3','4', '5','6')
+        AND sm.whole_sale_market_id = #{marketId}
+        AND cpi.stalls_mage_id IN
+        <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+            ${id}
+        </foreach>
+        <if test="timeStart != null">
+            AND cpi.create_date >= #{timeStart}
+        </if>
+        <if test="timeEnd != null">
+            AND cpi.create_date <![CDATA[<=]]> #{timeEnd}
+        </if>
+        GROUP BY cpi.id
+        <if test="seleckey != null and seleckey == '0'.toString()">
+            ORDER BY saleNum DESC
+        </if>
+        <if test="seleckey != null and seleckey == '1'.toString()">
+            ORDER BY saleCount DESC
+        </if>
+        limit 10
+    </select>
+    <!-- 查询商品销售统计 -->
+    <select id="commSaleStatics" resultType="com.wisea.transac.common.vo.product.CommStaticsVo"
+            parameterType="com.wisea.transac.common.po.product.CommStatisPo">
+        SELECT
+        cpi.comm_title AS 'commName',
+        mi.entp_name AS 'compName',
+        sum(lsq.sales_volume) AS 'saleCount',
+        sum(lsq.transaction_amount) AS 'saleNum',
+        count(oi.buyer_id)AS 'personPayCount'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id
+        LEFT JOIN ord_comm_rela ocr ON ocr.comm_pub_id = cpi.id
+        LEFT JOIN order_info oi ON oi.id = ocr.ord_id
+        LEFT JOIN memb_info AS mi ON cpi.memb_id = mi.id
+        LEFT JOIN stalls_mage AS sm ON cpi.stalls_mage_id = sm.id
+        WHERE cpi.del_flag = '0'
+        AND sm.whole_sale_market_id = #{marketId}
+        AND oi.order_state_type IN('4','6') or oi.pay_ord_date is not null
+        AND cpi.stalls_mage_id IN
+        <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+            ${id}
+        </foreach>
+        <if test="timeStart != null">
+            AND cpi.create_date >= #{timeStart}
+        </if>
+        <if test="timeEnd != null">
+            AND cpi.create_date <![CDATA[<=]]> #{timeEnd}
+        </if>
+        GROUP BY cpi.id
+        ORDER BY saleNum DESC
+    </select>
+  <!-- 根据订单ID查询订单商品列表 -->
+  <select id="findByOrdId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from ord_comm_rela where ord_id = #{ordId}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ord_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ord_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.OrdCommRela" >
+    insert into ord_comm_rela (id, ord_id, comm_pub_id,
+      import_bill_id, level_spec_quote_id, count, price,
+      comm_art_num, comm_url, comm_name,
+      comm_spec, meas_unit_name, comm_total_weight,
+      unit_weight_price, net_weight, dimensions_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT},
+      #{importBillId,jdbcType=BIGINT}, #{levelSpecQuoteId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE},
+      #{commArtNum,jdbcType=VARCHAR}, #{commUrl,jdbcType=VARCHAR}, #{commName,jdbcType=VARCHAR},
+      #{commSpec,jdbcType=VARCHAR}, #{measUnitName,jdbcType=VARCHAR}, #{commTotalWeight,jdbcType=DOUBLE},
+      #{unitWeightPrice,jdbcType=DOUBLE}, #{netWeight,jdbcType=DOUBLE}, #{dimensionsType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.OrdCommRela" >
+    insert into ord_comm_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="importBillId != null" >
+        import_bill_id,
+      </if>
+      <if test="level_spec_quote_id != null" >
+        levelSpecQuoteId,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="commArtNum != null" >
+        comm_art_num,
+      </if>
+      <if test="commUrl != null" >
+        comm_url,
+      </if>
+      <if test="commName != null" >
+        comm_name,
+      </if>
+      <if test="commSpec != null" >
+        comm_spec,
+      </if>
+      <if test="measUnitName != null" >
+        meas_unit_name,
+      </if>
+      <if test="commTotalWeight != null" >
+        comm_total_weight,
+      </if>
+      <if test="unitWeightPrice != null" >
+        unit_weight_price,
+      </if>
+      <if test="netWeight != null" >
+        net_weight,
+      </if>
+      <if test="dimensionsType != null" >
+        dimensions_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="importBillId != null" >
+        #{importBillId,jdbcType=BIGINT},
+      </if>
+       <if test="levelSpecQuoteId != null" >
+        #{levelSpecQuoteId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="commArtNum != null" >
+        #{commArtNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commUrl != null" >
+        #{commUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commName != null" >
+        #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="commSpec != null" >
+        #{commSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="measUnitName != null" >
+        #{measUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalWeight != null" >
+        #{commTotalWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="unitWeightPrice != null" >
+        #{unitWeightPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="netWeight != null" >
+        #{netWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="dimensionsType != null" >
+        #{dimensionsType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.OrdCommRela" >
+    update ord_comm_rela
+    <set >
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="importBillId != null" >
+        import_bill_id = #{importBillId,jdbcType=BIGINT},
+      </if>
+      <if test="levelSpecQuoteId != null" >
+        level_spec_quote_id = #{levelSpecQuoteId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="commArtNum != null" >
+        comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commUrl != null" >
+        comm_url = #{commUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="commSpec != null" >
+        comm_spec = #{commSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="measUnitName != null" >
+        meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalWeight != null" >
+        comm_total_weight = #{commTotalWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="unitWeightPrice != null" >
+        unit_weight_price = #{unitWeightPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="netWeight != null" >
+        net_weight = #{netWeight,jdbcType=DOUBLE},
+      </if>
+       <if test="dimensionsType != null" >
+        dimensions_type = #{dimensionsType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.OrdCommRela" >
+    update ord_comm_rela
+    set ord_id = #{ordId,jdbcType=BIGINT},
+      comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      import_bill_id = #{importBillId,jdbcType=BIGINT},
+      level_spec_quote_id = #{levelSpecQuoteId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+      comm_url = #{commUrl,jdbcType=VARCHAR},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      comm_spec = #{commSpec,jdbcType=VARCHAR},
+      meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      comm_total_weight = #{commTotalWeight,jdbcType=DOUBLE},
+      unit_weight_price = #{unitWeightPrice,jdbcType=DOUBLE},
+      net_weight = #{netWeight,jdbcType=DOUBLE},
+      dimensions_type = #{dimensionsType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+   <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into ord_comm_rela (id, ord_id, comm_pub_id,
+	      import_bill_id,level_spec_quote_id, count, price,
+	      comm_art_num, comm_url, comm_name,
+	      comm_spec, meas_unit_name, comm_total_weight,
+	      unit_weight_price, net_weight,dimensions_type, create_by,
+	      create_date, update_by, update_date,
+	      remarks, del_flag)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.ordId,jdbcType=BIGINT}, #{item.commPubId,jdbcType=BIGINT},
+	      #{item.importBillId,jdbcType=BIGINT},#{item.levelSpecQuoteId,jdbcType=BIGINT}, #{item.count,jdbcType=INTEGER}, #{item.price,jdbcType=DOUBLE},
+	      #{item.commArtNum,jdbcType=VARCHAR}, #{item.commUrl,jdbcType=VARCHAR}, #{item.commName,jdbcType=VARCHAR},
+	      #{item.commSpec,jdbcType=VARCHAR}, #{item.measUnitName,jdbcType=VARCHAR}, #{item.commTotalWeight,jdbcType=DOUBLE},
+	      #{item.unitWeightPrice,jdbcType=DOUBLE}, #{item.netWeight,jdbcType=DOUBLE},#{item.dimensionsType,jdbcType=VARCHAR}, #{item.createBy,jdbcType=VARCHAR},
+	      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+	      #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+        </foreach>
+    </insert>
+</mapper>

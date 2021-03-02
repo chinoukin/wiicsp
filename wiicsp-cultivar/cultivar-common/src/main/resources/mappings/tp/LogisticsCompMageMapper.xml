@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LogisticsCompMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR"/>
+        <result column="logistics_comp_code" property="logisticsCompCode" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, logistics_comp_name, logistics_comp_code,tel, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from logistics_comp_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from logistics_comp_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+    insert into logistics_comp_mage (id, logistics_comp_name, logistics_comp_code, tel,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{logisticsCompName,jdbcType=VARCHAR}, #{logisticsCompCode,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+        insert into logistics_comp_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="logisticsCompName != null">
+                logistics_comp_name,
+            </if>
+            <if test="logisticsCompCode != null">
+                logistics_comp_code,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="logisticsCompName != null">
+                #{logisticsCompName,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCompCode != null">
+                #{logisticsCompCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+        update logistics_comp_mage
+        <set>
+            <if test="logisticsCompName != null">
+                logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCompCode != null">
+                logistics_comp_code = #{logisticsCompCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+    update logistics_comp_mage
+    set logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      logistics_comp_code = #{logisticsCompCode,jdbcType=VARCHAR},
+        tel = #{tel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.LogisticsCompMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.LogisticsCompMagePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from logistics_comp_mage
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.LogisticsCompMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.LogisticsCompMageListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from logistics_comp_mage
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+    update logistics_comp_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findForPage" resultType="com.wisea.cultivar.common.vo.tp.LogisticsCompMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.LogisticsCompMagePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from logistics_comp_mage
+        where del_flag = '0'
+        <if test="logisticsCompName !=null and logisticsCompName != '' ">
+            AND INSTR(logistics_comp_name,#{logisticsCompName}) != 0
+        </if>
+        <if test="pageInfo.orderBy!=null and pageInfo.orderBy!=''">
+            ORDER BY ${pageInfo.orderBy}
+        </if>
+    </select>
+    <select id="findByName" resultType="com.wisea.cultivar.common.vo.tp.LogisticsCompMageListVo"
+            parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM logistics_comp_mage
+        WHERE
+        del_flag = "0"
+        AND logistics_comp_name = #{name,jdbcType=VARCHAR}
+    </select>
+    <select id="findById" resultType="com.wisea.cultivar.common.vo.tp.LogisticsCompMageListVo" parameterType="java.lang.Long">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM logistics_comp_mage
+        WHERE
+        del_flag = "0"
+        AND id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findForList" resultType="com.wisea.cultivar.common.vo.tp.LogisticsCompMageListVo">
+        select
+        <include refid="Base_Column_List"/>
+        from logistics_comp_mage
+        where del_flag = '0'
+    </select>
+    <select id="getComponyList" resultType="com.wisea.cultivar.common.entity.tp.LogisticsCompMage">
+        SELECT id,logistics_comp_name,logistics_comp_code FROM logistics_comp_mage
+    </select>
+</mapper>

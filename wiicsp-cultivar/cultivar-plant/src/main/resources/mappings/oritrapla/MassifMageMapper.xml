@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.MassifMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.MassifMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="massif_name" property="massifName" jdbcType="VARCHAR"/>
+        <result column="massif_type" property="massifType" jdbcType="VARCHAR"/>
+        <result column="massif_acre" property="massifAcre" jdbcType="DOUBLE"/>
+        <result column="jd" property="jd" jdbcType="DOUBLE"/>
+        <result column="wd" property="wd" jdbcType="DOUBLE"/>
+        <result column="location" property="location" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, memb_id, massif_name, massif_type, massif_acre, jd, wd, location,
+		create_by, create_date, update_by, update_date, remarks, del_flag
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap"
+            parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from massif_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from massif_mage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MassifMage">
+        insert into massif_mage (id,
+                                 memb_id, massif_name,
+                                 massif_type, massif_acre, jd, wd, location, create_by,
+                                 create_date,
+                                 update_by, update_date,
+                                 remarks, del_flag)
+        values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT},
+                #{massifName,jdbcType=VARCHAR},
+                #{massifType,jdbcType=VARCHAR},
+                #{massifAcre,jdbcType=DOUBLE}, #{jd,jdbcType=DOUBLE},
+                #{wd,jdbcType=DOUBLE}, #{location,jdbcType=VARCHAR},
+                #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+                #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+                #{remarks,jdbcType=VARCHAR},  #{delFlag,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MassifMage">
+        insert into massif_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="massifName != null">
+                massif_name,
+            </if>
+            <if test="massifType != null">
+                massif_type,
+            </if>
+            <if test="massifAcre != null">
+                massif_acre,
+            </if>
+            <if test="jd != null">
+                jd,
+            </if>
+            <if test="wd != null">
+                wd,
+            </if>
+            <if test="location != null">
+                location,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="massifName != null">
+                #{massifName,jdbcType=VARCHAR},
+            </if>
+            <if test="massifType != null">
+                #{massifType,jdbcType=VARCHAR},
+            </if>
+            <if test="massifAcre != null">
+                #{massifAcre,jdbcType=DOUBLE},
+            </if>
+            <if test="jd != null">
+                #{jd,jdbcType=DOUBLE},
+            </if>
+            <if test="wd != null">
+                #{wd,jdbcType=DOUBLE},
+            </if>
+            <if test="location != null">
+                #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MassifMage">
+        update massif_mage
+        <set>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="massifName != null">
+                massif_name = #{massifName,jdbcType=VARCHAR},
+            </if>
+            <if test="massifType != null">
+                massif_type = #{massifType,jdbcType=VARCHAR},
+            </if>
+            <if test="massifAcre != null">
+                massif_acre = #{massifAcre,jdbcType=DOUBLE},
+            </if>
+            <if test="jd != null">
+                jd = #{jd,jdbcType=DOUBLE},
+            </if>
+            <if test="wd != null">
+                wd = #{wd,jdbcType=DOUBLE},
+            </if>
+            <if test="location != null">
+                location = #{location,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MassifMage">
+        update massif_mage
+        set memb_id     = #{membId,jdbcType=BIGINT},
+            massif_name =
+                #{massifName,jdbcType=VARCHAR},
+            massif_type =
+                #{massifType,jdbcType=VARCHAR},
+            massif_acre =
+                #{massifAcre,jdbcType=DOUBLE},
+            jd =
+                #{jd,jdbcType=DOUBLE},
+            wd =
+                #{wd,jdbcType=DOUBLE},
+            location =
+                #{location,jdbcType=VARCHAR},
+            create_by   =
+                #{createBy,jdbcType=VARCHAR},
+            create_date =
+                #{createDate,jdbcType=TIMESTAMP},
+            update_by   =
+                #{updateBy,jdbcType=VARCHAR},
+            update_date =
+                #{updateDate,jdbcType=TIMESTAMP},
+            remarks     =
+                #{remarks,jdbcType=VARCHAR},
+            del_flag    = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <!-- app 分页查询地块管理列表 -->
+    <select id="findMassifPageList" parameterType="com.wisea.cultivar.plant.po.oritrapla.MassifMageInfoListPo"
+            resultType="com.wisea.cultivar.plant.vo.oritrapla.MassifMageInfoVo">
+        SELECT
+        T1.id, T1.massif_name, T1.massif_type, T1.massif_acre, T1.jd, T1.wd, T1.location,
+        T1.update_date,IFNULL(IF(T2.cont_name = '',T2.login_name,T2.cont_name),T2.login_name) contName, T1.massif_type massifType
+        from
+        massif_mage T1
+        INNER JOIN zhfw_memb_info T2 ON T1.memb_id = T2.id
+        where T1.memb_id in
+        <foreach collection="membId" open="(" close=")" item="id" separator=",">
+            ${id}
+        </foreach>
+        <if test="massifName != null and massifName != ''">
+            and massif_name like '%${massifName}%'
+        </if>
+        AND T1.del_flag='0'
+        ORDER BY T1.update_date DESC
+    </select>
+    <!-- web 查询地块信息列表 -->
+    <select id="findMassifMageListPage" parameterType="com.wisea.cultivar.plant.po.oritrapla.WebMassifMageListPo"
+            resultType="com.wisea.cultivar.plant.vo.oritrapla.WebMassifMageVo">
+        SELECT
+        T1.id,
+        T1.massif_name,
+        T1.massif_type,
+        T1.massif_acre,
+        CASE WHEN T2.org_name IS NULL THEN mi.org_name ELSE T2.org_name END org_name,
+        T2.cont_name createName,
+        T1.create_date,
+        T3.cont_name updateName,
+        T1.update_date
+        FROM
+        massif_mage T1
+        INNER JOIN
+        zhfw_memb_info T2 ON T1.memb_id = T2.id
+        INNER
+        JOIN zhfw_memb_info T3 ON
+        T1.update_by = T3.id
+        LEFT JOIN zhfw_memb_info mi ON mi.id = T2.pid
+        WHERE 1 = 1
+        AND T1.del_flag='0'
+        <if test="value != null and value != ''">
+            <if test="key == '0'.toString()">
+                AND T1.massif_name LIKE CONCAT('%', #{value}, '%')
+            </if>
+            <if test="key == '1'.toString()">
+                AND T2.org_name LIKE CONCAT('%', #{value}, '%')
+            </if>
+            <if test="key == '2'.toString()">
+                AND T2.cont_name LIKE CONCAT('%', #{value}, '%')
+            </if>
+            <if test="key == '3'.toString()">
+                AND T3.cont_name LIKE CONCAT('%', #{value}, '%')
+            </if>
+        </if>
+        <if test="massifType != null and massifType != ''">
+            AND T1.massif_type = #{massifType}
+        </if>
+        <if test="createStaDate != null">
+            AND T1.create_date  <![CDATA[ >= ]]>
+            #{createStaDate}
+        </if>
+        <if test="createEndDate != null">
+            AND T1.create_date  <![CDATA[ <= ]]>
+            #{createEndDate}
+        </if>
+        <if test="updateStaDate != null">
+            AND T1.update_date  <![CDATA[ >= ]]>
+            #{updateStaDate}
+        </if>
+        <if test="updateEndDate != null">
+            AND T1.update_date  <![CDATA[ <= ]]>
+            #{updateEndDate}
+        </if>
+        ORDER BY
+        T1.update_date DESC
+
+    </select>
+    <!-- 查询所有地块名称 -->
+    <select id="selAllMassiName" resultType="com.wisea.cultivar.plant.entity.oritrapla.MassifMage">
+        SELECT id,
+               massif_name
+        FROM massif_mage
+        WHERE 1 = 1
+    </select>
+
+    <!-- 所有地块关联列表 - 提供【资源管理系统】使用 -->
+    <select id="findMassifRelatedList" parameterType="com.wisea.cultivar.plant.po.oritrapla.StringPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.MassifRelatedVo">
+        SELECT
+          mm.id,
+          zmi.org_name orgName,
+          mm.massif_name massifName,
+          mm.massif_type massifType,
+          mm.massif_acre massifAcre,
+          mm.jd jd,
+          mm.wd wd,
+          mm.location location,
+          COUNT(DISTINCT CASE WHEN eim.equ_type = '0' THEN eim.id END) equCount,
+          COUNT(DISTINCT CASE WHEN eim.equ_type = '1' THEN eim.id END) videoCount,
+          COUNT(DISTINCT abi.id) archCount
+        FROM
+          massif_mage mm
+          INNER JOIN zhfw_memb_info zmi ON mm.memb_id = zmi.id
+          LEFT JOIN massif_equ_rela mer ON mer.massif_id = mm.id
+          LEFT JOIN equ_info_mage eim ON eim.id = mer.equ_id AND eim.del_flag = '0'
+          LEFT JOIN arch_basic_info abi ON abi.massif_id = mm.id AND abi.del_flag = '0'
+        WHERE
+          mm.del_flag = '0'
+          <if test="str != null and str != ''">
+            and (mm.massif_name like CONCAT('%', #{str}, '%') OR zmi.org_name like CONCAT('%', #{str}, '%'))
+          </if>
+        GROUP BY
+          mm.id
+        ORDER BY
+          mm.create_date DESC
+    </select>
+    <!-- 根据地块ID查询设备列表 -->
+    <select id="findEquByMassifIds" resultType="com.wisea.cultivar.plant.vo.oritrapla.mss.EquInfo">
+        select
+            eim.id id,
+            eim.equ_type equType,
+            eim.equ_name equName,
+            eim.equ_entp_id equEntpId,
+            eim.firm_name firmName,
+            eim.equ_model_id equModelId,
+            eim.equ_xh equXh,
+            eim.equ_num equNum,
+            eim.psn psn,
+            eim.bf_url bfUrl,
+            eim.sply_url splyUrl,
+            eim.fmtp_url fmtpUrl
+        from
+            equ_info_mage eim
+        where
+            eim.del_flag = '0'
+            and eim.id in (
+                select
+                    mer.equ_id
+                from
+                    massif_equ_rela mer
+                where
+                    mer.massif_id in
+                    <foreach collection="ids" item="item" separator="," open="(" close=")">
+                        #{item}
+                    </foreach>
+            )
+    </select>
+
+    <!-- 根据地块ID查询档案列表 -->
+    <select id="findArchByMassifIds" resultType="com.wisea.cultivar.plant.vo.oritrapla.mss.ArchInfo">
+        select
+            abi.id,
+            mm.massif_name massifName,
+            abi.plant_acre plantAcre,
+            abi.comm_id commId,
+            zcm.comm_catg_name commName,
+            abi.comm_variet_id commVarietId,
+            zcmm.comm_variet_name variName,
+            abi.plant_type plantType,
+            abi.start_date startDate,
+            abi.end_date endDate
+        from
+            arch_basic_info abi
+            left join massif_mage mm on mm.id = abi.massif_id
+            LEFT JOIN zhfw_comm_mage zcm ON zcm.id = abi.comm_id
+            LEFT JOIN zhfw_comm_variet_mage zcmm ON zcmm.id = abi.comm_variet_id
+        where
+            abi.del_flag = '0'
+            and mm.del_flag = '0'
+            and abi.massif_id in
+            <foreach collection="ids" item="item" separator="," open="(" close=")">
+                #{item}
+            </foreach>
+    </select>
+    <select id="detailedRecord" parameterType="com.wisea.cultivar.plant.po.oritrapla.LongIdPo"
+            resultType="com.wisea.cultivar.plant.vo.oritrapla.mss.DetailedRecordVo"
+            resultMap="detailedRecordResultMap">
+        select
+           abi.id,
+           ma.id    mineArchId,
+           mm.id    massifId,
+           mm.massif_name   massifName,
+           mm.massif_acre massifAcre,
+           abi.plant_acre plantAcre,
+           zcm.comm_catg_name commName,
+           abi.plant_type plantType,
+           zcvm.comm_variet_name commVariName,
+           mm.massif_type massifType,
+           case when zmi.cont_name is not null then zmi.cont_name else zmi.login_name end cropAdmin,
+           zmi.introduce,
+           zmi.org_name,
+           zmi.cont_name,
+           zmi.cont_tel,
+           concat(ifnull(sa1.name, ''), ifnull(sa2.name, ''), ifnull(sa3.name, ''), zmi.address) as address
+        from arch_basic_info abi
+             INNER JOIN massif_mage mm ON mm.id = abi.massif_id
+             inner join zhfw_memb_info zmi on mm.create_by = zmi.id
+             LEFT JOIN zhfw_comm_mage zcm ON zcm.id = abi.comm_id
+             LEFT JOIN zhfw_comm_variet_mage zcvm ON zcvm.id = abi.comm_variet_id
+             left join mine_arch ma on ma.memb_id = abi.memb_id and ma.arch_id = abi.id and ma.arch_type = '2'
+             left join planting_method pm on pm.id = abi.planting_method_id
+             left join sys_area sa1 on sa1.code = zmi.area_code_prov
+             left join sys_area sa2 on sa2.code = zmi.area_code_city
+             left join sys_area sa3 on sa3.code = zmi.area_code_cou
+        where abi.id = #{id}
+    </select>
+    <resultMap id="detailedRecordResultMap" type="com.wisea.cultivar.plant.vo.oritrapla.mss.DetailedRecordVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <collection property="equInfoListVos" column="massifId" select="selectEquInfoList"/>
+    </resultMap>
+    <select id="selectEquInfoList" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.plant.vo.oritrapla.mss.EquInfoListVo">
+        select
+            eim.id,
+            eim.equ_name equName
+        from massif_equ_rela mer
+            inner join equ_info_mage eim on mer.equ_id = eim.id
+        where
+            mer.massif_id = #{id}
+        order by
+            eim.create_date desc
+    </select>
+</mapper>

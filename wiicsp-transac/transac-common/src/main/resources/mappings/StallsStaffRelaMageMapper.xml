@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.StallsStaffRelaMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="stalls_mage_id" property="stallsMageId" jdbcType="BIGINT" />
+    <result column="staff_info_mage_id" property="staffInfoMageId" jdbcType="BIGINT" />
+    <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+    <result column="rela_state_type" property="relaStateType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, stalls_mage_id, staff_info_mage_id, effe_inval_state, rela_state_type, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据员工ID查询员工档口关联列表 -->
+  <select id="findByStaffInfoMageId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from stalls_staff_rela_mage ssrm where ssrm.staff_info_mage_id = #{staffInfoMageId} and ssrm.effe_inval_state = '0' and ssrm.rela_state_type = '0'
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from stalls_staff_rela_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from stalls_staff_rela_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    insert into stalls_staff_rela_mage (id, stalls_mage_id, staff_info_mage_id,
+      effe_inval_state, rela_state_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{stallsMageId,jdbcType=BIGINT}, #{staffInfoMageId,jdbcType=BIGINT},
+      #{effeInvalState,jdbcType=VARCHAR}, #{relaStateType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    insert into stalls_staff_rela_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stallsMageId != null" >
+        stalls_mage_id,
+      </if>
+      <if test="staffInfoMageId != null" >
+        staff_info_mage_id,
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state,
+      </if>
+      <if test="relaStateType != null" >
+        rela_state_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="stallsMageId != null" >
+        #{stallsMageId,jdbcType=BIGINT},
+      </if>
+      <if test="staffInfoMageId != null" >
+        #{staffInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="effeInvalState != null" >
+        #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="relaStateType != null" >
+        #{relaStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    update stalls_staff_rela_mage
+    <set >
+      <if test="stallsMageId != null" >
+        stalls_mage_id = #{stallsMageId,jdbcType=BIGINT},
+      </if>
+      <if test="staffInfoMageId != null" >
+        staff_info_mage_id = #{staffInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="relaStateType != null" >
+        rela_state_type = #{relaStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    update stalls_staff_rela_mage
+    set stalls_mage_id = #{stallsMageId,jdbcType=BIGINT},
+      staff_info_mage_id = #{staffInfoMageId,jdbcType=BIGINT},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      rela_state_type = #{relaStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.seller.SaleStaffInfoMagePageListVo"
+          parameterType="com.wisea.transac.common.po.SaleStaffInfoMagePageListPo" >
+    select ssrm.rela_state_type,
+           ssrm.effe_inval_state stallsEffeInvalState,
+           ssim.*,
+           mi.regist_tel
+    from stalls_staff_rela_mage ssrm,
+         sale_staff_info_mage ssim,
+         memb_info mi
+    where ssim.del_flag = '0'
+      and ssrm.del_flag = '0'
+      and mi.del_flag = '0'
+      and mi.id = ssim.memb_id
+      and ssrm.staff_info_mage_id =  ssim.sale_staff_id
+    and ssrm.stalls_mage_id = #{stallsMageId}
+    and ssrm.rela_state_type = '0'
+  </select>
+
+   <select id="findAll" resultType="com.wisea.transac.common.vo.seller.SaleStaffInfoMagePageListVo"
+          parameterType="com.wisea.transac.common.po.SaleStaffInfoMagePo" >
+    select ssrm.rela_state_type,
+           ssrm.effe_inval_state stallsEffeInvalState,
+           ssim.*
+    from stalls_staff_rela_mage ssrm ,
+         sale_staff_info_mage ssim
+    where ssim.del_flag = '0'
+      and ssrm.del_flag = '0'
+      and ssrm.staff_info_mage_id = ssim.id
+      and ssrm.stalls_mage_id = #{stallsMageId}
+    <if test="sfAdminFlag!=null and sfAdminFlag!=''">
+      and ssim.sf_admin_flag = #{sfAdminFlag}
+    </if>
+  </select>
+
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.seller.StallsStaffRelaMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  stalls_mage_id stallsMageId,
+	  staff_info_mage_id staffInfoMageId,
+	  effe_inval_state effeInvalState,
+	  rela_state_type relaStateType
+	from
+	  stalls_staff_rela_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <select id="findInfoByStaffIdAndStallId" resultType="com.wisea.transac.common.vo.seller.StallsStaffRelaMageInfoVo"
+          parameterType="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    select
+	  id id,
+	  stalls_mage_id stallsMageId,
+	  staff_info_mage_id staffInfoMageId,
+	  effe_inval_state effeInvalState,
+	  rela_state_type relaStateType
+	from
+	  stalls_staff_rela_mage
+	where
+	  del_flag = '0'
+	  and stalls_mage_id = #{stallsMageId}
+	  and staff_info_mage_id = #{staffInfoMageId}
+  </select>
+
+  <update id="updateBystaffInfoMageId" parameterType="com.wisea.transac.common.entity.StallsStaffRelaMage" >
+    update stalls_staff_rela_mage
+    <set >
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="relaStateType != null" >
+        rela_state_type = #{relaStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where  staff_info_mage_id = #{staffInfoMageId,jdbcType=BIGINT}
+  </update>
+</mapper>

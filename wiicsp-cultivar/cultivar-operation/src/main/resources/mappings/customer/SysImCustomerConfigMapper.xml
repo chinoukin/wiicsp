@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.operation.customer.dao.SysImCustomerConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.operation.customer.entity.SysImCustomerConfig" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="group_id" property="groupId" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="ser_max_count" property="serMaxCount" jdbcType="INTEGER" />
+    <result column="ret_contact" property="retContact" jdbcType="VARCHAR" />
+    <result column="dep_no_admin" property="depNoAdmin" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, group_id, type, ser_max_count, ret_contact, dep_no_admin, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_im_customer_config
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sys_im_customer_config
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.operation.customer.entity.SysImCustomerConfig" >
+    insert into sys_im_customer_config (id, group_id, type,
+      ser_max_count, ret_contact, dep_no_admin, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{groupId,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR},
+      #{serMaxCount,jdbcType=INTEGER},#{retContact,jdbcType=VARCHAR},#{depNoAdmin,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.operation.customer.entity.SysImCustomerConfig" >
+    insert into sys_im_customer_config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="groupId != null" >
+        group_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="serMaxCount != null" >
+        ser_max_count,
+      </if>
+      <if test="retContact != null" >
+        ret_contact,
+      </if>
+      <if test="depNoAdmin != null" >
+        dep_no_admin,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="serMaxCount != null" >
+        #{serMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="retContact != null" >
+        #{retContact,jdbcType=VARCHAR},
+      </if>
+      <if test="depNoAdmin != null" >
+        #{depNoAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.operation.customer.entity.SysImCustomerConfig" >
+    update sys_im_customer_config
+    <set >
+      <!-- groupId会有默认值，不能变更 -->
+      <!--       <if test="groupId != null" > -->
+      <!--         group_id = #{groupId,jdbcType=VARCHAR}, -->
+      <!--       </if> -->
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="serMaxCount != null" >
+        ser_max_count = #{serMaxCount,jdbcType=INTEGER},
+      </if>
+      <if test="retContact != null" >
+        ret_contact = #{retContact,jdbcType=INTEGER},
+      </if>
+      <if test="depNoAdmin != null" >
+        dep_no_admin = #{depNoAdmin,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.operation.customer.entity.SysImCustomerConfig" >
+    update sys_im_customer_config
+    set
+      <!-- groupId会有默认值，不能变更 -->
+      <!--     group_id = #{groupId,jdbcType=VARCHAR}, -->
+      type = #{type,jdbcType=VARCHAR},
+      ser_max_count = #{serMaxCount,jdbcType=INTEGER},
+      ret_contact = #{retContact,jdbcType=VARCHAR},
+      dep_no_admin = #{depNoAdmin,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.operation.customer.entity.SysImCustomerConfig" >
+    update sys_im_customer_config
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

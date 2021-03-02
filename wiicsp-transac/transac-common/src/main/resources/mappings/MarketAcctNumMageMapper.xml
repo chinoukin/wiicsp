@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.MarketAcctNumMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.MarketAcctNumMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="role_type" property="roleType" jdbcType="VARCHAR" />
+    <result column="sf_admin_flag" property="sfAdminFlag" jdbcType="VARCHAR" />
+	<result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, whole_sale_market_id, login_name, role_type,sf_admin_flag,effe_inval_state,
+    name, tel, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from market_acct_num_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.MarketAcctNumMage" >
+    insert into market_acct_num_mage (id, whole_sale_market_id,
+      login_name, role_type, sf_admin_flag,effe_inval_state,
+      name, tel, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{wholeSaleMarketId,jdbcType=BIGINT},
+      #{loginName,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR} , #{sfAdminFlag,jdbcType=VARCHAR},#{effeInvalState,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.MarketAcctNumMage" >
+    insert into market_acct_num_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        whole_sale_market_id,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="roleType != null" >
+        role_type,
+      </if>
+      <if test="sfAdminFlag != null" >
+        sf_admin_flag,
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        #{wholeSaleMarketId,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="sfAdminFlag != null" >
+        #{sfAdminFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="effeInvalState != null" >
+        #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.MarketAcctNumMage" >
+    update market_acct_num_mage
+    <set >
+      <if test="wholeSaleMarketId != null" >
+        whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleType != null" >
+        role_type = #{roleType,jdbcType=VARCHAR},
+      </if>
+      <if test="sfAdminFlag != null" >
+        sf_admin_flag = #{sfAdminFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      name = #{name,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.MarketAcctNumMage" >
+    update market_acct_num_mage
+    set whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      role_type = #{roleType,jdbcType=VARCHAR},
+      sf_admin_flag = #{sfAdminFlag,jdbcType=VARCHAR},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 分页查询信息 -->
+	<select id="findPageList" parameterType="com.wisea.transac.common.po.memb.PlatFormUserPagePo"
+		resultType="com.wisea.transac.common.vo.memb.PlatFormUserInfoVo">
+	    SELECT T1.*,T2.`name` AS 'roleName',T1.whole_sale_market_id AS 'marketId'
+		FROM market_acct_num_mage T1
+		LEFT JOIN sys_role T2 ON T1.role_type = T2.id
+		WHERE T2.del_flag = '0' AND T1.del_flag = '0'
+			  <choose>
+			  	<when test="marketId != null and marketId != ''">
+			  		AND T1.whole_sale_market_id = #{marketId}
+			  	</when>
+			  	<otherwise>
+			  		AND T1.whole_sale_market_id IS NULL
+			  	</otherwise>
+			  </choose>
+			  <if test="key != null and key != ''" >
+		      	AND (T1.`name` LIKE  CONCAT('%', #{key}, '%')
+		      		 OR T1.`name` LIKE  CONCAT('%', #{key}, '%') )
+		      </if>
+		      <if test="roleType != null and roleType != ''" >
+		      AND T2.id = #{roleType}
+		      </if>
+		      <if test="effeInvalState != null and effeInvalState != ''" >
+		      AND T1.effe_inval_state = #{effeInvalState}
+		      </if>
+		 ORDER BY T1.create_date DESC
+  	</select>
+  	<!-- 导出运营平台、市场人员用户列表 -->
+	<select id="userListExport" parameterType="com.wisea.transac.common.po.memb.PlatFormUserExportPo"
+		resultType="com.wisea.transac.common.vo.memb.PlatFormUserInfoExportVo">
+	    SELECT T1.id,T1.whole_sale_market_id,T1.role_type,T1.login_name,T1.`name`,T1.tel,T3.label AS 'sf_admin_flag',T4.label AS 'effe_inval_state'
+		       ,T2.`name` AS 'roleName',T1.whole_sale_market_id AS 'marketId'
+		FROM market_acct_num_mage T1
+		LEFT JOIN sys_role T2 ON T1.role_type = T2.id
+		LEFT JOIN sys_dict T3 ON (T3.`value` = T1.sf_admin_flag AND T3.type = 'sf_admin_flag')
+		LEFT JOIN sys_dict T4 ON (T4.`value` = T1.effe_inval_state AND T4.type = 'effe_inval_state')
+		WHERE T2.del_flag = '0' AND T1.del_flag = '0'
+			  <choose>
+				<when test="idList != null and idList.size > 0">
+					AND T1.id in
+					<foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+				  		#{item}
+				  	</foreach>
+				</when>
+				<otherwise>
+					<choose>
+					  	<when test="marketId != null and marketId != ''">
+					  		AND T1.whole_sale_market_id = #{marketId}
+					  	</when>
+					  	<otherwise>
+					  		AND T1.whole_sale_market_id IS NULL
+					  	</otherwise>
+					</choose>
+					<if test="key != null and key != ''" >
+				      	AND (T1.`name` LIKE  CONCAT('%', #{key}, '%')
+				      		 OR T1.`name` LIKE  CONCAT('%', #{key}, '%') )
+				    </if>
+				    <if test="roleType != null and roleType != ''" >
+				      AND T2.id = #{roleType}
+				    </if>
+				    <if test="effeInvalState != null and effeInvalState != ''" >
+				      AND T1.effe_inval_state = #{effeInvalState}
+				    </if>
+				</otherwise>
+			  </choose>
+		 ORDER BY T1.create_date DESC
+  	</select>
+  	<!-- 分页查询市场管理员相关的信息 -->
+  	<select id="findMarketAdminList" parameterType="com.wisea.transac.common.po.memb.MarketAdminInfoPagePo"
+		resultType="com.wisea.transac.common.vo.memb.MarketAdminInfoVo">
+  		SELECT T1.id,T2.whole_sale_market_name,T2.area_city,T2.area_cou,T2.area_prov,T2.address
+			 ,T1.login_name,T1.`name`,T1.tel,CONCAT(IFNULL(a1.`name`,''),IFNULL(a2.`name`,''),IFNULL(a3.`name`,'')) AS 'areaZhCn'
+		FROM market_acct_num_mage T1
+		LEFT JOIN whole_sale_market_mage T2 ON T2.id = T1.whole_sale_market_id
+		LEFT JOIN sys_area a1 ON a1.`code` = T2.area_prov AND a1.del_flag = '0'
+		LEFT JOIN sys_area a2 ON a2.`code` = T2.area_city AND a2.del_flag = '0'
+		LEFT JOIN sys_area a3 ON a3.`code` = T2.area_cou AND a3.del_flag = '0'
+		WHERE T1.del_flag ='0' AND T1.sf_admin_flag = '0' AND T1.whole_sale_market_id IS NOT NULL
+		      <if test="key != null and key != ''" >
+		      AND (T1.`name` LIKE  CONCAT('%', #{key}, '%')
+		      	   OR T1.login_name  LIKE  CONCAT('%', #{key}, '%')
+		      	   OR T2.whole_sale_market_name  LIKE  CONCAT('%', #{key}, '%'))
+		      </if>
+		      <if test="tel != null and tel != ''" >
+			  AND T1.tel LIKE  CONCAT('%', #{tel}, '%')
+			  </if>
+  	</select>
+  	<!-- 导出查询市场管理员相关的信息 -->
+  	<select id="marketAdminListExport" parameterType="com.wisea.transac.common.po.memb.MarketAdminExportPo"
+		resultType="com.wisea.transac.common.vo.memb.MarketAdminInfoExportVo">
+  		SELECT T1.id,T2.whole_sale_market_name,T2.area_city,T2.area_cou,T2.area_prov,T2.address
+			 ,T1.login_name,T1.`name`,T1.tel,CONCAT(IFNULL(a1.`name`,''),IFNULL(a2.`name`,''),IFNULL(a3.`name`,'')) AS 'areaZhCn'
+		FROM market_acct_num_mage T1
+		LEFT JOIN whole_sale_market_mage T2 ON T2.id = T1.whole_sale_market_id
+		LEFT JOIN sys_area a1 ON a1.`code` = T2.area_prov AND a1.del_flag = '0'
+		LEFT JOIN sys_area a2 ON a2.`code` = T2.area_city AND a2.del_flag = '0'
+		LEFT JOIN sys_area a3 ON a3.`code` = T2.area_cou AND a3.del_flag = '0'
+		WHERE T1.del_flag ='0' AND T1.sf_admin_flag = '0' AND T1.whole_sale_market_id IS NOT NULL
+			  <choose>
+				<when test="idList != null and idList.size > 0">
+					AND T1.id in
+					<foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+				  		#{item}
+				  	</foreach>
+				</when>
+				<otherwise>
+					<if test="key != null and key != ''" >
+				      AND (T1.`name` LIKE  CONCAT('%', #{key}, '%')
+				      	   OR T1.login_name  LIKE  CONCAT('%', #{key}, '%')
+				      	   OR T2.whole_sale_market_name  LIKE  CONCAT('%', #{key}, '%'))
+				    </if>
+				    <if test="tel != null and tel != ''" >
+					  AND T1.tel LIKE  CONCAT('%', #{tel}, '%')
+					</if>
+				</otherwise>
+			   </choose>
+  	</select>
+  	<!-- 根据Id查询市场管理员基本信息 -->
+  	<select id="getMarketAdminInfo" parameterType="java.lang.Long"
+		resultType="com.wisea.transac.common.vo.memb.MarketAdminInfoVo">
+  		SELECT T1.id,T2.whole_sale_market_name,T2.area_city,T2.area_cou,T2.area_prov,T2.address
+			 ,T1.login_name,T1.`name`,T1.tel,CONCAT(IFNULL(a1.`name`,''),IFNULL(a2.`name`,''),IFNULL(a3.`name`,'')) AS 'areaZhCn'
+		FROM market_acct_num_mage T1
+		LEFT JOIN whole_sale_market_mage T2 ON T2.id = T1.whole_sale_market_id
+		LEFT JOIN sys_area a1 ON a1.`code` = T2.area_prov AND a1.del_flag = '0'
+		LEFT JOIN sys_area a2 ON a2.`code` = T2.area_city AND a2.del_flag = '0'
+		LEFT JOIN sys_area a3 ON a3.`code` = T2.area_cou AND a3.del_flag = '0'
+		WHERE T1.del_flag ='0' AND T1.sf_admin_flag = '0'
+		      AND T1.ID = #{id}
+  	</select>
+  	<!-- 通过批发市场ID查询市场管理员信息 -->
+  	<select id="getMarketAcctByMarketId" parameterType="java.lang.Long" resultType="com.wisea.transac.common.entity.MarketAcctNumMage">
+	 	SELECT *
+		FROM market_acct_num_mage
+		WHERE del_flag = '0' AND  sf_admin_flag = '0' AND whole_sale_market_id = #{_parameter}
+	</select>
+	<!-- 根据用户名获取市场或者运营平台人员的信息 -->
+	<select id="getMarketAcctInfo" parameterType="java.lang.String" resultType="com.wisea.transac.common.entity.MarketAcctNumMage">
+		SELECT *
+		FROM market_acct_num_mage
+		WHERE login_name = #{_parameter}
+	</select>
+</mapper>

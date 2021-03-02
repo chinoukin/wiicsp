@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ImportBillMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ImportBill">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+        <result column="comm_pub_type" property="commPubType" jdbcType="VARCHAR"/>
+        <result column="comm_spec" property="commSpec" jdbcType="DOUBLE"/>
+        <result column="comm_level_type" property="commLevelType" jdbcType="VARCHAR"/>
+        <result column="count" property="count" jdbcType="INTEGER"/>
+        <result column="price" property="price" jdbcType="DOUBLE"/>
+        <result column="join_time" property="joinTime" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <result column="agent_price" property="agentPrice" jdbcType="DOUBLE"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, comm_pub_id, memb_id, seller_id, comm_pub_type, comm_spec, comm_level_type, count, price, join_time, create_by,
+    create_date, update_by, update_date, remarks, del_flag, agent_price
+  </sql>
+    <!--根据会员id查询进货单总数-->
+    <select id="selMyIncomingBillSum" resultType="java.lang.Integer">
+        SELECT
+        COUNT(*)
+        FROM
+        import_bill ib
+        LEFT JOIN comm_pub_info cpi ON cpi.id = ib.comm_pub_id
+        WHERE ib.del_flag = '0'
+        AND ib.memb_id = #{id}
+        AND cpi.comm_state_type = '0'
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from import_bill
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from import_bill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ImportBill">
+    insert into import_bill (id, comm_pub_id, memb_id,
+      seller_id, comm_pub_type, comm_spec, comm_level_type, count,
+      price, join_time, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag, agent_price
+      )
+    values (#{id,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT},
+      #{sellerId,jdbcType=BIGINT}, #{commPubType,jdbcType=VARCHAR},  #{commSpec,jdbcType=DOUBLE},
+       #{commLevelType,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER},
+      #{price,jdbcType=DOUBLE}, #{joinTime,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{agentPrice,jdbcType=DOUBLE}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ImportBill">
+        insert into import_bill
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="commPubId != null">
+                comm_pub_id,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="commPubType != null">
+                comm_pub_type,
+            </if>
+            <if test="commSpec != null">
+                comm_spec,
+            </if>
+            <if test="commLevelType != null">
+                comm_level_type,
+            </if>
+            <if test="count != null">
+                count,
+            </if>
+            <if test="price != null">
+                price,
+            </if>
+            <if test="joinTime != null">
+                join_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="agentPrice != null">
+                agent_price,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="commPubId != null">
+                #{commPubId,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubType != null">
+                #{commPubType,jdbcType=VARCHAR},
+            </if>
+            <if test="commSpec != null">
+                #{commSpec,jdbcType=DOUBLE},
+            </if>
+            <if test="commLevelType != null">
+                #{commLevelType,jdbcType=VARCHAR},
+            </if>
+            <if test="count != null">
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="joinTime != null">
+                #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="agentPrice != null">
+                #{agentPrice,jdbcType=DOUBLE},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ImportBill">
+        update import_bill
+        <set>
+            <if test="commPubId != null">
+                comm_pub_id = #{commPubId,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubType != null">
+                comm_pub_type = #{commPubType,jdbcType=VARCHAR},
+            </if>
+            <if test="commSpec != null">
+                comm_spec = #{commSpec,jdbcType=DOUBLE},
+            </if>
+            <if test="commLevelType != null">
+                comm_level_type = #{commLevelType,jdbcType=VARCHAR},
+            </if>
+            <if test="count != null">
+                count = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="price != null">
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="joinTime != null">
+                join_time = #{joinTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="agentPrice != null">
+                agent_price = #{agentPrice,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ImportBill">
+    update import_bill
+    set comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      memb_id = #{membId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      comm_pub_type = #{commPubType,jdbcType=VARCHAR},
+        comm_spec = #{commSpec,jdbcType=DOUBLE},
+       comm_level_type =  #{commLevelType,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      join_time = #{joinTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      agent_price = #{agentPrice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.ImportBillListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.ImportBillPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from import_bill
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.ImportBillListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.ImportBillListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from import_bill
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ImportBill">
+    update import_bill
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!-- 查询进货单id列表（用于添加商品） -->
+    <select id="findCommIdList" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.ImportBill">
+  	SELECT
+  	  id,
+	  comm_pub_id
+	FROM import_bill
+	WHERE del_flag = '0'
+	    AND memb_id = #{membId,jdbcType=BIGINT}
+  </select>
+
+    <!-- 根据商品发布ID 以及 买家的ID 查询  是否已经添加此商品 -->
+    <select id="isHaveImportBillInfo" resultMap="BaseResultMap"
+            parameterType="com.wisea.cultivar.common.entity.tp.ImportBill">
+        select
+        <include refid="Base_Column_List"/>
+        from import_bill
+        where comm_pub_id = #{commPubId,jdbcType=BIGINT}
+        AND memb_id = #{membId,jdbcType=BIGINT}
+        AND del_flag = '0'
+        <if test="commSpec != null">
+            AND comm_spec = #{commSpec,jdbcType=DOUBLE}
+        </if>
+        <if test="commLevelType != null">
+            AND comm_level_type = #{commLevelType,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!-- 根据发布商品的ID集合批量删除 进货单商品信息 -->
+    <delete id="deleImportBillInfoByCommPubIdList"
+            parameterType="com.wisea.cultivar.common.po.tp.trade.BuyerDeleManyImportBillPo">
+    delete from import_bill
+    where id in (${commpubIds})
+  </delete>
+
+    <!-- 批量插入进货单信息 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into import_bill (id, comm_pub_id, memb_id,
+        seller_id, comm_pub_type, comm_spec, comm_level_type, count,
+        price, join_time, create_by,
+        create_date, update_by, update_date,
+        remarks, del_flag)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.commPubId,jdbcType=BIGINT}, #{item.membId,jdbcType=BIGINT},
+            #{item.sellerId,jdbcType=BIGINT}, #{item.commPubType,jdbcType=VARCHAR}, #{item.commSpec,jdbcType=DOUBLE},
+            #{item.commLevelType,jdbcType=VARCHAR}, #{item.count,jdbcType=INTEGER},
+            #{item.price,jdbcType=DOUBLE}, #{item.joinTime,jdbcType=TIMESTAMP}, #{item.createBy,jdbcType=VARCHAR},
+            #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP},
+            #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+        </foreach>
+    </insert>
+
+    <!-- 查询认证企业的个数 -->
+    <select id="selectMembList" resultType="com.wisea.cultivar.common.vo.trade.MembAuthListVo"
+            parameterType="com.wisea.cultivar.common.po.trade.MembAuthPo">
+    select
+    count(id) as 'membCount'
+    from entp_data_info
+    where del_flag = '0'
+  </select>
+</mapper>

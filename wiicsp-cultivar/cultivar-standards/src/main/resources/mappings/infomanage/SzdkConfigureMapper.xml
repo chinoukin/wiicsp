@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.SzdkConfigureMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.SzdkConfigure" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="copyright" property="copyright" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.SzdkConfigureWithBLOBs" extends="BaseResultMap" >
+    <result column="comp_introduce" property="compIntroduce" jdbcType="LONGVARCHAR" />
+    <result column="buyer_regist_agreement" property="buyerRegistAgreement" jdbcType="LONGVARCHAR" />
+    <result column="seller_regist_agreement" property="sellerRegistAgreement" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, entp_name, tel, email, address, copyright, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    comp_introduce
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zhfw_about_us_configure
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from szdk_configure
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.SzdkConfigureWithBLOBs" >
+    insert into zhfw_about_us_configure (id, entp_name, tel,
+      email, address, copyright,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,
+      comp_introduce)
+    values (#{id,jdbcType=BIGINT}, #{entpName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+      #{email,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{copyright,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{compIntroduce,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.SzdkConfigureWithBLOBs" >
+    insert into szdk_configure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entpName != null" >
+        entp_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="copyright != null" >
+        copyright,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="compIntroduce != null" >
+        comp_introduce,
+      </if>
+      <if test="buyerRegistAgreement != null" >
+        buyer_regist_agreement,
+      </if>
+      <if test="sellerRegistAgreement != null" >
+        seller_regist_agreement,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entpName != null" >
+        #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="copyright != null" >
+        #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="compIntroduce != null" >
+        #{compIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="buyerRegistAgreement != null" >
+        #{buyerRegistAgreement,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="sellerRegistAgreement != null" >
+        #{sellerRegistAgreement,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.SzdkConfigureWithBLOBs" >
+    update zhfw_about_us_configure
+    <set >
+      <if test="entpName != null" >
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="copyright != null" >
+        copyright = #{copyright,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="compIntroduce != null" >
+        comp_introduce = #{compIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.common.entity.SzdkConfigureWithBLOBs" >
+    update szdk_configure
+    set entp_name = #{entpName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      copyright = #{copyright,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      comp_introduce = #{compIntroduce,jdbcType=LONGVARCHAR},
+      buyer_regist_agreement = #{buyerRegistAgreement,jdbcType=LONGVARCHAR},
+      seller_regist_agreement = #{sellerRegistAgreement,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.SzdkConfigure" >
+    update zhfw_about_us_configure
+    set entp_name = #{entpName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      copyright = #{copyright,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.common.vo.SzdkConfigurePageListVo" parameterType="com.wisea.cultivar.common.po.SzdkConfigurePageListPo" >
+    select
+	  id id,
+	  entp_name entpName,
+	  tel tel,
+	  email email,
+	  address address,
+	  copyright copyright,
+	  comp_introduce compIntroduce
+	from
+	  zhfw_about_us_configure
+	where
+	  del_flag = '0'
+	   order by update_date desc
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.SzdkConfigureInfoVo" parameterType="java.lang.Long" >
+    select
+	  <include refid="Base_Column_List"/>,
+           <include refid="Blob_Column_List"/>
+	from
+    zhfw_about_us_configure
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <select id="findById" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zhfw_about_us_configure
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findDetail" resultType="com.wisea.cultivar.common.vo.SzdkConfigureInfoVo" >
+    select
+    <include refid="Base_Column_List"/>,
+    <include refid="Blob_Column_List"/>
+    from
+    zhfw_about_us_configure
+    where
+    del_flag = '0'
+  </select>
+</mapper>

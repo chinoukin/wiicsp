@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.CurrencyRetrospInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.CurrencyRetrospInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.tp.CurrencyRetrospInfo" extends="BaseResultMap" >
+    <result column="currency_retrosp_template" property="currencyRetrospTemplate" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    currency_retrosp_template
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from currency_retrosp_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from currency_retrosp_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.CurrencyRetrospInfo" >
+    insert into currency_retrosp_info (id, memb_id, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag, currency_retrosp_template
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{currencyRetrospTemplate,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.CurrencyRetrospInfo" >
+    insert into currency_retrosp_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="currencyRetrospTemplate != null" >
+        currency_retrosp_template,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="currencyRetrospTemplate != null" >
+        #{currencyRetrospTemplate,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.CurrencyRetrospInfo" >
+    update currency_retrosp_info
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="currencyRetrospTemplate != null" >
+        currency_retrosp_template = #{currencyRetrospTemplate,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!--  <update id="updateByPrimaryKeyWithBLOBs" parameterType="CurrencyRetrospInfo" >-->
+<!--    update currency_retrosp_info-->
+<!--    set memb_id = #{membId,jdbcType=BIGINT},-->
+<!--      create_by = #{createBy,jdbcType=VARCHAR},-->
+<!--      create_date = #{createDate,jdbcType=TIMESTAMP},-->
+<!--      update_by = #{updateBy,jdbcType=VARCHAR},-->
+<!--      update_date = #{updateDate,jdbcType=TIMESTAMP},-->
+<!--      remarks = #{remarks,jdbcType=VARCHAR},-->
+<!--      del_flag = #{delFlag,jdbcType=CHAR},-->
+<!--      currency_retrosp_template = #{currencyRetrospTemplate,jdbcType=LONGVARCHAR}-->
+<!--    where id = #{id,jdbcType=BIGINT}-->
+<!--  </update>-->
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.CurrencyRetrospInfo" >
+    update currency_retrosp_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByMembId" resultType="com.wisea.cultivar.common.vo.tp.retro.RetroTemplateVo" parameterType="java.lang.Long">
+    select * from currency_retrosp_info
+    where del_flag = '0'
+    and memb_id = #{membId}
+  </select>
+
+</mapper>

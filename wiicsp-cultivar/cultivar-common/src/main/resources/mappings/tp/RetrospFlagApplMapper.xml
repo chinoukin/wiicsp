@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.RetrospFlagApplMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.RetrospFlagAppl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="retrosp_pc_mage_id" property="retrospPcMageId" jdbcType="BIGINT" />
+    <result column="prdut_name" property="prdutName" jdbcType="VARCHAR" />
+    <result column="place_origin" property="placeOrigin" jdbcType="VARCHAR" />
+    <result column="retro_label_type" property="retroLabelType" jdbcType="VARCHAR" />
+    <result column="appl_sl" property="applSl" jdbcType="INTEGER" />
+    <result column="refund_comm_address_id" property="refundCommAddressId" jdbcType="BIGINT" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="retro_label_state" property="retroLabelState" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="excel_file_url" property="excelFileUrl" jdbcType="VARCHAR" />
+    <result column="appl_mode_type" property="applModeType" jdbcType="VARCHAR" />
+    <result column="start_num" property="startNum" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, retrosp_pc_mage_id, prdut_name, place_origin, retro_label_type, appl_sl,
+    refund_comm_address_id, appl_date, retro_label_state, file_url, excel_file_url, appl_mode_type,
+    start_num, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 查询追溯码申请记录列表 -->
+  <select id="findFlagApplList" parameterType="com.wisea.cultivar.common.po.tp.retro.RetrospFlagApplListPo" resultType="com.wisea.cultivar.common.vo.tp.retro.RetrospFlagApplListVo" resultMap="listResultMap">
+    select
+      rfa.id id,
+      rpm.retrosp_pc_num retrospPcNum,
+      rfa.prdut_name prdutName,
+      rfa.appl_sl applSl,
+      rfa.appl_date applDate,
+      rfa.retro_label_type retroLabelType,
+      rfa.appl_mode_type applModeType,
+      rfa.retro_label_state retroLabelState,
+      rfa.file_url fileUrl,
+      rfa.excel_file_url excelFileUrl
+    from
+      retrosp_flag_appl rfa
+      inner join retrosp_pc_mage rpm on rfa.retrosp_pc_mage_id = rpm.id
+    where
+      rfa.del_flag = '0'
+      and rfa.memb_id = #{membId}
+      <if test="query != null and query != ''">
+        and (rfa.prdut_name like CONCAT('%', #{query}, '%')
+            or rpm.retrosp_pc_num like CONCAT('%', #{query}, '%')
+        )
+      </if>
+      <if test="retroLabelType != null and retroLabelType != ''">
+        and rfa.retro_label_type = #{retroLabelType}
+      </if>
+      <if test="retroLabelState != null and retroLabelState != ''">
+        and rfa.retro_label_state = #{retroLabelState}
+      </if>
+      <if test="applModeType != null and applModeType != ''">
+        and rfa.appl_mode_type = #{applModeType}
+      </if>
+      <if test="applDateStart != null">
+        and rfa.appl_date >= #{applDateStart}
+      </if>
+      <if test="applDateEnd != null">
+        and rfa.appl_date <![CDATA[<=]]> #{applDateEnd}
+      </if>
+    order by
+    rfa.appl_date desc
+  </select>
+
+  <resultMap id="listResultMap" type="com.wisea.cultivar.common.vo.tp.retro.RetrospFlagApplListVo">
+    <id property="id" column="id" jdbcType="BIGINT"></id>
+    <collection property="applAttributeVos" column="id" select="selectApplAttributes"/>
+  </resultMap>
+
+  <!-- 级联查询申请记录属性列表 -->
+  <select id="selectApplAttributes" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.retro.RetrospFlagApplAttributeVo">
+    select
+      rfaam.attribute_name attributeName,
+      rfaam.attribute_content attributeContent,
+      rfaam.sort sort
+    from
+      retrosp_flag_appl_attribute_mage rfaam
+    where
+      rfaam.del_flag = '0'
+      and rfaam.retrosp_flag_appl_id = #{id}
+    order by
+      rfaam.sort
+  </select>
+
+  <!-- 预览 -->
+  <select id="findFlagApplPreview" parameterType="com.wisea.cultivar.common.po.tp.LongIdPo" resultType="com.wisea.cultivar.common.vo.tp.retro.RetrospFlagApplPreviewVo">
+    select
+      rpm.currency_retrosp_template currencyRetrospTemplate,
+      rpm.prdut_name prdutName
+    from
+      retrosp_flag_appl rfa
+      inner join retrosp_pc_mage rpm on rfa.retrosp_pc_mage_id = rpm.id
+    where
+      rfa.id = #{id}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from retrosp_flag_appl
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from retrosp_flag_appl
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.RetrospFlagAppl" >
+    insert into retrosp_flag_appl (id, memb_id, retrosp_pc_mage_id,
+      prdut_name, place_origin, retro_label_type,
+      appl_sl, refund_comm_address_id, appl_date,
+      retro_label_state, file_url, excel_file_url,
+      appl_mode_type, start_num, create_by, create_date,
+      update_by, update_date, remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{retrospPcMageId,jdbcType=BIGINT},
+      #{prdutName,jdbcType=VARCHAR}, #{placeOrigin,jdbcType=VARCHAR}, #{retroLabelType,jdbcType=VARCHAR},
+      #{applSl,jdbcType=INTEGER}, #{refundCommAddressId,jdbcType=BIGINT}, #{applDate,jdbcType=TIMESTAMP},
+      #{retroLabelState,jdbcType=VARCHAR}, #{fileUrl,jdbcType=VARCHAR}, #{excelFileUrl,jdbcType=VARCHAR},
+      #{applModeType,jdbcType=VARCHAR}, #{startNum,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.RetrospFlagAppl" >
+    insert into retrosp_flag_appl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="retrospPcMageId != null" >
+        retrosp_pc_mage_id,
+      </if>
+      <if test="prdutName != null" >
+        prdut_name,
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin,
+      </if>
+      <if test="retroLabelType != null" >
+        retro_label_type,
+      </if>
+      <if test="applSl != null" >
+        appl_sl,
+      </if>
+      <if test="refundCommAddressId != null" >
+        refund_comm_address_id,
+      </if>
+      <if test="applDate != null" >
+        appl_date,
+      </if>
+      <if test="retroLabelState != null" >
+        retro_label_state,
+      </if>
+      <if test="fileUrl != null" >
+        file_url,
+      </if>
+      <if test="excelFileUrl != null" >
+        excel_file_url,
+      </if>
+      <if test="applModeType != null" >
+        appl_mode_type,
+      </if>
+      <if test="startNum != null" >
+        start_num,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="retrospPcMageId != null" >
+        #{retrospPcMageId,jdbcType=BIGINT},
+      </if>
+      <if test="prdutName != null" >
+        #{prdutName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="retroLabelType != null" >
+        #{retroLabelType,jdbcType=VARCHAR},
+      </if>
+      <if test="applSl != null" >
+        #{applSl,jdbcType=INTEGER},
+      </if>
+      <if test="refundCommAddressId != null" >
+        #{refundCommAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="applDate != null" >
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retroLabelState != null" >
+        #{retroLabelState,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="excelFileUrl != null" >
+        #{excelFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applModeType != null" >
+        #{applModeType,jdbcType=VARCHAR},
+      </if>
+      <if test="startNum != null" >
+        #{startNum,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.RetrospFlagAppl" >
+    update retrosp_flag_appl
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="retrospPcMageId != null" >
+        retrosp_pc_mage_id = #{retrospPcMageId,jdbcType=BIGINT},
+      </if>
+      <if test="prdutName != null" >
+        prdut_name = #{prdutName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin = #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="retroLabelType != null" >
+        retro_label_type = #{retroLabelType,jdbcType=VARCHAR},
+      </if>
+      <if test="applSl != null" >
+        appl_sl = #{applSl,jdbcType=INTEGER},
+      </if>
+      <if test="refundCommAddressId != null" >
+        refund_comm_address_id = #{refundCommAddressId,jdbcType=BIGINT},
+      </if>
+      <if test="applDate != null" >
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retroLabelState != null" >
+        retro_label_state = #{retroLabelState,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="excelFileUrl != null" >
+        excel_file_url = #{excelFileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="applModeType != null" >
+        appl_mode_type = #{applModeType,jdbcType=VARCHAR},
+      </if>
+      <if test="startNum != null" >
+        start_num = #{startNum,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.RetrospFlagAppl" >
+    update retrosp_flag_appl
+    set memb_id = #{membId,jdbcType=BIGINT},
+      retrosp_pc_mage_id = #{retrospPcMageId,jdbcType=BIGINT},
+      prdut_name = #{prdutName,jdbcType=VARCHAR},
+      place_origin = #{placeOrigin,jdbcType=VARCHAR},
+      retro_label_type = #{retroLabelType,jdbcType=VARCHAR},
+      appl_sl = #{applSl,jdbcType=INTEGER},
+      refund_comm_address_id = #{refundCommAddressId,jdbcType=BIGINT},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      retro_label_state = #{retroLabelState,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      excel_file_url = #{excelFileUrl,jdbcType=VARCHAR},
+      appl_mode_type = #{applModeType,jdbcType=VARCHAR},
+      start_num = #{startNum,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findSumAppSlByPcId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select IFNULL(sum(appl_sl),0)
+    from retrosp_flag_appl
+    where del_flag = '0'
+    and retrosp_pc_mage_id = #{pcId}
+  </select>
+
+</mapper>

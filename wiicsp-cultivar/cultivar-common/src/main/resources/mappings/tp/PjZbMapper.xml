@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.PjZbMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.PjZb" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pj_jg_id" property="pjJgId" jdbcType="BIGINT" />
+    <result column="pj_cs_id" property="pjCsId" jdbcType="BIGINT" />
+    <result column="pj_zb" property="pjZb" jdbcType="VARCHAR" />
+    <result column="pj_val" property="pjVal" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pj_jg_id, pj_cs_id, pj_zb, pj_val, sort, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+    <!-- 根据评价结果ID删除评价指标 -->
+    <delete id="delByPjzbResultId" parameterType="java.lang.Long">
+        DELETE FROM pj_zb WHERE pj_jg_id = #{id}
+    </delete>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into pj_zb (id, pj_jg_id, pj_cs_id, pj_zb, pj_val, sort, create_by, create_date, update_by, update_date,
+        remarks, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.pjJgId,jdbcType=BIGINT},#{item.pjCsId,jdbcType=BIGINT},
+            #{item.pjZb,jdbcType=BIGINT},#{item.pjVal,jdbcType=BIGINT},#{item.sort,jdbcType=INTEGER},
+            #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from pj_zb
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pj_zb
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    insert into pj_zb (id, pj_jg_id, pj_cs_id,
+      pj_zb, pj_val, sort,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{pjJgId,jdbcType=BIGINT}, #{pjCsId,jdbcType=BIGINT},
+      #{pjZb,jdbcType=VARCHAR}, #{pjVal,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    insert into pj_zb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pjJgId != null" >
+        pj_jg_id,
+      </if>
+      <if test="pjCsId != null" >
+        pj_cs_id,
+      </if>
+      <if test="pjZb != null" >
+        pj_zb,
+      </if>
+      <if test="pjVal != null" >
+        pj_val,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pjJgId != null" >
+        #{pjJgId,jdbcType=BIGINT},
+      </if>
+      <if test="pjCsId != null" >
+        #{pjCsId,jdbcType=BIGINT},
+      </if>
+      <if test="pjZb != null" >
+        #{pjZb,jdbcType=VARCHAR},
+      </if>
+      <if test="pjVal != null" >
+        #{pjVal,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    update pj_zb
+    <set >
+      <if test="pjJgId != null" >
+        pj_jg_id = #{pjJgId,jdbcType=BIGINT},
+      </if>
+      <if test="pjCsId != null" >
+        pj_cs_id = #{pjCsId,jdbcType=BIGINT},
+      </if>
+      <if test="pjZb != null" >
+        pj_zb = #{pjZb,jdbcType=VARCHAR},
+      </if>
+      <if test="pjVal != null" >
+        pj_val = #{pjVal,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    update pj_zb
+    set pj_jg_id = #{pjJgId,jdbcType=BIGINT},
+      pj_cs_id = #{pjCsId,jdbcType=BIGINT},
+      pj_zb = #{pjZb,jdbcType=VARCHAR},
+      pj_val = #{pjVal,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.PjZb" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    select
+    <include refid="Base_Column_List" />
+    from pj_zb
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.PjZb" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    select
+    <include refid="Base_Column_List" />
+    from pj_zb
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.PjZb" >
+    update pj_zb
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

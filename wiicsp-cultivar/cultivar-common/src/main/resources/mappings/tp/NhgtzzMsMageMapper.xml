@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.NhgtzzMsMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="zzh_name" property="zzhName" jdbcType="VARCHAR" />
+    <result column="sc_mj" property="scMj" jdbcType="DOUBLE" />
+    <result column="jy_address" property="jyAddress" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="create_date" property="whTime" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, zzh_name, sc_mj, jy_address, tel, create_date as whTime, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from nhgtzz_ms_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from nhgtzz_ms_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    insert into nhgtzz_ms_mage (id, zzh_name, sc_mj,
+      jy_address, tel, wh_time,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{zzhName,jdbcType=VARCHAR}, #{scMj,jdbcType=DOUBLE},
+      #{jyAddress,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{whTime,jdbcType=TIMESTAMP},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    insert into nhgtzz_ms_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="zzhName != null" >
+        zzh_name,
+      </if>
+      <if test="scMj != null" >
+        sc_mj,
+      </if>
+      <if test="jyAddress != null" >
+        jy_address,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="whTime != null" >
+        wh_time,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="zzhName != null" >
+        #{zzhName,jdbcType=VARCHAR},
+      </if>
+      <if test="scMj != null" >
+        #{scMj,jdbcType=DOUBLE},
+      </if>
+      <if test="jyAddress != null" >
+        #{jyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="whTime != null" >
+        #{whTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    update nhgtzz_ms_mage
+    <set >
+      <if test="zzhName != null" >
+        zzh_name = #{zzhName,jdbcType=VARCHAR},
+      </if>
+      <if test="scMj != null" >
+        sc_mj = #{scMj,jdbcType=DOUBLE},
+      </if>
+      <if test="jyAddress != null" >
+        jy_address = #{jyAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="whTime != null" >
+        wh_time = #{whTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    update nhgtzz_ms_mage
+    set zzh_name = #{zzhName,jdbcType=VARCHAR},
+      sc_mj = #{scMj,jdbcType=DOUBLE},
+      jy_address = #{jyAddress,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      wh_time = #{whTime,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    update nhgtzz_ms_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findForPages" resultType="com.wisea.cultivar.common.vo.tp.system.NhgtzzMsMageListVo"
+          parameterType="com.wisea.cultivar.common.po.tp.system.NhgtzzMsMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from nhgtzz_ms_mage
+    where del_flag = '0'
+    <if test="search!=null and search !=''">
+      and (zzh_name = #{search} or tel = #{search})
+    </if>
+    <if test="sort=='createDate'">
+        order by create_date desc
+    </if>
+    <if test="sort=='scMj'">
+      order by sc_mj desc
+    </if>
+  </select>
+
+  <select id="findZzhNameAndTel" resultType="com.wisea.cultivar.common.vo.tp.system.NhgtzzMsMageListVo"
+          parameterType="com.wisea.cultivar.common.entity.tp.NhgtzzMsMage" >
+    select
+    <include refid="Base_Column_List" />
+    from nhgtzz_ms_mage
+    where del_flag = '0'
+      and zzh_name = #{zzhName} and tel = #{tel}
+    <if test="id!=null">
+      and id!=#{id}
+    </if>
+  </select>
+
+</mapper>

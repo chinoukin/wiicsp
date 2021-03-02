@@ -1,0 +1,1168 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.MembInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.MembInfo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+        <result column="contacts_name" property="contactsName" jdbcType="VARCHAR" />
+        <result column="comp_name" property="compName" jdbcType="VARCHAR" />
+        <result column="regist_date" property="registDate" jdbcType="TIMESTAMP" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="sex_type" property="sexType" jdbcType="VARCHAR" />
+        <result column="fixed_tel" property="fixedTel" jdbcType="VARCHAR" />
+        <result column="contacts_email" property="contactsEmail" jdbcType="VARCHAR" />
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+        <result column="comp_catg_type" property="compCatgType" jdbcType="VARCHAR" />
+        <result column="my_dept" property="myDept" jdbcType="VARCHAR" />
+        <result column="my_position" property="myPosition" jdbcType="VARCHAR" />
+        <result column="mage_model_type" property="mageModelType" jdbcType="VARCHAR" />
+        <result column="purchase_prdut" property="purchasePrdut" jdbcType="VARCHAR" />
+        <result column="sale_prdut" property="salePrdut" jdbcType="VARCHAR" />
+        <result column="comp_website" property="compWebsite" jdbcType="VARCHAR" />
+        <result column="comp_introduce" property="compIntroduce" jdbcType="VARCHAR" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="weChat_openid" property="weChatOpenid" jdbcType="VARCHAR" />
+        <result column="source_type" property="sourceType" jdbcType="VARCHAR" />
+        <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+        <result column="member_type" property="memberType" jdbcType="VARCHAR" />
+        <result column="agent_flag" property="agentFlag" jdbcType="CHAR" />
+        <result column="acct_state" property="acctState" jdbcType="VARCHAR" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="pet_name" property="petName" jdbcType="VARCHAR" />
+        <result column="ap_flag" property="apFlag" jdbcType="VARCHAR" />
+    </resultMap>
+    <resultMap id="BaseResult" type="com.wisea.cultivar.common.vo.tp.statistics.BuyerAndSellerConsumeVo">
+        <id column="purchaseAmount" property="purchaseAmount" jdbcType="VARCHAR"/>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"/>
+        <result column="orderCount" property="orderCount" jdbcType="VARCHAR"/>
+        <result column="orderNum" property="orderNum" jdbcType="VARCHAR"/>
+        <result column="comp_name" property="endpName" jdbcType="VARCHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List" >
+        id, user_name, regist_tel, contacts_name, comp_name, regist_date, name, sex_type,
+        fixed_tel, contacts_email, area_prov, area_city, area_cou, address, entp_name, comp_catg_type,
+        my_dept, my_position, mage_model_type, purchase_prdut, sale_prdut, comp_website,
+        comp_introduce, url, weChat_openid, source_type, entp_auth_state_type, member_type,
+        agent_flag, acct_state, ap_flag,create_by, create_date, update_by, update_date, remarks,
+        del_flag, pet_name
+    </sql>
+    <!-- 查询服务费最大值最小值-->
+    <select id="platfCostMax" parameterType="com.wisea.cultivar.common.po.tp.statistics.PlatfCostListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.statistics.PlatfCostVo">
+        SELECT
+          MIN(a.platfCostTotal) AS 'platfCostTatalMax',MAX(a.platfCostTotal) AS 'platfCostTatalMin'
+        FROM(SELECT
+            substr(oi.create_date, 1, 10) AS 'date',
+            count(oi.id) 'orderCount',
+            sum(oi.platf_cost) 'platfCost',
+            count(rca.id) 'returnAndRefunds',
+            SUM(rca.platf_cost) 'returnAndRefundsPlatfCost',
+            sum(oi.platf_cost) - IFNULL(SUM(rca.platf_cost),0) AS 'platfCostTotal'
+            FROM
+            order_info oi
+            LEFT JOIN ord_comm_rela ocr ON ocr.ord_id = oi.id
+            LEFT JOIN refund_comm_appl rca ON rca.ord_comm_id = ocr.id
+            WHERE
+            oi.order_state_type = '4'
+            GROUP BY
+            substr(oi.create_date, 1, 10)
+            )a
+    </select>
+    <!-- 查询服务费的总和 -->
+    <select id="platfCostSum" parameterType="com.wisea.cultivar.common.po.tp.statistics.PlatfCostListPo"
+            resultType="java.lang.Integer">
+        SELECT
+          round(SUM(a.platfCostTotal),2) AS 'total'
+        FROM(SELECT
+        substr(oi.create_date, 1, 10) AS 'date',
+        IFNull(count(DISTINCT(oi.id)),0) 'orderCount',
+        (case count(DISTINCT(oi.id))
+        WHEN '1' THEN oi.platf_cost
+        WHEN '0' THEN 0
+        ELSE round(sum(oi.platf_cost), 2)
+        END)AS 'platfCost',
+        count(ocr.ocrCount) 'returnAndRefunds',
+        IFNull(round(SUM(ocr.ocrPlatfcost), 2),0) 'returnAndRefundsPlatfCost',
+        IFNULL(round(
+        cast(sum(oi.platf_cost) AS DECIMAL (10, 2)
+        ) - CAST(ocr.ocrPlatfcost AS DECIMAL (10, 2)),
+        2),
+        cast(sum(oi.platf_cost) AS DECIMAL (10, 2))) AS 'platfCostTotal'
+        FROM
+        order_info oi
+        LEFT JOIN (
+        SELECT
+          ocr.ord_id,
+          SUM(rca.rcaPlatfcost) AS 'ocrPlatfcost',
+          SUM(rca.rcaCount) AS 'ocrCount'
+        FROM ord_comm_rela ocr
+        LEFT  JOIN (
+        SELECT
+          ord_comm_id ,
+          SUM(platf_cost) AS 'rcaPlatfcost',
+          COUNT(ord_comm_id) AS 'rcaCount'
+        FROM refund_comm_appl
+        GROUP BY ord_comm_id)
+        rca ON rca.ord_comm_id = ocr.id
+        GROUP BY ocr.ord_id)
+        ocr ON ocr.ord_id = oi.id
+        WHERE
+        oi.order_state_type = '4'
+        GROUP BY
+        substr(oi.create_date, 1, 10)
+        )a
+    </select>
+    <!-- 查询服务费统计信息 -->
+    <select id="platfCostList" resultType="com.wisea.cultivar.common.vo.tp.statistics.PlatfCostListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.statistics.PlatfCostListPo">
+        SELECT
+        substr(oi.create_date, 1, 10) AS 'date',
+        IFNull(count(DISTINCT(oi.id)),0) 'orderCount',
+        (case count(DISTINCT(oi.id))
+        WHEN '1' THEN oi.platf_cost
+        WHEN '0' THEN 0
+        ELSE round(sum(oi.platf_cost), 2)
+        END)AS 'platfCost',
+        count(ocr.ocrCount) 'returnAndRefunds',
+        IFNull(round(SUM(ocr.ocrPlatfcost), 2),0) 'returnAndRefundsPlatfCost',
+        IFNULL(round(
+        cast(sum(oi.platf_cost) AS DECIMAL (10, 2)
+        ) - CAST(ocr.ocrPlatfcost AS DECIMAL (10, 2)),
+        2),
+        cast(sum(oi.platf_cost) AS DECIMAL (10, 2))) AS 'platfCostTotal'
+        FROM
+        order_info oi
+        LEFT JOIN (
+            SELECT
+              ocr.ord_id,
+              SUM(rca.rcaPlatfcost) AS 'ocrPlatfcost',
+              SUM(rca.rcaCount) AS 'ocrCount'
+            FROM ord_comm_rela ocr
+              LEFT  JOIN (
+                SELECT
+                  ord_comm_id ,
+                  SUM(platf_cost) AS 'rcaPlatfcost',
+                  COUNT(ord_comm_id) AS 'rcaCount'
+                FROM refund_comm_appl
+                GROUP BY ord_comm_id)
+                rca ON rca.ord_comm_id = ocr.id
+            GROUP BY ocr.ord_id)
+            ocr ON ocr.ord_id = oi.id
+        WHERE
+        oi.order_state_type = '4'
+        <if test="searchTimeStart != null">
+            AND oi.create_date > #{searchTimeStart}
+        </if>
+        <if test="searchTimeEnd != null">
+            AND oi.create_date &lt;= #{searchTimeEnd}
+        </if>
+        GROUP BY
+        substr(oi.create_date, 1, 10)
+    </select>
+    <!-- 查询 商家,买家消费排行 -->
+    <select id="selectBuyerAndSeller" resultMap="BaseResult"
+            parameterType="com.wisea.cultivar.common.po.tp.statistics.BuyerAndSellerConsumePo">
+        SELECT
+        b.*
+        FROM (SELECT
+        mi.id,
+        mi.user_name,
+        edi.comp_name,
+        ifNULl(sum(oi.comm_total_count),0) AS 'orderCount',
+        ifNULL(count(DISTINCT(oi.id)),0) AS 'orderNum',
+        ifNULL(round(sum(oi.amount_payable), 2),0) AS 'purchaseAmount'
+        FROM
+        memb_info mi
+        LEFT JOIN entp_data_info edi ON edi.memb_id = mi.id
+        LEFT JOIN sys_user su ON su.parent_id = mi.id
+        <if test="entpAuthStateType != null and entpAuthStateType != '' and entpAuthStateType == '1'.toString()">
+            LEFT JOIN order_info oi ON oi.buyer_id = mi.id AND oi.order_state_type IN ('0','1','2','3','4')
+        </if>
+        <if test="entpAuthStateType != null and entpAuthStateType != '' and entpAuthStateType == '0'.toString()">
+            LEFT JOIN order_info oi ON oi.seller_id = mi.id AND oi.order_state_type IN ('0','1','2','3','4')
+        </if>
+        WHERE mi.del_flag = '0'
+        <if test="searchTimeStart != null">
+            AND oi.create_date > #{searchTimeStart}
+        </if>
+        <if test="searchTimeEnd != null">
+            AND oi.create_date &lt;= #{searchTimeEnd}
+        </if>
+        GROUP BY mi.id )b,(
+        SELECT
+        mi.id,
+        mi.user_name,
+        edi.comp_name,
+        ifNULl(sum(oi.comm_total_count),0) AS 'orderCount',
+        ifNULL(count(oi.id),0) AS 'orderNum',
+        ifNULL(round(sum(oi.amount_payable), 2),0) AS 'purchaseAmount'
+        FROM
+        memb_info mi
+        LEFT JOIN entp_data_info edi ON edi.memb_id = mi.id
+        LEFT JOIN sys_user su ON su.parent_id = mi.id
+        <if test="entpAuthStateType != null and entpAuthStateType != '' and entpAuthStateType == '1'.toString()">
+            LEFT JOIN order_info oi ON oi.buyer_id = mi.id AND oi.order_state_type IN ('0','1','2','3','4')
+        </if>
+        <if test="entpAuthStateType != null and entpAuthStateType != '' and entpAuthStateType == '0'.toString()">
+            LEFT JOIN order_info oi ON oi.seller_id = mi.id AND oi.order_state_type IN ('0','1','2','3','4')
+        </if>
+        WHERE mi.del_flag = '0'
+        <if test="searchTimeStart != null">
+            AND oi.create_date > #{searchTimeStart}
+        </if>
+        <if test="searchTimeEnd != null">
+            AND oi.create_date &lt;= #{searchTimeEnd}
+        </if>
+        GROUP BY mi.id
+        )a
+        WHERE a.id = b.id
+        ORDER BY b.purchaseAmount DESC
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <!-- 注册会员插入数据的操作 -->
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo">
+    insert into memb_info (id, user_name, regist_tel,
+      regist_date, entp_auth_state_type, agent_flag,
+      acct_state, pet_name, url,create_by, create_date, update_by,
+      update_date, remarks, del_flag,weChat_openid,source_type,contacts_name,comp_name,member_type, ap_flag,
+      area_prov,area_city,area_cou,nfkfp_type,invo_type
+      )
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{registTel,jdbcType=VARCHAR},
+      #{registDate,jdbcType=TIMESTAMP}, #{entpAuthStateType,jdbcType=VARCHAR}, #{agentFlag,jdbcType=CHAR},
+      #{acctState,jdbcType=VARCHAR}, #{petName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{weChatOpenid,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR},#{contactsName,jdbcType=VARCHAR},
+      #{compName,jdbcType=VARCHAR},#{memberType,jdbcType=VARCHAR},#{apFlag,jdbcType=VARCHAR},
+      #{areaProv,jdbcType=VARCHAR},#{areaCity,jdbcType=VARCHAR},#{areaCou,jdbcType=VARCHAR},
+      #{nfkfpType,jdbcType=VARCHAR},#{invoType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <!-- 注册会员插入数据的操作 -->
+	<insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo" >
+        insert into memb_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="registTel != null" >
+                regist_tel,
+            </if>
+            <if test="contactsName != null" >
+                contacts_name,
+            </if>
+            <if test="compName != null" >
+                comp_name,
+            </if>
+            <if test="registDate != null" >
+                regist_date,
+            </if>
+            <if test="name != null" >
+                name,
+            </if>
+            <if test="sexType != null" >
+                sex_type,
+            </if>
+            <if test="fixedTel != null" >
+                fixed_tel,
+            </if>
+            <if test="contactsEmail != null" >
+                contacts_email,
+            </if>
+            <if test="areaProv != null" >
+                area_prov,
+            </if>
+            <if test="areaCity != null" >
+                area_city,
+            </if>
+            <if test="areaCou != null" >
+                area_cou,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="entpName != null" >
+                entp_name,
+            </if>
+            <if test="compCatgType != null" >
+                comp_catg_type,
+            </if>
+            <if test="myDept != null" >
+                my_dept,
+            </if>
+            <if test="myPosition != null" >
+                my_position,
+            </if>
+            <if test="mageModelType != null" >
+                mage_model_type,
+            </if>
+            <if test="purchasePrdut != null" >
+                purchase_prdut,
+            </if>
+            <if test="salePrdut != null" >
+                sale_prdut,
+            </if>
+            <if test="compWebsite != null" >
+                comp_website,
+            </if>
+            <if test="compIntroduce != null" >
+                comp_introduce,
+            </if>
+            <if test="url != null" >
+                url,
+            </if>
+            <if test="weChatOpenid != null" >
+                weChat_openid,
+            </if>
+            <if test="sourceType != null" >
+                source_type,
+            </if>
+            <if test="entpAuthStateType != null" >
+                entp_auth_state_type,
+            </if>
+            <if test="memberType != null" >
+                member_type,
+            </if>
+            <if test="agentFlag != null" >
+                agent_flag,
+            </if>
+            <if test="acctState != null" >
+                acct_state,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateBy != null" >
+                update_by,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="remarks != null" >
+                remarks,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+            <if test="petName != null" >
+                pet_name,
+            </if>
+            <if test="contactsName != null">
+                contacts_name,
+            </if>
+            <if test="compName != null">
+                comp_name,
+            </if>
+            <if test="apFlag != null">
+                ap_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="registTel != null" >
+                #{registTel,jdbcType=VARCHAR},
+            </if>
+            <if test="contactsName != null" >
+                #{contactsName,jdbcType=VARCHAR},
+            </if>
+            <if test="compName != null" >
+                #{compName,jdbcType=VARCHAR},
+            </if>
+            <if test="registDate != null" >
+                #{registDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null" >
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sexType != null" >
+                #{sexType,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedTel != null" >
+                #{fixedTel,jdbcType=VARCHAR},
+            </if>
+            <if test="contactsEmail != null" >
+                #{contactsEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null" >
+                #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null" >
+                #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null" >
+                #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="entpName != null" >
+                #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="compCatgType != null" >
+                #{compCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="myDept != null" >
+                #{myDept,jdbcType=VARCHAR},
+            </if>
+            <if test="myPosition != null" >
+                #{myPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="mageModelType != null" >
+                #{mageModelType,jdbcType=VARCHAR},
+            </if>
+            <if test="purchasePrdut != null" >
+                #{purchasePrdut,jdbcType=VARCHAR},
+            </if>
+            <if test="salePrdut != null" >
+                #{salePrdut,jdbcType=VARCHAR},
+            </if>
+            <if test="compWebsite != null" >
+                #{compWebsite,jdbcType=VARCHAR},
+            </if>
+            <if test="compIntroduce != null" >
+                #{compIntroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="weChatOpenid != null" >
+                #{weChatOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null" >
+                #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="entpAuthStateType != null" >
+                #{entpAuthStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="memberType != null" >
+                #{memberType,jdbcType=VARCHAR},
+            </if>
+            <if test="agentFlag != null" >
+                #{agentFlag,jdbcType=CHAR},
+            </if>
+            <if test="acctState != null" >
+                #{acctState,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="petName != null" >
+                #{petName,jdbcType=VARCHAR},
+            </if>
+            <if test="contactsName != null">
+                #{contactsName,jdbcType=VARCHAR},
+            </if>
+            <if test="compName != null">
+                #{compName,jdbcType=VARCHAR},
+            </if>
+            <if test="apFlag != null">
+                #{apFlag,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo" >
+        update memb_info
+        <set >
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="registTel != null" >
+                regist_tel = #{registTel,jdbcType=VARCHAR},
+            </if>
+            <if test="contactsName != null" >
+                contacts_name = #{contactsName,jdbcType=VARCHAR},
+            </if>
+            <if test="compName != null" >
+                comp_name = #{compName,jdbcType=VARCHAR},
+            </if>
+            <if test="registDate != null" >
+                regist_date = #{registDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="sexType != null" >
+                sex_type = #{sexType,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedTel != null" >
+                fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+            </if>
+            <if test="contactsEmail != null" >
+                contacts_email = #{contactsEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null" >
+                area_prov = #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null" >
+                area_city = #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null" >
+                area_cou = #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="entpName != null" >
+                entp_name = #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="compCatgType != null" >
+                comp_catg_type = #{compCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="myDept != null" >
+                my_dept = #{myDept,jdbcType=VARCHAR},
+            </if>
+            <if test="myPosition != null" >
+                my_position = #{myPosition,jdbcType=VARCHAR},
+            </if>
+            <if test="mageModelType != null" >
+                mage_model_type = #{mageModelType,jdbcType=VARCHAR},
+            </if>
+            <if test="purchasePrdut != null" >
+                purchase_prdut = #{purchasePrdut,jdbcType=VARCHAR},
+            </if>
+            <if test="salePrdut != null" >
+                sale_prdut = #{salePrdut,jdbcType=VARCHAR},
+            </if>
+            <if test="compWebsite != null" >
+                comp_website = #{compWebsite,jdbcType=VARCHAR},
+            </if>
+            <if test="compIntroduce != null" >
+                comp_introduce = #{compIntroduce,jdbcType=VARCHAR},
+            </if>
+            <if test="url != null" >
+                url = #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="weChatOpenid != null" >
+                weChat_openid = #{weChatOpenid,jdbcType=VARCHAR},
+            </if>
+            <if test="sourceType != null" >
+                source_type = #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="entpAuthStateType != null" >
+                entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="memberType != null" >
+                member_type = #{memberType,jdbcType=VARCHAR},
+            </if>
+            <if test="agentFlag != null" >
+                agent_flag = #{agentFlag,jdbcType=CHAR},
+            </if>
+            <if test="acctState != null" >
+                acct_state = #{acctState,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="petName != null" >
+                pet_name = #{petName,jdbcType=VARCHAR},
+            </if>
+            <if test="apFlag != null" >
+                ap_flag = #{apFlag,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo" >
+    update memb_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      contacts_name = #{contactsName,jdbcType=VARCHAR},
+      comp_name = #{compName,jdbcType=VARCHAR},
+      regist_date = #{registDate,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      sex_type = #{sexType,jdbcType=VARCHAR},
+      fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+      contacts_email = #{contactsEmail,jdbcType=VARCHAR},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      comp_catg_type = #{compCatgType,jdbcType=VARCHAR},
+      my_dept = #{myDept,jdbcType=VARCHAR},
+      my_position = #{myPosition,jdbcType=VARCHAR},
+      mage_model_type = #{mageModelType,jdbcType=VARCHAR},
+      purchase_prdut = #{purchasePrdut,jdbcType=VARCHAR},
+      sale_prdut = #{salePrdut,jdbcType=VARCHAR},
+      comp_website = #{compWebsite,jdbcType=VARCHAR},
+      comp_introduce = #{compIntroduce,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      weChat_openid = #{weChatOpenid,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      member_type = #{memberType,jdbcType=VARCHAR},
+      agent_flag = #{agentFlag,jdbcType=CHAR},
+      acct_state = #{acctState,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      pet_name = #{petName,jdbcType=VARCHAR},
+      ap_flag = #{apFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!-- 微信解除绑定 -->
+    <update id="updUnbind" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo">
+  	update memb_info
+    set weChat_openid = #{weChatOpenid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!-- 后台分页查询会员信息 -->
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.MembInfoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.memb.MembInfoPagePo">
+        SELECT T1.id,T1.user_name,T1.regist_tel,T1.regist_date,T1.acct_state,T1.entp_auth_state_type,T1.agent_flag
+        	   ,T2.comp_name,T1.member_type
+        FROM memb_info T1
+        LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+        WHERE T1.del_flag = '0' and T1.member_type in ('0','1')
+        <if test="key != null and key != ''">
+            AND (T1.user_name LIKE CONCAT('%', #{key}, '%')
+            OR T1.regist_tel LIKE CONCAT('%', #{key}, '%')
+            OR T2.comp_name LIKE CONCAT('%', #{key}, '%'))
+        </if>
+        <if test="registDateStart != null">
+            AND T1.regist_date <![CDATA[ >= ]]> #{registDateStart}
+        </if>
+        <if test="registDateEnd != null">
+            AND T1.regist_date <![CDATA[ <= ]]> #{registDateEnd}
+        </if>
+        <if test="acctState != null and acctState != ''">
+            AND T1.acct_state = #{acctState,jdbcType=VARCHAR}
+        </if>
+        <if test="states != null and states == '1'.toString()">
+            AND T1.member_type = '0'
+        </if>
+        <if test="states != null and states == '2'.toString()">
+            AND T1.member_type = '1'
+        </if>
+        <if test="states != null and states == '3'.toString()">
+            AND T1.member_type = '1' AND T2.comp_type = '1'
+        </if>
+        order by T1.regist_date desc
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.MembInfoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.MembInfoListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_info
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo">
+    update memb_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!-- 验证手机号是否已经存在 -->
+    <select id="checkMobileExist" parameterType="com.wisea.cultivar.common.po.tp.memb.MembCheckMobilePo"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*)
+		FROM(
+			SELECT id FROM memb_info T1
+			WHERE T1.user_name = #{mobile} OR T1.regist_tel=#{mobile}
+			UNION
+			SELECT id FROM sub_acct_info T2
+			WHERE T2.acct_num = #{mobile} OR T2.tel = #{mobile}
+		) tab
+		WHERE 1=1
+		<if test="membId != null and membId != ''">
+            AND tab.id NOT IN(#{membId})
+        </if>
+    </select>
+    <!-- 注册的时候验证公司名称是否已经存在 -->
+    <select id="checkCompNameForReg" parameterType="java.lang.String" resultType="java.lang.Integer">
+    	SELECT count(*) FROM memb_info T1
+		WHERE T1.comp_name = #{compName} AND T1.del_flag= '0'
+    </select>
+    <!-- 验证用户名称是否已经存在 -->
+    <select id="checkLoginNameExist" parameterType="com.wisea.cultivar.common.po.tp.memb.MembCheckLoginNamePo"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*)
+		FROM(
+			SELECT id FROM memb_info T1
+			WHERE T1.user_name = #{loginName} OR T1.regist_tel=#{loginName}
+			UNION
+			SELECT id FROM sub_acct_info T2
+			WHERE T2.acct_num = #{loginName} OR T2.tel = #{loginName}
+		) tab
+		WHERE 1=1
+		<if test="membId != null and membId != ''">
+            AND tab.id NOT IN(#{membId})
+        </if>
+    </select>
+    <!-- 查询会员的基本信息 -->
+    <select id="getMembBaseInfo" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.MembBaseInfo">
+  	select T1.id,T1.id AS 'membId',T1.user_name,T1.regist_tel,T1.regist_date,T1.entp_auth_state_type,T1.agent_flag,T1.acct_state,T1.url,T1.pet_name,
+		   tab1.comp_name AS 'authCompName',tab1.id AS 'authCompId',tab2.comp_name AS 'compName',tab2.id AS 'compId',tab2.merchant_no,tab2.bd_tel,
+		   T1.member_type,tab3.id AS 'personId',tab4.id AS 'authPersonId', T1.ap_flag AS 'apFlag',tab3.name AS 'personName',tab4.name AS 'authPersonName',
+		   T1.nfkfp_type,T1.invo_content,T1.invo_type,tab2.comp_type
+	FROM memb_info T1
+	LEFT JOIN (SELECT T2.* FROM entp_data_info_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab1 ON tab1.memb_id = T1.id
+	LEFT JOIN entp_data_info tab2 ON tab2.memb_id = T1.id
+	LEFT JOIN (SELECT T2.* FROM person_auth_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab4 ON tab4.memb_id = T1.id
+	LEFT JOIN person_auth tab3 ON tab3.memb_id = T1.id
+    where T1.id = #{id,jdbcType=BIGINT}
+	UNION
+	SELECT T1.id,T4.id AS 'membId',T1.acct_num AS 'user_name',T4.regist_tel,T4.regist_date,T4.entp_auth_state_type,T4.agent_flag,T4.acct_state,T4.url,T4.pet_name,
+			tab1.comp_name AS 'authCompName',tab1.id AS 'authCompId',tab2.comp_name AS 'compName',tab2.id AS 'compId',tab2.merchant_no,tab2.bd_tel,
+			T4.member_type,tab3.id AS 'personId',tab5.id AS 'authPersonId', T4.ap_flag AS 'apFlag',tab3.name AS 'personName',tab5.name AS 'authPersonName',
+			T4.nfkfp_type,T4.invo_content,T4.invo_type,tab2.comp_type
+	FROM sub_acct_info T1
+	LEFT JOIN memb_info T4 ON  T4.id = T1.memb_id
+	LEFT JOIN (SELECT T2.* FROM entp_data_info_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab1 ON tab1.memb_id = T1.memb_id
+	LEFT JOIN entp_data_info tab2 ON tab2.memb_id = T1.memb_id
+	LEFT JOIN (SELECT T2.* FROM person_auth_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab5 ON tab5.memb_id = T4.id
+	LEFT JOIN person_auth tab3 ON tab3.memb_id = T1.id
+    where T1.id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 查询会员的基本信息 -->
+  <select id="getMembInfoByUserName" parameterType="java.lang.String"
+            resultType="com.wisea.cultivar.common.entity.tp.MembBaseInfo">
+  	select T1.id,T1.id AS 'membId',T1.user_name,T1.regist_tel,T1.regist_date,T1.entp_auth_state_type,T1.agent_flag,T1.acct_state,T1.url,T1.pet_name,
+		   tab1.comp_name AS 'authCompName',tab1.id AS 'authCompId',tab2.comp_name AS 'compName',tab2.id AS 'compId' ,tab2.merchant_no,tab2.bd_tel,
+		   T1.member_type,tab3.id AS 'personId',tab4.id AS 'authPersonId', T1.ap_flag AS 'apFlag',tab3.name AS 'personName',tab4.name AS 'authPersonName'
+	FROM memb_info T1
+	LEFT JOIN (SELECT T2.* FROM entp_data_info_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab1 ON tab1.memb_id = T1.id
+	LEFT JOIN entp_data_info tab2 ON tab2.memb_id = T1.id
+	LEFT JOIN (SELECT T2.* FROM person_auth_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab4 ON tab4.memb_id = T1.id
+	LEFT JOIN person_auth tab3 ON tab3.memb_id = T1.id
+    where T1.user_name = #{userName,jdbcType=VARCHAR}
+	UNION
+	SELECT T1.id,T4.id AS 'membId',T1.acct_num AS 'user_name',T4.regist_tel,T4.regist_date,T4.entp_auth_state_type,T4.agent_flag,T4.acct_state,T4.url,T4.pet_name,
+			tab1.comp_name AS 'authCompName',tab1.id AS 'authCompId',tab2.comp_name AS 'compName',tab2.id AS 'compId' ,tab2.merchant_no,tab2.bd_tel,
+			T4.member_type,tab3.id AS 'personId',tab5.id AS 'authPersonId', T4.ap_flag AS 'apFlag',tab3.name AS 'personName',tab5.name AS 'authPersonName'
+	FROM sub_acct_info T1
+	LEFT JOIN memb_info T4 ON  T4.id = T1.memb_id
+	LEFT JOIN (SELECT T2.* FROM entp_data_info_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab1 ON tab1.memb_id = T1.memb_id
+	LEFT JOIN entp_data_info tab2 ON tab2.memb_id = T1.memb_id
+	LEFT JOIN (SELECT T2.* FROM person_auth_copy T2 WHERE T2.auth_exam_state IN ('0','2','3') AND T2.del_flag = '0') tab5 ON tab5.memb_id = T4.id
+	LEFT JOIN person_auth tab3 ON tab3.memb_id = T1.id
+    where T1.acct_num = #{userName,jdbcType=VARCHAR}
+  </select>
+    <!-- 根据会员id查询会员的基本详细信息 -->
+    <select id="getMembBaseDetail" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.MembBaseDetailVo">
+  SELECT T1.id,T1.regist_tel,T1.user_name,T2.ctscc,T2.legal_person,T2.comp_name
+	FROM memb_info T1
+	LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+  </select>
+    <!-- 会员到处列表的查询 -->
+    <select id="selMembInfoForExportByIds" parameterType="java.util.List"
+            resultType="com.wisea.cultivar.common.vo.tp.MembInfoExportVo">
+        SELECT T1.id,T1.regist_tel,T1.regist_date,T1.user_name,
+        T2.comp_name,T3.label AS 'entpAuthStateType',T4.label AS 'agentFlag',T5.label AS 'acctState'
+        FROM memb_info T1
+        LEFT JOIN sys_dict T3 ON T3.value = T1.entp_auth_state_type AND T3.type = 'entp_auth_state_type'
+        LEFT JOIN sys_dict T4 ON T4.value = T1.agent_flag AND T4.type = 'agent_flag'
+        LEFT JOIN sys_dict T5 ON T5.value = T1.acct_state AND T5.type = 'acct_state'
+        LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+        WHERE T1.id IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        ORDER BY T1.regist_date Desc
+    </select>
+    <!-- 会员列表页面数据统计的查询 -->
+    <select id="getMembStatisticalDate" resultType="com.wisea.cultivar.common.vo.tp.MembInfoBackListVo">
+		SELECT COUNT(T1.id) AS 'allMemb', SUM(IF(T1.member_type='0',1,0)) AS 'individual',
+			   SUM(IF(T1.member_type='1',1,0)) AS 'enterprise',SUM(IF(T1.agent_flag='0' AND T1.member_type='1',1,0)) AS 'agent'
+		FROM memb_info T1
+		LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+		WHERE T1.del_flag = '0' and T1.member_type in ('0','1')
+  </select>
+    <!-- 查询要发送会员的列表信息(分页查询) -->
+    <select id="findPageForMsg" resultType="com.wisea.cultivar.common.vo.tp.MembInfoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.MemPageForMsgPo">
+        SELECT T1.id,T1.user_name,T1.regist_tel,T1.regist_date,T1.acct_state,T1.agent_flag,
+        	   T1.entp_auth_state_type,T1.member_type,T2.comp_name
+        FROM memb_info T1
+        LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+        WHERE T1.del_flag = '0' AND T1.acct_state = '0' and T1.member_type in ('0','1')
+        <if test="states != null and states == '4'.toString()">
+            <if test="membKeys != null and membKeys.size != 0">
+                AND (T1.user_name IN
+                <foreach collection="membKeys" item="key" index="index" open="(" close=")" separator=",">
+                    '${key}'
+                </foreach>
+                OR T2.comp_name IN
+                <foreach collection="membKeys" item="key" index="index" open="(" close=")" separator=",">
+                    '${key}'
+                </foreach>
+                )
+            </if>
+        </if>
+        <if test="states != null and states == '1'.toString()">
+            AND T1.member_type = '0'
+        </if>
+        <if test="states != null and states == '2'.toString()">
+            AND T1.member_type = '1'
+        </if>
+        order by T1.regist_date desc
+    </select>
+    <!-- 查询要发送会员的列表信息(分页查询) -->
+    <select id="findAllForMsg" resultType="java.lang.String" parameterType="com.wisea.cultivar.common.po.tp.MemSendForMsgPo">
+        SELECT T1.id
+        FROM memb_info T1
+        LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+        WHERE T1.del_flag = '0' AND T1.acct_state = '0' and T1.member_type in ('0','1')
+        <if test="states != null and states == '4'.toString()">
+            <if test="membKeys != null and membKeys.size != 0">
+                AND (T1.user_name IN
+                <foreach collection="membKeys" item="key" index="index" open="(" close=")" separator=",">
+                    '${key}'
+                </foreach>
+                OR T2.comp_name IN
+                <foreach collection="membKeys" item="key" index="index" open="(" close=")" separator=",">
+                    '${key}'
+                </foreach>
+                )
+            </if>
+        </if>
+        <if test="states != null and states == '1'.toString()">
+            AND T1.member_type = '0'
+        </if>
+        <if test="states != null and states == '2'.toString()">
+            AND T1.member_type = '1'
+        </if>
+        order by T1.regist_date desc
+    </select>
+    <select id="findUserAreAgent" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.tp.MembInfo">
+        SELECT agent_flag
+        FROM memb_info
+        <where>
+            id = #{id}
+        </where>
+    </select>
+    <!-- 根据ID获取会员或者是子账户的基本信息 -->
+    <select id="getMembInfoById" resultType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo" parameterType="java.lang.Long">
+    SELECT T1.id,T1.user_name,T1.regist_date,T1.regist_tel,T1.entp_auth_state_type,T1.agent_flag,
+			 T1.acct_state,T1.pet_name,T1.url,T1.member_type,T1.ap_flag apFlag,T1.id AS 'membId'
+	FROM memb_info T1
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+	UNION
+	SELECT T1.id,T1.acct_num AS 'userName',T1.create_date AS 'registDate',T1.tel AS 'registTel',T2.entp_auth_state_type,
+			   '1' AS 'agentFlag',T1.enable_flag AS 'acctState',T2.pet_name,T2.url,
+			   '1' AS 'memberType',T2.ap_flag apFlag,T2.id AS 'membId'
+	FROM sub_acct_info T1
+	INNER JOIN memb_info T2 ON T2.id = T1.memb_id
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+    </select>
+    <!-- 验证会员昵称是否已经存在 -->
+    <select id="checkPetNameExist" resultType="java.lang.Integer" parameterType="java.util.Map">
+    	SELECT COUNT(*) FROM memb_info
+    	WHERE pet_name = #{petName} AND id <![CDATA[ <> ]]> #{id}
+    </select>
+    <!-- 根据openid查询用户信息 -->
+    <select id="getMembInfoByOpenid" parameterType="java.lang.String"
+            resultType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_info
+        where weChat_openid = #{openid}
+    </select>
+    <!-- 根据用户名查询绑定的会员信息 -->
+    <select id="getMembByUserNameForWeChat" resultType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo"
+            parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_info
+        where weChat_openid IS NOT NULL
+        AND user_name = #{userName}
+    </select>
+    <!-- 查询会员详细信息包含企业名称 -->
+    <select id="selectInfoByKey" resultType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo" parameterType="java.lang.Long">
+        SELECT
+			T2.comp_name,T1.*
+		FROM memb_info T1
+		LEFT JOIN entp_data_info T2 ON T2.memb_id = T1.id
+		WHERE T1.id = #{id,jdbcType=BIGINT}
+  	</select>
+    <!-- 微信绑定通过用户名称获取会员表的信息 -->
+    <select id="selectInfoByLoginName" resultType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo"
+            parameterType="java.lang.String">
+  		SELECT * FROM memb_info
+  		WHERE del_flag = '0'
+  		AND user_name=#{userName}
+  	</select>
+
+    <!-- 按月统计注册人数 -->
+    <select id="registMouthStatics" parameterType="com.wisea.cultivar.common.po.tp.statistics.MembStaticsPo"
+            resultType="com.wisea.cultivar.common.vo.tp.statistics.RegistStaticsVo">
+  		SELECT
+		  count(*) as registNum,
+		  DATE_FORMAT(t1.regist_date,'%Y-%m-%d') as registDate
+		from memb_info t1
+		where t1.acct_state = '0'
+		    and t1.del_flag = '0'
+		    AND DATE_FORMAT(t1.regist_date,'%Y-%m') = #{querDate}
+		    group by registDate
+		    order by registDate
+  	</select>
+
+    <!-- 按年统计注册人数 -->
+    <select id="registYearStatics" parameterType="com.wisea.cultivar.common.po.tp.statistics.MembStaticsPo"
+            resultType="com.wisea.cultivar.common.vo.tp.statistics.RegistStaticsVo">
+  		SELECT
+		  COUNT(*) AS registNum,
+		  DATE_FORMAT(t1.regist_date,'%Y-%m') AS registDate
+		FROM memb_info t1
+		WHERE t1.acct_state = '0'
+		    AND t1.del_flag = '0'
+		    AND DATE_FORMAT(t1.regist_date,'%Y') = #{querDate}
+		    GROUP BY registDate
+		    ORDER BY registDate
+  	</select>
+  	<!-- 查询所有的会员信息（注册的所有用户） -->
+  	<select id="findMembInfoAll" parameterType="com.wisea.cultivar.common.po.tp.EntpInfoForAllListPo"
+  					resultType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo">
+  		SELECT * FROM memb_info T1
+		WHERE T1.del_flag = '0' AND T1.acct_state = '0' and T1.member_type in ('0','1')
+		<if test="compName != null and compName != ''">
+			AND user_name  LIKE CONCAT('%', #{compName}, '%')
+	 	</if>
+	 	<if test="otherId != null and otherId != ''">
+	 		AND id not in (#{otherId})
+	 	</if>
+  	</select>
+  	<!-- 个人信息的保存 -->
+  	<update id="saveMembIndInfo" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo">
+	  	update memb_info
+	    <set >
+	      <if test="name != null" >
+	        name = #{name,jdbcType=VARCHAR},
+	      </if>
+	      <if test="sexType != null" >
+	        sex_type = #{sexType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="fixedTel != null" >
+	        fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+	      </if>
+	      <if test="contactsEmail != null" >
+	        contacts_email = #{contactsEmail,jdbcType=VARCHAR},
+	      </if>
+	      <if test="areaProv != null" >
+	        area_prov = #{areaProv,jdbcType=VARCHAR},
+	      </if>
+	      <if test="areaCity != null" >
+	        area_city = #{areaCity,jdbcType=VARCHAR},
+	      </if>
+	      <if test="areaCou != null" >
+	        area_cou = #{areaCou,jdbcType=VARCHAR},
+	      </if>
+	      <if test="address != null" >
+	        address = #{address,jdbcType=VARCHAR},
+	      </if>
+	      <if test="updateBy != null" >
+	        update_by = #{updateBy,jdbcType=VARCHAR},
+	      </if>
+	      <if test="updateDate != null" >
+	        update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      </if>
+	    </set>
+	    where id = #{id,jdbcType=BIGINT}
+  	</update>
+  	<!-- 保存会员公司信息 -->
+  	<update id="saveMembCompInfo" parameterType="com.wisea.cultivar.common.entity.tp.MembInfo">
+	  	update memb_info
+	    <set >
+	      <if test="entpName != null" >
+	        entp_name = #{entpName,jdbcType=VARCHAR},
+	      </if>
+	      <if test="compCatgType != null" >
+	        comp_catg_type = #{compCatgType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="myDept != null" >
+	        my_dept = #{myDept,jdbcType=VARCHAR},
+	      </if>
+	      <if test="myPosition != null" >
+	        my_position = #{myPosition,jdbcType=VARCHAR},
+	      </if>
+	      <if test="mageModelType != null" >
+	        mage_model_type = #{mageModelType,jdbcType=VARCHAR},
+	      </if>
+	      <if test="purchasePrdut != null" >
+	        purchase_prdut = #{purchasePrdut,jdbcType=VARCHAR},
+	      </if>
+	      <if test="salePrdut != null" >
+	        sale_prdut = #{salePrdut,jdbcType=VARCHAR},
+	      </if>
+	      <if test="compWebsite != null" >
+	        comp_website = #{compWebsite,jdbcType=VARCHAR},
+	      </if>
+	      <if test="compIntroduce != null" >
+	        comp_introduce = #{compIntroduce,jdbcType=VARCHAR},
+	      </if>
+	      <if test="updateBy != null" >
+	        update_by = #{updateBy,jdbcType=VARCHAR},
+	      </if>
+	      <if test="updateDate != null" >
+	        update_date = #{updateDate,jdbcType=TIMESTAMP},
+	      </if>
+	    </set>
+	    where id = #{id,jdbcType=BIGINT}
+  	</update>
+  	<!-- 查询采样人员的详细信息 -->
+  	<select id="getMembSampUserById" resultType="com.wisea.cultivar.common.vo.tp.memb.MembSampUserVo" parameterType="java.lang.Long">
+  		SELECT T1.id,T1.user_name AS 'loginName',T1.`name` AS 'sampName',T1.regist_tel AS 'mobile',T1.contacts_email AS 'email' ,T1.acct_state
+		FROM memb_info T1
+		WHERE T1.member_type = '8'
+			AND T1.id = #{id,jdbcType=BIGINT}
+  	</select>
+  	<!-- 查询采样员列表信息 -->
+  	<select id="findMembSampUserList" parameterType="com.wisea.cultivar.common.po.tp.memb.SampUserListPo" resultType="com.wisea.cultivar.common.vo.tp.memb.MembSampUserVo">
+  		SELECT T1.id,T1.user_name AS 'loginName',T1.name AS 'sampName',T1.regist_tel AS 'mobile',T1.contacts_email AS 'email' ,T1.acct_state
+		FROM memb_info T1
+		WHERE T1.member_type = '8'
+			<if test="keyStr!= null and keyStr != ''">
+				AND (T1.user_name LIKE CONCAT('%', #{keyStr!=}, '%')
+	            OR T1.regist_tel LIKE CONCAT('%', #{keyStr!=}, '%')
+	            OR T1.name LIKE CONCAT('%', #{keyStr!=}, '%'))
+			</if>
+  	</select>
+  	<!-- 查询个人信息 -->
+  	<select id="getIndBaseInfoByMembId" resultType="com.wisea.cultivar.common.vo.tp.memb.MembIndBaseInfoVo" parameterType="java.lang.Long">
+  		SELECT T1.id,T1.sex_type,T1.fixed_tel,T1.contacts_email,T1.area_prov,T1.area_city,T1.area_cou,T1.address,
+			 IF(ISNULL(T2.id),T1.name,T2.name) AS 'name',IF(ISNULL(T2.id),'1','0') AS 'entp_auth_state_type'
+		FROM memb_info T1
+		LEFT JOIN person_auth T2 ON T2.memb_id = t1.id
+		WHERE T1.id = #{id,jdbcType=BIGINT}
+  	</select>
+  	<!-- 查询公司信息 -->
+  	<select id="getCompBaseInfoByMembId" resultType="com.wisea.cultivar.common.vo.tp.memb.MembCompInfoVo" parameterType="java.lang.Long">
+  		SELECT T1.id,T1.comp_catg_type,T1.my_dept,T1.my_position,T1.mage_model_type,T1.purchase_prdut,T1.sale_prdut,T1.comp_website,T1.comp_introduce,
+			 IF(ISNULL(T2.id),T1.entp_name,T2.comp_name) AS 'entpName',IF(ISNULL(T2.id),'1','0') AS 'entp_auth_state_type'
+		FROM memb_info T1
+		LEFT JOIN entp_data_info T2 ON T2.memb_id = t1.id
+		WHERE T1.id = #{id,jdbcType=BIGINT}
+  	</select>
+  	<!-- 根据手机号码查询会员ID或则子账户ID -->
+  	<select id="getMembInfoByMobile" resultType="com.wisea.cultivar.common.entity.tp.MembBaseInfo" parameterType="java.lang.String">
+  		select T1.id,T1.id AS 'membId',T1.user_name,T1.regist_tel,T1.regist_date,
+  			   T1.entp_auth_state_type,T1.agent_flag,T1.acct_state,T1.url,T1.pet_name,T1.member_type
+		FROM memb_info T1
+	    where T1.regist_tel = #{mobile,jdbcType=VARCHAR}
+		UNION
+		SELECT T1.id,T4.id AS 'membId',T1.acct_num AS 'user_name',T4.regist_tel,T4.regist_date,
+			   T4.entp_auth_state_type,T4.agent_flag,T4.acct_state,T4.url,T4.pet_name,T4.member_type
+		FROM sub_acct_info T1
+		LEFT JOIN memb_info T4 ON  T4.id = T1.memb_id
+	    where T1.tel = #{mobile,jdbcType=VARCHAR}
+  	</select>
+  	<!-- 保存会员发票设置信息 -->
+  	<update id="saveMembInvoInfo" parameterType="com.wisea.cultivar.common.po.tp.memb.MembInvoSetPo">
+  		update memb_info
+	    set nfkfp_type=#{nfkfpType,jdbcType=VARCHAR},
+	    	invo_content = #{invoContent,jdbcType=VARCHAR},
+	    	invo_type = #{invoType,jdbcType=VARCHAR}
+	    where id = #{membId,jdbcType=BIGINT}
+  	</update>
+  	<!-- 查询会员发票设置信息 -->
+  	<select id="getMembInvoInfo" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.memb.MembInvoSetInfoVo">
+  		SELECT T1.id AS 'membId',T1.nfkfp_type,T1.invo_content,T1.invo_type
+  		FROM memb_info T1
+  		WHERE T1.id = #{membId,jdbcType=BIGINT}
+  	</select>
+  	<!-- 根据用户输入的登录信息查询用户信息 -->
+    <select id="getLoginNameByUserNameOrMobile" parameterType="java.lang.String"
+            resultType="java.lang.String">
+        SELECT tab.loginName
+		FROM(
+			SELECT T1.user_name AS 'loginName' FROM memb_info T1
+			WHERE T1.user_name = #{_paremeter} OR T1.regist_tel=#{_paremeter}
+			UNION
+			SELECT T2.acct_num AS 'loginName' FROM sub_acct_info T2
+			WHERE T2.acct_num =#{_paremeter} OR T2.tel = #{_paremeter}
+		) tab
+    </select>
+    <select id="getMembAllInfoByMembId" resultType="com.wisea.cultivar.common.vo.tp.memb.ShopEntpInfoVo" parameterType="java.lang.Long">
+  		SELECT T1.id,T1.comp_catg_type,T1.my_dept,T1.my_position,T1.mage_model_type,T1.purchase_prdut,T1.sale_prdut,T1.comp_website,T1.comp_introduce,
+			 IF(ISNULL(T2.id),T1.entp_name,T2.comp_name) AS 'entpName',IF(ISNULL(T2.id),'1','0') AS 'entp_auth_state_type',
+			 T2.id AS 'entpDataInfo.id',T2.memb_id as 'entpDataInfo.membId',T2.comp_type AS 'entpDataInfo.compType', T2.comp_name AS 'entpDataInfo.compName',T2.comp_short_name AS 'entpDataInfo.compShortName',
+			 T2.ctscc AS 'entpDataInfo.ctscc',T2.yyzz_url AS 'entpDataInfo.yyzzUrl',T2.contacts AS 'entpDataInfo.contacts',T2.bd_tel AS 'entpDataInfo.bdTel',T2.contacts_email AS 'entpDataInfo.contactsEmail',
+			 T2.regist_address_prov AS 'entpDataInfo.registAddressProv',T2.regist_address_city AS 'entpDataInfo.registAddressCity',T2.regist_address_cou AS 'entpDataInfo.registAddressCou',
+			 T2.address AS 'entpDataInfo.address',T2.legal_person AS 'entpDataInfo.legalPerson',T2.operate_range AS 'entpDataInfo.operateRange'
+		FROM memb_info T1
+		LEFT JOIN entp_data_info T2 ON T2.memb_id = t1.id
+		WHERE T1.id = #{id,jdbcType=BIGINT}
+  	</select>
+    <select id="membListForMsg" parameterType="com.wisea.cultivar.common.po.memb.MembListForMsgPo" resultType="com.wisea.cultivar.common.vo.memb.MembInfoListForMsgVo">
+        SELECT T1.id,T1.user_name AS 'loginName',T1.regist_tel,T1.regist_date AS 'registDate',T1.acct_state,
+        T1.entp_auth_state_type,T1.member_type  AS 'memberType',T1.comp_name AS 'entpName'
+        FROM memb_info T1
+        WHERE T1.del_flag = '0' AND T1.member_type in ('0','1')
+        <if test="key != null and key != ''">
+            AND (T1.user_name LIKE CONCAT('%', #{key}, '%')
+            OR T1.comp_name LIKE CONCAT('%', #{key}, '%')
+            OR T1.regist_tel LIKE CONCAT('%', #{key}, '%')
+            )
+        </if>
+    </select>
+    <!-- 发送消息查询全部会员列表 -->
+    <select id="findAllMembList" resultType="java.lang.String">
+    	SELECT m.id
+        FROM memb_info m
+        WHERE m.del_flag = '0' AND m.member_type in ('0','1')
+    </select>
+</mapper>

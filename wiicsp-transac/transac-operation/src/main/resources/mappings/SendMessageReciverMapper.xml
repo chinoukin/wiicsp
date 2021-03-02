@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.operation.dao.SendMessageReciverMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.operation.entity.SendMessageReciver" >
+    <id column="msg_id" property="msgId" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    msg_id, memb_id, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into send_message_reciver (msg_id, memb_id, create_by, create_date, update_by, update_date, remarks, del_flag)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+        (#{item.msgId}, #{item.membId},
+        #{item.createBy}, #{item.createDate}, #{item.updateBy}, #{item.updateDate},
+        #{item.remarks}, #{item.delFlag}
+        )
+    </foreach>
+  </insert>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.memb.MembInfoListForMsgVo" parameterType="com.wisea.transac.common.po.SendMessageReciverPageListPo" >
+    SELECT
+        mi.*
+    FROM
+        memb_info mi
+    INNER JOIN (
+        SELECT
+            smr.msg_id,
+            smr.memb_id
+        FROM
+            send_message_reciver smr,
+            send_message sm
+        WHERE
+            sm.id = #{id}
+        AND smr.msg_id = sm.id
+        AND sm.del_flag = '0'
+    ) smt ON smt.memb_id = mi.id
+    WHERE
+        mi.del_flag = '0'
+  </select>
+</mapper>

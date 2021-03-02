@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.YxEntpMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.YxEntp" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="place_origin_id" property="placeOriginId" jdbcType="BIGINT" />
+    <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+    <result column="szgj" property="szgj" jdbcType="VARCHAR" />
+    <result column="dk_sl" property="dkSl" jdbcType="INTEGER" />
+    <result column="hjjcsb_sl" property="hjjcsbSl" jdbcType="INTEGER" />
+    <result column="spsxt_sl" property="spsxtSl" jdbcType="INTEGER" />
+    <result column="da_sl" property="daSl" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="jd" property="jd" jdbcType="DOUBLE" />
+    <result column="wd" property="wd" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, place_origin_id, entp_name, szgj, dk_sl, hjjcsb_sl, spsxt_sl, da_sl, create_by,
+    create_date, update_by, update_date, remarks, del_flag, memb_id, jd, wd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from yx_entp
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from yx_entp
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.YxEntp" >
+    insert into yx_entp (id, place_origin_id, entp_name,
+      szgj, dk_sl, hjjcsb_sl,
+      spsxt_sl, da_sl, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag, memb_id, jd, wd)
+    values (#{id,jdbcType=BIGINT}, #{placeOriginId,jdbcType=BIGINT}, #{entpName,jdbcType=VARCHAR},
+      #{szgj,jdbcType=VARCHAR}, #{dkSl,jdbcType=INTEGER}, #{hjjcsbSl,jdbcType=INTEGER},
+      #{spsxtSl,jdbcType=INTEGER}, #{daSl,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{membId,jdbcType=BIGINT}, #{jd,jdbcType=DOUBLE}, #{wd,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.YxEntp" >
+    insert into yx_entp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="placeOriginId != null" >
+        place_origin_id,
+      </if>
+      <if test="entpName != null" >
+        entp_name,
+      </if>
+      <if test="szgj != null" >
+        szgj,
+      </if>
+      <if test="dkSl != null" >
+        dk_sl,
+      </if>
+      <if test="hjjcsbSl != null" >
+        hjjcsb_sl,
+      </if>
+      <if test="spsxtSl != null" >
+        spsxt_sl,
+      </if>
+      <if test="daSl != null" >
+        da_sl,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="wd != null" >
+        wd,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="placeOriginId != null" >
+        #{placeOriginId,jdbcType=BIGINT},
+      </if>
+      <if test="entpName != null" >
+        #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="szgj != null" >
+        #{szgj,jdbcType=VARCHAR},
+      </if>
+      <if test="dkSl != null" >
+        #{dkSl,jdbcType=INTEGER},
+      </if>
+      <if test="hjjcsbSl != null" >
+        #{hjjcsbSl,jdbcType=INTEGER},
+      </if>
+      <if test="spsxtSl != null" >
+        #{spsxtSl,jdbcType=INTEGER},
+      </if>
+      <if test="daSl != null" >
+        #{daSl,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.YxEntp" >
+    update yx_entp
+    <set >
+      <if test="placeOriginId != null" >
+        place_origin_id = #{placeOriginId,jdbcType=BIGINT},
+      </if>
+      <if test="entpName != null" >
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="szgj != null" >
+        szgj = #{szgj,jdbcType=VARCHAR},
+      </if>
+      <if test="dkSl != null" >
+        dk_sl = #{dkSl,jdbcType=INTEGER},
+      </if>
+      <if test="hjjcsbSl != null" >
+        hjjcsb_sl = #{hjjcsbSl,jdbcType=INTEGER},
+      </if>
+      <if test="spsxtSl != null" >
+        spsxt_sl = #{spsxtSl,jdbcType=INTEGER},
+      </if>
+      <if test="daSl != null" >
+        da_sl = #{daSl,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.YxEntp" >
+    update yx_entp
+    set place_origin_id = #{placeOriginId,jdbcType=BIGINT},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      szgj = #{szgj,jdbcType=VARCHAR},
+      dk_sl = #{dkSl,jdbcType=INTEGER},
+      hjjcsb_sl = #{hjjcsbSl,jdbcType=INTEGER},
+      spsxt_sl = #{spsxtSl,jdbcType=INTEGER},
+      da_sl = #{daSl,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      memb_id = #{membId,jdbcType=BIGINT},
+      jd = #{jd,jdbcType=DOUBLE},
+      wd = #{wd,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.YxEntpListVo" parameterType="com.wisea.cultivar.common.po.bigdata.YxEntpPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from yx_entp
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.YxEntpListVo" parameterType="com.wisea.cultivar.common.po.bigdata.YxEntpListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from yx_entp
+    where del_flag = '0'
+    <if test="placeOriginId != null and placeOriginId != ''">
+        and place_origin_id = #{placeOriginId,jdbcType=BIGINT}
+    </if>
+    order by create_date desc
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.YxEntp" >
+    update yx_entp
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+        insert into yx_entp (id, place_origin_id, entp_name,
+	      szgj, dk_sl, hjjcsb_sl,
+	      spsxt_sl, da_sl, create_by,
+	      create_date, update_by, update_date,
+	      remarks, del_flag, memb_id, jd, wd)
+	    values
+	    <foreach collection="list" item="item" separator=",">
+	      (#{item.id,jdbcType=BIGINT}, #{item.placeOriginId,jdbcType=BIGINT}, #{item.entpName,jdbcType=VARCHAR},
+	      #{item.szgj,jdbcType=VARCHAR}, #{item.dkSl,jdbcType=INTEGER}, #{item.hjjcsbSl,jdbcType=INTEGER},
+	      #{item.spsxtSl,jdbcType=INTEGER}, #{item.daSl,jdbcType=INTEGER}, #{item.createBy,jdbcType=VARCHAR},
+	      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+	      #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR},
+	      #{item.membId,jdbcType=BIGINT}, #{item.jd,jdbcType=DOUBLE}, #{item.wd,jdbcType=DOUBLE})
+        </foreach>
+    </insert>
+
+    <!-- 根据产地ID删除 -->
+     <update id="delByPlantId" parameterType="java.lang.Long" >
+        update yx_entp
+        set del_flag = '1'
+        where place_origin_id = #{placeOriginId,jdbcType=BIGINT}
+      </update>
+</mapper>

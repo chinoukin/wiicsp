@@ -1,0 +1,41 @@
+spring:
+  autoconfigure:
+    exclude:
+      org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration,
+      org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,
+      org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,
+      org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration,
+      org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,
+      org.springframework.cloud.netflix.rx.RxJavaAutoConfiguration,
+      org.springframework.cloud.netflix.archaius.ArchaiusAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,
+      org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration,
+      org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration,
+      org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration
+
+mybatis:
+  type-aliases-package: com.wisea.cloud.common.entity,com.wisea.cloud.common.sys.entity
+  type-aliases-super-type: com.wisea.cloud.common.entity.BaseEntity
+  mapper-locations: classpath*:/mappings/**/*.xml
+  config-locations: classpath*:mybatis-config.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 15000
+  ConnectTimeout: 15000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: true

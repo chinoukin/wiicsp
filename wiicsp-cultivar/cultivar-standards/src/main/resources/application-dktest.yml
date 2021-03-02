@@ -1,0 +1,16 @@
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-种植综合服务-综合服务(资源、农资农技、种苗、标准、门户、总后台) #标题
+  mssurl:
+    security: http://cultivar-operation
+    system: http://cultivar-operation
+    files: http://cultivar-operation
+    standards: http://cultivar-standards
+    plant: http://cultivar-plant
+    equipment: http://cultivar-equipment
+  tencent-im:
+    enabled: true
+    sdkAppId: 1400459109
+    key: 5b2a460fc20eaa8ffad4e804e8f17345f59b5aa7fe820be5979f598257072cd6
+

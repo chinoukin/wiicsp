@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ReceAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ReceAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+    <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="rece_address_prov" property="receAddressProv" jdbcType="VARCHAR" />
+    <result column="rece_address_city" property="receAddressCity" jdbcType="VARCHAR" />
+    <result column="rece_address_cou" property="receAddressCou" jdbcType="VARCHAR" />
+    <result column="rece_address_street" property="receAddressStreet" jdbcType="VARCHAR" />
+    <result column="rece_address_detail" property="receAddressDetail" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="fixed_tel" property="fixedTel" jdbcType="VARCHAR" />
+    <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_id, rece_name, tel, rece_address_prov, rece_address_city, rece_address_cou,
+    rece_address_street, rece_address_detail, zip_code, fixed_tel, default_flag, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据订单ID查询收货地址信息 -->
+  <select id="findByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from rece_address where ord_id = #{id}
+  </select>
+
+  <!-- 根据订单ID删除订单收货地址信息 -->
+  <delete id="deleteByOrderId" parameterType="java.lang.Long" >
+    delete from rece_address
+    where ord_id = #{ordId,jdbcType=BIGINT}
+  </delete>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rece_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rece_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddress" >
+    insert into rece_address (id, ord_id, rece_name,
+      tel, rece_address_prov, rece_address_city,
+      rece_address_cou, rece_address_street, rece_address_detail,
+      zip_code, fixed_tel, default_flag,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT}, #{receName,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{receAddressProv,jdbcType=VARCHAR}, #{receAddressCity,jdbcType=VARCHAR},
+      #{receAddressCou,jdbcType=VARCHAR}, #{receAddressStreet,jdbcType=VARCHAR}, #{receAddressDetail,jdbcType=VARCHAR},
+      #{zipCode,jdbcType=VARCHAR}, #{fixedTel,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddress" >
+    insert into rece_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="receName != null" >
+        rece_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="receAddressProv != null" >
+        rece_address_prov,
+      </if>
+      <if test="receAddressCity != null" >
+        rece_address_city,
+      </if>
+      <if test="receAddressCou != null" >
+        rece_address_cou,
+      </if>
+      <if test="receAddressStreet != null" >
+        rece_address_street,
+      </if>
+      <if test="receAddressDetail != null" >
+        rece_address_detail,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="fixedTel != null" >
+        fixed_tel,
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="receName != null" >
+        #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressProv != null" >
+        #{receAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressCity != null" >
+        #{receAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressCou != null" >
+        #{receAddressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressStreet != null" >
+        #{receAddressStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressDetail != null" >
+        #{receAddressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedTel != null" >
+        #{fixedTel,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddress" >
+    update rece_address
+    <set >
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="receName != null" >
+        rece_name = #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressProv != null" >
+        rece_address_prov = #{receAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressCity != null" >
+        rece_address_city = #{receAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressCou != null" >
+        rece_address_cou = #{receAddressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressStreet != null" >
+        rece_address_street = #{receAddressStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="receAddressDetail != null" >
+        rece_address_detail = #{receAddressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="fixedTel != null" >
+        fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag = #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddress" >
+    update rece_address
+    set ord_id = #{ordId,jdbcType=BIGINT},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      rece_address_prov = #{receAddressProv,jdbcType=VARCHAR},
+      rece_address_city = #{receAddressCity,jdbcType=VARCHAR},
+      rece_address_cou = #{receAddressCou,jdbcType=VARCHAR},
+      rece_address_street = #{receAddressStreet,jdbcType=VARCHAR},
+      rece_address_detail = #{receAddressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.ReceAddressListVo" parameterType="com.wisea.cultivar.common.po.tp.ReceAddressPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from rece_address
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.ReceAddressListVo" parameterType="com.wisea.cultivar.common.po.tp.ReceAddressListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from rece_address
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddress" >
+    update rece_address
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

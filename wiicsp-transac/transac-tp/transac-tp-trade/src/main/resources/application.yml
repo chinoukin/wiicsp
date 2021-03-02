@@ -1,0 +1,36 @@
+server:
+  port: 8945
+spring:
+  application:
+    name: transac-tp-trade
+
+wbfc:
+  quartz:
+    auto-resume:
+      enabled: true
+    timer:
+      job: transac.tp.trade.timer.job # 任务分组
+      trigger: transac.tp.trade.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": transac_tp_trade_scheduler
+  logger:
+    enabled: true
+    inOneFile:
+      order:
+        enabled: true # 开启单文件order日志
+        appender:
+          # file: ${LOG_HOME}/${ONE_FILE_PATH}/${LOGGER_NAME}.log # 日志文件路径 相对或绝对 支持日志配置中的变量 如slf4j log4j logback 等xml配置文件中定义的property 默认等于代理中的fileNamePattern
+          fixedWindowRollingPolicy:
+            enabled: true # 使用默认的代理
+      settleBill:
+        enabled: true # 开启单文件settleBill日志
+        appender:
+          # file: ${LOG_HOME}/${ONE_FILE_PATH}/${LOGGER_NAME}.log # 日志文件路径 相对或绝对 支持日志配置中的变量 如slf4j log4j logback 等xml配置文件中定义的property 默认等于代理中的fileNamePattern
+          fixedWindowRollingPolicy:
+            enabled: true # 使用默认的代理
+
+management:
+  endpoint:
+    logviewer:
+      enabled: true # 开启实时日志节点

@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LevelSpecQuoteMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="spec" property="spec" jdbcType="DOUBLE" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="start_ord_count" property="startOrdCount" jdbcType="INTEGER" />
+    <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_pub_id, level, spec, price, content, start_ord_count, avai_supply_count,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <!-- 根据商品发布id查询等级报价信息   -->
+    <select id="commPubLevelPrice" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" resultMap="BaseResultMap">
+        select * from level_spec_quote where comm_pub_id = #{commPubId}
+    </select>
+    <!-- 删除价格表信息根据发布商品id -->
+    <delete id="delByCommPubInfoId" parameterType="java.lang.Long">
+        DELETE FROM level_spec_quote WHERE comm_pub_id = #{id}
+    </delete>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into level_spec_quote (id, comm_pub_id, level, spec, price, content, start_ord_count, avai_supply_count,
+        create_by, create_date, update_by, update_date, remarks, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.commPubId,jdbcType=BIGINT},
+            #{item.level,jdbcType=VARCHAR},#{item.spec,jdbcType=DOUBLE},
+            #{item.price,jdbcType=DOUBLE},#{item.content,jdbcType=VARCHAR},
+            #{item.startOrdCount,jdbcType=INTEGER}, #{item.avaiSupplyCount,jdbcType=DOUBLE},
+            #{item.createBy,jdbcType=VARCHAR},#{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from level_spec_quote
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from level_spec_quote
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    insert into level_spec_quote (id, comm_pub_id, level,
+      spec, price, content,
+      start_ord_count, avai_supply_count, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT}, #{level,jdbcType=VARCHAR},
+      #{spec,jdbcType=DOUBLE}, #{price,jdbcType=DOUBLE}, #{content,jdbcType=VARCHAR},
+      #{startOrdCount,jdbcType=INTEGER}, #{avaiSupplyCount,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    insert into level_spec_quote
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="startOrdCount != null" >
+        start_ord_count,
+      </if>
+      <if test="avaiSupplyCount != null" >
+        avai_supply_count,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="startOrdCount != null" >
+        #{startOrdCount,jdbcType=INTEGER},
+      </if>
+      <if test="avaiSupplyCount != null" >
+        #{avaiSupplyCount,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    update level_spec_quote
+    <set >
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="startOrdCount != null" >
+        start_ord_count = #{startOrdCount,jdbcType=INTEGER},
+      </if>
+      <if test="avaiSupplyCount != null" >
+        avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    update level_spec_quote
+    set comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      level = #{level,jdbcType=VARCHAR},
+      spec = #{spec,jdbcType=DOUBLE},
+      price = #{price,jdbcType=DOUBLE},
+      content = #{content,jdbcType=VARCHAR},
+      start_ord_count = #{startOrdCount,jdbcType=INTEGER},
+      avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.product.LevelSpecQuoteListVo" parameterType="com.wisea.cultivar.common.po.tp.product.LevelSpecQuoteListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from level_spec_quote
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    update level_spec_quote
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+   <!-- 根据商品id，等级规格查询 -->
+  <select id="selBySpecAndLevel" resultType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" parameterType="com.wisea.cultivar.common.entity.tp.LevelSpecQuote" >
+    select
+    <include refid="Base_Column_List" />
+    from level_spec_quote
+    where del_flag = '0'
+    <if test="commPubId != null">
+	    and comm_pub_id = #{commPubId,jdbcType=BIGINT}
+    </if>
+    <if test="level != null">
+	    and level = #{level,jdbcType=VARCHAR}
+    </if>
+    <if test="spec != null">
+	    and spec = #{spec,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

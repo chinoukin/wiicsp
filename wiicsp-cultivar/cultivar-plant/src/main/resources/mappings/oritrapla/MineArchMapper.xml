@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.MineArchMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.MineArch" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="source_memb_id" property="sourceMembId" jdbcType="BIGINT" />
+    <result column="mine_arch_id" property="mineArchId" jdbcType="BIGINT" />
+    <result column="arch_id" property="archId" jdbcType="BIGINT" />
+    <result column="arch_type" property="archType" jdbcType="VARCHAR" />
+    <result column="mine_arch_status" property="mineArchStatus" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, source_memb_id, mine_arch_id, arch_id, arch_type, mine_arch_status, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from mine_arch
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from mine_arch
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MineArch" >
+    insert into mine_arch (id, memb_id, source_memb_id,
+      mine_arch_id, arch_id, arch_type, mine_arch_status,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{sourceMembId,jdbcType=BIGINT},
+      #{mineArchId,jdbcType=BIGINT}, #{archId,jdbcType=BIGINT}, #{archType,jdbcType=VARCHAR}, #{mineArchStatus,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MineArch" >
+    insert into mine_arch
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="sourceMembId != null" >
+        source_memb_id,
+      </if>
+      <if test="mineArchId != null" >
+        mine_arch_id,
+      </if>
+      <if test="archId != null" >
+        arch_id,
+      </if>
+      <if test="archType != null" >
+        arch_type,
+      </if>
+      <if test="mineArchStatus != null" >
+        mine_arch_status,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="sourceMembId != null" >
+        #{sourceMembId,jdbcType=BIGINT},
+      </if>
+      <if test="mineArchId != null" >
+        #{mineArchId,jdbcType=BIGINT},
+      </if>
+      <if test="archId != null" >
+        #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="archType != null" >
+        #{archType,jdbcType=VARCHAR},
+      </if>
+      <if test="mineArchStatus != null" >
+        #{mineArchStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MineArch" >
+    update mine_arch
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="sourceMembId != null" >
+        source_memb_id = #{sourceMembId,jdbcType=BIGINT},
+      </if>
+      <if test="mineArchId != null" >
+        mine_arch_id = #{mineArchId,jdbcType=BIGINT},
+      </if>
+      <if test="archId != null" >
+        arch_id = #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="archType != null" >
+        arch_type = #{archType,jdbcType=VARCHAR},
+      </if>
+      <if test="mineArchStatus != null" >
+        mine_arch_status = #{mineArchStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.MineArch" >
+    update mine_arch
+    set memb_id = #{membId,jdbcType=BIGINT},
+      source_memb_id = #{sourceMembId,jdbcType=BIGINT},
+      mine_arch_id = #{mineArchId,jdbcType=BIGINT},
+      arch_id = #{archId,jdbcType=BIGINT},
+      arch_type = #{archType,jdbcType=VARCHAR},
+      mine_arch_status = #{mineArchStatus,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="mineArchBasicInfo" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.MineArchInfoVo">
+  	SELECT
+	  t1.id,
+	  t1.memb_id,
+	  (CASE WHEN ISNULL(t3.cont_name) THEN t3.login_name ELSE t3.cont_name END) AS 'menbName',
+	  (case when isnull(t3.org_name) then t8.org_name else t3.org_name end) as 'org_name',
+	  (case when isnull(t8.cont_name) then t3.cont_name else t8.cont_name end) as 'cont_name',
+	  (case when isnull(t8.cont_tel) then t3.cont_tel else t8.cont_tel end) as 'cont_tel',
+	  (case when isnull(t3.introduce) then t8.introduce else t3.introduce end) as 'introduce',
+	  (case when isnull(t3.area_code_city) then t8.area_code_city else t3.area_code_city end) as 'area_code_city',
+	  (case when isnull(t3.area_code_cou) then t8.area_code_cou else t3.area_code_cou end) as 'area_code_cou',
+	  (case when isnull(t3.area_code_prov) then t8.area_code_prov else t3.area_code_prov end) as 'area_code_prov',
+	  (case when isnull(t3.address) then t8.address else t3.address end) as 'address',
+	  t1.source_memb_id,
+	  (CASE WHEN ISNULL(t4.org_name) THEN t9.org_name ELSE t4.org_name END) AS 'sourceOrgName',
+	  (CASE WHEN ISNULL(t4.cont_name) THEN t9.cont_name ELSE t4.cont_name END) AS 'sourceContName',
+	  (CASE WHEN ISNULL(t4.cont_tel) THEN t9.cont_tel ELSE t4.cont_tel END) AS 'sourceContTel',
+	  (CASE WHEN ISNULL(t4.area_code_prov) THEN t9.area_code_prov ELSE t4.area_code_prov END) AS 'sourceAreaCodeProv',
+	  (CASE WHEN ISNULL(t4.area_code_city) THEN t9.area_code_city ELSE t4.area_code_city END) AS 'sourceAreaCodeCity',
+	  (CASE WHEN ISNULL(t4.area_code_cou) THEN t9.area_code_cou ELSE t4.area_code_cou END) AS 'sourceAreaCodeCou',
+	  (CASE WHEN ISNULL(t4.address) THEN t9.address ELSE t4.address END) AS 'sourceAddress',
+	  t1.mine_arch_id,
+	  t1.arch_id,
+	  t1.arch_type,
+	  t1.mine_arch_status,
+	  t1.create_date,
+	  t2.arch_num,
+	  t2.massif_id,
+	  t5.massif_name,
+	  t5.massif_acre,
+	  t2.comm_id,
+	  t6.comm_catg_name as commName,
+	  t2.comm_variet_id,
+	  t7.comm_variet_name variName,
+	  t2.plant_type,
+	  t2.planting_method_id,
+	  t10.massif_type,
+	  t2.start_date,
+	  t2.end_date,
+	  t2.plant_acre,
+	  t2.est_output,
+	  t2.est_list_date,
+	  t2.update_date,
+	  t2.url
+	from mine_arch t1
+	  left join arch_basic_info t2
+	    on t2.id = t1.arch_id
+	  left join zhfw_memb_info t3
+	    on t3.id = t1.memb_id
+	  left join zhfw_memb_info t4
+	    on t4.id = t1.source_memb_id
+	  left join massif_mage t5
+	    on t5.id = t2.massif_id
+	  left join zhfw_comm_mage t6
+	    on t6.id = t2.comm_id
+	  left join zhfw_comm_variet_mage t7
+	    on t7.id = t2.comm_variet_id
+	  LEFT JOIN zhfw_memb_info t8
+	    ON t3.pid = t8.id
+	  left join zhfw_memb_info t9
+	    on t9.id = t4.pid
+	  left join planting_method t10
+	    on t10.id = t2.planting_method_id
+	where 1 = 1
+	  and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 查询档案列表 -->
+  <select id="mineArckList" parameterType="com.wisea.cultivar.plant.po.oritrapla.MineArchListPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.ArchBasicInfoVo">
+	 SELECT
+	  t1.id,
+	  t1.memb_id,
+	  (CASE WHEN ISNULL(t3.cont_name) THEN t3.login_name ELSE t3.cont_name END) AS 'menbName',
+	  t1.source_memb_id,
+	  (CASE WHEN ISNULL(t4.org_name) THEN t9.org_name ELSE t4.org_name END) AS 'sourceOrgName',
+	  t1.mine_arch_id,
+	  t1.arch_id,
+	  t1.arch_type,
+	  t1.mine_arch_status,
+	  t1.create_date,
+	  (case when isnull(t3.org_name) then t8.org_name else t3.org_name end) as 'org_name',
+	  t2.arch_num,
+	  t2.massif_id,
+	  t5.massif_name,
+	  t5.massif_acre,
+	  t2.comm_id,
+	  t6.comm_catg_name as commName,
+	  t2.comm_variet_id,
+	  t7.comm_variet_name variName,
+	  t2.plant_type,
+	  t2.planting_method_id,
+	  t2.start_date,
+	  t2.end_date,
+	  t2.plant_acre,
+	  t2.est_output,
+	  t2.est_list_date,
+	  t2.update_date,
+	  t2.url,
+	  t10.notAuthCount
+	FROM mine_arch t1
+	  LEFT JOIN arch_basic_info t2
+	    ON t2.id = t1.arch_id
+	  LEFT JOIN zhfw_memb_info t3
+	    ON t3.id = t1.memb_id
+	  LEFT JOIN zhfw_memb_info t4
+	    ON t4.id = t1.source_memb_id
+	  LEFT JOIN massif_mage t5
+	    ON t5.id = t2.massif_id
+	      AND t5.del_flag = '0'
+	  LEFT JOIN zhfw_comm_mage t6
+	    ON t6.id = t2.comm_id
+	  LEFT JOIN zhfw_comm_variet_mage t7
+	    ON t7.id = t2.comm_variet_id
+	  LEFT JOIN zhfw_memb_info t8
+	    ON t3.pid = t8.id
+	  LEFT JOIN zhfw_memb_info t9
+	    ON t9.id = t4.pid
+	  LEFT JOIN (SELECT
+	               mine_arch_id,
+	               SUM(rtsp_code_count) AS notAuthCount
+	             FROM rtsp_code_mage
+	             GROUP BY mine_arch_id) t10
+	    ON t10.mine_arch_id = t1.id
+	  where 1=1
+	  and (t1.mine_arch_status = '0' or t1.mine_arch_status = '1')
+	<if test="membId != null">
+		and (t1.memb_id = #{membId,jdbcType=BIGINT} or t8.id = #{membId,jdbcType=BIGINT})
+	</if>
+	<if test="id != null">
+		and t1.id = #{id,jdbcType=BIGINT}
+	</if>
+	<if test="archType != null and archType != ''">
+		<choose>
+			<when test='archType == "0"'>
+				and t1.arch_type = "2"
+			</when>
+			<otherwise>
+				and (t1.arch_type = "0" or t1.arch_type = "1")
+			</otherwise>
+		</choose>
+	</if>
+	<if test="plantStatus != null and plantStatus != ''">
+		<choose>
+			<when test='plantStatus == "0"'>
+				and (t2.start_date &lt;= now() and t2.end_date >= now())
+			</when>
+			<when test='plantStatus == "1"'>
+				and t2.start_date >= now()
+			</when>
+			<when test='plantStatus == "2"'>
+				and t2.end_date &lt;= now()
+			</when>
+		</choose>
+	</if>
+	<if test="searchKey != null and searchKey != ''">
+		and (t5.massif_name like concat('%',#{searchKey},'%')
+		    or t6.comm_catg_name like concat('%',#{searchKey},'%')
+		    or t7.comm_variet_name like concat('%',#{searchKey},'%'))
+	</if>
+	<if test="sourceMembId != null">
+		and t1.source_memb_id = #{sourceMembId,jdbcType=BIGINT}
+	</if>
+	<if test="mineArchId != null">
+		and t1.mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+	</if>
+	<if test="startTime != null">
+		and t2.start_date >= #{startTime,jdbcType=TIMESTAMP}
+	</if>
+	<if test="endTime != null">
+		and t2.start_date &lt;= #{endTime,jdbcType=TIMESTAMP}
+	</if>
+	<if test="commId != null">
+		and t2.comm_id = #{commId,jdbcType=BIGINT}
+	</if>
+	<if test="commVarietId != null">
+		and t2.comm_id = #{commVarietId,jdbcType=BIGINT}
+	</if>
+	<if test="plantType != null">
+		and t2.plant_type = #{plantType}
+	</if>
+	<if test='methodFlag != null and methodFlag == "0"'>
+		AND t2.planting_method_id IS null
+	</if>
+	order by t1.create_date desc
+  </select>
+
+  <!-- 后台管理端查询档案列表 -->
+  <select id="webMineArckList" parameterType="com.wisea.cultivar.plant.po.oritrapla.WebMineArchListPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.ArchBasicInfoVo">
+	 SELECT
+	  t1.id,
+	  t1.memb_id,
+	  (CASE WHEN ISNULL(t3.cont_name) THEN t3.login_name ELSE t3.cont_name END) AS 'menbName',
+	  t1.source_memb_id,
+	  (CASE WHEN ISNULL(t4.org_name) THEN t9.org_name ELSE t4.org_name END) AS 'sourceOrgName',
+	  t1.mine_arch_id,
+	  t1.arch_id,
+	  t1.arch_type,
+	  t1.mine_arch_status,
+	  t1.create_date,
+	  (case when isnull(t3.org_name) then t8.org_name else t3.org_name end) as 'org_name',
+	  t2.arch_num,
+	  t2.massif_id,
+	  t5.massif_name,
+	  t2.comm_id,
+	  t6.comm_catg_name as commName,
+	  t2.comm_variet_id,
+	  t7.comm_variet_name variName,
+	  t2.plant_type,
+	  t2.start_date,
+	  t2.end_date,
+	  t2.plant_acre,
+	  t2.est_output,
+	  t2.est_list_date,
+	  t2.update_date,
+	  t2.url,
+	  t10.notAuthCount
+	FROM mine_arch t1
+	  LEFT JOIN arch_basic_info t2
+	    ON t2.id = t1.arch_id
+	  LEFT JOIN zhfw_memb_info t3
+	    ON t3.id = t1.memb_id
+	  LEFT JOIN zhfw_memb_info t4
+	    ON t4.id = t1.source_memb_id
+	  LEFT JOIN massif_mage t5
+	    ON t5.id = t2.massif_id
+	      AND t5.del_flag = '0'
+	  LEFT JOIN zhfw_comm_mage t6
+	    ON t6.id = t2.comm_id
+	  LEFT JOIN zhfw_comm_variet_mage t7
+	    ON t7.id = t2.comm_variet_id
+	  LEFT JOIN zhfw_memb_info t8
+	    ON t3.pid = t8.id
+	  LEFT JOIN zhfw_memb_info t9
+	    ON t9.id = t4.pid
+	  LEFT JOIN (SELECT
+	               mine_arch_id,
+	               SUM(rtsp_code_count) AS notAuthCount
+	             FROM rtsp_code_mage
+	             GROUP BY mine_arch_id) t10
+	    ON t10.mine_arch_id = t1.id
+	  where 1=1
+	<if test="archType != null and archType != ''">
+		<choose>
+			<when test='archType == "0"'>
+				and t1.arch_type = "2"
+			</when>
+			<otherwise>
+				and (t1.arch_type = "0" or t1.arch_type = "1")
+			</otherwise>
+		</choose>
+	</if>
+	<if test="archNum != null and archNum != ''">
+		and t2.arch_num like concat('%',#{archNum},'%')
+	</if>
+	<if test="menbName != null and menbName != ''">
+		and (t3.cont_name like concat('%',#{menbName},'%')
+			or t3.login_name like concat('%',#{menbName},'%'))
+		and t1.arch_type = "2"
+	</if>
+	<if test="souMenbName != null and souMenbName != ''">
+		and (t3.cont_name like concat('%',#{souMenbName},'%')
+			or t3.login_name like concat('%',#{souMenbName},'%'))
+		and (t1.arch_type = "0" or t1.arch_type = "1")
+	</if>
+	<if test="massifId != null">
+		and t2.massif_id = #{massifId, jdbcType=BIGINT}
+	</if>
+	<if test="commVarietId != null">
+		and t2.comm_variet_id = #{commVarietId, jdbcType=BIGINT}
+	</if>
+	<if test="commId != null">
+		and t2.comm_id = #{commId, jdbcType=BIGINT}
+	</if>
+	<if test="orgName != null and orgName != ''">
+		and (t3.org_name like concat('%',#{orgName},'%')
+			or t8.org_name like concat('%',#{orgName},'%'))
+	</if>
+	<if test="plantType != null and plantType != ''">
+		and t2.plant_type = #{plantType}
+	</if>
+	<if test="mineArchStatus != null and mineArchStatus != ''">
+		and t1.mine_arch_status = #{mineArchStatus}
+	</if>
+	<if test="listFlag == '0'.toString()">
+		and (t1.mine_arch_status = "0"
+			or t1.mine_arch_status = "1")
+	</if>
+	<if test="listFlag == '1'.toString()">
+		and t1.mine_arch_status = "2"
+	</if>
+	<if test="startDateStart != null">
+		and t2.start_date >= #{startDateStart,jdbcType=TIMESTAMP}
+	</if>
+	<if test="startDateEnd != null">
+		and t2.start_date &lt;= #{startDateEnd,jdbcType=TIMESTAMP}
+	</if>
+	<if test="endDateStart != null">
+		and t2.end_date >= #{endDateStart,jdbcType=TIMESTAMP}
+	</if>
+	<if test="endDateEnd != null">
+		and t2.end_date &lt;= #{endDateEnd,jdbcType=TIMESTAMP}
+	</if>
+	<if test="estListDateStart != null">
+		and t2.est_list_date >= #{estListDateStart,jdbcType=TIMESTAMP}
+	</if>
+	<if test="estListDateEnd != null">
+		and t2.est_list_date &lt;= #{estListDateEnd,jdbcType=TIMESTAMP}
+	</if>
+	order by t1.create_date desc
+  </select>
+
+  <!-- 修改我的档案状态 -->
+  <update id="updMineStatus" parameterType="com.wisea.cultivar.plant.po.oritrapla.IdsAndFlagPo">
+  	update mine_arch
+  	<set>
+	  	<if test="mineArchStatus != null" >
+	        mine_arch_status = #{mineArchStatus,jdbcType=VARCHAR},
+	    </if>
+	    <if test="delFlag != null" >
+	        del_flag = #{delFlag,jdbcType=CHAR},
+	    </if>
+  	</set>
+    where id IN (${ids})
+  </update>
+</mapper>

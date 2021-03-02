@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.FollowShopMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.FollowShopMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_info_mage_id" property="shopInfoMageId" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, shop_info_mage_id, memb_id, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from follow_shop_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from follow_shop_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.FollowShopMage" >
+    insert into follow_shop_mage (id, shop_info_mage_id, memb_id,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{shopInfoMageId,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.FollowShopMage" >
+    insert into follow_shop_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopInfoMageId != null" >
+        shop_info_mage_id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="shopInfoMageId != null" >
+        #{shopInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.FollowShopMage" >
+    update follow_shop_mage
+    <set >
+      <if test="shopInfoMageId != null" >
+        shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.FollowShopMage" >
+    update follow_shop_mage
+    set shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT},
+      memb_id = #{membId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.FollowShopMageListVo" parameterType="com.wisea.cultivar.common.po.tp.FollowShopMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from follow_shop_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.FollowShopMageListVo" parameterType="com.wisea.cultivar.common.po.tp.FollowShopMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from follow_shop_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.FollowShopMage" >
+    update follow_shop_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询关注店铺列表 -->
+  <select id="followShopList" resultType="com.wisea.cultivar.common.vo.tp.FollowShopMageListVo" parameterType="com.wisea.cultivar.common.po.tp.FollowShopMageListPo">
+    SELECT
+	  t2.shop_name,
+	  t2.memb_id        AS sellerId,
+	  t1.shop_info_mage_id,
+	  t3.comp_name,
+	  t3.contacts,
+	  t3.bd_tel,
+	  t3.contacts_email,
+	  t3.address,
+	  t4.name           AS prov,
+	  t5.name           AS city,
+	  t6.name           AS cou
+	FROM follow_shop_mage t1
+	  LEFT JOIN shop_info_mage t2
+	    ON t2.id = t1.shop_info_mage_id
+	  LEFT JOIN entp_data_info t3
+	    ON t3.memb_id = t2.memb_id
+	  LEFT JOIN sys_area t4
+	    ON t4.code = t3.regist_address_prov
+	  LEFT JOIN sys_area t5
+	    ON t5.code = t3.regist_address_city
+	  LEFT JOIN sys_area t6
+	    ON t6.code = t3.regist_address_cou
+	WHERE 1 = 1
+	    AND t1.del_flag = '0'
+	    <if test="membId != null and membId != ''">
+		    and t1.memb_id = #{membId,jdbcType=BIGINT}
+	    </if>
+	    <if test="shopInfoMageId != null and shopInfoMageId != ''">
+            and t1.shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT}
+        </if>
+	    <if test="seachkey != null and seachkey != ''">
+            and (t3.comp_name like concat('%',#{seachkey},'%')
+            or t2.shop_name like concat('%',#{seachkey},'%')
+            )
+        </if>
+  </select>
+
+  <!-- 查询已经取消  -->
+  <select id="ifHavaList" resultType="com.wisea.cultivar.common.vo.tp.FollowShopMageListVo" parameterType="com.wisea.cultivar.common.po.tp.FollowShopMageListPo">
+    SELECT
+     <include refid="Base_Column_List" />
+    FROM follow_shop_mage
+    WHERE 1 = 1
+        <if test="membId != null and membId != ''">
+            and memb_id = #{membId,jdbcType=BIGINT}
+        </if>
+        <if test="shopInfoMageId != null and shopInfoMageId != ''">
+            and shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT}
+        </if>
+  </select>
+  <!-- 取消关注 -->
+  <update id="qxgzFollow" parameterType="com.wisea.cultivar.common.po.tp.FollowShopMageUpdatePo" >
+    update follow_shop_mage
+    set del_flag = '1'
+    where memb_id = #{membId,jdbcType=BIGINT} and shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询登录会员对当前店铺的关注情况 -->
+  <select id="getfollowShopInfo" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.entity.tp.FollowShopMage">
+    select
+    <include refid="Base_Column_List" />
+    from follow_shop_mage
+    where memb_id = #{membId,jdbcType=BIGINT} and shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT}
+  </select>
+</mapper>

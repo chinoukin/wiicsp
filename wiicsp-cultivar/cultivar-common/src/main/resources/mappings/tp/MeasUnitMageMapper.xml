@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.MeasUnitMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR"/>
+        <result column="unit_num" property="unitNum" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="VARCHAR"/>
+        <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, meas_unit_name,unit_num, sort, effe_inval_state, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from meas_unit_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from meas_unit_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+    insert into meas_unit_mage (id, meas_unit_name,unit_num, sort,
+      effe_inval_state, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{measUnitName,jdbcType=VARCHAR},#{unitNum,jdbcType=VARCHAR}, #{sort,jdbcType=VARCHAR},
+      #{effeInvalState,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+        insert into meas_unit_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="measUnitName != null">
+                meas_unit_name,
+            </if>
+            <if test="unitNum != null">
+                unit_num,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="effeInvalState != null">
+                effe_inval_state,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="measUnitName != null">
+                #{measUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNum != null">
+                #{unitNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="effeInvalState != null">
+                #{effeInvalState,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+        update meas_unit_mage
+        <set>
+            <if test="measUnitName != null">
+                meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="unitNum != null">
+                unit_num = #{unitNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=VARCHAR},
+            </if>
+            <if test="effeInvalState != null">
+                effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+    update meas_unit_mage
+    set meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      unit_num = #{unitNum,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=VARCHAR},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.MeasUnitMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.MeasUnitMagePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from meas_unit_mage
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.MeasUnitMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.MeasUnitMageListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from meas_unit_mage
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+    update meas_unit_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--查询计量单位的列表-->
+    <select id="measList" parameterType="com.wisea.cultivar.common.po.tp.MeasUnitMageListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.MeasUnitMageListVo">
+        SELECT id, meas_unit_name,unit_num, sort, effe_inval_state
+        FROM meas_unit_mage
+        <where>
+            <if test="measUnitName != null and measUnitName != '' ">
+                AND instr(meas_unit_name,#{measUnitName}) != 0
+            </if>
+            <if test="effeInvalState != null and effeInvalState != '' ">
+                AND instr(effe_inval_state,#{effeInvalState}) != 0
+            </if>
+            AND del_flag != '1' ORDER BY sort ASC
+        </where>
+    </select>
+    <!--计量单位接口-->
+    <select id="measUnitInterface" resultType="com.wisea.cultivar.common.vo.tp.MeasUnitMageListVo">
+        SELECT meas_unit_name
+        FROM meas_unit_mage
+        WHERE del_flag != '1'
+    </select>
+    <select id="selectRepeatByNumAndName" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage"
+            resultType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+        SELECT id
+        FROM meas_unit_mage
+        WHERE
+        del_flag = '0'
+        AND unit_num = #{unitNum} and meas_unit_name = #{measUnitName}
+    </select>
+    <select id="selectOnlyOne" parameterType="com.wisea.cultivar.common.entity.tp.MeasUnitMage"
+            resultType="com.wisea.cultivar.common.entity.tp.MeasUnitMage">
+        SELECT id
+        FROM meas_unit_mage
+        WHERE meas_unit_name = #{measUnitName} AND del_flag != '1' AND id != #{id}
+    </select>
+</mapper>

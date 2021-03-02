@@ -1,0 +1,20 @@
+wbfc:
+  swaggerui:
+    enable: false
+  conf:
+    enable: true
+    url1: http://192.168.20.208/ori
+
+logging:
+  level:
+    com.wisea: debug
+
+management:
+  endpoint:
+    env:
+      post:
+        enabled: true # 开启环境变量可修改
+    logviewer:
+      enabled: true # 开启实时日志节点
+    restart:
+      enabled: true # 开启热重启

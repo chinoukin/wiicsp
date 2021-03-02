@@ -1,0 +1,1101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.EntpAuthMapper" >
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.EntpAuth" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="memb_id" property="membId" jdbcType="BIGINT" />
+        <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+        <result column="initials" property="initials" jdbcType="VARCHAR" />
+        <result column="entp_short_name" property="entpShortName" jdbcType="VARCHAR" />
+        <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT" />
+        <result column="cust_type" property="custType" jdbcType="VARCHAR" />
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="ctscc" property="ctscc" jdbcType="VARCHAR" />
+        <result column="yyzz_url" property="yyzzUrl" jdbcType="VARCHAR" />
+        <result column="mtz_url" property="mtzUrl" jdbcType="VARCHAR" />
+        <result column="conter" property="conter" jdbcType="VARCHAR" />
+        <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+        <result column="legal_person_tel" property="legalPersonTel" jdbcType="VARCHAR" />
+        <result column="legal_person_num" property="legalPersonNum" jdbcType="VARCHAR" />
+        <result column="sfz_zm_url" property="sfzZmUrl" jdbcType="VARCHAR" />
+        <result column="sfz_fm_url" property="sfzFmUrl" jdbcType="VARCHAR" />
+        <result column="hold_sfz_zm_url" property="holdSfzZmUrl" jdbcType="VARCHAR" />
+        <result column="auth_date" property="authDate" jdbcType="TIMESTAMP" />
+        <result column="auth_state_type" property="authStateType" jdbcType="VARCHAR" />
+        <result column="exam_fail_reason" property="examFailReason" jdbcType="VARCHAR" />
+        <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+        <result column="entp_type" property="entpType" jdbcType="VARCHAR" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="yyzz_validity_start" property="yyzzValidityStart" jdbcType="TIMESTAMP" />
+        <result column="yyzz_validity_end" property="yyzzValidityEnd" jdbcType="TIMESTAMP" />
+        <result column="legal_person_validity" property="legalPersonValidity" jdbcType="VARCHAR" />
+        <result column="rp_state_type" property="rpStateType" jdbcType="VARCHAR" />
+        <result column="jycs_url_one" property="jycsUrlOne" jdbcType="VARCHAR" />
+        <result column="jycs_url_two" property="jycsUrlTwo" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, memb_id,initials, entp_name, entp_short_name, whole_sale_market_id, cust_type, area_prov,
+    area_city, area_cou, address, ctscc, yyzz_url, mtz_url, conter, cont_tel,
+    email, legal_person_name, legal_person_tel, legal_person_num,
+    sfz_zm_url, sfz_fm_url, hold_sfz_zm_url, auth_date, auth_state_type, exam_fail_reason,
+    entp_auth_state_type, entp_type, create_by, create_date, update_by, update_date,
+    remarks, del_flag,yyzz_validity_start,yyzz_validity_end,legal_person_validity_start,legal_person_validity_end,
+    rp_state_type,jycs_url_one,jycs_url_two
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from entp_auth
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="selUpdEntpInfoByMembId" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.po.memb.EntpAuthUpInfoPo" >
+        select e.*
+        from entp_auth e
+        INNER JOIN zhfw_memb_info m ON e.memb_id = m.id
+        where e.del_flag = '0'
+        AND memb_id = #{membId,jdbcType=BIGINT}
+        <if test="flag != null and flag == '1'.toString()">
+            AND e.whole_sale_market_id IS NULL
+        </if>
+        <if test="flag != null and flag == '2'.toString()">
+            AND e.whole_sale_market_id IS NOT NULL
+            AND e.auth_state_type IS NOT NULL
+        </if>
+        <if test="flag != null and flag == '3'.toString()">
+            AND m.locality_memb_type = '0'
+            AND e.entp_short_name IS NOT NULL
+            AND e.whole_sale_market_id IS NULL
+            AND e.auth_state_type IS NOT NULL
+        </if>
+        ORDER BY update_date DESC
+        LIMIT 1
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from entp_auth
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <select id="getEntpAuthPassByMembId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from entp_auth
+        where memb_id = #{membId,jdbcType=BIGINT} and del_flag = '0' and auth_state_type = '3'
+    </select>
+    <select id="getEntpRzPassByMembId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from entp_auth
+        where memb_id = #{membId,jdbcType=BIGINT} and del_flag = '0' and entp_auth_state_type = '0'
+    </select>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+    insert into entp_auth (id, memb_id, entp_name,
+      entp_short_name, whole_sale_market_id, cust_type,
+      area_prov, area_city, area_cou,
+      address, ctscc,
+      yyzz_url, mtz_url, conter,
+      cont_tel, email, legal_person_name,
+      legal_person_tel, legal_person_num,
+      sfz_zm_url, sfz_fm_url, hold_sfz_zm_url,
+      auth_date, auth_state_type, exam_fail_reason,
+      entp_auth_state_type, entp_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag,yyzz_validity_start,yyzz_validity_end,legal_person_validity_start,legal_person_validity_end,
+      rp_state_type,jycs_url_one,jycs_url_two)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{entpName,jdbcType=VARCHAR},
+      #{entpShortName,jdbcType=VARCHAR}, #{wholeSaleMarketId,jdbcType=BIGINT}, #{custType,jdbcType=VARCHAR},
+      #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{ctscc,jdbcType=VARCHAR},
+      #{yyzzUrl,jdbcType=VARCHAR}, #{mtzUrl,jdbcType=VARCHAR}, #{conter,jdbcType=VARCHAR},
+      #{contTel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{legalPersonName,jdbcType=VARCHAR},
+      #{legalPersonTel,jdbcType=VARCHAR}, #{legalPersonNum,jdbcType=VARCHAR},
+      #{sfzZmUrl,jdbcType=VARCHAR}, #{sfzFmUrl,jdbcType=VARCHAR}, #{holdSfzZmUrl,jdbcType=VARCHAR},
+      #{authDate,jdbcType=TIMESTAMP}, #{authStateType,jdbcType=VARCHAR}, #{examFailReason,jdbcType=VARCHAR},
+      #{entpAuthStateType,jdbcType=VARCHAR}, #{entpType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{yyzzValidityStart,jdbcType=TIMESTAMP},#{yyzzValidityEnd,jdbcType=TIMESTAMP},#{legalPersonValidityStart,jdbcType=TIMESTAMP},#{legalPersonValidityEnd,jdbcType=TIMESTAMP},
+      #{rpStateType,jdbcType=VARCHAR}, #{jycsUrlOne,jdbcType=VARCHAR}, #{jycsUrlTwo,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+        insert into entp_auth
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="membId != null" >
+                memb_id,
+            </if>
+            <if test="entpName != null" >
+                entp_name,
+            </if>
+            <if test="entpShortName != null" >
+                entp_short_name,
+            </if>
+            <if test="wholeSaleMarketId != null" >
+                whole_sale_market_id,
+            </if>
+            <if test="custType != null" >
+                cust_type,
+            </if>
+            <if test="areaProv != null" >
+                area_prov,
+            </if>
+            <if test="areaCity != null" >
+                area_city,
+            </if>
+            <if test="areaCou != null" >
+                area_cou,
+            </if>
+            <if test="address != null" >
+                address,
+            </if>
+            <if test="ctscc != null" >
+                ctscc,
+            </if>
+            <if test="yyzzUrl != null" >
+                yyzz_url,
+            </if>
+            <if test="mtzUrl != null" >
+                mtz_url,
+            </if>
+            <if test="conter != null" >
+                conter,
+            </if>
+            <if test="contTel != null" >
+                cont_tel,
+            </if>
+            <if test="email != null" >
+                email,
+            </if>
+            <if test="legalPersonName != null" >
+                legal_person_name,
+            </if>
+            <if test="legalPersonTel != null" >
+                legal_person_tel,
+            </if>
+            <if test="legalPersonNum != null" >
+                legal_person_num,
+            </if>
+            <if test="sfzZmUrl != null" >
+                sfz_zm_url,
+            </if>
+            <if test="sfzFmUrl != null" >
+                sfz_fm_url,
+            </if>
+            <if test="holdSfzZmUrl != null" >
+                hold_sfz_zm_url,
+            </if>
+            <if test="authDate != null" >
+                auth_date,
+            </if>
+            <if test="authStateType != null" >
+                auth_state_type,
+            </if>
+            <if test="examFailReason != null" >
+                exam_fail_reason,
+            </if>
+            <if test="entpAuthStateType != null" >
+                entp_auth_state_type,
+            </if>
+            <if test="entpType != null" >
+                entp_type,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateBy != null" >
+                update_by,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="remarks != null" >
+                remarks,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+            <if test="yyzzValidityStart != null" >
+                yyzz_validity_start,
+            </if>
+            <if test="yyzzValidityEnd != null" >
+                yyzz_validity_end,
+            </if>
+            <if test="legalPersonValidityStart != null" >
+                legal_person_validity_start,
+            </if>
+            <if test="legalPersonValidityEnd != null" >
+                legal_person_validity_end,
+            </if>
+            <if test="rpStateType != null" >
+                rp_state_type,
+            </if>
+            <if test="jycsUrlOne != null" >
+                jycs_url_one,
+            </if>
+            <if test="jycsUrlTwo != null" >
+                jycs_url_two,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null" >
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="entpName != null" >
+                #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="entpShortName != null" >
+                #{entpShortName,jdbcType=VARCHAR},
+            </if>
+            <if test="wholeSaleMarketId != null" >
+                #{wholeSaleMarketId,jdbcType=BIGINT},
+            </if>
+            <if test="custType != null" >
+                #{custType,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null" >
+                #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null" >
+                #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null" >
+                #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="ctscc != null" >
+                #{ctscc,jdbcType=VARCHAR},
+            </if>
+            <if test="yyzzUrl != null" >
+                #{yyzzUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="mtzUrl != null" >
+                #{mtzUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="conter != null" >
+                #{conter,jdbcType=VARCHAR},
+            </if>
+            <if test="contTel != null" >
+                #{contTel,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null" >
+                #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonName != null" >
+                #{legalPersonName,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonTel != null" >
+                #{legalPersonTel,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonNum != null" >
+                #{legalPersonNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzZmUrl != null" >
+                #{sfzZmUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzFmUrl != null" >
+                #{sfzFmUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="holdSfzZmUrl != null" >
+                #{holdSfzZmUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="authDate != null" >
+                #{authDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authStateType != null" >
+                #{authStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="examFailReason != null" >
+                #{examFailReason,jdbcType=VARCHAR},
+            </if>
+            <if test="entpAuthStateType != null" >
+                #{entpAuthStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="entpType != null" >
+                #{entpType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="yyzzValidityStart != null" >
+                #{yyzzValidityStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="yyzzValidityEnd != null" >
+                #{yyzzValidityEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="legalPersonValidityStart != null" >
+                #{legalPersonValidityStart,jdbcType=TIMESTAMP},
+            </if>
+            <if test="legalPersonValidityEnd != null" >
+                #{legalPersonValidityEnd,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rpStateType != null" >
+                #{rpStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="jycsUrlOne != null" >
+                #{jycsUrlOne,jdbcType=VARCHAR},
+            </if>
+            <if test="jycsUrlTwo != null" >
+                #{jycsUrlTwo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+        update entp_auth
+        <set >
+            <if test="membId != null" >
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="entpName != null" >
+                entp_name = #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="custType != null" >
+                entp_type = #{custType,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null" >
+                area_prov = #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null" >
+                area_city = #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null" >
+                area_cou = #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null" >
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="ctscc != null" >
+                ctscc = #{ctscc,jdbcType=VARCHAR},
+            </if>
+            <if test="yyzzUrl != null" >
+                yyzz_url = #{yyzzUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="mtzUrl != null" >
+                mtz_url = #{mtzUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="conter != null" >
+                conter = #{conter,jdbcType=VARCHAR},
+            </if>
+            <if test="contTel != null" >
+                cont_tel = #{contTel,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonName != null" >
+                legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonTel != null" >
+                legal_person_tel = #{legalPersonTel,jdbcType=VARCHAR},
+            </if>
+            <if test="legalPersonNum != null" >
+                legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzZmUrl != null" >
+                sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzFmUrl != null" >
+                sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="holdSfzZmUrl != null" >
+                hold_sfz_zm_url = #{holdSfzZmUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="authDate != null" >
+                auth_date = #{authDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authStateType != null" >
+                auth_state_type = #{authStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="examFailReason != null" >
+                exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+            </if>
+            <if test="entpAuthStateType != null" >
+                entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="entpType != null" >
+                entp_type = #{entpType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="yyzzValidityStart != null" >
+                yyzz_validity_start = #{yyzzValidityStart,jdbcType=TIMESTAMP},
+            </if>
+            yyzz_validity_end = #{yyzzValidityEnd,jdbcType=TIMESTAMP},
+            <if test="legalPersonValidity != null" >
+                legal_person_validity = #{legalPersonValidity,jdbcType=VARCHAR},
+            </if>
+            <if test="rpStateType != null" >
+                rp_state_type = #{rpStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="jycsUrlOne != null" >
+                jycs_url_one = #{jycsUrlOne,jdbcType=VARCHAR},
+            </if>
+            <if test="jycsUrlTwo != null" >
+                jycs_url_two = #{jycsUrlTwo,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="batchSelRpstateType" parameterType="java.util.List" resultType="com.wisea.cultivar.common.entity.EntpAuth">
+        select e.*
+        from entp_auth e
+        INNER JOIN zhfw_memb_info m ON m.id = e.memb_id
+        where e.auth_state_type = '3' AND e.del_flag = '0'
+        and m.id in
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </select>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+    update entp_auth
+    set memb_id = #{membId,jdbcType=BIGINT},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      entp_short_name = #{entpShortName,jdbcType=VARCHAR},
+      whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      cust_type = #{custType,jdbcType=VARCHAR},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      ctscc = #{ctscc,jdbcType=VARCHAR},
+      yyzz_url = #{yyzzUrl,jdbcType=VARCHAR},
+      mtz_url = #{mtzUrl,jdbcType=VARCHAR},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      legal_person_tel = #{legalPersonTel,jdbcType=VARCHAR},
+      legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+      sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+      sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+      hold_sfz_zm_url = #{holdSfzZmUrl,jdbcType=VARCHAR},
+      auth_date = #{authDate,jdbcType=TIMESTAMP},
+      auth_state_type = #{authStateType,jdbcType=VARCHAR},
+      exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      entp_type = #{entpType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      yyzz_validity_start = #{yyzzValidityStart,jdbcType=TIMESTAMP},
+      yyzz_validity_end = #{yyzzValidityEnd,jdbcType=TIMESTAMP},
+      legal_person_validity_start = #{legalPersonValidityStart,jdbcType=TIMESTAMP},
+      legal_person_validity_end = #{legalPersonValidityEnd,jdbcType=TIMESTAMP},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPageList" resultType="com.wisea.cultivar.common.vo.EntpAuthPageListVo" parameterType="com.wisea.cultivar.common.po.memb.EntpAuthPageListPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  entp_name entpName,
+	  entp_short_name entpShortName,
+	  whole_sale_market_id wholeSaleMarketId,
+	  cust_type custType,
+	  area_prov areaProv,
+	  area_city areaCity,
+	  area_cou areaCou,
+	  address address,
+	  ctscc ctscc,
+	  yyzz_url yyzzUrl,
+	  mtz_url mtzUrl,
+	  conter conter,
+	  cont_tel contTel,
+	  email email,
+	  legal_person_name legalPersonName,
+	  legal_person_tel legalPersonTel,
+	  legal_person_num legalPersonNum,
+	  sfz_zm_url sfzZmUrl,
+	  sfz_fm_url sfzFmUrl,
+	  hold_sfz_zm_url holdSfzZmUrl,
+	  auth_date authDate,
+	  auth_state_type authStateType,
+	  exam_fail_reason examFailReason,
+	  entp_auth_state_type entpAuthStateType,
+	  yyzz_validity_start yyzzValidityStart,
+      yyzz_validity_end yyzzValidityEnd,
+      legal_person_validity_start legalPersonValidityStart,
+      legal_person_validity_end legalPersonValidityEnd,
+	  entp_type entpType
+	from
+	  entp_auth
+	where
+	  del_flag = '0'
+  </select>
+    <select id="findInfo" resultType="com.wisea.cultivar.common.po.memb.MembForSellerPageListPo"
+            parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+        select
+        id id,
+        memb_id membId,
+        entp_name entpName,
+        entp_short_name entpShortName,
+        whole_sale_market_id wholeSaleMarketId,
+        cust_type custType,
+        area_prov areaProv,
+        area_city areaCity,
+        area_cou areaCou,
+        address address,
+        ctscc ctscc,
+        yyzz_url yyzzUrl,
+        mtz_url mtzUrl,
+        conter conter,
+        cont_tel contTel,
+        email email,
+        legal_person_name legalPersonName,
+        legal_person_tel legalPersonTel,
+        legal_person_num legalPersonNum,
+        sfz_zm_url sfzZmUrl,
+        sfz_fm_url sfzFmUrl,
+        hold_sfz_zm_url holdSfzZmUrl,
+        auth_date authDate,
+        auth_state_type authStateType,
+        exam_fail_reason examFailReason,
+        entp_auth_state_type entpAuthStateType,
+        yyzz_validity_start yyzzValidityStart,
+        yyzz_validity_end yyzzValidityEnd,
+        legal_person_validity_start legalPersonValidityStart,
+        legal_person_validity_end legalPersonValidityEnd,
+        entp_type entpType
+        from
+        entp_auth
+        where
+        del_flag = '0'
+        <if test="id!=null">
+            and id = #{id}
+        </if>
+        <if test="id!=null">
+            and memb_id = #{id}
+        </if>
+        and whole_sale_market_id is not null
+
+    </select>
+
+    <select id="findminiInfo" resultType="com.wisea.cultivar.common.po.memb.MembForSellerPageListPo"
+            parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+    SELECT
+    ea.id id,
+    ea.memb_id membId,
+    ea.entp_name entpName,
+    ea.entp_short_name entpShortName,
+    ea.whole_sale_market_id wholeSaleMarketId,
+    ea.cust_type custType,
+    ea.area_prov areaProv,
+    ea.area_city areaCity,
+    ea.area_cou areaCou,
+    ea.address address,
+    ea.ctscc ctscc,
+    ea.yyzz_url yyzzUrl,
+    ea.mtz_url mtzUrl,
+    ea.conter conter,
+    ea.cont_tel contTel,
+    ea.email email,
+    ea.legal_person_name legalPersonName,
+    ea.legal_person_tel legalPersonTel,
+    ea.legal_person_num legalPersonNum,
+    ea.sfz_zm_url sfzZmUrl,
+    ea.sfz_fm_url sfzFmUrl,
+    ea.hold_sfz_zm_url holdSfzZmUrl,
+    ea.auth_date authDate,
+    ea.auth_state_type authStateType,
+    ea.exam_fail_reason examFailReason,
+    ea.entp_auth_state_type entpAuthStateType,
+    ea.yyzz_validity_start yyzzValidityStart,
+    ea.yyzz_validity_end yyzzValidityEnd,
+    ea.legal_person_validity_start legalPersonValidityStart,
+    ea.legal_person_validity_end legalPersonValidityEnd,
+    ea.entp_type entpType,
+    concat_ws('-',sa.name,sa1.name,sa2.name) areaArr
+    FROM
+    entp_auth ea
+    LEFT JOIN sys_area sa ON sa.code = ea.area_prov
+    LEFT JOIN sys_area sa1 ON sa1.code = ea.area_city
+    LEFT JOIN sys_area sa2 ON sa2.code = ea.area_cou
+    WHERE
+    ea.del_flag = '0'
+    and ea.id = #{id}
+  </select>
+    <!-- 根据会员ID查询企业信息的处理 -->
+    <resultMap type="com.wisea.cultivar.common.vo.memb.EntpAuthInfoInitVo" id="entpDetialMap">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="memb_id" property="membId" jdbcType="BIGINT" />
+        <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+        <result column="entp_short_name" property="entpShortName" jdbcType="VARCHAR" />
+        <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT" />
+        <result column="marketName" property="marketName" jdbcType="VARCHAR" />
+        <result column="cust_type" property="custType" jdbcType="VARCHAR" />
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+        <result column="address" property="address" jdbcType="VARCHAR" />
+        <result column="ctscc" property="ctscc" jdbcType="VARCHAR" />
+        <result column="yyzz_url" property="yyzzUrl" jdbcType="VARCHAR" />
+        <result column="mtz_url" property="mtzUrl" jdbcType="VARCHAR" />
+        <result column="conter" property="conter" jdbcType="VARCHAR" />
+        <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+        <result column="email" property="email" jdbcType="VARCHAR" />
+        <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+        <result column="legal_person_tel" property="legalPersonTel" jdbcType="VARCHAR" />
+        <result column="legal_person_num" property="legalPersonNum" jdbcType="VARCHAR" />
+        <result column="sfz_zm_url" property="sfzZmUrl" jdbcType="VARCHAR" />
+        <result column="sfz_fm_url" property="sfzFmUrl" jdbcType="VARCHAR" />
+        <result column="hold_sfz_zm_url" property="holdSfzZmUrl" jdbcType="VARCHAR" />
+        <result column="auth_date" property="authDate" jdbcType="TIMESTAMP" />
+        <result column="auth_state_type" property="authStateType" jdbcType="VARCHAR" />
+        <result column="exam_fail_reason" property="examFailReason" jdbcType="VARCHAR" />
+        <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+        <result column="entp_type" property="entpType" jdbcType="VARCHAR" />
+        <result column="yyzz_validity_start" property="yyzzValidityStart" jdbcType="TIMESTAMP" />
+        <result column="yyzz_validity_end" property="yyzzValidityEnd" jdbcType="TIMESTAMP" />
+        <result column="legal_person_validity" property="legalPersonValidity" jdbcType="VARCHAR" />
+        <result column="rp_state_type" property="rpStateType" jdbcType="VARCHAR" />
+        <result column="jycs_url_one" property="jycsUrlOne" jdbcType="VARCHAR" />
+        <result column="jycs_url_two" property="jycsUrlTwo" jdbcType="VARCHAR" />
+    </resultMap>
+    <!-- 根据会员ID查询最新的企业认证信息  -->
+    <select id="getUpEntpInfoByMembId" parameterType="com.wisea.cultivar.common.po.memb.EntpAuthUpInfoPo" resultMap="entpDetialMap">
+        select e.* from entp_auth e
+        INNER JOIN zhfw_memb_info m ON e.memb_id = m.id
+        where e.del_flag = '0'
+        and e.memb_id = #{membId}
+        <if test="flag != null and flag == '2'.toString()">
+            AND e.auth_state_type IS NOT NULL
+        </if>
+        <if test="flag != null and flag == '3'.toString()">
+            AND e.auth_state_type IS NOT NULL
+        </if>
+        ORDER BY e.update_date DESC
+        LIMIT 1
+    </select>
+    <!-- 根据企业ID获取企业详细信息包含银行卡信息 -->
+    <select id="getEntpDetailById" parameterType="java.lang.Long" resultMap="entpDetialMap">
+  	select e.* from entp_auth e
+  	where e.id = #{_parameter}
+  </select>
+    <update id="updDelById" parameterType="com.wisea.cultivar.common.entity.EntpAuth" >
+        update entp_auth
+        <set >
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            del_flag = '1'
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+
+    <!-- 会员管理 会员列表查询 -->
+    <select id="findSupplierMembList" parameterType="com.wisea.cultivar.common.po.memb.MembForSellerPageListPo"
+            resultType="com.wisea.cultivar.common.vo.memb.MembForManagerListVo">
+        SELECT m.id AS 'membId',m.memb_type,m.login_name,m.regist_tel,m.register_date as 'registDate',m.acct_state,
+        m.org_name as 'entpName',m.entp_auth_state_type,sd.label AS 'acctStateValue',
+        sd1.label AS 'entpAuthStateTypeValue'
+        FROM zhfw_memb_info m
+        LEFT JOIN sys_dict sd ON sd.`value` = m.acct_state AND sd.type = 'acct_state'
+        LEFT JOIN sys_dict sd1 ON sd1.`value` = m.entp_auth_state_type AND sd1.type = 'entp_auth_state_type'
+        WHERE m.del_flag = '0' and   m.memb_type = '0'
+        <if test="key != null and key != ''">
+            AND (m.login_name LIKE CONCAT('%', #{key}, '%')
+            OR m.regist_tel LIKE CONCAT('%', #{key}, '%')
+            OR m.org_name LIKE CONCAT('%', #{key}, '%'))
+        </if>
+        <if test="acctState != null and acctState != ''">
+            AND m.acct_state = #{acctState}
+        </if>
+        <if test="entpAuthStateType != null and entpAuthStateType != ''">
+            AND m.entp_auth_state_type = #{entpAuthStateType}
+        </if>
+        GROUP BY m.id
+        ORDER BY m.create_date DESC
+    </select>
+
+    <select id="findSupplierMembListImport" parameterType="com.wisea.cultivar.common.po.memb.MembSellerExportPo"
+            resultType="com.wisea.cultivar.common.vo.memb.MembInfoExportListExcelVo">
+        SELECT m.id AS 'membId',m.memb_type,m.login_name,m.regist_tel,m.register_date as 'registDate',m.acct_state,
+        m.org_name as 'entpName',m.entp_auth_state_type,sd.label AS 'acctStateValue',
+        sd1.label AS 'entpAuthStateTypeValue'
+        FROM zhfw_memb_info m
+        LEFT JOIN sys_dict sd ON sd.`value` = m.acct_state AND sd.type = 'acct_state'
+        LEFT JOIN sys_dict sd1 ON sd1.`value` = m.entp_auth_state_type AND sd1.type = 'entp_auth_state_type'
+        WHERE m.del_flag = '0' and m.memb_type = '0'
+        <choose>
+            <when test="idList != null and idList.size > 0">
+                AND m.id in
+                <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="key != null and key != ''">
+                    AND (m.login_name LIKE CONCAT('%', #{key}, '%')
+                    OR m.regist_tel LIKE CONCAT('%', #{key}, '%')
+                    OR m.org_name LIKE CONCAT('%', #{key}, '%'))
+                </if>
+                <if test="acctState != null and acctState != ''">
+                    AND m.acct_state = #{acctState}
+                </if>
+                <if test="entpAuthStateType != null and entpAuthStateType != ''">
+                    AND m.entp_auth_state_type = #{entpAuthStateType}
+                </if>
+            </otherwise>
+        </choose>
+        GROUP BY m.id
+        ORDER BY m.create_date DESC
+    </select>
+
+    <!-- 服务商管理 审核列表查询 -->
+    <select id="findSupplierAuthList" parameterType="com.wisea.cultivar.common.po.memb.MembForMangerPageListPo"
+            resultType="com.wisea.cultivar.common.vo.memb.MembForManagerListVo">
+        SELECT tabtwo.id as 'entpId',tabtwo.memb_id,tabtwo.entp_name,tabtwo.auth_type,sd.label AS 'authTypeValue',
+        tabtwo.auth_state_type,sd1.label AS 'authStateTypeValue',zmi.login_name,zmi.regist_tel,zmi.register_date as 'registDate'
+        FROM  (
+        SELECT tab1.entp_name,tab1.id,tab1.memb_id,tab1.auth_type,tab1.auth_state_type FROM (SELECT e.*,m.login_name FROM zhfw_memb_info m LEFT JOIN entp_auth e ON m.id = e.memb_id AND m.del_flag = '0' AND e.del_flag = '0') tab1
+        UNION
+        SELECT tab.real_name AS 'entpName',tab.id,tab.memb_id,tab.auth_type,tab.auth_state_type FROM (SELECT r.*,m.login_name FROM zhfw_memb_info m LEFT JOIN real_person_auth r ON m.id = r.memb_id AND r.del_flag = '0' AND m.del_flag = '0') tab
+        )tabtwo
+        INNER JOIN zhfw_memb_info zmi ON tabtwo.memb_id = zmi.id
+        LEFT JOIN sys_dict sd ON sd.`value` = tabtwo.auth_type AND sd.type = 'auth_type'
+        LEFT JOIN sys_dict sd1 ON sd1.`value` = tabtwo.auth_state_type AND sd1.type = 'auth_state_type'
+        WHERE  zmi.memb_type = 0
+        <if test="key != null and key != ''">
+            AND (zmi.login_name LIKE CONCAT('%', #{key}, '%')
+            OR zmi.regist_tel LIKE CONCAT('%', #{key}, '%')
+            OR tabtwo.entp_name LIKE CONCAT('%', #{key}, '%'))
+        </if>
+        <if test="authStateType != null and authStateType != ''">
+            <!-- 审核状态 -->
+            AND tabtwo.auth_state_type = #{authStateType}
+        </if>
+        <if test="authType != null and authType != ''">
+            <!-- 认证状态 -->
+            AND tabtwo.auth_type = #{authType}
+        </if>
+        GROUP BY tabtwo.id
+        ORDER BY zmi.register_date DESC
+    </select>
+    <select id="findSupplierAuthListImport" parameterType="com.wisea.cultivar.common.po.memb.MembSellerAuthExportPo"
+            resultType="com.wisea.cultivar.common.vo.memb.MembForServiceExcelVo">
+        SELECT tabtwo.id as 'entpId',tabtwo.memb_id,tabtwo.entp_name,tabtwo.auth_type,sd.label AS 'authTypeValue',
+        tabtwo.auth_state_type,sd1.label AS 'authStateTypeValue',zmi.login_name,zmi.regist_tel,zmi.register_date as 'registDate'
+        FROM  (
+        SELECT tab1.entp_name,tab1.id,tab1.memb_id,tab1.auth_type,tab1.auth_state_type FROM (SELECT e.*,m.login_name FROM zhfw_memb_info m LEFT JOIN entp_auth e ON m.id = e.memb_id AND m.del_flag = '0' AND e.del_flag = '0') tab1
+        UNION
+        SELECT tab.real_name AS 'entpName',tab.id,tab.memb_id,tab.auth_type,tab.auth_state_type FROM (SELECT r.*,m.login_name FROM zhfw_memb_info m LEFT JOIN real_person_auth r ON m.id = r.memb_id AND r.del_flag = '0' AND m.del_flag = '0') tab
+        )tabtwo
+        INNER JOIN zhfw_memb_info zmi ON tabtwo.memb_id = zmi.id
+        LEFT JOIN sys_dict sd ON sd.`value` = tabtwo.auth_type AND sd.type = 'auth_type'
+        LEFT JOIN sys_dict sd1 ON sd1.`value` = tabtwo.auth_state_type AND sd1.type = 'auth_state_type'
+        WHERE  zmi.memb_type = 0
+        <choose>
+            <when test="idList != null and idList.size > 0">
+                AND tabtwo.id in
+                <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+                    #{item}
+                </foreach>
+            </when>
+            <otherwise>
+                <if test="key != null and key != ''">
+                    AND (zmi.login_name LIKE CONCAT('%', #{key}, '%')
+                    OR zmi.regist_tel LIKE CONCAT('%', #{key}, '%')
+                    OR tabtwo.entp_name LIKE CONCAT('%', #{key}, '%'))
+                </if>
+                <if test="authStateType != null and authStateType != ''">
+                    <!-- 审核状态 -->
+                    AND tabtwo.auth_state_type = #{authStateType}
+                </if>
+                <if test="authType != null and authType != ''">
+                    <!-- 认证状态 -->
+                    AND tabtwo.auth_type = #{authType}
+                </if>
+            </otherwise>
+        </choose>
+        ORDER BY zmi.register_date DESC
+    </select>
+
+    <!-- 会员管理详情 -->
+    <resultMap id="entpDetailInfoMap"  type="com.wisea.cultivar.common.vo.memb.MembEntpDetailBackVo">
+        <result column="id" property="id" jdbcType="BIGINT"></result>
+        <result column="memb_type" property="membType" jdbcType="VARCHAR"></result>
+        <result column="membId" property="membId" jdbcType="BIGINT"></result>
+        <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR"></result>
+        <result column="auth_type" property="authType" jdbcType="VARCHAR"></result>
+        <association property="regInfoVo" column="{id=membId}"  select="getMemRegInfoByMembId"/>
+        <collection property="examRecdList" column="{id=membId}" select="findExamRecdList"/>
+    </resultMap>
+    <!-- 会员管理认证基本注册信息 -->
+    <select id="getEntpMembDetail" resultMap="entpDetailInfoMap">
+            SELECT tabtwo.id,zmi.id as 'membId',zmi.org_name as 'entpName',tabtwo.auth_type,sd.label AS 'authTypeValue',
+            sd2.label AS 'membTypeValue',
+			zmi.memb_type,zmi.entp_auth_state_type,sd3.label AS 'entpAuthStateType',
+          sd1.label AS 'authStateTypeValue',zmi.login_name,zmi.regist_tel,zmi.register_date as 'registDate'
+          FROM  zhfw_memb_info zmi
+          LEFT JOIN (
+          SELECT tab1.id,tab1.memb_id,tab1.auth_type,tab1.auth_state_type FROM (SELECT e.*,m.login_name FROM zhfw_memb_info m LEFT JOIN entp_auth e ON m.id = e.memb_id AND m.del_flag = '0') tab1
+          UNION
+          SELECT tab.id,tab.memb_id,tab.auth_type,tab.auth_state_type FROM (SELECT r.*,m.login_name FROM zhfw_memb_info m LEFT JOIN real_person_auth r ON m.id = r.memb_id AND r.del_flag = '0') tab
+          )tabtwo
+           ON tabtwo.memb_id = zmi.id
+          LEFT JOIN sys_dict sd ON sd.`value` = tabtwo.auth_type AND sd.type = 'auth_type'
+          LEFT JOIN sys_dict sd2 ON sd2.`value` = zmi.memb_type AND sd2.type = 'memb_type'
+          LEFT JOIN sys_dict sd3 ON sd3.`value` = zmi.entp_auth_state_type AND sd3.type = 'entp_auth_state_type'
+          LEFT JOIN sys_dict sd1 ON sd1.`value` = tabtwo.auth_state_type AND sd1.type = 'auth_state_type'
+		    where zmi.id = #{id}
+    </select>
+    <!-- 获取会员注册信息 -->
+    <select id="getMemRegInfoByMembId" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.memb.UserRegisterInfoVo">
+          SELECT mi.id,mi.login_name,mi.regist_tel,mi.register_date,
+          mi.entp_auth_state_type,mi.acct_state,mi.memb_type,
+          sd.label AS 'acctStateValue',sd1.label AS 'entpAuthStateTypeValue',sd2.label AS 'membTypeValue'
+          FROM zhfw_memb_info mi
+          LEFT JOIN sys_dict sd ON sd.`value` = mi.acct_state AND sd.type = 'acct_state'
+          LEFT JOIN sys_dict sd1 ON sd1.`value` = mi.entp_auth_state_type AND sd1.type = 'entp_auth_state_type'
+          LEFT JOIN sys_dict sd2 ON sd2.`value` = mi.memb_type AND sd2.type = 'memb_type'
+          WHERE mi.del_flag = '0'
+          AND mi.id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <!-- 当会员经过认证时 通过会员id查询认证详情信息（认证类型包括 auth_type 个人 和 企业 ） -->
+
+    <select id="findEntpAuth" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.memb.EntpAuthInfoInitVo">
+
+                SELECT e.* FROM entp_auth e
+                LEFT JOIN zhfw_memb_info m
+                ON  m.id = e.memb_id
+                WHERE e.del_flag = '0' AND  e.id = #{id}
+                and  e.entp_auth_state_type = 0 and m.del_flag = '0'
+           </select>
+
+    <select id="findResAuth" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.memb.EntpAuthInfoInitVo">
+                SELECT
+                m.area_code_prov,m.area_code_city,m.area_code_cou,m.address,m.cont_name,
+                e.memb_id,e.real_name AS 'legal_person_name',e.id_card_num as 'legal_person_num',
+                e.sfz_zm_url,e.sfz_fm_url,e.cont_tel
+                FROM zhfw_memb_info m left join real_person_auth e on m.id = e.memb_id
+                WHERE e.del_flag = '0' AND m.id = #{id}  and  e.entp_auth_state_type = 0  and m.del_flag = '0'
+           </select>
+
+    <select id="findEntpTypeAuth" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.memb.EntpAuthInfoInitVo">
+
+                SELECT e.* FROM entp_auth e
+                LEFT JOIN zhfw_memb_info m
+                ON  m.id = e.memb_id
+                WHERE e.del_flag = '0' AND  e.id = #{id} and m.del_flag = '0'
+
+           </select>
+
+    <select id="findResTypeAuth" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.memb.EntpAuthInfoInitVo">
+                SELECT
+                m.area_code_prov,m.area_code_city,m.area_code_cou,m.address,m.cont_name,
+                e.memb_id,e.real_name AS 'legal_person_name',e.id_card_num as 'legal_person_num',
+                e.sfz_zm_url,e.sfz_fm_url,e.cont_tel
+                FROM zhfw_memb_info m left join real_person_auth e on m.id = e.memb_id
+                WHERE e.del_flag = '0' AND m.id = #{id} and m.del_flag = '0'
+           </select>
+
+    <select id="getRealPersonDetailById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.memb.EntpAuthInfoInitVo">
+        select * from real_person_auth
+        where del_flag = '0' and id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <update id="updateByRealPerson" parameterType="com.wisea.cultivar.common.entity.EntpAuth">
+        update real_person_auth
+        <set >
+            <if test="membId != null" >
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="entpName != null" >
+                real_name = #{entpName,jdbcType=VARCHAR},
+            </if>
+            <if test="custType != null" >
+                entp_type = #{custType,jdbcType=VARCHAR},
+            </if>
+            <if test="yyzzValidityEnd != null" >
+                yyzz_validity_end,
+            </if>
+            <if test="legalPersonValidity != null" >
+                legal_person_validity,
+            </if>
+            <if test="authDate != null" >
+                auth_date = #{authDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="authStateType != null" >
+                auth_state_type = #{authStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="examFailReason != null" >
+                exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+            </if>
+            <if test="entpAuthStateType != null" >
+                entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = 0,
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <!-- 获取处理信息 -->
+    <select id="findExamRecdList" resultType="com.wisea.cultivar.common.vo.memb.ExamRecdListVo" parameterType="java.util.Map">
+  	select * from zhfw_exam_recd
+    where del_flag = '0' and memb_id = #{id,jdbcType=BIGINT}
+    Order by operat_date DESC
+  </select>
+
+    <select id="getEntpDetail" resultMap="entpDetailMap">
+          SELECT tabtwo.id,zmi.id as 'membId',zmi.entp_name,tabtwo.auth_type,sd.label AS 'authTypeValue',
+          sd1.label AS 'authStateTypeValue',zmi.login_name,zmi.regist_tel,zmi.register_date as 'registDate'
+          FROM  zhfw_memb_info zmi LEFT JOIN(
+          SELECT tab1.id,tab1.memb_id,tab1.auth_type,tab1.auth_state_type FROM (SELECT e.*,m.login_name FROM zhfw_memb_info m LEFT JOIN entp_auth e ON m.id = e.memb_id AND m.del_flag = '0' AND e.del_flag = '0') tab1
+          UNION
+          SELECT tab.id,tab.memb_id,tab.auth_type,tab.auth_state_type FROM (SELECT r.*,m.login_name FROM zhfw_memb_info m LEFT JOIN real_person_auth r ON m.id = r.memb_id AND m.del_flag = '0'  AND r.del_flag = '0') tab
+          )tabtwo
+          ON tabtwo.memb_id = zmi.id
+          LEFT JOIN sys_dict sd ON sd.`value` = tabtwo.auth_type AND sd.type = 'auth_type'
+          LEFT JOIN sys_dict sd1 ON sd1.`value` = tabtwo.auth_state_type AND sd1.type = 'auth_state_type'
+          WHERE  tabtwo.id = #{id} and zmi.memb_type = 0
+    </select>
+
+    <select id="getEntpDetailRegInfoVo" resultType="com.wisea.cultivar.common.vo.memb.UserRegisterInfoVo">
+          SELECT tabtwo.id,zmi.id as 'membId',zmi.entp_name,tabtwo.auth_type,sd.label AS 'authTypeValue',
+          tabtwo.auth_state_type,zmi.acct_state,sd2.label as 'acctStateValue',zmi.memb_type,
+          sd1.label AS 'authStateTypeValue',zmi.login_name,zmi.regist_tel,zmi.register_date as 'registerDate'
+          FROM  zhfw_memb_info zmi LEFT JOIN(
+          SELECT tab1.id,tab1.memb_id,tab1.auth_type,tab1.auth_state_type FROM (SELECT e.*,m.login_name FROM zhfw_memb_info m LEFT JOIN entp_auth e ON m.id = e.memb_id AND m.del_flag = '0' AND e.del_flag = '0') tab1
+          UNION
+          SELECT tab.id,tab.memb_id,tab.auth_type,tab.auth_state_type FROM (SELECT r.*,m.login_name FROM zhfw_memb_info m LEFT JOIN real_person_auth r ON m.id = r.memb_id AND m.del_flag = '0' AND r.del_flag = '0') tab
+          )tabtwo
+            ON tabtwo.memb_id = zmi.id
+          LEFT JOIN sys_dict sd ON sd.`value` = tabtwo.auth_type AND sd.type = 'auth_type'
+          LEFT JOIN sys_dict sd1 ON sd1.`value` = tabtwo.auth_state_type AND sd1.type = 'auth_state_type'
+          LEFT JOIN sys_dict sd2 ON sd2.`value` = zmi.acct_state AND sd2.type = 'acct_state'
+          LEFT JOIN sys_dict sd3 ON sd3.`value` = zmi.memb_type AND sd3.type = 'memb_type'
+          WHERE  tabtwo.id = #{id} and zmi.memb_type = 0
+    </select>
+
+    <resultMap id="entpDetailMap"  type="com.wisea.cultivar.common.vo.memb.MembEntpDetailBackVo">
+        <result column="id" property="id" jdbcType="BIGINT"></result>
+        <result column="membId" property="membId" jdbcType="BIGINT"></result>
+        <result column="auth_type" property="authType" jdbcType="BIGINT"></result>
+        <association property="regInfoVo" column="{id=id}" select="getEntpDetailRegInfoVo"/>
+        <collection property="examRecdList" column="{id = membId}" select="findExamRecdList"/>
+    </resultMap>
+
+
+
+
+    <!--   查询认证信息-->
+    <select id="findAuthInfo" resultType="com.wisea.cultivar.common.po.memb.MembForSellerPageListPo" parameterType="com.wisea.cultivar.common.po.QueryEntpAuthPo" >
+        select
+        id id,
+        memb_id membId,
+        entp_name entpName,
+        entp_short_name entpShortName,
+        whole_sale_market_id wholeSaleMarketId,
+        cust_type custType,
+        area_prov areaProv,
+        area_city areaCity,
+        area_cou areaCou,
+        address address,
+        ctscc ctscc,
+        yyzz_url yyzzUrl,
+        mtz_url mtzUrl,
+        conter conter,
+        cont_tel contTel,
+        email email,
+        legal_person_name legalPersonName,
+        legal_person_tel legalPersonTel,
+        legal_person_num legalPersonNum,
+        sfz_zm_url sfzZmUrl,
+        sfz_fm_url sfzFmUrl,
+        hold_sfz_zm_url holdSfzZmUrl,
+        auth_date authDate,
+        auth_state_type authStateType,
+        exam_fail_reason examFailReason,
+        entp_auth_state_type entpAuthStateType,
+        yyzz_validity_start yyzzValidityStart,
+        yyzz_validity_end yyzzValidityEnd,
+        legal_person_validity_start legalPersonValidityStart,
+        legal_person_validity_end legalPersonValidityEnd,
+        entp_type entpType
+        from
+        entp_auth
+        where
+        del_flag = '0'
+        and memb_id = #{id}
+        <choose>
+            <when test="agentFlag != null and agentFlag != ''">
+                and auth_state_type =='3'
+            </when>
+            <otherwise>
+                and auth_state_type IS NULL
+            </otherwise>
+        </choose>
+        and cust_type = #{custType}
+    </select>
+</mapper>

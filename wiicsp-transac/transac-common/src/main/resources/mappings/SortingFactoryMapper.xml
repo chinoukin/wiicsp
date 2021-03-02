@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.SortingFactoryMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.SortingFactory" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="base_id" property="baseId" jdbcType="BIGINT" />
+    <result column="sorting_factory_name" property="sortingFactoryName" jdbcType="VARCHAR" />
+    <result column="sorting_factory_mj" property="sortingFactoryMj" jdbcType="DOUBLE" />
+    <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+    <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+    <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="conter" property="conter" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="sorting_factory_content" property="sortingFactoryContent" jdbcType="VARCHAR" />
+    <result column="jd" property="jd" jdbcType="VARCHAR" />
+    <result column="wd" property="wd" jdbcType="VARCHAR" />
+    <result column="ori_name" property="oriName" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, base_id, sorting_factory_name, sorting_factory_mj, area_prov, area_city, area_cou,
+    address, conter, cont_tel, sorting_factory_content, jd, wd, ori_name, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据基地ID查询分选工厂列表 -->
+  <select id="findListByBaseId" parameterType="com.wisea.cloud.model.po.LongIdPo" resultType="com.wisea.transac.common.po.seller.SortingFactoryListVo">
+    select
+      sf.id,
+      sf.base_id baseId,
+      sf.sorting_factory_name sortingFactoryName,
+      sf.sorting_factory_mj sortingFactoryMj,
+      sf.conter conter,
+      sf.cont_tel contTel,
+      sfp.url imgUrl
+    from
+      sorting_factory sf
+      left join sorting_factory_picture sfp on sf.id = sfp.sorting_factory_id and sfp.base_picture_type = '0'
+    where
+      sf.base_id = #{id}
+    group by
+      sf.id
+  </select>
+  <select id="findListByBaseIdForBuyer" parameterType="com.wisea.cloud.model.po.LongIdPo"
+          resultType="com.wisea.transac.common.vo.seller.SortingFactoryVo" resultMap="infoResultMap">
+    select
+      sf.id id,
+      sf.base_id baseId,
+      sf.sorting_factory_name sortingFactoryName,
+      sf.sorting_factory_mj sortingFactoryMj,
+      sf.address address,
+      sf.conter conter,
+      sf.cont_tel contTel,
+      sf.sorting_factory_content sortingFactoryContent,
+      sf.jd jd,
+      sf.wd wd,
+      sf.ori_name oriName,
+      sfp.url imgUrl
+    from
+      sorting_factory sf
+      left join sorting_factory_picture sfp on sf.id = sfp.sorting_factory_id and sfp.base_picture_type = '0'
+    where
+      sf.base_id = #{id}
+    group by
+      sf.id
+  </select>
+
+  <!-- 查询分选工厂详细信息 -->
+  <select id="findSortingFactoryInfo" parameterType="com.wisea.cloud.model.po.LongIdPo" resultType="com.wisea.transac.common.vo.seller.SortingFactoryVo" resultMap="infoResultMap">
+    select
+      sf.id id,
+      sf.base_id baseId,
+      sf.sorting_factory_name sortingFactoryName,
+      sf.sorting_factory_mj sortingFactoryMj,
+      sf.address address,
+      sf.conter conter,
+      sf.cont_tel contTel,
+      sf.sorting_factory_content sortingFactoryContent,
+      sf.jd jd,
+      sf.wd wd,
+      sf.ori_name oriName
+    from
+      sorting_factory sf
+    where
+      sf.id = #{id}
+  </select>
+  <resultMap id="infoResultMap" type="com.wisea.transac.common.vo.seller.SortingFactoryVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <collection property="files" column="id" select="selectFiles"/>
+    <collection property="liveVideos" column="id" select="selectLiveVideos"/>
+  </resultMap>
+  <!-- 级联查询分选工厂图片列表 -->
+  <select id="selectFiles" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.FileVo">
+    select
+      sfp.url fileUrl,
+      sfp.base_picture_type fileType,
+      sfp.sort sort
+    from
+      sorting_factory_picture sfp
+    where
+      sfp.sorting_factory_id = #{id}
+    order by
+      sfp.sort
+  </select>
+  <!-- 级联查询分选工厂实时视频列表 -->
+  <select id="selectLiveVideos" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.LiveVideoVo">
+    select
+      srtv.id id,
+      srtv.install_position installPosition,
+      srtv.url url,
+      srtv.equ_manufact equManufact,
+      srtv.equ_num equNum,
+      srtv.sort sort
+    from
+      sorting_real_time_video srtv
+    where
+      srtv.sorting_factory_id = #{id}
+    order by
+      srtv.sort
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sorting_factory
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sorting_factory
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.SortingFactory" >
+    insert into sorting_factory (id, base_id, sorting_factory_name,
+      sorting_factory_mj, area_prov, area_city,
+      area_cou, address, conter,
+      cont_tel, sorting_factory_content, jd,
+      wd, ori_name, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{baseId,jdbcType=BIGINT}, #{sortingFactoryName,jdbcType=VARCHAR},
+      #{sortingFactoryMj,jdbcType=DOUBLE}, #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR},
+      #{areaCou,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{conter,jdbcType=VARCHAR},
+      #{contTel,jdbcType=VARCHAR}, #{sortingFactoryContent,jdbcType=VARCHAR}, #{jd,jdbcType=VARCHAR},
+      #{wd,jdbcType=VARCHAR}, #{oriName,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.SortingFactory" >
+    insert into sorting_factory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="baseId != null" >
+        base_id,
+      </if>
+      <if test="sortingFactoryName != null" >
+        sorting_factory_name,
+      </if>
+      <if test="sortingFactoryMj != null" >
+        sorting_factory_mj,
+      </if>
+      <if test="areaProv != null" >
+        area_prov,
+      </if>
+      <if test="areaCity != null" >
+        area_city,
+      </if>
+      <if test="areaCou != null" >
+        area_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="conter != null" >
+        conter,
+      </if>
+      <if test="contTel != null" >
+        cont_tel,
+      </if>
+      <if test="sortingFactoryContent != null" >
+        sorting_factory_content,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="wd != null" >
+        wd,
+      </if>
+      <if test="oriName != null" >
+        ori_name,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="baseId != null" >
+        #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="sortingFactoryName != null" >
+        #{sortingFactoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortingFactoryMj != null" >
+        #{sortingFactoryMj,jdbcType=DOUBLE},
+      </if>
+      <if test="areaProv != null" >
+        #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null" >
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="sortingFactoryContent != null" >
+        #{sortingFactoryContent,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=VARCHAR},
+      </if>
+      <if test="oriName != null" >
+        #{oriName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.SortingFactory" >
+    update sorting_factory
+    <set >
+      <if test="baseId != null" >
+        base_id = #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="sortingFactoryName != null" >
+        sorting_factory_name = #{sortingFactoryName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortingFactoryMj != null" >
+        sorting_factory_mj = #{sortingFactoryMj,jdbcType=DOUBLE},
+      </if>
+      <if test="areaProv != null" >
+        area_prov = #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        area_city = #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        area_cou = #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null" >
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="sortingFactoryContent != null" >
+        sorting_factory_content = #{sortingFactoryContent,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=VARCHAR},
+      </if>
+      <if test="oriName != null" >
+        ori_name = #{oriName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.SortingFactory" >
+    update sorting_factory
+    set base_id = #{baseId,jdbcType=BIGINT},
+      sorting_factory_name = #{sortingFactoryName,jdbcType=VARCHAR},
+      sorting_factory_mj = #{sortingFactoryMj,jdbcType=DOUBLE},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      sorting_factory_content = #{sortingFactoryContent,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=VARCHAR},
+      wd = #{wd,jdbcType=VARCHAR},
+      ori_name = #{oriName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findAllByBaseId" parameterType="java.lang.Long"
+          resultType="com.wisea.transac.common.entity.SortingFactory">
+    select *
+    from sorting_factory
+    where del_flag = '0'
+      and base_id = #{baseId}
+  </select>
+  <select id="countAndAreaSum" parameterType="java.lang.Long"
+          resultType="com.wisea.transac.common.vo.BaseStatVo">
+    select count(id)                          sfCount,
+           ifnull(sum(sorting_factory_mj), 0) sfArea
+    from sorting_factory
+    where del_flag = '0'
+      and base_id = #{baseId}
+  </select>
+</mapper>

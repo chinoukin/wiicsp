@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+  <include resource="org/springframework/boot/logging/logback/base.xml" />
+
+  <!-- 定义日志文件的存储地址 如果变量没定义就是用:后的默认值 -->
+  <property name="LOG_HOME" value="${BOOT_LOGHOME:-logs}" />
+  <!-- 日志名称 -->
+  <property name="LOG_NAME" value="transac-files" />
+
+  <!-- wisea包为debug -->
+  <logger name="com.wisea" level="INFO"></logger>
+
+  <!-- 生产环境 -->
+  <springProfile name="prod">
+    <!-- 注意这里一定要放到springProfile里, 否则在本机执行的时候还是会去创建相应的文件，但不会输出内容，定义在里面也不会影响ref引用 -->
+    <!-- 按照每天生成日志文件 -->
+    <appender name="FILE"
+      class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <rollingPolicy
+        class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <!--日志文件输出的文件名 -->
+        <FileNamePattern>${LOG_HOME}/${LOG_NAME}_%d{yyyy-MM-dd}.%i.log
+        </FileNamePattern>
+        <!--日志文件保留天数 -->
+        <maxHistory>15</maxHistory>
+        <!--日志文件最大的大小 -->
+        <MaxFileSize>10MB</MaxFileSize>
+        <!--日志文件的上限大小,到了阀值就会删除旧的日志 -->
+        <totalSizeCap>10GB</totalSizeCap>
+      </rollingPolicy>
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+        <charset>UTF-8</charset>
+      </encoder>
+    </appender>
+
+    <!-- 文件输出 -->
+    <appender name="asyncFileAppender" class="ch.qos.logback.classic.AsyncAppender">
+      <!-- 不丢失日志.默认的,如果队列的80%已满,则会丢弃TRACT、DEBUG、INFO级别的日志 -->
+      <discardingThreshold>0</discardingThreshold>
+      <!-- 更改默认的队列的深度,该值会影响性能.默认值为256 -->
+      <queueSize>2048</queueSize>
+      <includeCallerData>true</includeCallerData>
+      <!-- 添加附加的appender,最多只能添加一个 -->
+      <appender-ref ref="FILE" />
+    </appender>
+
+    <!-- 上传文件留存索引 -->
+    <appender name="UPLOAD_FILE_INDEX" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <!--日志文件输出的文件名 -->
+      <file>${LOG_HOME}/UPLOAD_FILE_INDEX</file>
+      <!--日志文件输出的文件名 -->
+      <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+        <fileNamePattern>${LOG_HOME}/UPLOAD_FILE_INDEX_%i</fileNamePattern>
+      </rollingPolicy>
+      <triggeringPolicy
+        class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+        <!--日志文件最大的大小 -->
+        <MaxFileSize>1KB</MaxFileSize>
+      </triggeringPolicy>
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%msg%n</pattern>
+        <charset>UTF-8</charset>
+      </encoder>
+    </appender>
+
+    <!-- additivity必须设置为false，否则不光新的日志文件会存储索引的日志，原业务日志(root)文件也会存储 不继承root -->
+    <logger name="com.wisea.cloud.files.service.FastDFSClientService" level="INFO" additivity="false">
+      <appender-ref ref="UPLOAD_FILE_INDEX" />
+    </logger>
+
+    <root level="INFO">
+      <!-- <appender-ref ref="consoleAppender" /> -->
+      <appender-ref ref="asyncFileAppender" />
+    </root>
+  </springProfile>
+
+    <!-- 测试环境 -->
+  <springProfile name="test">
+    <!-- 上传文件留存索引 -->
+    <appender name="UPLOAD_FILE_INDEX" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <!--日志文件输出的文件名 -->
+      <file>${LOG_HOME}/UPLOAD_FILE_INDEX</file>
+      <!--日志文件输出的文件名 -->
+      <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+        <fileNamePattern>${LOG_HOME}/UPLOAD_FILE_INDEX_%i</fileNamePattern>
+      </rollingPolicy>
+      <triggeringPolicy
+        class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+        <!--日志文件最大的大小 -->
+        <MaxFileSize>2MB</MaxFileSize>
+      </triggeringPolicy>
+      <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <pattern>%msg%n</pattern>
+        <charset>UTF-8</charset>
+      </encoder>
+    </appender>
+
+    <!-- additivity必须设置为false，否则不光新的日志文件会存储索引的日志，原业务日志(root)文件也会存储 不继承root -->
+    <logger name="com.wisea.cloud.files.service.FastDFSClientService" level="INFO" additivity="false">
+      <appender-ref ref="UPLOAD_FILE_INDEX" />
+    </logger>
+  </springProfile>
+</configuration>

@@ -1,0 +1,1195 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.CommPubInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.CommPubInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="sale_staff_id" property="saleStaffId" jdbcType="BIGINT"/>
+        <result column="stalls_mage_id" property="stallsMageId" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_title" property="commTitle" jdbcType="VARCHAR"/>
+        <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT"/>
+        <result column="brand_mage_id" property="brandMageId" jdbcType="BIGINT"/>
+        <result column="origin_place_type" property="originPlaceType" jdbcType="VARCHAR"/>
+        <result column="abroad_id" property="abroadId" jdbcType="BIGINT"/>
+        <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR"/>
+        <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR"/>
+        <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR"/>
+        <result column="comm_signature" property="commSignature" jdbcType="VARCHAR"/>
+        <result column="Recommend" property="recommend" jdbcType="VARCHAR"/>
+        <result column="notes_to_buy" property="notesToBuy" jdbcType="VARCHAR"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR"/>
+        <result column="start_ord_expres" property="startOrdExpres" jdbcType="VARCHAR"/>
+        <result column="exam_id" property="examId" jdbcType="BIGINT"/>
+        <result column="comm_sale_set_id" property="commSaleSetId" jdbcType="BIGINT"/>
+        <result column="version_num" property="versionNum" jdbcType="VARCHAR"/>
+        <result column="ser_support_type" property="serSupportType" jdbcType="VARCHAR"/>
+        <result column="storage_type" property="storageType" jdbcType="VARCHAR"/>
+        <result column="storage_id" property="storageId" jdbcType="BIGINT"/>
+        <result column="plantation_id" property="plantationId" jdbcType="BIGINT"/>
+        <result column="port_id" property="portId" jdbcType="BIGINT"/>
+        <result column="base_id" property="baseId" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="goods_type" property="goodsType" jdbcType="VARCHAR"/>
+        <result column="yjdf_flag" property="yjdfFlag" jdbcType="VARCHAR"/>
+        <result column="ser_type_expres" property="serTypeExpres" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <resultMap id="ListProduct" type="com.wisea.transac.common.vo.product.CheckShopCartProduct">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_title" property="commTitle" jdbcType="VARCHAR"/>
+        <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT"/>
+        <result column="stalls_mage_id" property="stallsMageId" jdbcType="BIGINT"/>
+        <result column="base_id" property="baseId" jdbcType="BIGINT"/>
+        <result column="goods_type" property="goodsType" jdbcType="VARCHAR"/>
+        <result column="yjdf_flag" property="yjdfFlag" jdbcType="VARCHAR"/>
+        <collection property="commAttris" ofType="com.wisea.transac.common.po.product.CommAttriMagePo">
+            <result column="commAttriId" property="commAttriId" jdbcType="BIGINT"/>
+            <result column="dictVal" property="dictVal" jdbcType="VARCHAR"/>
+            <result column="commAttriVal" property="commAttriVal" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="commLevelPo" ofType="com.wisea.transac.common.po.product.LevelSpecQuoteMagePo">
+            <result column="commLevelSpecId" property="commLevelSpecId" jdbcType="BIGINT"/>
+            <result column="spec" property="spec" jdbcType="VARCHAR"/>
+            <result column="startOrdExpres" property="startOrdExpres" jdbcType="VARCHAR"/>
+            <result column="priceExpres" property="priceExpres" jdbcType="VARCHAR"/>
+            <result column="measUnitId" property="measUnitId" jdbcType="BIGINT"/>
+            <result column="lsqAvaiCount" property="avaiSupplyCount" jdbcType="DOUBLE"/>
+            <result column="netWeight" property="netWeight" jdbcType="DOUBLE"/>
+        </collection>
+    </resultMap>
+    <resultMap id="ListResultMap" type="com.wisea.transac.common.vo.product.CommPubInfoListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR"/>
+        <result column="comm_title" property="commTitle" jdbcType="VARCHAR"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="goods_type" property="goodsType" jdbcType="VARCHAR"/>
+        <result column="yjdf_flag" property="yjdfFlag" jdbcType="VARCHAR"/>
+
+        <result column="comm_sale_set_id" property="commSaleSetId" jdbcType="BIGINT"/>
+        <result column="comm_name" property="commSalesSetName" jdbcType="VARCHAR"/>
+        <result column="setSort" property="sort" jdbcType="INTEGER"/>
+
+        <result column="catg_name" property="commSaleName" jdbcType="VARCHAR"/>
+        <result column="comm_sale_catg_id" property="commSaleId" jdbcType="BIGINT"/>
+        <result column="commSaleSort" property="commSort" jdbcType="INTEGER"/>
+
+        <result column="stalls_mage_id" property="stallsMageId" jdbcType="BIGINT"/>
+        <association property="stallsMageInfoVo" javaType="com.wisea.transac.common.vo.seller.StallsMageInfoVo">
+            <result column="stalls_name" property="stallsName" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="commPicture" ofType="com.wisea.transac.common.vo.CommPictureInfoVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="ListResMap" type="com.wisea.transac.common.vo.product.CommListStaffMageVo">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_sale_catg_id" property="commSaleCatgId" jdbcType="BIGINT"/>
+        <result column="comm_name" property="commName" jdbcType="VARCHAR"/>
+        <result column="setSort" property="sort" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <resultMap id="detaliMap" type="com.wisea.transac.common.vo.CommPubInfoInfoVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="sale_staff_id" property="saleStaffId" jdbcType="BIGINT"/>
+        <result column="stalls_mage_id" property="stallsMageId" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_title" property="commTitle" jdbcType="VARCHAR"/>
+        <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT"/>
+        <result column="comm_variet_name" property="commVarietName" jdbcType="VARCHAR"/>
+        <result column="brand_mage_id" property="brandMageId" jdbcType="BIGINT"/>
+        <result column="origin_place_type" property="originPlaceType" jdbcType="VARCHAR"/>
+        <result column="abroad_id" property="abroadId" jdbcType="BIGINT"/>
+        <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR"/>
+        <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR"/>
+        <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR"/>
+        <result column="comm_signature" property="commSignature" jdbcType="VARCHAR"/>
+        <result column="Recommend" property="recommend" jdbcType="VARCHAR"/>
+        <result column="notes_to_buy" property="notesToBuy" jdbcType="VARCHAR"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR"/>
+        <result column="start_ord_expres" property="startOrdExpres" jdbcType="VARCHAR"/>
+        <result column="exam_id" property="examId" jdbcType="BIGINT"/>
+        <result column="comm_sale_set_id" property="commSaleSetId" jdbcType="BIGINT"/>
+        <result column="comm_sale_set_name" property="commSaleSetName" jdbcType="VARCHAR"/>
+        <result column="ser_support_type" property="serSupportType" jdbcType="VARCHAR"/>
+        <result column="storage_type" property="storageType" jdbcType="VARCHAR"/>
+        <result column="storage_id" property="storageId" jdbcType="BIGINT"/>
+        <result column="plantation_id" property="plantationId" jdbcType="BIGINT"/>
+        <result column="base_id" property="baseId" jdbcType="BIGINT"/>
+        <result column="base_url" property="basePicture" jdbcType="VARCHAR"/>
+        <result column="port_id" property="portId" jdbcType="BIGINT"/>
+        <result column="storage_name" property="storageName" jdbcType="VARCHAR"/>
+        <result column="base_name" property="baseName" jdbcType="VARCHAR"/>
+        <result column="port_name" property="portName" jdbcType="VARCHAR"/>
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR"/>
+        <result column="plantation_name" property="plantationName" jdbcType="VARCHAR"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="follow_merchant_id" property="followMerchantId" jdbcType="BIGINT"/>
+        <result column="followCommPubId" property="followCommPubId" jdbcType="BIGINT"/>
+        <result column="goods_type" property="goodsType" jdbcType="VARCHAR"/>
+        <result column="yjdf_flag" property="yjdfFlag" jdbcType="VARCHAR"/>
+        <result column="ser_type_expres" property="serTypeExpres" jdbcType="VARCHAR"/>
+        <association property="brandMage" javaType="com.wisea.transac.common.vo.BrandMageInfoVo">
+            <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        </association>
+        <association property="stallsMageInfoVo" javaType="com.wisea.transac.common.vo.seller.StallsMageInfoVo">
+            <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT"/>
+            <result column="shop_id" property="shopId" jdbcType="BIGINT"/>
+            <result column="stalls_name" property="stallsName" jdbcType="BIGINT"/>
+            <result column="shop_name" property="shopName" jdbcType="BIGINT"/>
+            <result column="address" property="address" jdbcType="VARCHAR"/>
+            <result column="stalls_house_num" property="stallsHouseNum" jdbcType="VARCHAR"/>
+            <result column="contacts" property="contacts" jdbcType="VARCHAR"/>
+            <result column="cont_tel" property="contTel" jdbcType="VARCHAR"/>
+            <result column="business_date" property="businessDate" jdbcType="VARCHAR"/>
+            <result column="business_time" property="businessTime" jdbcType="VARCHAR"/>
+            <result column="back_ground_url" property="backGroundUrl" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="commAttri" ofType="com.wisea.transac.common.vo.CommAttriInfoVo">
+            <result column="commAttriId" property="commAttriId" jdbcType="BIGINT"/>
+            <result column="commAttriColumn" property="commAttriColumn" jdbcType="VARCHAR"/>
+            <result column="commAttriName" property="commAttriName" jdbcType="VARCHAR"/>
+            <result column="commAttriType" property="commAttriType" jdbcType="VARCHAR"/>
+            <result column="commAttriVal" property="commAttriVal" jdbcType="VARCHAR"/>
+            <result column="ifRequ" property="ifRequ" jdbcType="CHAR"/>
+            <result column="commAttriSort" property="sort" jdbcType="CHAR"/>
+            <result column="length" property="length" jdbcType="INTEGER"/>
+            <result column="dictVal" property="dictVal" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="commPicture" ofType="com.wisea.transac.common.vo.CommPictureInfoVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+            <result column="comm_picture_type" property="commPictureType" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="commLevelPo" ofType="com.wisea.transac.common.vo.product.LevelSqecQuatePriceVo">
+            <result column="commLevelSpecId" property="commLevelSpecId" jdbcType="BIGINT"/>
+            <result column="spec" property="spec" jdbcType="VARCHAR"/>
+            <result column="measUnitId" property="measUnitId" jdbcType="BIGINT"/>
+            <result column="lsqAvaiCount" property="avaiSupplyCount" jdbcType="DOUBLE"/>
+            <result column="netWeight" property="netWeight" jdbcType="DOUBLE"/>
+            <result column="start_ord_expres" property="startOrdExpres" jdbcType="VARCHAR"/>
+            <result column="price_expres" property="priceExpres" jdbcType="VARCHAR"/>
+            <result column="sales_volume" property="salesVolume" jdbcType="DOUBLE"/>
+            <result column="transaction_amount" property="transactionAmount" jdbcType="DOUBLE"/>
+        </collection>
+    </resultMap>
+    <resultMap id="ListResult" type="com.wisea.transac.common.vo.product.CommodityStatisticsVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_title" property="commTitle" jdbcType="VARCHAR"/>
+        <result column="transaction_amount" property="transactionAmount" jdbcType="DOUBLE"/>
+        <result column="sales_volume" property="salesCount" jdbcType="DOUBLE"/>
+        <result column="buyer_id" property="purchasesNum" jdbcType="INTEGER"/>
+        <collection property="commPicture" ofType="com.wisea.transac.common.vo.CommPictureInfoVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, comm_num, memb_id, sale_staff_id, stalls_mage_id, comm_id, comm_title, comm_variet_id,
+    brand_mage_id, origin_place_type, abroad_id, comm_local_prov, comm_local_city, comm_local_cou,
+    comm_signature, Recommend, notes_to_buy, comm_state_type, reject_reason,start_ord_expres, exam_id,
+    comm_sale_set_id, version_num,ser_support_type,storage_type,storage_id,plantation_id,port_id,base_id,goods_type,yjdf_flag,ser_type_expres,
+    create_by, create_date, update_by, update_date, remarks,del_flag
+  </sql>
+
+    <!-- 商家App 商品统计(下单人数) -->
+    <select id="selCommodityStatisticsList" resultMap="ListResult"
+            parameterType="com.wisea.transac.common.po.product.CommodityStatisticsPo">
+        SELECT
+        cpi.id,cpi.comm_title,cp.url,cp.comm_picture_type,cp.sort,sum(lsq.sales_volume) as 'sales_volume',
+        sum(lsq.transaction_amount) as 'transaction_amount',count(oi.buyer_id) AS 'buyer_id'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_picture cp ON cp.comm_pub_id = cpi.id AND cp.comm_picture_type = '0'
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id
+        LEFT JOIN ord_comm_rela ocr ON ocr.comm_pub_id = cpi.id
+        LEFT JOIN order_info oi ON oi.id = ocr.ord_id AND oi.order_state_type != '5'
+        WHERE cpi.del_flag = '0'
+        <if test="stallsMageIds != null and stallsMageIds.size != 0">
+            and cpi.stalls_mage_id IN
+            <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        <if test="startTime != null">
+            AND cpi.create_date >= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND cpi.create_date <![CDATA[<=]]> #{endTime}
+        </if>
+        GROUP BY cpi.id
+        ORDER BY transaction_amount DESC
+    </select>
+    <!-- 根据商品发布id 获取详细信息 -->
+    <select id="findById" parameterType="com.wisea.transac.common.po.product.CommPubInfoGetPo" resultMap="detaliMap">
+        select
+        cpi.id, comm_num, cpi.memb_id, cpi.sale_staff_id, cpi.stalls_mage_id, cpi.comm_id, cpi.comm_title,
+        cpi.comm_variet_id,origin_place_type, cpi.abroad_id, comm_local_prov, comm_local_city, comm_local_cou,ser_type_expres,
+        comm_signature,Recommend, notes_to_buy, comm_state_type, reject_reason,exam_id,comm_sale_set_id,
+        css.comm_name as 'comm_sale_set_name',cvm.comm_variet_name,
+        cpi.ser_support_type,cpi.storage_type,cpi.storage_id,cpi.plantation_id,cpi.base_id,cpi.port_id,goods_type,yjdf_flag,
+        cpi.create_date as 'createDate',cpi.update_date as 'update_date',brand_mage_id,
+        cp.url,cp.comm_picture_type,cp.sort,sm.business_date,sm.business_time,sm.contacts,sm.cont_tel,
+        sm.address,sm.whole_sale_market_id,sm.shop_id,si.shop_name,sm.stalls_name,sm.stalls_house_num,sm.back_ground_url,
+        ca.comm_attri_column as 'commAttriColumn',ca.comm_attri_name as "commAttriName",ca.comm_attri_type as
+        "commAttriType",
+        lsq.id as "commLevelSpecId",lsq.avai_supply_count as 'lsqAvaiCount',lsq.meas_unit_id as
+        'measUnitId',lsq.start_ord_expres,
+        lsq.spec as 'spec', lsq.net_weight as 'netWeight',lsq.price_expres,lsq.transaction_amount,lsq.sales_volume,
+        ca.comm_attri_val as "commAttriVal",ca.if_requ as 'ifRequ',ca.sort as 'commAttriSort',ca.length as 'length',
+        ca.dict_val as 'dictVal',ca.comm_attri_id as 'commAttriId',bm.brand_name,bi.base_name,bp.url as
+        'base_url',sti.storage_name,pi.plantation_name,pm.port_name,
+        pm.area_prov
+        <if test="membId != null and membId != ''">
+            ,fc.id as 'followCommPubId'
+            ,fm.id as 'follow_merchant_id'
+        </if>
+        from comm_pub_info cpi
+        LEFT JOIN comm_sale_set css ON css.id = cpi.comm_sale_set_id
+        LEFT JOIN comm_variet_mage cvm ON cvm.id = cpi.comm_variet_id
+        LEFT JOIN comm_attri ca ON ca.comm_pub_id = cpi.id
+        LEFT JOIN comm_picture cp ON cp.comm_pub_id = cpi.id
+        LEFT JOIN brand_mage bm ON bm.id = cpi.brand_mage_id
+        LEFT JOIN stalls_mage sm ON sm.id = cpi.stalls_mage_id
+        LEFT JOIN shop_info si ON si.id = sm.shop_id
+        LEFT JOIN base_info bi ON bi.id = cpi.base_id
+        LEFT JOIN base_picture bp ON bi.id = bp.base_id and bp.base_picture_type ='0'
+        LEFT JOIN storage_info sti ON sti.id = cpi.storage_id
+        LEFT JOIN plantation_info pi ON pi.id = cpi.plantation_id
+        LEFT JOIN port_mage pm ON pm.id = cpi.port_id
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id and lsq.del_flag = '0'
+        <if test="membId != null and membId != ''">
+            LEFT JOIN follow_comm fc ON (fc.comm_pub_id = cpi.id AND fc.del_flag = '0' AND fc.memb_id = #{membId})
+            LEFT JOIN follow_merchant fm ON fm.shop_id = si.id and fm.del_flag = '0' and fm.memb_id = #{membId}
+        </if>
+        where cpi.id = #{id,jdbcType=BIGINT} and cpi.del_flag = '0' order by cp.sort asc
+    </select>
+    <!-- 查询每一个商品状态对应的信息 -->
+    <select id="getStateCountMap" parameterType="com.wisea.transac.common.po.product.CommPubInfoPagePo"
+            resultType="java.util.Map">
+        SELECT
+        cpi.comm_state_type,
+        count(cpi.comm_state_type)
+        FROM
+        comm_pub_info cpi
+        WHERE cpi.del_flag = '0'
+        <if test="stallsMageIds != null and stallsMageIds.size != 0">
+            AND cpi.stalls_mage_id IN
+            <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        GROUP BY cpi.comm_state_type
+    </select>
+
+    <!-- 查询商品列表 -->
+    <select id="findCommPubList" resultMap="ListResultMap"
+            parameterType="com.wisea.transac.common.po.product.CommPubInfoPagePo">
+        SELECT
+        cpi.id,cpi.comm_num,goods_type,yjdf_flag,
+        cpi.comm_title,cpi.stalls_mage_id,cpi.comm_state_type,cp.url,sm.stalls_name,cpi.comm_sale_set_id,css.comm_name,
+        css.comm_sale_catg_id,css.sort as 'setSort',csc.catg_name,csc.sort as 'commSaleSort'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_sale_set css ON css.id = cpi.comm_sale_set_id
+        LEFT JOIN comm_sale_catg csc ON csc.id = css.comm_sale_catg_id
+        LEFT JOIN comm_picture cp ON cp.comm_pub_id = cpi.id AND cp.comm_picture_type = '0' AND cp.sort = '0'
+        LEFT JOIN stalls_mage sm ON sm.id = cpi.stalls_mage_id
+        WHERE cpi.del_flag = '0'
+        <if test="stallsMageIds != null and stallsMageIds.size != 0">
+            and cpi.stalls_mage_id IN
+            <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+                ${id}
+            </foreach>
+        </if>
+        <if test="commSaleSetIds != null and commSaleSetIds.size != 0">
+            and cpi.comm_sale_set_id IN
+            <foreach collection="commSaleSetIds" item="id" open="(" close=")" separator=",">
+                ${id}
+            </foreach>
+        </if>
+        <if test="search != null and search != ''">
+            AND (cpi.comm_num LIKE CONCAT('%', #{search}, '%')
+            OR cpi.comm_title LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="commStateType != null and commStateType != ''">
+            AND cpi.comm_state_type = #{commStateType}
+        </if>
+        <if test="commSalesSetId != null and commSalesSetId != ''">
+            AND cpi.comm_sale_set_id = #{commSalesSetId}
+        </if>
+        <if test="nearlyMonth != null">
+            AND cpi.update_date <![CDATA[ >= ]]> #{nearlyMonth}
+        </if>
+        ORDER BY IFNULL(cpi.update_date,cpi.create_date) DESC
+    </select>
+    <!-- 查询每一个商品状态对应的信息 -->
+    <select id="getStateCountMapOrigin" parameterType="com.wisea.transac.common.po.product.CommPubInfoPagePo"
+            resultType="java.util.Map">
+        SELECT
+        cpi.comm_state_type,
+        count(cpi.comm_state_type)
+        FROM
+        comm_pub_info cpi
+        WHERE cpi.del_flag = '0'
+        AND cpi.base_id = #{baseId}
+        GROUP BY cpi.comm_state_type
+    </select>
+
+    <!-- 查询商品列表 -->
+    <select id="findCommPubListOrigin" resultMap="ListResultMap"
+            parameterType="com.wisea.transac.common.po.product.CommPubInfoPagePo">
+        SELECT
+        cpi.id,cpi.comm_num,goods_type,yjdf_flag,
+        cpi.comm_title,cpi.stalls_mage_id,cpi.comm_state_type,cp.url,sm.stalls_name,cpi.comm_sale_set_id,css.comm_name,
+        css.comm_sale_catg_id,css.sort as 'setSort',csc.catg_name,csc.sort as 'commSaleSort'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_sale_set css ON css.id = cpi.comm_sale_set_id
+        LEFT JOIN comm_sale_catg csc ON csc.id = css.comm_sale_catg_id
+        LEFT JOIN comm_picture cp ON cp.comm_pub_id = cpi.id AND cp.comm_picture_type = '0' AND cp.sort = '0'
+        LEFT JOIN stalls_mage sm ON sm.id = cpi.stalls_mage_id
+        WHERE cpi.del_flag = '0'
+        AND cpi.base_id = #{baseId}
+        <if test="commSaleSetIds != null">
+            and cpi.comm_sale_set_id IN
+            <foreach collection="commSaleSetIds" item="id" open="(" close=")" separator=",">
+                ${id}
+            </foreach>
+        </if>
+        <if test="search != null and search != ''">
+            AND (cpi.comm_num LIKE CONCAT('%', #{search}, '%')
+            OR cpi.comm_title LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="commStateType != null and commStateType != ''">
+            AND cpi.comm_state_type = #{commStateType}
+        </if>
+        <if test="commSalesSetId != null and commSalesSetId != ''">
+            AND cpi.comm_sale_set_id = #{commSalesSetId}
+        </if>
+        ORDER BY IFNULL(cpi.update_date,cpi.create_date) DESC
+    </select>
+
+    <!--  根据档口id 查询销售分类设置  -->
+    <select id="findCommMageListByStaffId" resultMap="ListResMap"
+            parameterType="com.wisea.transac.common.po.product.CommPubInfoPagePo">
+        SELECT
+        distinct (css.id) as 'id',
+        css.comm_name,
+        css.comm_sale_catg_id,
+        css.sort as 'setSort'
+        FROM
+        comm_sale_catg csc
+        LEFT JOIN comm_sale_set css ON css.comm_sale_catg_id = csc.id
+        LEFT JOIN comm_pub_info cpi ON cpi.comm_sale_set_id = css.id
+        WHERE
+        cpi.del_flag = '0'
+        AND cpi.stalls_mage_id IN
+        <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+            ${id}
+        </foreach>
+        ORDER BY IFNULL(cpi.update_date,cpi.create_date) DESC
+    </select>
+    <!--  根据档口id 查询销售分类 去重  -->
+    <select id="findCommMageListDistincStaffId" resultType="com.wisea.transac.common.vo.product.DistincCommSaleVo"
+            parameterType="com.wisea.transac.common.po.product.CommPubInfoPagePo">
+        SELECT
+        distinct (css.comm_sale_catg_id) as 'id',
+        csc.catg_name,
+        csc.sort as 'sort'
+        FROM
+        comm_sale_catg csc
+        LEFT JOIN comm_sale_set css ON css.comm_sale_catg_id = csc.id
+        LEFT JOIN comm_pub_info cpi ON cpi.comm_sale_set_id = css.id
+        WHERE
+        cpi.del_flag = '0'
+        AND cpi.stalls_mage_id IN
+        <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+            ${id}
+        </foreach>
+    </select>
+    <!-- 根据发布商品状态和id来查询商品列表-->
+    <select id="findListByCommPubInfoStateType" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        comm_pub_info cpi
+        WHERE 1=1
+        <if test="stateType != null and stateType != ''">
+            and cpi.comm_state_type = #{stateType}
+        </if>
+        AND cpi.id IN (
+        <foreach collection="ids" item="item" index="index" separator=",">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        )
+    </select>
+    <!-- 批量修改商品发布状态 -->
+    <update id="updateCommPubInfoState" parameterType="com.wisea.transac.common.entity.CommPubInfo">
+        UPDATE
+        comm_pub_info cpi
+        SET
+        cpi.comm_state_type = #{commPubInfo.commStateType},
+        cpi.reject_reason = #{commPubInfo.rejectReason},
+        update_by = #{commPubInfo.updateBy},
+        update_date = #{commPubInfo.updateDate},
+        del_flag = #{commPubInfo.delFlag}
+        WHERE cpi.id IN (
+        <foreach collection="ids" item="item" index="index" separator=",">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        )
+    </update>
+
+    <!-- 批量商品发布状态 -->
+    <update id="updateCommPubState" parameterType="com.wisea.transac.common.entity.CommPubInfo">
+        UPDATE
+        comm_pub_info cpi
+        SET
+        cpi.comm_state_type = #{commPubInfo.commStateType},
+        update_by = #{commPubInfo.updateBy},
+        update_date = #{commPubInfo.updateDate},
+        del_flag = #{commPubInfo.delFlag}
+        WHERE cpi.id IN (
+        <foreach collection="ids" item="item" index="index" separator=",">
+            #{item,jdbcType=BIGINT}
+        </foreach>
+        )
+    </update>
+    <!--  根据id查询修改前数据信息 包括 商品标题、商品品类、品种,商品属性中commAttriVal字段,  -->
+    <select id="findDetailById" parameterType="java.lang.Long" resultMap="ListProduct">
+        select
+          cpi.id,cpi.comm_id,cpi.comm_title,cpi.comm_variet_id,cpi.stalls_mage_id,cpi.base_id,goods_type,yjdf_flag,
+          ca.comm_attri_val as "commAttriVal",ca.comm_attri_id as 'commAttriId',
+          lsq.id as "commLevelSpecId",lsq.avai_supply_count as 'lsqAvaiCount',lsq.meas_unit_id as 'measUnitId',
+          lsq.spec as 'spec', lsq.net_weight as 'netWeight',lsq.start_ord_expres as 'startOrdExpres',lsq.price_expres as 'priceExpres'
+        from
+        comm_pub_info cpi
+        LEFT JOIN comm_attri ca ON ca.comm_pub_id = cpi.id and ca.if_requ = '0'
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id and lsq.del_flag = '0'
+        WHERE cpi.id = #{id,jdbcType=BIGINT}
+        order by ca.sort asc
+    </select>
+    <!-- 查询商品最大编号   -->
+    <select id="findCommPubInfoMaxNum" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT comm_num FROM comm_pub_info WHERE comm_num LIKE CONCAT(#{commNum}, '%')
+    </select>
+    <!--查询商品信息-->
+    <select id="commList" parameterType="com.wisea.transac.common.po.product.CommDataListPo"
+            resultType="com.wisea.transac.common.vo.product.CommDataListVo">
+        SELECT
+        t1.id AS id,
+        t1.comm_num AS commNum,
+        t1.comm_title AS commName,
+        t4.entp_name AS entpName,
+        t1.comm_state_type AS commStateType,
+        t1.comm_id AS commId,
+        t1.comm_sale_set_id AS commSaleSetId,
+        t2.comm_name AS commSaleSetName,
+        t3.catg_name AS catgName,
+        t1.reject_reason AS examYj,
+        t1.start_ord_expres as startOrdExpres,
+        t1.stalls_mage_id as stallsMageId,
+        t1.goods_type as goodsType,
+        t1.yjdf_flag as yjdfFlag,
+        sm.stalls_name as stallsName,
+        bi.base_name as baseName,
+        IFNULL(t1.update_date,t1.create_date) AS updateDate
+        FROM
+        comm_pub_info AS t1
+        LEFT JOIN comm_sale_set AS t2 ON t2.id = t1.comm_sale_set_id
+        LEFT JOIN comm_sale_catg AS t3 ON t3.id = t2.comm_sale_catg_id
+        LEFT JOIN memb_info AS t4 ON t1.memb_id = t4.id
+        LEFT JOIN stalls_mage AS sm on sm.id = t1.stalls_mage_id
+        LEFT JOIN shop_info AS si ON si.id = sm.shop_id
+        LEFT JOIN base_info AS bi ON bi.id = t1.base_id
+        <where>
+            <if test="likeName != null and likeName != '' ">
+                AND (instr(t1.comm_num,#{likeName}) != 0 OR
+                instr(t1.comm_title,#{likeName})) != 0
+            </if>
+            <if test="commId != null and commId != '' ">
+                AND INSTR(t1.comm_id,#{commId}) != 0
+            </if>
+            <if test="entpName != null and entpName != '' ">
+                AND INSTR(ea.comp_name,#{entpName}) != 0)
+            </if>
+            <if test="baseName != null and baseName != '' ">
+                AND INSTR(bi.base_name,#{baseName}) != 0)
+            </if>
+            <if test="commStateType != null and commStateType != '' ">
+                AND INSTR(t1.comm_state_type,#{commStateType}) != 0
+            </if>
+            <if test="shopMageIds != null and shopMageIds.size != 0">
+                AND si.merchant_id IN
+                <foreach collection="shopMageIds" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="stallsMageIds != null and stallsMageIds.size != 0">
+                AND t1.stalls_mage_id IN
+                <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+                    #{id}
+                </foreach>
+            </if>
+            AND sm.whole_sale_market_id = #{marketId} AND t1.del_flag != '1' AND t1.comm_state_type != '3' AND
+            t4.del_flag != '1'
+            ORDER BY t1.update_date DESC
+        </where>
+    </select>
+    <!--查询商品信息-->
+    <select id="commListAll" parameterType="com.wisea.transac.common.po.product.CommDataListPo"
+            resultType="com.wisea.transac.common.vo.product.CommDataListVo">
+        SELECT
+        t1.id AS id,
+        t1.comm_num AS commNum,
+        t1.comm_title AS commName,
+        t1.comm_state_type AS commStateType,
+        t1.comm_id AS commId,
+        t1.comm_sale_set_id AS commSaleSetId,
+        t1.reject_reason AS examYj,
+        t1.start_ord_expres as startOrdExpres,
+        t1.stalls_mage_id as stallsMageId,
+        IFNULL(t1.update_date,t1.create_date) AS updateDate
+        FROM
+        comm_pub_info AS t1
+        where
+        t1.del_flag = '0'
+        and t1.comm_state_type = #{commStateType}
+    </select>
+    <!--根据品类id 查询商品品牌信息-->
+    <select id="findBrandListByCommMageId" parameterType="com.wisea.cloud.model.po.LongIdPo" resultMap="BaseResultMap">
+        SELECT
+          DISTINCT(brand_mage_id)
+        FROM
+        comm_pub_info AS cpi
+        where cpi.comm_id = #{id} and cpi.del_flag != '1' and cpi.comm_state_type = '0' AND cpi.brand_mage_id is not null
+    </select>
+    <!-- 根据仓库ID查询正在销售商品列表 -->
+    <select id="findBySortingFactoryId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+      *
+    from
+      comm_pub_info cpi
+    where
+      cpi.storage_id = #{sortingFactoryId,jdbcType=BIGINT}
+      and cpi.comm_state_type = '0'
+  </select>
+    <!-- 根据种植园ID查询正在销售商品列表 -->
+    <select id="findByPlantationId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+      *
+    from
+      comm_pub_info cpi
+    where
+      cpi.plantation_id = #{plantationId,jdbcType=BIGINT}
+      and cpi.comm_state_type = '0'
+  </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from comm_pub_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from comm_pub_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.CommPubInfo">
+    insert into comm_pub_info (id, comm_num, memb_id,
+      sale_staff_id, stalls_mage_id, comm_id,
+      comm_title, comm_variet_id, brand_mage_id,
+      origin_place_type, abroad_id, comm_local_prov,
+      comm_local_city, comm_local_cou, comm_signature,
+      Recommend, notes_to_buy, comm_state_type,
+      reject_reason,start_ord_expres, exam_id, comm_sale_set_id,
+      version_num,ser_support_type,ser_support_type,ser_type_expres,
+      storage_type,storage_id,plantation_id,port_id,base_id,goods_type,yjdf_flag,
+      create_by, create_date,update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commNum,jdbcType=VARCHAR}, #{membId,jdbcType=BIGINT},
+      #{saleStaffId,jdbcType=BIGINT}, #{stallsMageId,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT},
+      #{commTitle,jdbcType=VARCHAR}, #{commVarietId,jdbcType=BIGINT}, #{brandMageId,jdbcType=BIGINT},
+      #{originPlaceType,jdbcType=VARCHAR}, #{abroadId,jdbcType=BIGINT}, #{commLocalProv,jdbcType=VARCHAR},
+      #{commLocalCity,jdbcType=VARCHAR}, #{commLocalCou,jdbcType=VARCHAR}, #{commSignature,jdbcType=VARCHAR},
+      #{recommend,jdbcType=VARCHAR}, #{notesToBuy,jdbcType=VARCHAR}, #{commStateType,jdbcType=VARCHAR},
+      #{rejectReason,jdbcType=VARCHAR}, #{startOrdExpres,jdbcType=VARCHAR},#{examId,jdbcType=BIGINT}, #{commSaleSetId,jdbcType=BIGINT},
+      #{versionNum,jdbcType=VARCHAR},#{serSupportType,jdbcType=VARCHAR},#{storageType,jdbcType=VARCHAR},#{serTypeExpres,jdbcType=VARCHAR},#{storageId,jdbcType=BIGINT},
+      #{plantationId,jdbcType=BIGINT},#{portId,jdbcType=BIGINT},#{baseId,jdbcType=BIGINT},#{goodsType,jdbcType=VARCHAR},#{yjdfFlag,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.CommPubInfo">
+        insert into comm_pub_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="commNum != null">
+                comm_num,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="saleStaffId != null">
+                sale_staff_id,
+            </if>
+            <if test="stallsMageId != null">
+                stalls_mage_id,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="commTitle != null">
+                comm_title,
+            </if>
+            <if test="commVarietId != null">
+                comm_variet_id,
+            </if>
+            <if test="brandMageId != null">
+                brand_mage_id,
+            </if>
+            <if test="originPlaceType != null">
+                origin_place_type,
+            </if>
+            <if test="abroadId != null">
+                abroad_id,
+            </if>
+            <if test="commLocalProv != null">
+                comm_local_prov,
+            </if>
+            <if test="commLocalCity != null">
+                comm_local_city,
+            </if>
+            <if test="commLocalCou != null">
+                comm_local_cou,
+            </if>
+            <if test="commSignature != null">
+                comm_signature,
+            </if>
+            <if test="recommend != null">
+                Recommend,
+            </if>
+            <if test="notesToBuy != null">
+                notes_to_buy,
+            </if>
+            <if test="commStateType != null">
+                comm_state_type,
+            </if>
+            <if test="rejectReason != null">
+                reject_reason,
+            </if>
+            <if test="startOrdExpres != null">
+                start_ord_expres,
+            </if>
+            <if test="examId != null">
+                exam_id,
+            </if>
+            <if test="commSaleSetId != null">
+                comm_sale_set_id,
+            </if>
+            <if test="versionNum != null">
+                version_num,
+            </if>
+            <if test="serSupportType != null">
+                ser_support_type,
+            </if>
+            <if test="serTypeExpres != null">
+                ser_type_expres,
+            </if>
+            <if test="storageType != null">
+                storage_type,
+            </if>
+            <if test="storageId != null">
+                storage_id,
+            </if>
+            <if test="plantationId != null">
+                plantation_id,
+            </if>
+            <if test="baseId != null">
+                base_id,
+            </if>
+            <if test="portId != null">
+                port_id,
+            </if>
+            <if test="goodsType != null">
+                goods_type,
+            </if>
+            <if test="yjdfFlag != null">
+                yjdf_flag,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="commNum != null">
+                #{commNum,jdbcType=VARCHAR},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="saleStaffId != null">
+                #{saleStaffId,jdbcType=BIGINT},
+            </if>
+            <if test="stallsMageId != null">
+                #{stallsMageId,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null">
+                #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="commTitle != null">
+                #{commTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="commVarietId != null">
+                #{commVarietId,jdbcType=BIGINT},
+            </if>
+            <if test="brandMageId != null">
+                #{brandMageId,jdbcType=BIGINT},
+            </if>
+            <if test="originPlaceType != null">
+                #{originPlaceType,jdbcType=VARCHAR},
+            </if>
+            <if test="abroadId != null">
+                #{abroadId,jdbcType=BIGINT},
+            </if>
+            <if test="commLocalProv != null">
+                #{commLocalProv,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCity != null">
+                #{commLocalCity,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCou != null">
+                #{commLocalCou,jdbcType=VARCHAR},
+            </if>
+            <if test="commSignature != null">
+                #{commSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                #{recommend,jdbcType=VARCHAR},
+            </if>
+            <if test="notesToBuy != null">
+                #{notesToBuy,jdbcType=VARCHAR},
+            </if>
+            <if test="commStateType != null">
+                #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="rejectReason != null">
+                #{rejectReason,jdbcType=VARCHAR},
+            </if>
+            <if test="startOrdExpres != null">
+                #{startOrdExpres,jdbcType=VARCHAR},
+            </if>
+            <if test="examId != null">
+                #{examId,jdbcType=BIGINT},
+            </if>
+            <if test="commSaleSetId != null">
+                #{commSaleSetId,jdbcType=BIGINT},
+            </if>
+            <if test="versionNum != null">
+                #{versionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="serSupportType != null">
+                #{serSupportType,jdbcType=VARCHAR},
+            </if>
+            <if test="serTypeExpres != null">
+                #{serTypeExpres,jdbcType=VARCHAR},
+            </if>
+            <if test="storageType != null">
+                #{storageType,jdbcType=VARCHAR},
+            </if>
+            <if test="storageId != null">
+                #{storageId,jdbcType=BIGINT},
+            </if>
+            <if test="plantationId != null">
+                #{plantationId,jdbcType=BIGINT},
+            </if>
+            <if test="baseId != null">
+                #{baseId,jdbcType=BIGINT},
+            </if>
+            <if test="portId != null">
+                #{portId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsType != null">
+                #{goodsType,jdbcType=VARCHAR},
+            </if>
+            <if test="yjdfFlag != null">
+                #{yjdfFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.CommPubInfo">
+        update comm_pub_info
+        <set>
+            <if test="commNum != null">
+                comm_num = #{commNum,jdbcType=VARCHAR},
+            </if>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="saleStaffId != null">
+                sale_staff_id = #{saleStaffId,jdbcType=BIGINT},
+            </if>
+            <if test="stallsMageId != null">
+                stalls_mage_id = #{stallsMageId,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null">
+                comm_id = #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="commTitle != null">
+                comm_title = #{commTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="commVarietId != null">
+                comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+            </if>
+            <if test="brandMageId != null">
+                brand_mage_id = #{brandMageId,jdbcType=BIGINT},
+            </if>
+            <if test="originPlaceType != null">
+                origin_place_type = #{originPlaceType,jdbcType=VARCHAR},
+            </if>
+            <if test="abroadId != null">
+                abroad_id = #{abroadId,jdbcType=BIGINT},
+            </if>
+            <if test="commLocalProv != null">
+                comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCity != null">
+                comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCou != null">
+                comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+            </if>
+            <if test="commSignature != null">
+                comm_signature = #{commSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="recommend != null">
+                Recommend = #{recommend,jdbcType=VARCHAR},
+            </if>
+            <if test="notesToBuy != null">
+                notes_to_buy = #{notesToBuy,jdbcType=VARCHAR},
+            </if>
+            <if test="commStateType != null">
+                comm_state_type = #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="rejectReason != null">
+                reject_reason = #{rejectReason,jdbcType=VARCHAR},
+            </if>
+            <if test="startOrdExpres != null">
+                start_ord_expres = #{startOrdExpres,jdbcType=VARCHAR},
+            </if>
+            <if test="examId != null">
+                exam_id = #{examId,jdbcType=BIGINT},
+            </if>
+            <if test="commSaleSetId != null">
+                comm_sale_set_id = #{commSaleSetId,jdbcType=BIGINT},
+            </if>
+            <if test="versionNum != null">
+                version_num = #{versionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="serSupportType != null">
+                ser_support_type = #{serSupportType,jdbcType=VARCHAR},
+            </if>
+            <if test="serTypeExpres != null">
+                ser_type_expres = #{serTypeExpres,jdbcType=VARCHAR},
+            </if>
+            <if test="storageType != null">
+                storage_type = #{storageType,jdbcType=VARCHAR},
+                <if test="storageType == '0'.toString()" >
+                    storage_id = #{storageId,jdbcType=BIGINT},
+                    plantation_id = null,
+                </if>
+                <if test="storageType == '1'.toString()" >
+                    plantation_id = #{plantationId,jdbcType=BIGINT},
+                    storage_id = null,
+                </if>
+            </if>
+            <if test="baseId != null">
+                base_id = #{baseId,jdbcType=BIGINT},
+            </if>
+            <if test="portId != null">
+                port_id = #{portId,jdbcType=BIGINT},
+            </if>
+            <if test="goodsType != null">
+                goods_type = #{goodsType,jdbcType=VARCHAR},
+            </if>
+            <if test="yjdfFlag != null">
+                yjdf_flag = #{yjdfFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.CommPubInfo">
+    update comm_pub_info
+    set comm_num = #{commNum,jdbcType=VARCHAR},
+      memb_id = #{membId,jdbcType=BIGINT},
+      sale_staff_id = #{saleStaffId,jdbcType=BIGINT},
+      stalls_mage_id = #{stallsMageId,jdbcType=BIGINT},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_title = #{commTitle,jdbcType=VARCHAR},
+      comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      brand_mage_id = #{brandMageId,jdbcType=BIGINT},
+      origin_place_type = #{originPlaceType,jdbcType=VARCHAR},
+      abroad_id = #{abroadId,jdbcType=BIGINT},
+      comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+      comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+      comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+      comm_signature = #{commSignature,jdbcType=VARCHAR},
+      Recommend = #{recommend,jdbcType=VARCHAR},
+      notes_to_buy = #{notesToBuy,jdbcType=VARCHAR},
+      comm_state_type = #{commStateType,jdbcType=VARCHAR},
+      reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      start_ord_expres = #{startOrdExpres,jdbcType=VARCHAR},
+      exam_id = #{examId,jdbcType=BIGINT},
+      comm_sale_set_id = #{commSaleSetId,jdbcType=BIGINT},
+      version_num = #{versionNum,jdbcType=VARCHAR},
+      ser_support_type = #{serSupportType,jdbcType=VARCHAR},
+      ser_type_expres = #{serTypeExpres,jdbcType=VARCHAR},
+      storage_type = #{storageType,jdbcType=VARCHAR},
+      storage_id = #{storageId,jdbcType=BIGINT},
+      plantation_id = #{plantationId,jdbcType=BIGINT},
+      base_id = #{baseId,jdbcType=BIGINT},
+      port_id = #{portId,jdbcType=BIGINT},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      yjdf_flag = #{yjdfFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPageList" resultType="com.wisea.transac.common.vo.CommPubInfoPageListVo"
+            parameterType="com.wisea.transac.common.po.CommPubInfoPageListPo">
+        select
+        id id,
+        comm_num commNum,
+        memb_id membId,
+        sale_staff_id saleStaffId,
+        stalls_mage_id stallsMageId,
+        comm_id commId,
+        comm_title commTitle,
+        comm_variet_id commVarietId,
+        brand_mage_id brandMageId,
+        origin_place_type originPlaceType,
+        abroad_id abroadId,
+        comm_local_prov commLocalProv,
+        comm_local_city commLocalCity,
+        comm_local_cou commLocalCou,
+        comm_signature commSignature,
+        Recommend recommend,
+        notes_to_buy notesToBuy,
+        comm_state_type commStateType,
+        reject_reason rejectReason,
+        exam_id examId,
+        comm_sale_set_id commSaleSetId,
+        version_num versionNum
+        from
+        comm_pub_info
+        where
+        del_flag = '0'
+        and comm_state_type = '0'
+        <if test="commId!=null">
+            and comm_id = #{commId}
+        </if>
+        <if test="stallsMageId!=null">
+            and stalls_mage_id = #{stallsMageId}
+        </if>
+    </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.CommPubInfoInfoVo" parameterType="java.lang.Long">
+    select
+	  id id,
+	  comm_num commNum,
+	  memb_id membId,
+	  sale_staff_id saleStaffId,
+	  stalls_mage_id stallsMageId,
+	  comm_id commId,
+	  comm_title commTitle,
+	  comm_variet_id commVarietId,
+	  brand_mage_id brandMageId,
+	  origin_place_type originPlaceType,
+	  abroad_id abroadId,
+	  comm_local_prov commLocalProv,
+	  comm_local_city commLocalCity,
+	  comm_local_cou commLocalCou,
+	  comm_signature commSignature,
+	  Recommend recommend,
+	  notes_to_buy notesToBuy,
+	  comm_state_type commStateType,
+	  reject_reason rejectReason,
+	  exam_id examId,
+	  comm_sale_set_id commSaleSetId,
+	  version_num versionNum
+	from
+	  comm_pub_info
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+    <select id="findCommVariet" parameterType="java.lang.Long"
+            resultType="com.wisea.transac.common.vo.product.CommVarietMageListVo">
+    select distinct cvm.*
+    from comm_pub_info cpi,
+         comm_variet_mage cvm
+    where cpi.del_flag = '0'
+      and cvm.del_flag = '0'
+      and cpi.comm_variet_id = cvm.id
+      and cpi.comm_state_type = '0'
+      and cpi.stalls_mage_id = #{stallsMageId};
+  </select>
+
+    <select id="findComm" parameterType="com.wisea.transac.common.po.seller.StallsIdAndCommVarietIdPo"
+            resultType="com.wisea.transac.common.vo.CommMagePageListVo">
+        select cm.*
+        from comm_pub_info cpi,
+             comm_mage cm
+        where cpi.del_flag = '0'
+          and cm.del_flag = '0'
+          and cpi.comm_id = cm.id
+          and cpi.comm_state_type = '0'
+          and cpi.stalls_mage_id = #{stallsId}
+          and cpi.comm_variet_id = #{commVarietId}
+    </select>
+
+    <!-- 根据发布商品ID查询对应品类ID -->
+    <select id="getCommIdMap" parameterType="java.util.List" resultType="java.util.Map">
+        select
+        cpi.id,
+        cpi.comm_id
+        from
+        comm_pub_info cpi
+        where
+        cpi.id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 运营后台 商品类目销售top10 -->
+    <select id="commSetSaleScale" resultType="com.wisea.transac.common.vo.product.CommdityCategoriesVo"
+            parameterType="com.wisea.transac.common.po.product.CommStatisPo">
+        select
+        b.comm_name as 'commSetName',
+        b.saleCount,
+        b.saleCount/a.salesCountTotal AS 'salesScale',
+        b.saleNum,
+        b.saleNum/a.amountTotal AS 'amountScale'
+        FROM
+        (SELECT
+        css.comm_name,
+        sum(lsq.sales_volume) AS 'saleCount',
+        sum(lsq.transaction_amount) AS 'saleNum'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_sale_set css ON css.id = cpi.comm_sale_set_id
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id
+        LEFT JOIN stalls_mage AS sm ON cpi.stalls_mage_id = sm.id
+        WHERE
+        cpi.del_flag = '0'
+        AND sm.whole_sale_market_id = #{marketId}
+        AND cpi.stalls_mage_id IN
+        <foreach collection="stallsMageIds" item="id" open="(" close=")" separator=",">
+            ${id}
+        </foreach>
+        <if test="timeStart != null">
+            AND cpi.create_date >= #{timeStart}
+        </if>
+        <if test="timeEnd != null">
+            AND cpi.create_date <![CDATA[<=]]> #{timeEnd}
+        </if>
+        GROUP BY cpi.comm_sale_set_id
+        ORDER BY saleNum DESC
+        LIMIT 10 )b,(select
+        sum(lsq.sales_volume) as 'salesCountTotal',sum(lsq.transaction_amount) as 'amountTotal'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_sale_set css ON css.id = cpi.comm_sale_set_id
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id) a
+    </select>
+
+    <select id="findAllByBaseIdAndStoreType" parameterType="com.wisea.transac.common.entity.CommPubInfo"
+            resultType="com.wisea.transac.common.vo.CommPubNumAndWeightVo">
+        select lsq.avai_supply_count count,
+               mum.meas_unit_name unitName
+        from comm_pub_info cpi
+                 left join level_spec_quote lsq on lsq.comm_pub_id = cpi.id
+                 left join meas_unit_mage mum on lsq.meas_unit_id = mum.id
+        where cpi.del_flag = '0'
+          and lsq.del_flag = '0'
+          and cpi.storage_type = #{storageType}
+          and cpi.base_id = #{baseId}
+    </select>
+</mapper>

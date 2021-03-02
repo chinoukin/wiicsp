@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.RtspCodeMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.RtspCodeMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="mine_arch_id" property="mineArchId" jdbcType="BIGINT" />
+    <result column="arch_num" property="archNum" jdbcType="VARCHAR" />
+    <result column="batch_num" property="batchNum" jdbcType="VARCHAR" />
+    <result column="rtsp_code_count" property="rtspCodeCount" jdbcType="INTEGER" />
+    <result column="print_meth_type" property="printMethType" jdbcType="VARCHAR" />
+    <result column="recipients" property="recipients" jdbcType="VARCHAR" />
+    <result column="cont_inform" property="contInform" jdbcType="VARCHAR" />
+    <result column="cont_address" property="contAddress" jdbcType="VARCHAR" />
+    <result column="apply_date" property="applyDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, mine_arch_id, arch_num, batch_num, rtsp_code_count, print_meth_type, recipients,
+    cont_inform, cont_address, apply_date, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+
+  <!-- 查询追溯码申请详细信息 -->
+  <select id="findRtspCodeInfo" parameterType="com.wisea.cultivar.plant.entity.oritrapla.RtspCodeMage" resultType="com.wisea.cultivar.plant.vo.oritrapla.RtspCodeMageInfoVo">
+    SELECT
+      rcm.id,
+      rcm.memb_id membId,
+      mi.cont_name membName,
+      rcm.mine_arch_id mineArchId,
+      ma.arch_id archId,
+      rcm.arch_num archNum,
+      rcm.batch_num batchNum,
+      rcm.rtsp_code_count rtspCodeCount,
+      rcm.print_meth_type printMethType,
+      mm.massif_name massifName,
+      cm.comm_catg_name commName,
+      cv.comm_variet_name commVarietName,
+      abi.url url,
+      ma.mine_arch_status mineArchStatus,
+      abi.start_date startDate,
+      rcm.create_date creataDate,
+      CASE WHEN mi.org_name IS NOT NULL THEN mi.org_name ELSE mi2.org_name END orgName
+    FROM
+      rtsp_code_mage rcm
+      INNER JOIN zhfw_memb_info mi ON mi.id = rcm.memb_id
+      INNER JOIN mine_arch ma ON ma.id = rcm.mine_arch_id
+      INNER JOIN arch_basic_info abi ON abi.id = ma.arch_id
+      INNER JOIN massif_mage mm ON mm.id = abi.massif_id
+      INNER JOIN zhfw_comm_mage cm ON cm.id = abi.comm_id
+      LEFT JOIN zhfw_comm_variet_mage cv ON cv.id = abi.comm_variet_id
+      LEFT JOIN zhfw_memb_info mi2 ON mi2.id = mi.pid
+    WHERE
+      1=1
+      <if test="id != null and id != ''">
+        AND rcm.id = #{id}
+      </if>
+      <if test="batchNum != null and batchNum != ''">
+        AND rcm.batch_num = #{batchNum}
+      </if>
+  </select>
+
+  <!-- 查询追溯码申请列表 -->
+  <select id="findRtspCodeList" parameterType="com.wisea.cultivar.plant.po.oritrapla.RtspCodeMageListPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.RtspCodeMageInfoVo">
+    SELECT
+      rcm.id,
+      rcm.memb_id membId,
+      mi.cont_name membName,
+      rcm.mine_arch_id mineArchId,
+      rcm.arch_num archNum,
+      rcm.batch_num batchNum,
+      rcm.rtsp_code_count rtspCodeCount,
+      rcm.print_meth_type printMethType,
+      mm.massif_name massifName,
+      cm.comm_catg_name commName,
+      cv.comm_variet_name commVarietName,
+      abi.url url,
+      abi.start_date startDate,
+      ma.mine_arch_status mineArchStatus,
+      rcm.create_date creataDate,
+      mi.cont_name contName,
+      mi.cont_tel contTel,
+      CASE WHEN mi.org_name IS NOT NULL THEN mi.org_name ELSE mi4.org_name END orgName
+    FROM
+    rtsp_code_mage rcm
+      INNER JOIN zhfw_memb_info mi ON mi.id = rcm.memb_id
+      INNER JOIN mine_arch ma ON ma.id = rcm.mine_arch_id
+      INNER JOIN arch_basic_info abi ON abi.id = ma.arch_id
+      INNER JOIN massif_mage mm ON mm.id = abi.massif_id
+      INNER JOIN zhfw_comm_mage cm ON cm.id = abi.comm_id
+      LEFT JOIN zhfw_comm_variet_mage cv ON cv.id = abi.comm_variet_id
+      LEFT JOIN zhfw_memb_info mi4 ON mi4.id = mi.pid
+    WHERE
+      1 = 1
+    <if test="queryFlag != null and queryFlag == '0'.toString()">
+      AND rcm.memb_id IN (
+        SELECT #{userId}
+        UNION ALL
+        SELECT mi5.id FROM zhfw_memb_info mi5 WHERE mi5.pid = #{userId}
+      )
+      <if test="query != null and query != ''">
+        AND (
+          rcm.arch_num LIKE CONCAT('%', #{query}, '%')
+          OR rcm.batch_num LIKE CONCAT('%', #{query}, '%')
+          OR mm.massif_name LIKE CONCAT('%', #{query}, '%')
+          OR cm.comm_catg_name LIKE CONCAT('%', #{query}, '%')
+          OR cv.comm_variet_name LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+      ORDER BY rcm.create_date DESC
+    </if>
+    <if test="queryFlag != null and queryFlag == '1'.toString()">
+      <if test="queryKey != null and queryKey == '0'.toString() and query != null and query != ''">
+        AND rcm.batch_num LIKE CONCAT('%', #{query}, '%')
+      </if>
+      <if test="queryKey != null and queryKey == '1'.toString() and query != null and query != ''">
+        AND rcm.arch_num LIKE CONCAT('%', #{query}, '%')
+      </if>
+      <if test="queryKey != null and queryKey == '2'.toString() and query != null and query != ''">
+        AND (
+          rcm.memb_id IN (
+            SELECT mi2.id FROM zhfw_memb_info mi2 WHERE mi2.org_name LIKE CONCAT('%', #{query}, '%')
+            UNION ALL
+            SELECT mi3.id FROM zhfw_memb_info mi3 WHERE mi3.pid IN (SELECT mi2.id FROM zhfw_memb_info mi2 WHERE mi2.org_name LIKE CONCAT('%', #{query}, '%'))
+          )
+        )
+      </if>
+      <if test="commId != null and commId != ''">
+        AND abi.comm_id = #{commId}
+      </if>
+      <if test="commVarietId != null and commVarietId != ''">
+        AND abi.comm_variet_id = #{commVarietId}
+      </if>
+      <if test="creataDateStart != null">
+        AND rcm.create_date &gt; #{creataDateStart}
+      </if>
+      <if test="creataDateEnd != null">
+        AND rcm.create_date &lt; #{creataDateEnd}
+      </if>
+      ORDER BY rcm.create_date DESC
+    </if>
+  </select>
+
+  <!-- 查询档案信息 -->
+  <select id="findMineArchInfo" parameterType="java.util.Map" resultType="com.wisea.cultivar.plant.vo.oritrapla.RtspMineArchInfoVo" resultMap="rtspMineArchInfoResultMap">
+    SELECT
+      ma.id,
+      ma.memb_id membId,
+      ma.mine_arch_status mineArchStatus,
+      abi.arch_num archNum,
+      mm.massif_name massifName,
+      cm.comm_catg_name commName,
+      cv.comm_variet_name variName,
+      abi.id archId,
+      abi.plant_type plantType,
+      abi.start_date startDate,
+      abi.end_date endDate,
+      abi.plant_acre plantAcre,
+      abi.est_output estOutput,
+      abi.est_list_date estListDate,
+      abi.url url,
+      pmi.id pMembId,
+      pmi.org_name orgName,
+      pmi.introduce introduce,
+      pmi.cont_name contName,
+      pmi.cont_tel contTel,
+      pmi.address address,
+      pmi.area_code_prov areaCodeProv,
+      pmi.area_code_city areaCodeCity,
+      pmi.area_code_cou areaCodeCou
+    FROM
+      mine_arch ma
+      INNER JOIN arch_basic_info abi ON abi.id = ma.arch_id
+      INNER JOIN massif_mage mm ON mm.id = abi.massif_id
+      INNER JOIN zhfw_memb_info pmi ON pmi.id = #{membId}
+      INNER JOIN zhfw_comm_mage cm ON cm.id = abi.comm_id
+      LEFT JOIN zhfw_comm_variet_mage cv ON cv.id = abi.comm_variet_id
+    WHERE
+        ma.id = #{mineArchId}
+  </select>
+  <resultMap id="rtspMineArchInfoResultMap" type="com.wisea.cultivar.plant.vo.oritrapla.RtspMineArchInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <!-- 主体信息荣誉资质或风采图片列表 -->
+    <collection property="membPictureList" column="pMembId" select="selectMembPictureList"></collection>
+    <!-- 主体信息品牌信息列表 -->
+    <collection property="brandInfos" column="pMembId" select="selectBrandInfos"></collection>
+    <!-- 农事记录列表 -->
+    <collection property="farmWorkRecdVoList" column="archId" select="selectFarmWorkRecds"></collection>
+    <!-- 检测记录列表 -->
+    <collection property="examRecdVoList" column="id" select="selectExamRecds"></collection>
+  </resultMap>
+
+  <!-- 级联查询主体信息荣誉资质或风采图片列表 -->
+  <select id="selectMembPictureList" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.entity.oritrapla.MembPictureInfo">
+    SELECT mpi.memb_id membId, mpi.url url FROM memb_picture_info mpi WHERE mpi.memb_id = #{id} AND mpi.del_flag != '1'
+  </select>
+
+  <!-- 级联查询主体信息品牌列表 -->
+  <select id="selectBrandInfos" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.BrandInfoVo" resultMap="brandInfoResultMap">
+    SELECT
+      bi.id,
+      bi.memb_id membId,
+      bi.brand_name brandName,
+      bi.brand_intr brandIntr
+    FROM
+      brand_info bi
+    WHERE
+      bi.memb_id = #{id}
+      AND bi.del_flag != '1'
+    ORDER BY bi.create_date DESC
+  </select>
+  <resultMap id="brandInfoResultMap" type="com.wisea.cultivar.plant.vo.oritrapla.BrandInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <collection property="brandPicture" column="id" select="selectBrandPictures"></collection>
+  </resultMap>
+  <!-- 级联查询品牌图片列表 -->
+  <select id="selectBrandPictures" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.entity.oritrapla.BrandPicture">
+    SELECT bp.brand_id brandId, bp.url FROM brand_picture bp WHERE bp.brand_id = #{id} AND bp.del_flag != '1'
+  </select>
+
+  <!-- 级联查询档案农事记录列表 -->
+  <select id="selectFarmWorkRecds" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.FarmWorkRecdVo" resultMap="farmWorkRecdResultMap">
+    SELECT
+      fwr.id,
+      fwr.arch_id archId,
+      fwr.farm_work_type_id farmWorkTypeId,
+      fwtd.name name,
+      fwr.operat_content operatContent,
+      fwr.operat_date operatDate,
+      mi.cont_name createByName,
+      fwr.video_url videoUrl,
+      fwr.remarks remarks
+    FROM
+      farm_work_recd fwr
+      INNER JOIN farm_work_type_dict fwtd ON fwtd.id = fwr.farm_work_type_id
+      INNER JOIN zhfw_memb_info mi ON mi.id = fwr.create_by
+    WHERE
+      fwr.arch_id = #{id}
+      and fwr.record_status = '1'
+      AND fwr.del_flag = '0'
+    ORDER BY
+      fwr.operat_date DESC
+  </select>
+  <resultMap id="farmWorkRecdResultMap" type="com.wisea.cultivar.plant.vo.oritrapla.FarmWorkRecdVo">
+    <id column="id" property="farmWorkRecdId" jdbcType="BIGINT" />
+    <collection property="farmWorkPictureList" column="id" select="selectFarmWorkPictures"></collection>
+  </resultMap>
+  <!-- 级联查询农事记录图片selectFarmWorkPictures -->
+  <select id="selectFarmWorkPictures" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkPicture">
+    SELECT fwp.farm_work_recd_id farmWorkRecdId, fwp.url FROM farm_work_picture fwp WHERE fwp.farm_work_recd_id = #{id} AND fwp.del_flag != '1'
+  </select>
+
+  <!-- 级联查询档案检测记录列表 -->
+  <select id="selectExamRecds" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.ExamRecdVo" resultMap="examRecdResultMap">
+    SELECT
+      er.id,
+      er.mine_arch_id mineArchId,
+      er.exam_date examDate,
+      er.exam_prjet examPrjet,
+      er.exam_result_type examResultType,
+      er.exam_mode_type examModeType,
+      er.exam_org examOrg,
+      er.exam_conc examConc
+    FROM
+      ori_exam_recd er
+    WHERE
+      er.exam_recd_rela_id IN(
+        SELECT err.id FROM exam_recd_rela err WHERE err.mine_arch_id = #{id}
+      )
+    AND er.del_flag != '1'
+    ORDER BY
+      er.exam_date DESC
+  </select>
+  <resultMap id="examRecdResultMap" type="com.wisea.cultivar.plant.vo.oritrapla.ExamRecdVo">
+    <id column="id" property="examRecdId" jdbcType="BIGINT" />
+    <collection property="examReportPicture" column="id" select="selectExamReportPictures"></collection>
+  </resultMap>
+  <!-- 级联查询检测记录图片列表 -->
+  <select id="selectExamReportPictures" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.entity.oritrapla.ExamReportPicture">
+    SELECT erp.exam_recd_id examRecdId, erp.url FROM exam_report_picture erp WHERE erp.exam_recd_id = #{id} AND erp.del_flag != '1'
+order by erp.remarks+0 asc
+  </select>
+
+  <!-- 平台追溯监管 -->
+  <select id="findArchInfoCirculation" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.ArchInfoCirculationVo" resultMap="archInfoCirculationResultMap">
+    SELECT
+      abi.id id,
+      abi.arch_num archNum,
+      cm.comm_catg_name commName,
+      cv.comm_variet_name commVarietName,
+      abi.plant_acre plantAcre,
+      abi.start_date startDate,
+      abi.end_date endDate,
+      abi.est_output estOutput,
+      abi.est_list_date estListDate
+    FROM
+      arch_basic_info abi
+      INNER JOIN zhfw_comm_mage cm ON cm.id = abi.comm_id
+      LEFT JOIN zhfw_comm_variet_mage cv ON cv.id = abi.comm_variet_id
+    WHERE abi.id = #{archId}
+  </select>
+  <resultMap id="archInfoCirculationResultMap" type="com.wisea.cultivar.plant.vo.oritrapla.ArchInfoCirculationVo">
+    <id column="id" property="archId" jdbcType="BIGINT" />
+    <collection property="mineArchs" column="id" select="selectMineArchs"></collection>
+  </resultMap>
+  <!-- 级联查询档案流转列表 -->
+  <select id="selectMineArchs" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.ArchInfoVo">
+    SELECT
+      ma.id id,
+      ma.source_memb_id sourceMembId,
+      CASE WHEN mi1.org_name IS NOT NULL THEN mi1.org_name ELSE mi2.org_name END sourceOrgName,
+      ma.memb_id membId,
+      mi1.cont_name menbName,
+      ma.arch_type archType,
+      ma.mine_arch_status mineArchStatus,
+      ma.create_date createDate
+    FROM
+      mine_arch ma
+      INNER JOIN zhfw_memb_info mi1 ON mi1.id = ma.memb_id
+      LEFT JOIN zhfw_memb_info mi2 ON mi2.id = mi1.pid
+    WHERE
+      ma.arch_id = #{id}
+    ORDER BY
+      ma.create_date ASC
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rtsp_code_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rtsp_code_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.RtspCodeMage" >
+    insert into rtsp_code_mage (id, memb_id, mine_arch_id,
+      arch_num, batch_num, rtsp_code_count,
+      print_meth_type, recipients, cont_inform,
+      cont_address, apply_date, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{mineArchId,jdbcType=BIGINT},
+      #{archNum,jdbcType=VARCHAR}, #{batchNum,jdbcType=VARCHAR}, #{rtspCodeCount,jdbcType=INTEGER},
+      #{printMethType,jdbcType=VARCHAR}, #{recipients,jdbcType=VARCHAR}, #{contInform,jdbcType=VARCHAR},
+      #{contAddress,jdbcType=VARCHAR}, #{applyDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.RtspCodeMage" >
+    insert into rtsp_code_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="mineArchId != null" >
+        mine_arch_id,
+      </if>
+      <if test="archNum != null" >
+        arch_num,
+      </if>
+      <if test="batchNum != null" >
+        batch_num,
+      </if>
+      <if test="rtspCodeCount != null" >
+        rtsp_code_count,
+      </if>
+      <if test="printMethType != null" >
+        print_meth_type,
+      </if>
+      <if test="recipients != null" >
+        recipients,
+      </if>
+      <if test="contInform != null" >
+        cont_inform,
+      </if>
+      <if test="contAddress != null" >
+        cont_address,
+      </if>
+      <if test="applyDate != null" >
+        apply_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="archId != null" >
+        #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="archNum != null" >
+        #{archNum,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNum != null" >
+        #{batchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rtspCodeCount != null" >
+        #{rtspCodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="printMethType != null" >
+        #{printMethType,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null" >
+        #{recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="contInform != null" >
+        #{contInform,jdbcType=VARCHAR},
+      </if>
+      <if test="contAddress != null" >
+        #{contAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="applyDate != null" >
+        #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.RtspCodeMage" >
+    update rtsp_code_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="mineArchId != null" >
+        mine_arch_id = #{mineArchId,jdbcType=BIGINT},
+      </if>
+      <if test="archNum != null" >
+        arch_num = #{archNum,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNum != null" >
+        batch_num = #{batchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rtspCodeCount != null" >
+        rtsp_code_count = #{rtspCodeCount,jdbcType=INTEGER},
+      </if>
+      <if test="printMethType != null" >
+        print_meth_type = #{printMethType,jdbcType=VARCHAR},
+      </if>
+      <if test="recipients != null" >
+        recipients = #{recipients,jdbcType=VARCHAR},
+      </if>
+      <if test="contInform != null" >
+        cont_inform = #{contInform,jdbcType=VARCHAR},
+      </if>
+      <if test="contAddress != null" >
+        cont_address = #{contAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="applyDate != null" >
+        apply_date = #{applyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.RtspCodeMage" >
+    update rtsp_code_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      mine_arch_id = #{mineArchId,jdbcType=BIGINT},
+      arch_num = #{archNum,jdbcType=VARCHAR},
+      batch_num = #{batchNum,jdbcType=VARCHAR},
+      rtsp_code_count = #{rtspCodeCount,jdbcType=INTEGER},
+      print_meth_type = #{printMethType,jdbcType=VARCHAR},
+      recipients = #{recipients,jdbcType=VARCHAR},
+      cont_inform = #{contInform,jdbcType=VARCHAR},
+      cont_address = #{contAddress,jdbcType=VARCHAR},
+      apply_date = #{applyDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

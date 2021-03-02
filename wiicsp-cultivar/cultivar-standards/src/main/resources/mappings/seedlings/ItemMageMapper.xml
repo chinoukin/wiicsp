@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.seedlings.mapper.ItemMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.seedlings.entity.ItemMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="item_year" jdbcType="INTEGER" property="itemYear" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="item_capital" jdbcType="DOUBLE" property="itemCapital" />
+    <result column="appl_date" jdbcType="TIMESTAMP" property="applDate" />
+    <result column="item_state_type" jdbcType="VARCHAR" property="itemStateType" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.wisea.cultivar.seedlings.entity.ItemMage">
+    <result column="appl_guide" jdbcType="LONGVARCHAR" property="applGuide" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    im.id, im.item_name, im.item_year, im.start_date, im.end_date, im.item_capital, im.appl_date, im.item_state_type,
+    im.create_by, im.create_date as 'applDate', im.update_by, im.update_date, im.remarks, im.del_flag
+  </sql>
+  <sql id="Blob_Column_List">
+    appl_guide
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from item_mage im
+    where im.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from item_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    insert into item_mage (id, item_name, item_year,
+      start_date, end_date, item_capital,
+      appl_date, item_state_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag, appl_guide
+      )
+    values (#{id,jdbcType=BIGINT}, #{itemName,jdbcType=VARCHAR}, #{itemYear,jdbcType=INTEGER},
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{itemCapital,jdbcType=DOUBLE},
+      #{applDate,jdbcType=TIMESTAMP}, #{itemStateType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{applGuide,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    insert into item_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="itemName != null">
+        item_name,
+      </if>
+      <if test="itemYear != null">
+        item_year,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="itemCapital != null">
+        item_capital,
+      </if>
+      <if test="applDate != null">
+        appl_date,
+      </if>
+      <if test="itemStateType != null">
+        item_state_type,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="applGuide != null">
+        appl_guide,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="itemName != null">
+        #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemYear != null">
+        #{itemYear,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemCapital != null">
+        #{itemCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="applDate != null">
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemStateType != null">
+        #{itemStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="applGuide != null">
+        #{applGuide,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    update item_mage
+    <set>
+      <if test="itemName != null">
+        item_name = #{itemName,jdbcType=VARCHAR},
+      </if>
+      <if test="itemYear != null">
+        item_year = #{itemYear,jdbcType=INTEGER},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemCapital != null">
+        item_capital = #{itemCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="applDate != null">
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="itemStateType != null">
+        item_state_type = #{itemStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="applGuide != null">
+        appl_guide = #{applGuide,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    update item_mage
+    set item_name = #{itemName,jdbcType=VARCHAR},
+      item_year = #{itemYear,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      item_capital = #{itemCapital,jdbcType=DOUBLE},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      item_state_type = #{itemStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      appl_guide = #{applGuide,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    update item_mage
+    set item_name = #{itemName,jdbcType=VARCHAR},
+      item_year = #{itemYear,jdbcType=INTEGER},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      item_capital = #{itemCapital,jdbcType=DOUBLE},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      item_state_type = #{itemStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.seedlings.po.ItemMagePagePo" resultType="com.wisea.cultivar.seedlings.vo.ItemMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    ,sd.label as 'itemStateTypeName'
+    from item_mage im
+    left join sys_dict sd on sd.`value` = im.item_state_type
+    and sd.type = 'item_state_type'
+      <where>
+          <include refid="query_where"/>
+      </where>
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.seedlings.po.ItemMageListPo" resultType="com.wisea.cultivar.seedlings.vo.ItemMageListVo">
+    select
+    <include refid="Base_Column_List" />
+      ,sd.label as 'itemStateTypeName'
+      from item_mage im
+      left join sys_dict sd on sd.`value` = im.item_state_type
+      and sd.type = 'item_state_type'
+      <where>
+          <include refid="query_where"/>
+      </where>
+  </select>
+
+    <select id="findSubsidyPage" parameterType="com.wisea.cultivar.seedlings.po.ItemMagePagePo" resultType="com.wisea.cultivar.seedlings.vo.ItemMageListVo">
+        SELECT im.id,im.item_name,COUNT(sam.id) AS 'peopleNum',IFNULL(ROUND(SUM(sam.appl_capital),2),0) AS 'applCapital',
+        im.item_year,im.item_state_type,sd.label AS 'itemStateTypeName',im.appl_date
+        FROM item_mage im
+        LEFT JOIN subsidy_appl_mage sam  ON  im.id = sam.item_mage_id AND sam.del_flag = '0'
+        LEFT JOIN sys_dict sd ON sd.`value` = im.item_state_type AND sd.type = 'item_state_type'
+        <where>
+            <include refid="query_where"/>
+        </where>
+
+    </select>
+    <select id="subsidyList" parameterType="com.wisea.cultivar.seedlings.po.ItemMageListPo" resultType="com.wisea.cultivar.seedlings.vo.ItemMageListVo">
+        SELECT im.id,im.item_name,COUNT(sam.id) AS 'peopleNum',IFNULL(ROUND(SUM(sam.appl_capital),2),0) AS 'applCapital',
+        IFNULL(ROUND(SUM(appl_measure_area),2),0) AS 'applMeasureArea',im.item_capital,
+        im.item_year,im.item_state_type,sd.label AS 'itemStateTypeName',im.appl_date
+        FROM item_mage im
+        LEFT JOIN subsidy_appl_mage sam  ON  im.id = sam.item_mage_id AND sam.del_flag = '0'
+        LEFT JOIN sys_dict sd ON sd.`value` = im.item_state_type AND sd.type = 'item_state_type'
+        <where>
+            <include refid="query_where"/>
+        </where>
+    </select>
+    <!-- 申请补助用户占比 -->
+    <select id="selectApplMessage" resultType="com.wisea.cultivar.seedlings.vo.ApplMessageVo">
+        SELECT T.id, T.item_year,IFNULL(ROUND(SUM(T2.appl_capital),2),0) AS 'applCapital',T2.auth_type
+        FROM item_mage T
+	    LEFT JOIN subsidy_appl_mage T2 ON T.id = T2.item_mage_id AND T.del_flag = '0'
+        WHERE  T2.del_flag = '0' AND T2.auth_type = 0 OR T2.auth_type = 1
+	    GROUP BY T.id,T2.auth_type
+    </select>
+    <!-- 种苗补助走势分析 -->
+    <select id="selectItemApplMessage" resultType="com.wisea.cultivar.seedlings.vo.ApplMessageVo">
+        SELECT T.id, T.item_capital,T.item_year,IFNULL(ROUND(SUM(T2.appl_capital),2),0) AS 'applCapital'
+        FROM item_mage T
+	    LEFT JOIN subsidy_appl_mage T2 ON T.id = T2.item_mage_id AND T.del_flag = '0'
+        WHERE   T2.del_flag = '0'
+	    GROUP BY T.id
+    </select>
+    <sql id="query_where">
+        im.del_flag = '0'
+        <if test="itemName != null and itemName != ''">
+            AND im.item_name like  concat('%',#{itemName},'%')
+        </if>
+        <if test="itemYear != null and itemYear != ''">
+            AND im.item_year = #{itemYear}
+        </if>
+        <if test="itemStateType != null and itemStateType != ''">
+            AND im.item_state_type = #{itemStateType}
+        </if>
+        GROUP BY im.id
+        <if test="sprout != null">
+            ORDER BY
+            <choose>
+                <when test='sprout==0'>
+                   im.appl_date DESC
+                </when>
+                <when test='sprout==2'>
+                    im.item_year DESC
+                </when>
+                <when test='sprout==1'>
+                    im.item_year ASC
+                </when>
+            </choose>
+        </if>
+    </sql>
+
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    update item_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="checkItemStateType" parameterType="com.wisea.cultivar.seedlings.entity.ItemMage">
+    update item_mage
+    set item_state_type = '1'
+    where  item_state_type = '0' and end_date &lt;= #{endDate}
+  </update>
+</mapper>

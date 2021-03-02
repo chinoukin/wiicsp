@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.SortingRealTimeVideoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.SortingRealTimeVideo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sorting_factory_id" property="sortingFactoryId" jdbcType="BIGINT" />
+    <result column="install_position" property="installPosition" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="equ_manufact" property="equManufact" jdbcType="VARCHAR" />
+    <result column="equ_num" property="equNum" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sorting_factory_id, install_position, url, equ_manufact, equ_num, sort, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据分选工厂ID删除分选工厂实时视频 -->
+  <delete parameterType="java.lang.Long" id="delBySortingFactoryId">
+    delete from sorting_real_time_video
+    where sorting_factory_id = #{sortingFactoryId, jdbcType=BIGINT}
+  </delete>
+
+  <!-- 批量插入分选工厂实时视频 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into sorting_real_time_video (id, sorting_factory_id, install_position,
+    url, equ_manufact, equ_num,
+    sort, create_by, create_date,
+    update_by, update_date, remarks,
+    del_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.sortingFactoryId,jdbcType=BIGINT}, #{item.installPosition,jdbcType=VARCHAR},
+      #{item.url,jdbcType=VARCHAR}, #{item.equManufact,jdbcType=VARCHAR}, #{item.equNum,jdbcType=VARCHAR},
+      #{item.sort,jdbcType=INTEGER}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sorting_real_time_video
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sorting_real_time_video
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.SortingRealTimeVideo" >
+    insert into sorting_real_time_video (id, sorting_factory_id, install_position,
+      url, equ_manufact, equ_num,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{sortingFactoryId,jdbcType=BIGINT}, #{installPosition,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{equManufact,jdbcType=VARCHAR}, #{equNum,jdbcType=VARCHAR},
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.SortingRealTimeVideo" >
+    insert into sorting_real_time_video
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sortingFactoryId != null" >
+        sorting_factory_id,
+      </if>
+      <if test="installPosition != null" >
+        install_position,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="equManufact != null" >
+        equ_manufact,
+      </if>
+      <if test="equNum != null" >
+        equ_num,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sortingFactoryId != null" >
+        #{sortingFactoryId,jdbcType=BIGINT},
+      </if>
+      <if test="installPosition != null" >
+        #{installPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="equManufact != null" >
+        #{equManufact,jdbcType=VARCHAR},
+      </if>
+      <if test="equNum != null" >
+        #{equNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.SortingRealTimeVideo" >
+    update sorting_real_time_video
+    <set >
+      <if test="sortingFactoryId != null" >
+        sorting_factory_id = #{sortingFactoryId,jdbcType=BIGINT},
+      </if>
+      <if test="installPosition != null" >
+        install_position = #{installPosition,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="equManufact != null" >
+        equ_manufact = #{equManufact,jdbcType=VARCHAR},
+      </if>
+      <if test="equNum != null" >
+        equ_num = #{equNum,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.SortingRealTimeVideo" >
+    update sorting_real_time_video
+    set sorting_factory_id = #{sortingFactoryId,jdbcType=BIGINT},
+      install_position = #{installPosition,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      equ_manufact = #{equManufact,jdbcType=VARCHAR},
+      equ_num = #{equNum,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

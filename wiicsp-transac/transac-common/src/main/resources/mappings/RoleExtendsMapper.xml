@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.RoleExtendsMapper" >
+
+ <!-- 根据名称和创建人ID查询是否名称已经存在  -->
+ <select id="checkRoleName" parameterType="com.wisea.transac.common.po.memb.RoleNameCheckPo" resultType="java.lang.Integer">
+ 	SELECT COUNT(*)
+	FROM sys_role
+	WHERE del_flag = '0' AND  name = #{name} AND create_by = #{marketId}
+		  <if test="id != null and id != ''">
+		  AND id <![CDATA[ <> ]]> #{id}
+		  </if>
+ </select>
+ <!-- 根据角色ID查询用户列表信息 -->
+ <select id="findByRoleId" parameterType="java.lang.Long" resultType="java.lang.String">
+ 	SELECT user_id FROM sys_user_role WHERE role_id = #{_paremeter}
+ </select>
+ <!-- 根据角色ID查询角色信息-->
+ <select id="getRoleById" parameterType="com.wisea.transac.common.po.memb.RoleExtendsCheckPo" resultType="com.wisea.cloud.common.sys.entity.Role">
+ 	SELECT * FROM sys_role WHERE id = #{id} AND del_flag = '0' AND create_by = #{marketId}
+ </select>
+ <!-- 根据角色CODE查询用户列表信息 -->
+ <select id="getRoleByCode" parameterType="java.lang.Long" resultType="com.wisea.cloud.common.sys.entity.Role">
+ 	SELECT * FROM sys_role WHERE code = #{_paremeter} AND del_flag = '0'
+ </select>
+ <!-- 分页查询角色信息列表 -->
+ <select id="findRolePage" parameterType="com.wisea.transac.common.po.memb.RoleExtendsPagePo" resultType="com.wisea.transac.common.vo.memb.RoleExtendsListVo">
+ 	SELECT T1.id,T1.name AS 'roleName',T1.create_by AS 'marketId',T1.remarks AS 'roleRemarks'
+	FROM sys_role T1
+	WHERE T1.del_flag = '0' AND T1.create_by = #{marketId}
+		  <if test="key != null and key != ''">
+			AND T1.`name` LIKE CONCAT('%', #{key}, '%')
+		  </if>
+ </select>
+ <!-- 分页查询角色信息列表 -->
+ <select id="findAllRoleList" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.memb.RoleExtendsListVo">
+ 	SELECT T1.id,T1.name AS 'roleName',T1.create_by AS 'marketId',T1.remarks AS 'roleRemarks'
+	FROM sys_role T1
+	WHERE T1.del_flag = '0' AND T1.create_by = #{marketId}
+ </select>
+</mapper>

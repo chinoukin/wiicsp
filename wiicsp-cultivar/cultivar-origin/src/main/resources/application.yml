@@ -1,0 +1,17 @@
+server:
+  port: 8949
+spring:
+  application:
+    name: cultivar-origin
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 册亨县糯米蕉产业服务平台-产地管理-主服务 #标题
+  quartz:
+    timer:
+      job: cultivar.ori.timer.job # 任务分组
+      trigger: cultivar.ori.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": cultivar_origin_main_scheduler

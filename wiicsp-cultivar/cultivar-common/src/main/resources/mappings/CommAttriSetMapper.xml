@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.CommAttriSetMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.ZhfwCommAttriSet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="attri_id" property="attriId" jdbcType="BIGINT" />
+    <result column="if_requ" property="ifRequ" jdbcType="CHAR" />
+    <result column="if_search" property="ifSearch" jdbcType="CHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+    <resultMap id="BaseResult" type="com.wisea.cultivar.common.vo.product.CommAttriMageListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="attri_id" property="attriId" jdbcType="BIGINT"/>
+        <result column="if_requ" property="ifRequ" jdbcType="CHAR"/>
+        <result column="if_search" property="ifSearch" jdbcType="CHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="cam.sort" property="camSort" jdbcType="INTEGER"/>
+        <result column="comm_attri_name" property="commAttriName" jdbcType="VARCHAR" />
+        <result column="comm_attri_column" property="commAttriColumn" jdbcType="VARCHAR" />
+        <result column="comm_attri_type" property="commAttriType" jdbcType="VARCHAR" />
+        <result column="length" property="length" jdbcType="INTEGER" />
+        <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+        <result column="dict_val" property="dictTest" jdbcType="VARCHAR" />
+        <result column="cam.remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="cam.del_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="decimal_dig" property="decimalDig" jdbcType="INTEGER" />
+        <result column="max_val" property="maxVal" jdbcType="DOUBLE" />
+        <result column="min_val" property="minVal" jdbcType="DOUBLE" />
+    </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_id, attri_id, if_requ, if_search, sort, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+    <!--如果等于NULL的话直接用当前商品分类ID去查询-->
+    <select id="findDecideByCommId" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet">
+        SELECT
+            attri_id
+        FROM
+            zhfw_comm_attri_set
+        WHERE
+            comm_id = #{commId} AND del_flag != '1'
+    </select>
+    <!--查询商品分类设置属性对象-->
+    <select id="editCommAttriSet" parameterType="com.wisea.cultivar.common.po.product.CommAttriSetGetPo"
+            resultType="com.wisea.cultivar.common.vo.product.CommAttriSetGetVo">
+        SELECT
+        t1.id,
+        t2.id AS attriId,#属性名称
+        t3.id AS commId,#商品分类
+        t1.if_requ,
+        t1.if_search,
+        t1.sort
+        FROM
+        zhfw_comm_attri_set AS t1
+        LEFT JOIN zhfw_comm_attri_mage AS t2 ON t1.attri_id = t2.id
+        LEFT JOIN zhfw_comm_mage AS t3 ON t3.id = t1.comm_id
+        <where>
+            t1.id = #{id} AND t1.del_flag != '1'
+        </where>
+    </select>
+    <!--根据商品id查商品属性设置-->
+    <select id="findAttSetListByCommId" resultMap="BaseResult" parameterType="java.util.ArrayList">
+        SELECT
+        cas.id as 'id',cas.attri_id,cas.if_requ,cas.sort,cas.if_search,
+        cam.comm_attri_name,cam.comm_attri_column,cam.effe_inval_state,cam.sort as 'cam.sort',
+        cam.comm_attri_type,cam.length,cam.remarks dict_val,cam.decimal_dig,cam.max_val,cam.min_val
+        from zhfw_comm_attri_set cas
+        LEFT JOIN zhfw_comm_attri_mage cam ON cam.id = cas.attri_id
+        LEFT JOIN zhfw_comm_mage cm ON cm.id = cas.comm_id
+        WHERE cas.del_flag = '0'
+        <if test="list != null and list.size > 0">
+            and cas.comm_id in
+            <foreach collection="list" item ="id" open="(" close=")" separator=",">
+                #{id}
+            </foreach>
+        </if>
+        ORDER BY cas.sort asc
+    </select>
+    <!--查询属性设置列表-->
+    <select id="commAttriSetList" parameterType="com.wisea.cultivar.common.po.product.CommAttriSetPagePo"
+            resultType="com.wisea.cultivar.common.vo.product.CommAttriSetListVo">
+        SELECT
+        t1.id,
+        t2.comm_attri_name AS commAttriName,#属性名称
+        t2.comm_attri_column AS commAttriColumn,#属性字段
+        t1.comm_id commId,
+        t3.comm_catg_name AS commCatgName,#商品分类
+        t1.if_requ,
+        t1.if_search,
+        t1.sort,
+        t1.create_date
+        FROM
+        zhfw_comm_attri_set AS t1
+        LEFT JOIN zhfw_comm_attri_mage AS t2 ON t1.attri_id = t2.id
+        LEFT JOIN zhfw_comm_mage AS t3 ON t3.id = t1.comm_id
+        where t1.del_flag != '1'
+        <if test="commAttriName != null and commAttriName != '' ">
+            AND instr(t2.comm_attri_name,#{commAttriName}) != 0
+        </if>
+        <if test="ifRequ != null and ifRequ != '' ">
+            AND instr(t1.if_requ,#{ifRequ}) != 0
+        </if>
+        <if test="classifyId!=null and classifyId != '' ">
+            AND t1.comm_id = #{classifyId}
+        </if>
+        ORDER BY t1.sort ASC
+    </select>
+    <!--  删除属性时校验是否关联了属性设置-->
+    <select id="selectCommAttriById" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet">
+        SELECT attri_id
+        FROM zhfw_comm_attri_set
+        WHERE attri_id = #{id} AND del_flag != '1'
+    </select>
+    <!--如果不等于NULL的话直接用当前商品分类ID去查询-->
+    <select id="findAttriByCommId" parameterType="java.util.List"
+            resultType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet">
+        SELECT
+        attri_id
+        FROM
+        zhfw_comm_attri_set
+        WHERE
+        comm_id IN
+        (
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+        AND del_flag != '1'
+    </select>
+    <!-- 删除属性设置   -->
+    <update id="deleteLogic" >
+    update zhfw_comm_attri_set
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_comm_attri_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zhfw_comm_attri_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet" >
+    insert into zhfw_comm_attri_set (id, comm_id, attri_id,
+      if_requ, if_search, sort, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{attriId,jdbcType=BIGINT},
+      #{ifRequ,jdbcType=CHAR}, #{ifSearch,jdbcType=CHAR}, #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet" >
+    insert into zhfw_comm_attri_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="attriId != null" >
+        attri_id,
+      </if>
+      <if test="ifRequ != null" >
+        if_requ,
+      </if>
+      <if test="ifSearch != null" >
+        if_search,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="attriId != null" >
+        #{attriId,jdbcType=BIGINT},
+      </if>
+      <if test="ifRequ != null" >
+        #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="ifSearch != null" >
+        #{ifSearch,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet" >
+    update zhfw_comm_attri_set
+    <set >
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="attriId != null" >
+        attri_id = #{attriId,jdbcType=BIGINT},
+      </if>
+      <if test="ifRequ != null" >
+        if_requ = #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="ifSearch != null" >
+        if_search = #{ifSearch,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttriSet" >
+    update zhfw_comm_attri_set
+    set comm_id = #{commId,jdbcType=BIGINT},
+      attri_id = #{attriId,jdbcType=BIGINT},
+      if_requ = #{ifRequ,jdbcType=CHAR},
+      if_search = #{ifSearch,jdbcType=CHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.common.vo.CommAttriSetPageListVo" parameterType="com.wisea.cultivar.common.po.CommAttriSetPageListPo" >
+    select
+	  id id,
+	  comm_id commId,
+	  attri_id attriId,
+	  if_requ ifRequ,
+	  if_search ifSearch,
+	  sort sort
+	from
+	  zhfw_comm_attri_set
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.CommAttriSetInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  comm_id commId,
+	  attri_id attriId,
+	  if_requ ifRequ,
+	  if_search ifSearch,
+	  sort sort
+	from
+	  zhfw_comm_attri_set
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+    <select id="findTwoLevelList" resultType="com.wisea.cultivar.common.vo.product.CommAttriSetListVo">
+        SELECT
+        t1.id,
+        t2.comm_attri_name AS commAttriName,#属性名称
+        t2.comm_attri_column AS commAttriColumn,#属性字段
+        t1.comm_id commId,
+        t3.comm_catg_name AS commCatgName,#商品分类
+        t1.if_requ,
+        t1.if_search,
+        t1.sort,
+        t1.create_date
+        FROM
+        zhfw_comm_attri_set AS t1
+        LEFT JOIN zhfw_comm_attri_mage AS t2 ON t1.attri_id = t2.id
+        LEFT JOIN zhfw_comm_mage AS t3 ON t3.id = t1.comm_id
+        where t1.del_flag = '0'
+        and  t1.comm_id in
+        <foreach collection="commIds" item="item" separator="," open="(" close=")">
+            #{item}
+        </foreach>
+        <if test="commAttriName != null and commAttriName != '' ">
+            AND instr(t2.comm_attri_name,#{commAttriName}) != 0
+        </if>
+        <if test="ifRequ != null and ifRequ != '' ">
+            AND instr(t1.if_requ,#{ifRequ}) != 0
+        </if>
+        ORDER BY t1.sort ASC
+    </select>
+</mapper>

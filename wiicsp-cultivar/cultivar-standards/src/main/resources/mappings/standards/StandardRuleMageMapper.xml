@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.standards.mapper.StandardRuleMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.standards.entity.StandardRuleMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="standard_type_mage_id" jdbcType="BIGINT" property="standardTypeMageId" />
+    <result column="link_mage_id" jdbcType="BIGINT" property="linkMageId" />
+    <result column="ics_class_mage_id" jdbcType="BIGINT" property="icsClassMageId" />
+    <result column="china_standard_type_mage_id" jdbcType="BIGINT" property="chinaStandardTypeMageId" />
+    <result column="standard_rule_type" jdbcType="VARCHAR" property="standardRuleType" />
+    <result column="standard_rule_no" jdbcType="VARCHAR" property="standardRuleNo" />
+    <result column="cn_title" jdbcType="VARCHAR" property="cnTitle" />
+    <result column="en_title" jdbcType="VARCHAR" property="enTitle" />
+    <result column="pub_date" jdbcType="TIMESTAMP" property="pubDate" />
+    <result column="imple_date" jdbcType="TIMESTAMP" property="impleDate" />
+    <result column="pub_dept" jdbcType="VARCHAR" property="pubDept" />
+    <result column="standard_rule_abstract" jdbcType="VARCHAR" property="standardRuleAbstract" />
+    <result column="replace_standard_rule" jdbcType="VARCHAR" property="replaceStandardRule" />
+    <result column="active_standard_rule" jdbcType="VARCHAR" property="activeStandardRule" />
+    <result column="modify_list" jdbcType="VARCHAR" property="modifyList" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="views" jdbcType="INTEGER" property="views" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, standard_type_mage_id, link_mage_id, ics_class_mage_id, china_standard_type_mage_id,
+    standard_rule_type, standard_rule_no, cn_title, en_title, pub_date, imple_date, pub_dept,
+    standard_rule_abstract, replace_standard_rule, active_standard_rule, modify_list,
+    create_by, create_date, update_by, update_date, remarks, del_flag, views
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from standard_rule_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from standard_rule_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.standards.entity.StandardRuleMage">
+    insert into standard_rule_mage (id, standard_type_mage_id, link_mage_id,
+      ics_class_mage_id, china_standard_type_mage_id,
+      standard_rule_type, standard_rule_no, cn_title,
+      en_title, pub_date, imple_date,
+      pub_dept, standard_rule_abstract, replace_standard_rule,
+      active_standard_rule, modify_list, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag,views)
+    values (#{id,jdbcType=BIGINT}, #{standardTypeMageId,jdbcType=BIGINT}, #{linkMageId,jdbcType=BIGINT},
+      #{icsClassMageId,jdbcType=BIGINT}, #{chinaStandardTypeMageId,jdbcType=BIGINT},
+      #{standardRuleType,jdbcType=VARCHAR}, #{standardRuleNo,jdbcType=VARCHAR}, #{cnTitle,jdbcType=VARCHAR},
+      #{enTitle,jdbcType=VARCHAR}, #{pubDate,jdbcType=TIMESTAMP}, #{impleDate,jdbcType=TIMESTAMP},
+      #{pubDept,jdbcType=VARCHAR}, #{standardRuleAbstract,jdbcType=VARCHAR}, #{replaceStandardRule,jdbcType=VARCHAR},
+      #{activeStandardRule,jdbcType=VARCHAR}, #{modifyList,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},#{views,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.standards.entity.StandardRuleMage">
+    insert into standard_rule_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="standardTypeMageId != null">
+        standard_type_mage_id,
+      </if>
+      <if test="linkMageId != null">
+        link_mage_id,
+      </if>
+      <if test="icsClassMageId != null">
+        ics_class_mage_id,
+      </if>
+      <if test="chinaStandardTypeMageId != null">
+        china_standard_type_mage_id,
+      </if>
+      <if test="standardRuleType != null">
+        standard_rule_type,
+      </if>
+      <if test="standardRuleNo != null">
+        standard_rule_no,
+      </if>
+      <if test="cnTitle != null">
+        cn_title,
+      </if>
+      <if test="enTitle != null">
+        en_title,
+      </if>
+      <if test="pubDate != null">
+        pub_date,
+      </if>
+      <if test="impleDate != null">
+        imple_date,
+      </if>
+      <if test="pubDept != null">
+        pub_dept,
+      </if>
+      <if test="standardRuleAbstract != null">
+        standard_rule_abstract,
+      </if>
+      <if test="replaceStandardRule != null">
+        replace_standard_rule,
+      </if>
+      <if test="activeStandardRule != null">
+        active_standard_rule,
+      </if>
+      <if test="modifyList != null">
+        modify_list,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=INTEGER},
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="standardTypeMageId != null">
+        #{standardTypeMageId,jdbcType=BIGINT},
+      </if>
+      <if test="linkMageId != null">
+        #{linkMageId,jdbcType=BIGINT},
+      </if>
+      <if test="icsClassMageId != null">
+        #{icsClassMageId,jdbcType=BIGINT},
+      </if>
+      <if test="chinaStandardTypeMageId != null">
+        #{chinaStandardTypeMageId,jdbcType=BIGINT},
+      </if>
+      <if test="standardRuleType != null">
+        #{standardRuleType,jdbcType=VARCHAR},
+      </if>
+      <if test="standardRuleNo != null">
+        #{standardRuleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cnTitle != null">
+        #{cnTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="enTitle != null">
+        #{enTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null">
+        #{pubDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="impleDate != null">
+        #{impleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pubDept != null">
+        #{pubDept,jdbcType=VARCHAR},
+      </if>
+      <if test="standardRuleAbstract != null">
+        #{standardRuleAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="replaceStandardRule != null">
+        #{replaceStandardRule,jdbcType=VARCHAR},
+      </if>
+      <if test="activeStandardRule != null">
+        #{activeStandardRule,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyList != null">
+        #{modifyList,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="views != null">
+        #{views,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.standards.entity.StandardRuleMage">
+    update standard_rule_mage
+    <set>
+      <if test="standardTypeMageId != null">
+        standard_type_mage_id = #{standardTypeMageId,jdbcType=BIGINT},
+      </if>
+      <if test="linkMageId != null">
+        link_mage_id = #{linkMageId,jdbcType=BIGINT},
+      </if>
+      <if test="icsClassMageId != null">
+        ics_class_mage_id = #{icsClassMageId,jdbcType=BIGINT},
+      </if>
+      <if test="chinaStandardTypeMageId != null">
+        china_standard_type_mage_id = #{chinaStandardTypeMageId,jdbcType=BIGINT},
+      </if>
+      <if test="standardRuleType != null">
+        standard_rule_type = #{standardRuleType,jdbcType=VARCHAR},
+      </if>
+      <if test="standardRuleNo != null">
+        standard_rule_no = #{standardRuleNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cnTitle != null">
+        cn_title = #{cnTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="enTitle != null">
+        en_title = #{enTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null">
+        pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="impleDate != null">
+        imple_date = #{impleDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="pubDept != null">
+        pub_dept = #{pubDept,jdbcType=VARCHAR},
+      </if>
+      <if test="standardRuleAbstract != null">
+        standard_rule_abstract = #{standardRuleAbstract,jdbcType=VARCHAR},
+      </if>
+      <if test="replaceStandardRule != null">
+        replace_standard_rule = #{replaceStandardRule,jdbcType=VARCHAR},
+      </if>
+      <if test="activeStandardRule != null">
+        active_standard_rule = #{activeStandardRule,jdbcType=VARCHAR},
+      </if>
+      <if test="modifyList != null">
+        modify_list = #{modifyList,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="views != null">
+        views = #{views,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.standards.entity.StandardRuleMage">
+    update standard_rule_mage
+    set standard_type_mage_id = #{standardTypeMageId,jdbcType=BIGINT},
+      link_mage_id = #{linkMageId,jdbcType=BIGINT},
+      ics_class_mage_id = #{icsClassMageId,jdbcType=BIGINT},
+      china_standard_type_mage_id = #{chinaStandardTypeMageId,jdbcType=BIGINT},
+      standard_rule_type = #{standardRuleType,jdbcType=VARCHAR},
+      standard_rule_no = #{standardRuleNo,jdbcType=VARCHAR},
+      cn_title = #{cnTitle,jdbcType=VARCHAR},
+      en_title = #{enTitle,jdbcType=VARCHAR},
+      pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      imple_date = #{impleDate,jdbcType=TIMESTAMP},
+      pub_dept = #{pubDept,jdbcType=VARCHAR},
+      standard_rule_abstract = #{standardRuleAbstract,jdbcType=VARCHAR},
+      replace_standard_rule = #{replaceStandardRule,jdbcType=VARCHAR},
+      active_standard_rule = #{activeStandardRule,jdbcType=VARCHAR},
+      modify_list = #{modifyList,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      views = #{views,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.standards.po.StandardRuleMagePagePo" resultType="com.wisea.cultivar.standards.vo.StandardRuleMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from standard_rule_mage
+    where del_flag = '0'
+    <if test="startImpleDate!=null and endImpleDate!=null">
+      and imple_date between #{startImpleDate} and #{endImpleDate}
+    </if>
+    <if test="standardRuleType != '' and standardRuleType != null">
+      and standard_rule_type=#{standardRuleType}
+    </if>
+    <if test="standardTypeMageId != '' and standardTypeMageId != null">
+      and standard_type_mage_id=#{standardTypeMageId}
+    </if>
+    <if test="linkMageId != '' and linkMageId != null">
+      and link_mage_id=#{linkMageId}
+    </if>
+    <if test="numberAndnameAnddepartment != '' and numberAndnameAnddepartment != null">
+      AND CONCAT(standard_rule_no, cn_title,en_title,pub_dept) LIKE CONCAT('%',#{numberAndnameAnddepartment},'%')
+    </if>
+    order by update_date desc
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.standards.po.StandardRuleMageListPo" resultType="com.wisea.cultivar.standards.vo.StandardRuleMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from standard_rule_mage
+    where del_flag = '0'
+    <if test="standardTypeMageId!=null and standardTypeMageId!=''"> and standard_type_mage_id=#{standardTypeMageId}</if>
+    <if test="icsClassMageId!=null and icsClassMageId!=''"> and ics_class_mage_id=#{icsClassMageId}</if>
+    <if test="chinaStandardTypeMageId!=null and chinaStandardTypeMageId!=''"> and china_standard_type_mage_id=#{chinaStandardTypeMageId}</if>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.standards.entity.StandardRuleMage">
+    update standard_rule_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

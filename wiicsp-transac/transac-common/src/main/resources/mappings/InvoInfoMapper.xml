@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.InvoInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.InvoInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="invo_type" property="invoType" jdbcType="VARCHAR" />
+    <result column="invo_catg_type" property="invoCatgType" jdbcType="VARCHAR" />
+    <result column="invo_title" property="invoTitle" jdbcType="VARCHAR" />
+    <result column="tax_ident_num" property="taxIdentNum" jdbcType="VARCHAR" />
+    <result column="invo_content_type" property="invoContentType" jdbcType="VARCHAR" />
+    <result column="regist_address" property="registAddress" jdbcType="VARCHAR" />
+    <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_acc_num" property="bankAccNum" jdbcType="VARCHAR" />
+    <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="invo_remarks" property="invoRemarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, invo_type, invo_catg_type, invo_title, tax_ident_num, invo_content_type,
+    regist_address, regist_tel, bank_name, bank_acc_num, default_flag, create_by, create_date,
+    update_by, update_date, remarks, del_flag,invo_remarks
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from invo_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from invo_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.InvoInfo" >
+    insert into invo_info (id, memb_id, invo_type,
+      invo_catg_type, invo_title, tax_ident_num,
+      invo_content_type, regist_address, regist_tel,
+      bank_name, bank_acc_num, default_flag,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,invo_remarks
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{invoType,jdbcType=VARCHAR},
+      #{invoCatgType,jdbcType=VARCHAR}, #{invoTitle,jdbcType=VARCHAR}, #{taxIdentNum,jdbcType=VARCHAR},
+      #{invoContentType,jdbcType=VARCHAR}, #{registAddress,jdbcType=VARCHAR}, #{registTel,jdbcType=VARCHAR},
+      #{bankName,jdbcType=VARCHAR}, #{bankAccNum,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{invoRemarks,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.InvoInfo" >
+    insert into invo_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="invoType != null" >
+        invo_type,
+      </if>
+      <if test="invoCatgType != null" >
+        invo_catg_type,
+      </if>
+      <if test="invoTitle != null" >
+        invo_title,
+      </if>
+      <if test="taxIdentNum != null" >
+        tax_ident_num,
+      </if>
+      <if test="invoContentType != null" >
+        invo_content_type,
+      </if>
+      <if test="registAddress != null" >
+        regist_address,
+      </if>
+      <if test="registTel != null" >
+        regist_tel,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAccNum != null" >
+        bank_acc_num,
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="invoRemarks != null" >
+        invo_remarks,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="invoType != null" >
+        #{invoType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoCatgType != null" >
+        #{invoCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoTitle != null" >
+        #{invoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taxIdentNum != null" >
+        #{taxIdentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoContentType != null" >
+        #{invoContentType,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddress != null" >
+        #{registAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNum != null" >
+        #{bankAccNum,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="invoRemarks != null" >
+        #{invoRemarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.InvoInfo" >
+    update invo_info
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="invoType != null" >
+        invo_type = #{invoType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoCatgType != null" >
+        invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoTitle != null" >
+        invo_title = #{invoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taxIdentNum != null" >
+        tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="invoContentType != null" >
+        invo_content_type = #{invoContentType,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddress != null" >
+        regist_address = #{registAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        regist_tel = #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNum != null" >
+        bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag = #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="invoRemarks != null" >
+        invo_remarks = #{invoRemarks,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.InvoInfo" >
+    update invo_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      invo_type = #{invoType,jdbcType=VARCHAR},
+      invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      invo_title = #{invoTitle,jdbcType=VARCHAR},
+      tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      invo_content_type = #{invoContentType,jdbcType=VARCHAR},
+      regist_address = #{registAddress,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      invo_remarks = #{invoRemarks,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.InvoInfoPageListVo" parameterType="com.wisea.transac.common.po.InvoInfoPageListPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  invo_type invoType,
+	  invo_catg_type invoCatgType,
+	  invo_title invoTitle,
+	  tax_ident_num taxIdentNum,
+	  invo_content_type invoContentType,
+	  regist_address registAddress,
+	  regist_tel registTel,
+	  bank_name bankName,
+	  bank_acc_num bankAccNum,
+	  default_flag defaultFlag,
+	  invo_remarks invoRemarks
+	from
+	  invo_info
+	where
+	  del_flag = '0'
+	and memb_id = #{membId}
+	order by default_flag,update_date desc
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.InvoInfoInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  invo_type invoType,
+	  invo_catg_type invoCatgType,
+	  invo_title invoTitle,
+	  tax_ident_num taxIdentNum,
+	  invo_content_type invoContentType,
+	  regist_address registAddress,
+	  regist_tel registTel,
+	  bank_name bankName,
+	  bank_acc_num bankAccNum,
+	  default_flag defaultFlag,
+	  invo_remarks invoRemarks
+	from
+	  invo_info
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+  <!-- 通过会员ID 查询默认的发票地址 -->
+    <select id="selDefaultInvoByMembId" parameterType="java.lang.Long"
+            resultType="com.wisea.transac.common.vo.InvoInfoInfoVo">
+       select
+       <include refid="Base_Column_List" />
+       from invo_info
+       where memb_id = #{membId}
+       AND default_flag = '0'
+       AND del_flag = '0'
+    </select>
+</mapper>

@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ManufacturerMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="manufacturer_name" property="manufacturerName" jdbcType="VARCHAR"/>
+        <result column="address_prov" property="addressProv" jdbcType="VARCHAR"/>
+        <result column="address_city" property="addressCity" jdbcType="VARCHAR"/>
+        <result column="address_cou" property="addressCou" jdbcType="VARCHAR"/>
+        <result column="address_detail" property="addressDetail" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, manufacturer_name, address_prov, address_city, address_cou, address_detail, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from manufacturer_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from manufacturer_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+    insert into manufacturer_mage (id, manufacturer_name, address_prov,
+      address_city, address_cou, address_detail,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{manufacturerName,jdbcType=VARCHAR}, #{addressProv,jdbcType=VARCHAR},
+      #{addressCity,jdbcType=VARCHAR}, #{addressCou,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+        insert into manufacturer_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="manufacturerName != null">
+                manufacturer_name,
+            </if>
+            <if test="addressProv != null">
+                address_prov,
+            </if>
+            <if test="addressCity != null">
+                address_city,
+            </if>
+            <if test="addressCou != null">
+                address_cou,
+            </if>
+            <if test="addressDetail != null">
+                address_detail,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="manufacturerName != null">
+                #{manufacturerName,jdbcType=VARCHAR},
+            </if>
+            <if test="addressProv != null">
+                #{addressProv,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCity != null">
+                #{addressCity,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCou != null">
+                #{addressCou,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDetail != null">
+                #{addressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+        update manufacturer_mage
+        <set>
+            <if test="manufacturerName != null">
+                manufacturer_name = #{manufacturerName,jdbcType=VARCHAR},
+            </if>
+            <if test="addressProv != null">
+                address_prov = #{addressProv,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCity != null">
+                address_city = #{addressCity,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCou != null">
+                address_cou = #{addressCou,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDetail != null">
+                address_detail = #{addressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+    update manufacturer_mage
+    set manufacturer_name = #{manufacturerName,jdbcType=VARCHAR},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.ManufacturerMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.ManufacturerMagePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from manufacturer_mage
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.ManufacturerMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.ManufacturerMageListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from manufacturer_mage
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+    update manufacturer_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--查询生产厂家列表-->
+    <select id="manufacturerList" parameterType="com.wisea.cultivar.common.po.tp.ManufacturerMagePagePo"
+            resultType="com.wisea.cultivar.common.vo.tp.ManufacturerMageListVo">
+        SELECT id, manufacturer_name, address_prov, address_city, address_cou, address_detail
+        FROM manufacturer_mage
+        <where>
+            <if test="manufacturerName != null and manufacturerName != '' ">
+                AND instr(manufacturer_name,#{manufacturerName}) != 0
+            </if>
+            AND del_flag != '1' <!--AND address_prov IS NOT NULL--> ORDER BY create_date DESC
+        </where>
+    </select>
+    <!--生产厂家接口-->
+    <select id="manuInterface" resultType="com.wisea.cultivar.common.vo.tp.ManufacturerMageListVo">
+        SELECT manufacturer_name
+        FROM manufacturer_mage
+        WHERE del_flag != '1'
+    </select>
+    <!--通过Code查询汉字-->
+    <select id="selectAddressName" parameterType="java.lang.String"
+            resultType="java.lang.String">
+        SELECT name
+        FROM sys_area
+        <where>
+            code = #{area}
+        </where>
+    </select>
+    <select id="selectCommByManufactureId" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        SELECT manufacturer_id FROM comm_pub_info WHERE manufacturer_id = #{id}
+    </select>
+    <select id="selectNotOnly" parameterType="com.wisea.cultivar.common.entity.tp.ManufacturerMage"
+            resultType="com.wisea.cultivar.common.entity.tp.ManufacturerMage">
+        SELECT manufacturer_name
+        FROM manufacturer_mage
+        WHERE manufacturer_name = #{manufacturerName} AND del_flag != '1' AND id != #{id}
+    </select>
+</mapper>

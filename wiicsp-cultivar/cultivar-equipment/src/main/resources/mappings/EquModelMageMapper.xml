@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.equipment.dao.EquModelMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.equipment.entity.EquModelMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="equ_entp_id" property="equEntpId" jdbcType="BIGINT" />
+    <result column="equ_model" property="equModel" jdbcType="VARCHAR" />
+    <result column="equ_type" property="equType" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, equ_entp_id, equ_model, equ_type, url, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+
+  <!-- 分页查询设备型号列表 -->
+  <select id="findPageList" parameterType="com.wisea.equipment.po.EquModelPageListPo" resultType="com.wisea.equipment.vo.EquModelPageListVo">
+    select
+      emm.id id,
+      emm.equ_entp_id equEntpId,
+      eem.equ_entp_name equEntpName,
+      emm.equ_model equModel,
+      emm.equ_type equType,
+      emm.url url
+    from
+      equ_model_mage emm
+      inner join equ_entp_mage eem on emm.equ_entp_id = eem.id
+    where
+      emm.del_flag = '0'
+      <if test="equEntpName != null and equEntpName != ''">
+        and eem.equ_entp_name like CONCAT('%', #{equEntpName}, '%')
+      </if>
+      <if test="equModel != null and equModel != ''">
+        and emm.equ_model like CONCAT('%', #{equModel}, '%')
+      </if>
+      <if test="equType != null and equType != ''">
+        and emm.equ_type = #{equType,jdbcType=VARCHAR}
+      </if>
+    order by
+      emm.create_date desc
+  </select>
+
+  <!-- 根据厂商查询设备型号列表 -->
+  <select id="findListByEntpId" parameterType="com.wisea.equipment.po.EquModelListPo" resultType="com.wisea.equipment.vo.EquModelListVo">
+    select
+      emm.id id,
+      emm.equ_model equModel,
+      emm.equ_type equType
+    from
+      equ_model_mage emm
+      inner join equ_entp_mage eem on emm.equ_entp_id = eem.id
+    where
+      emm.del_flag = '0'
+      and emm.equ_entp_id = #{equEntpId,jdbcType=BIGINT}
+      <if test="equType != null and equType != ''">
+        and emm.equ_type = #{equType,jdbcType=VARCHAR}
+      </if>
+    order by
+      emm.create_date desc
+  </select>
+
+  <!-- 根据型号名称查询设备型号 -->
+  <select id="selectByEquModelName" parameterType="com.wisea.equipment.po.EquModelPo" resultMap="BaseResultMap">
+    select
+      *
+    from
+      equ_model_mage emm
+    where
+      emm.del_flag = '0'
+      and emm.equ_model = #{equModel,jdbcType=VARCHAR}
+      and emm.equ_entp_id = #{equEntpId,jdbcType=BIGINT}
+      and emm.equ_type = #{equType,jdbcType=VARCHAR}
+      <if test="id != null">
+        and emm.id != #{id,jdbcType=BIGINT}
+      </if>
+  </select>
+
+  <!-- 查询设备厂商详细信息 -->
+  <select id="findEquModelInfo" parameterType="java.lang.Long" resultType="com.wisea.equipment.vo.EquModelVo">
+    select
+      emm.id id,
+      emm.equ_entp_id equEntpId,
+      eem.equ_entp_name equEntpName,
+      emm.equ_model equModel,
+      emm.equ_type equType,
+      emm.url url
+    from
+      equ_model_mage emm
+        inner join equ_entp_mage eem on emm.equ_entp_id = eem.id
+    where
+      emm.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from equ_model_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from equ_model_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.equipment.entity.EquModelMage" >
+    insert into equ_model_mage (id, equ_entp_id, equ_model,
+                                equ_type, url, create_by,
+                                create_date, update_by, update_date,
+                                remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{equEntpId,jdbcType=BIGINT}, #{equModel,jdbcType=VARCHAR},
+            #{equType,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+            #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+            #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.equipment.entity.EquModelMage" >
+    insert into equ_model_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="equEntpId != null" >
+        equ_entp_id,
+      </if>
+      <if test="equModel != null" >
+        equ_model,
+      </if>
+      <if test="equType != null" >
+        equ_type,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="equEntpId != null" >
+        #{equEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="equModel != null" >
+        #{equModel,jdbcType=VARCHAR},
+      </if>
+      <if test="equType != null" >
+        #{equType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.equipment.entity.EquModelMage" >
+    update equ_model_mage
+    <set >
+      <if test="equEntpId != null" >
+        equ_entp_id = #{equEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="equModel != null" >
+        equ_model = #{equModel,jdbcType=VARCHAR},
+      </if>
+      <if test="equType != null" >
+        equ_type = #{equType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.equipment.entity.EquModelMage" >
+    update equ_model_mage
+    set equ_entp_id = #{equEntpId,jdbcType=BIGINT},
+        equ_model = #{equModel,jdbcType=VARCHAR},
+        equ_type = #{equType,jdbcType=VARCHAR},
+        url = #{url,jdbcType=VARCHAR},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

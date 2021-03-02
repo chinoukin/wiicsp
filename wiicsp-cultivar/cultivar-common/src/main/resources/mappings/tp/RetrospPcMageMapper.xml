@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.RetrospPcMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="retrosp_pc_num" property="retrospPcNum" jdbcType="VARCHAR" />
+    <result column="retrosp_pc_name" property="retrospPcName" jdbcType="VARCHAR" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="prdut_name" property="prdutName" jdbcType="VARCHAR" />
+    <result column="place_origin" property="placeOrigin" jdbcType="VARCHAR" />
+    <result column="appl_sl" property="applSl" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.tp.RetrospPcMage" extends="BaseResultMap" >
+    <result column="currency_retrosp_template" property="currencyRetrospTemplate" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, retrosp_pc_num, retrosp_pc_name, comm_id, comm_name, prdut_name, place_origin,
+    appl_sl, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    currency_retrosp_template
+  </sql>
+
+  <!-- 查询批次号列表 -->
+  <select id="findTraceBatchNumCode" parameterType="java.lang.String" resultType="java.lang.String">
+    select
+      rpm.retrosp_pc_num
+    from
+      retrosp_pc_mage rpm
+    where
+      rpm.retrosp_pc_num like CONCAT(#{prefix}, '%')
+    order by
+      rpm.retrosp_pc_num desc
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from retrosp_pc_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from retrosp_pc_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    insert into retrosp_pc_mage (id, memb_id, retrosp_pc_num,
+      retrosp_pc_name, comm_id, comm_name,
+      prdut_name, place_origin, appl_sl,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,
+      currency_retrosp_template)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{retrospPcNum,jdbcType=VARCHAR},
+      #{retrospPcName,jdbcType=VARCHAR}, #{commId,jdbcType=BIGINT}, #{commName,jdbcType=VARCHAR},
+      #{prdutName,jdbcType=VARCHAR}, #{placeOrigin,jdbcType=VARCHAR}, #{applSl,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{currencyRetrospTemplate,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    insert into retrosp_pc_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="retrospPcNum != null" >
+        retrosp_pc_num,
+      </if>
+      <if test="retrospPcName != null" >
+        retrosp_pc_name,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commName != null" >
+        comm_name,
+      </if>
+      <if test="prdutName != null" >
+        prdut_name,
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin,
+      </if>
+      <if test="applSl != null" >
+        appl_sl,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="currencyRetrospTemplate != null" >
+        currency_retrosp_template,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="retrospPcNum != null" >
+        #{retrospPcNum,jdbcType=VARCHAR},
+      </if>
+      <if test="retrospPcName != null" >
+        #{retrospPcName,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commName != null" >
+        #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="prdutName != null" >
+        #{prdutName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="applSl != null" >
+        #{applSl,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="currencyRetrospTemplate != null" >
+        #{currencyRetrospTemplate,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    update retrosp_pc_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="retrospPcNum != null" >
+        retrosp_pc_num = #{retrospPcNum,jdbcType=VARCHAR},
+      </if>
+      <if test="retrospPcName != null" >
+        retrosp_pc_name = #{retrospPcName,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="prdutName != null" >
+        prdut_name = #{prdutName,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin = #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="applSl != null" >
+        appl_sl = #{applSl,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="currencyRetrospTemplate != null" >
+        currency_retrosp_template = #{currencyRetrospTemplate,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    update retrosp_pc_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      retrosp_pc_num = #{retrospPcNum,jdbcType=VARCHAR},
+      retrosp_pc_name = #{retrospPcName,jdbcType=VARCHAR},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      prdut_name = #{prdutName,jdbcType=VARCHAR},
+      place_origin = #{placeOrigin,jdbcType=VARCHAR},
+      appl_sl = #{applSl,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      currency_retrosp_template = #{currencyRetrospTemplate,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    update retrosp_pc_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      retrosp_pc_num = #{retrospPcNum,jdbcType=VARCHAR},
+      retrosp_pc_name = #{retrospPcName,jdbcType=VARCHAR},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      prdut_name = #{prdutName,jdbcType=VARCHAR},
+      place_origin = #{placeOrigin,jdbcType=VARCHAR},
+      appl_sl = #{applSl,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.retro.RetrospPcMageListVo" parameterType="com.wisea.cultivar.common.po.tp.retro.RetrospPcMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+           ,
+           IFNULL(update_date,create_date) lastModifyTime
+    from retrosp_pc_mage
+    where del_flag = '0'
+    <if test="commId!=null and commId!=''">
+      and comm_id = #{commId}
+    </if>
+    <if test="search!=null and search!=''">
+#       追溯批次名称/产品名称/产品产地
+      and (retrosp_pc_name like CONCAT('%',#{search},'%')
+            or comm_name like CONCAT('%',#{search},'%')
+            or place_origin like CONCAT('%',#{search},'%'))
+    </if>
+    <if test="membId!=null">
+      and memb_id = #{membId}
+    </if>
+    order by update_date desc,retrosp_pc_num asc,create_date desc
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.retro.RetrospPcMageListVo" parameterType="com.wisea.cultivar.common.po.tp.retro.RetrospPcMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from retrosp_pc_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.RetrospPcMage" >
+    update retrosp_pc_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findByPcNum" resultType="com.wisea.cultivar.common.vo.tp.retro.RetrospPcMageListVo"
+          parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from retrosp_pc_mage
+    where del_flag = '0'
+    and retrosp_pc_num = #{pcNum}
+  </select>
+
+</mapper>

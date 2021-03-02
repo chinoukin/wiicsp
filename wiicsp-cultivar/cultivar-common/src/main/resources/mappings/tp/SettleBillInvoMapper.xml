@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.SettleBillInvoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.SettleBillInvo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="entp_id" property="entpId" jdbcType="BIGINT" />
+        <result column="settle_id" property="settleId" jdbcType="BIGINT" />
+        <result column="invo_type" property="invoType" jdbcType="VARCHAR" />
+        <result column="invo_form" property="invoForm" jdbcType="VARCHAR" />
+        <result column="invo_catg_type" property="invoCatgType" jdbcType="VARCHAR" />
+        <result column="invo_title" property="invoTitle" jdbcType="VARCHAR" />
+        <result column="tax_ident_num" property="taxIdentNum" jdbcType="VARCHAR" />
+        <result column="regist_address" property="registAddress" jdbcType="VARCHAR" />
+        <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+        <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+        <result column="bank_acc_num" property="bankAccNum" jdbcType="VARCHAR" />
+        <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+        <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+        <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+        <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+        <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+        <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+        <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+        <result column="tel" property="tel" jdbcType="VARCHAR" />
+        <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR" />
+        <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="appl_num" property="applNum" jdbcType="VARCHAR" />
+        <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+        <result column="draw_date" property="drawDate" jdbcType="TIMESTAMP" />
+        <result column="draw_amount" property="drawAmount" jdbcType="DOUBLE" />
+        <result column="invo_state" property="invoState" jdbcType="VARCHAR" />
+        <result column="cancel_remarks" property="cancelRemarks" jdbcType="VARCHAR" />
+        <result column="dz_invo_url" property="dzInvoUrl" jdbcType="VARCHAR" />
+        <result column="dz_invo_name" property="dzInvoName" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+    id, entp_id, settle_id, invo_type, invo_form, invo_catg_type, invo_title, tax_ident_num,
+    regist_address, regist_tel, bank_name, bank_acc_num, default_flag, rece_name, address_prov,
+    address_city, address_cou, address_detail, zip_code, tel, logistics_comp_name, logistics_num,
+    create_by, create_date, update_by, update_date, remarks, del_flag, appl_num, appl_date,
+    draw_date, draw_amount, invo_state, cancel_remarks, dz_invo_url, dz_invo_name
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from settle_bill_invo
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from settle_bill_invo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.SettleBillInvo" >
+    insert into settle_bill_invo (id, entp_id, settle_id,
+      invo_type, invo_form, invo_catg_type,
+      invo_title, tax_ident_num, regist_address,
+      regist_tel, bank_name, bank_acc_num,
+      default_flag, rece_name, address_prov,
+      address_city, address_cou, address_detail,
+      zip_code, tel, logistics_comp_name,
+      logistics_num, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, appl_num, appl_date,
+      draw_date, draw_amount, invo_state,
+      cancel_remarks, dz_invo_url, dz_invo_name)
+    values (#{id,jdbcType=BIGINT}, #{entpId,jdbcType=BIGINT}, #{settleId,jdbcType=BIGINT},
+      #{invoType,jdbcType=VARCHAR}, #{invoForm,jdbcType=VARCHAR}, #{invoCatgType,jdbcType=VARCHAR},
+      #{invoTitle,jdbcType=VARCHAR}, #{taxIdentNum,jdbcType=VARCHAR}, #{registAddress,jdbcType=VARCHAR},
+      #{registTel,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, #{bankAccNum,jdbcType=VARCHAR},
+      #{defaultFlag,jdbcType=CHAR}, #{receName,jdbcType=VARCHAR}, #{addressProv,jdbcType=VARCHAR},
+      #{addressCity,jdbcType=VARCHAR}, #{addressCou,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR},
+      #{zipCode,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{logisticsCompName,jdbcType=VARCHAR},
+      #{logisticsNum,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{applNum,jdbcType=VARCHAR}, #{applDate,jdbcType=TIMESTAMP},
+      #{drawDate,jdbcType=TIMESTAMP}, #{drawAmount,jdbcType=DOUBLE}, #{invoState,jdbcType=VARCHAR},
+      #{cancelRemarks,jdbcType=VARCHAR}, #{dzInvoUrl,jdbcType=VARCHAR}, #{dzInvoName,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.SettleBillInvo" >
+        insert into settle_bill_invo
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="entpId != null" >
+                entp_id,
+            </if>
+            <if test="settleId != null" >
+                settle_id,
+            </if>
+            <if test="invoType != null" >
+                invo_type,
+            </if>
+            <if test="invoForm != null" >
+                invo_form,
+            </if>
+            <if test="invoCatgType != null" >
+                invo_catg_type,
+            </if>
+            <if test="invoTitle != null" >
+                invo_title,
+            </if>
+            <if test="taxIdentNum != null" >
+                tax_ident_num,
+            </if>
+            <if test="registAddress != null" >
+                regist_address,
+            </if>
+            <if test="registTel != null" >
+                regist_tel,
+            </if>
+            <if test="bankName != null" >
+                bank_name,
+            </if>
+            <if test="bankAccNum != null" >
+                bank_acc_num,
+            </if>
+            <if test="defaultFlag != null" >
+                default_flag,
+            </if>
+            <if test="receName != null" >
+                rece_name,
+            </if>
+            <if test="addressProv != null" >
+                address_prov,
+            </if>
+            <if test="addressCity != null" >
+                address_city,
+            </if>
+            <if test="addressCou != null" >
+                address_cou,
+            </if>
+            <if test="addressDetail != null" >
+                address_detail,
+            </if>
+            <if test="zipCode != null" >
+                zip_code,
+            </if>
+            <if test="tel != null" >
+                tel,
+            </if>
+            <if test="logisticsCompName != null" >
+                logistics_comp_name,
+            </if>
+            <if test="logisticsNum != null" >
+                logistics_num,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateBy != null" >
+                update_by,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="remarks != null" >
+                remarks,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+            <if test="applNum != null" >
+                appl_num,
+            </if>
+            <if test="applDate != null" >
+                appl_date,
+            </if>
+            <if test="drawDate != null" >
+                draw_date,
+            </if>
+            <if test="drawAmount != null" >
+                draw_amount,
+            </if>
+            <if test="invoState != null" >
+                invo_state,
+            </if>
+            <if test="cancelRemarks != null" >
+                cancel_remarks,
+            </if>
+            <if test="dzInvoUrl != null" >
+                dz_invo_url,
+            </if>
+            <if test="dzInvoName != null" >
+                dz_invo_name,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="entpId != null" >
+                #{entpId,jdbcType=BIGINT},
+            </if>
+            <if test="settleId != null" >
+                #{settleId,jdbcType=BIGINT},
+            </if>
+            <if test="invoType != null" >
+                #{invoType,jdbcType=VARCHAR},
+            </if>
+            <if test="invoForm != null" >
+                #{invoForm,jdbcType=VARCHAR},
+            </if>
+            <if test="invoCatgType != null" >
+                #{invoCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="invoTitle != null" >
+                #{invoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="taxIdentNum != null" >
+                #{taxIdentNum,jdbcType=VARCHAR},
+            </if>
+            <if test="registAddress != null" >
+                #{registAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="registTel != null" >
+                #{registTel,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankAccNum != null" >
+                #{bankAccNum,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultFlag != null" >
+                #{defaultFlag,jdbcType=CHAR},
+            </if>
+            <if test="receName != null" >
+                #{receName,jdbcType=VARCHAR},
+            </if>
+            <if test="addressProv != null" >
+                #{addressProv,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCity != null" >
+                #{addressCity,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCou != null" >
+                #{addressCou,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDetail != null" >
+                #{addressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null" >
+                #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCompName != null" >
+                #{logisticsCompName,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsNum != null" >
+                #{logisticsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="applNum != null" >
+                #{applNum,jdbcType=VARCHAR},
+            </if>
+            <if test="applDate != null" >
+                #{applDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="drawDate != null" >
+                #{drawDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="drawAmount != null" >
+                #{drawAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="invoState != null" >
+                #{invoState,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelRemarks != null" >
+                #{cancelRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="dzInvoUrl != null" >
+                #{dzInvoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="dzInvoName != null" >
+                #{dzInvoName,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.SettleBillInvo" >
+        update settle_bill_invo
+        <set >
+            <if test="entpId != null" >
+                entp_id = #{entpId,jdbcType=BIGINT},
+            </if>
+            <if test="settleId != null" >
+                settle_id = #{settleId,jdbcType=BIGINT},
+            </if>
+            <if test="invoType != null" >
+                invo_type = #{invoType,jdbcType=VARCHAR},
+            </if>
+            <if test="invoForm != null" >
+                invo_form = #{invoForm,jdbcType=VARCHAR},
+            </if>
+            <if test="invoCatgType != null" >
+                invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="invoTitle != null" >
+                invo_title = #{invoTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="taxIdentNum != null" >
+                tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+            </if>
+            <if test="registAddress != null" >
+                regist_address = #{registAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="registTel != null" >
+                regist_tel = #{registTel,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                bank_name = #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankAccNum != null" >
+                bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultFlag != null" >
+                default_flag = #{defaultFlag,jdbcType=CHAR},
+            </if>
+            <if test="receName != null" >
+                rece_name = #{receName,jdbcType=VARCHAR},
+            </if>
+            <if test="addressProv != null" >
+                address_prov = #{addressProv,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCity != null" >
+                address_city = #{addressCity,jdbcType=VARCHAR},
+            </if>
+            <if test="addressCou != null" >
+                address_cou = #{addressCou,jdbcType=VARCHAR},
+            </if>
+            <if test="addressDetail != null" >
+                address_detail = #{addressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null" >
+                zip_code = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null" >
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsCompName != null" >
+                logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsNum != null" >
+                logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="applNum != null" >
+                appl_num = #{applNum,jdbcType=VARCHAR},
+            </if>
+            <if test="applDate != null" >
+                appl_date = #{applDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="drawDate != null" >
+                draw_date = #{drawDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="drawAmount != null" >
+                draw_amount = #{drawAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="invoState != null" >
+                invo_state = #{invoState,jdbcType=VARCHAR},
+            </if>
+            <if test="cancelRemarks != null" >
+                cancel_remarks = #{cancelRemarks,jdbcType=VARCHAR},
+            </if>
+            <if test="dzInvoUrl != null" >
+                dz_invo_url = #{dzInvoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="dzInvoName != null" >
+                dz_invo_name = #{dzInvoName,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.SettleBillInvo" >
+    update settle_bill_invo
+    set entp_id = #{entpId,jdbcType=BIGINT},
+      settle_id = #{settleId,jdbcType=BIGINT},
+      invo_type = #{invoType,jdbcType=VARCHAR},
+      invo_form = #{invoForm,jdbcType=VARCHAR},
+      invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      invo_title = #{invoTitle,jdbcType=VARCHAR},
+      tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      regist_address = #{registAddress,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      appl_num = #{applNum,jdbcType=VARCHAR},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      draw_date = #{drawDate,jdbcType=TIMESTAMP},
+      draw_amount = #{drawAmount,jdbcType=DOUBLE},
+      invo_state = #{invoState,jdbcType=VARCHAR},
+      cancel_remarks = #{cancelRemarks,jdbcType=VARCHAR},
+      dz_invo_url = #{dzInvoUrl,jdbcType=VARCHAR},
+      dz_invo_name = #{dzInvoName,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.SettleBillInvoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.SettleBillInvoPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from settle_bill_invo
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.SettleBillInvoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.SettleBillInvoListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from settle_bill_invo
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.SettleBillInvo">
+    update settle_bill_invo
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="getSellerIssuedInvoice" parameterType="com.wisea.cultivar.common.entity.tp.SettleBillInvo"
+            resultType="com.wisea.cultivar.common.entity.tp.SettleBillInvo">
+        SELECT
+        t2.id AS settleId,
+        t1.id AS id,
+        t2.settle_bill_numb AS settleNum,
+        t2.settle_cycle AS settleCycle,
+        t2.total_money AS totalMoney,
+        t1.invo_type AS invoType,
+        t1.invo_title AS invoTitle,
+        t1.invo_state AS invoState
+        FROM
+        settle_bill_invo AS t1
+        LEFT JOIN settle_bill AS t2 ON t2.id = t1.settle_id
+        <where>
+            <if test="settleNum!=null and settleNum!=null">
+                AND instr(t2.settle_bill_numb,#{settleNum}) != 0
+            </if>
+            <if test="beforeTime != null and beforeTime != '' and afterTime != '' and afterTime!=null ">
+                <![CDATA[AND (LEFT(t2.settle_cycle,10) >= #{beforeTime} AND RIGHT(t2.settle_cycle,10) <= #{afterTime})]]>
+            </if>
+            <if test="invoState!=null and  invoState!=null">
+                AND instr(t1.invo_state,#{invoState}) != 0
+            </if>
+            AND t1.entp_id = #{entpId} AND t1.invo_state != '2' ORDER BY t1.create_date DESC
+        </where>
+    </select>
+    <update id="updateSellerSettleInvo" parameterType="com.wisea.cultivar.common.po.tp.PublishSellerSettleInvoPo">
+        UPDATE settle_bill_invo
+        <set>
+            invo_type = #{invoType,jdbcType=VARCHAR},
+            invo_title = #{invoTitle,jdbcType=VARCHAR},
+            logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+            logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+            invo_state = #{invoState,jdbcType=VARCHAR}
+        </set>
+        <where>
+            AND id IN
+            <foreach collection="yakIds" open="(" close=")" separator="," item="item">
+                #{item}
+            </foreach>
+        </where>
+    </update>
+    <select id="getLogisticsData" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.tp.SettleBillInvo">
+        SELECT logistics_comp_name, logistics_num
+        FROM settle_bill_invo
+        WHERE settid_id = #{invoLogistics}
+    </select>
+
+    <select id="findBySettleId" resultType="com.wisea.cultivar.common.vo.tp.SettleBillInvoListVo"
+            parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from settle_bill_invo
+        where settle_id = #{settleId,jdbcType=BIGINT}
+    </select>
+
+    <select id="selectInvoAndAddressMss" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.vo.tp.SettleBillInvoListVo">
+        SELECT
+        invo_type,
+        invo_title,
+        tax_ident_num,
+        regist_address,
+        regist_tel,
+        bank_name,
+        bank_acc_num,
+        tel,
+        rece_name,
+        address_prov,
+        address_city,
+        address_cou,
+        address_detail,
+        zip_code,
+        create_date AS createDate,
+        logistics_comp_name,
+        logistics_num
+        FROM
+        settle_bill_invo
+        <where>
+            settle_id IN
+            <foreach collection="list" open="(" close=")" separator="," item="idLong">
+                #{idLong}
+            </foreach>
+        </where>
+    </select>
+
+    <!-- 查询申请开票编码 -->
+    <select id="findApplNumMaxNum" parameterType="java.lang.String" resultType="java.lang.String">
+    	SELECT appl_num FROM settle_bill_invo WHERE appl_num LIKE CONCAT(#{applNum}, '%')
+    </select>
+
+    <!-- 卖家查询账期待开发票列表 -->
+    <select id="serSettleList" parameterType="com.wisea.cultivar.common.po.tp.trade.SellerSetBillInvoListPo" resultType="com.wisea.cultivar.common.vo.tp.trade.SellerSetBillInvoListVo">
+      SELECT
+        sbi.id id,
+        sbi.invo_type invoType,
+        sbi.invo_title invoTitle,
+        sbi.appl_num applNum,
+        sbi.draw_amount drawAmount,
+        sbi.invo_state invoState,
+        sbi.draw_date drawDate,
+        sb.settle_bill_numb settleBillNumb,
+        sb.settle_cycle_start_date settleCycleStartDate,
+        sb.settle_cycle_end_date settleCycleEndDate,
+        mi.user_name buyerUserName
+		FROM settle_bill_invo sbi
+		  LEFT JOIN settle_bill sb ON sbi.settle_id = sb.id
+		  LEFT JOIN memb_info mi  ON sb.buyer_id = mi.id
+		where
+          sb.seller_id = #{sellerId}
+          <if test="invoType != null and invoType != ''">
+            and sbi.invo_type = #{invoType}
+          </if>
+          <if test="startDate != null">
+            and sb.settle_cycle_start_date >= #{startDate}
+          </if>
+          <if test="endDate != null">
+            and sb.settle_cycle_end_date &lt;= #{endDate}
+          </if>
+          <if test="query != null and query != ''">
+            and (
+              sbi.appl_num like CONCAT('%', #{query}, '%')
+              or sb.settle_bill_numb like CONCAT('%', #{query}, '%')
+              or mi.user_name like CONCAT('%', #{query}, '%')
+              or sbi.invo_title like CONCAT('%', #{query}, '%')
+            )
+          </if>
+        order by
+          sbi.appl_date desc
+    </select>
+
+    <!-- 查询发票详情，带地址 -->
+    <select id="selInfoById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.SellerSetBillInvoInfoVo">
+    	SELECT
+    	  t1.settle_id,
+		  t1.invo_type,
+		  t1.invo_form,
+		  t1.invo_catg_type,
+		  t1.invo_title,
+		  t1.tax_ident_num,
+		  t1.regist_address,
+		  t1.regist_tel,
+		  t1.bank_name,
+		  t1.bank_acc_num,
+		  t1.default_flag,
+		  t1.rece_name,
+		  t1.address_prov,
+		  t1.address_city,
+		  t1.address_cou,
+		  t1.address_detail,
+		  t1.zip_code,
+		  t1.tel,
+		  t1.logistics_comp_name,
+		  t1.logistics_num,
+		  t1.appl_num,
+		  t1.appl_date,
+		  t1.draw_date,
+		  t1.draw_amount,
+		  t1.invo_state,
+		  t1.cancel_remarks,
+		  t1.dz_invo_url,
+		  t1.dz_invo_name,
+		  sa.name                AS provName,
+		  sar.name               AS cityName,
+		  sae.name               AS couName
+		FROM settle_bill_invo t1
+		  LEFT JOIN sys_area sa
+		    ON sa.code = t1.address_prov
+		  LEFT JOIN sys_area sar
+		    ON sar.code = t1.address_city
+		  LEFT JOIN sys_area sae
+		    ON sae.code = t1.address_cou
+		  where 1=1
+		  and t1.id = #{id,jdbcType=BIGINT}
+    </select>
+</mapper>

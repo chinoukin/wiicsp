@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.SupPieceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.SupPieceInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="base_id" property="baseId" jdbcType="BIGINT" />
+    <result column="sup_piece_id" property="supPieceId" jdbcType="BIGINT" />
+    <result column="sup_piece_name" property="supPieceName" jdbcType="VARCHAR" />
+    <result column="market_date" property="marketDate" jdbcType="VARCHAR" />
+    <result column="ncl" property="ncl" jdbcType="DOUBLE" />
+    <result column="sup_piece_content" property="supPieceContent" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, base_id, sup_piece_id, sup_piece_name, market_date, ncl, sup_piece_content, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据基地ID查询基地优势单品列表 -->
+  <select id="findListByBaseId" parameterType="com.wisea.cloud.model.po.LongIdPo" resultType="com.wisea.transac.common.vo.seller.SupPieceInfoListVo">
+    select
+      spi.id id,
+      spi.sup_piece_name supPieceName,
+      spi.market_date marketDate,
+      spi.ncl ncl,
+      spp.url imgUrl
+    from
+      sup_piece_info spi
+      left join sup_piece_picture spp on spi.id = spp.sup_piece_id and spp.base_picture_type = '0'
+    where
+      spi.base_id = #{id}
+    group by
+      spi.id
+  </select>
+
+  <!-- 优势单品详细信息 -->
+  <select id="findSupPieceInfo" parameterType="com.wisea.cloud.model.po.LongIdPo" resultType="com.wisea.transac.common.vo.seller.SupPieceInfoVo" resultMap="infoResultMap">
+    select
+      spi.id id,
+      spi.base_id baseId,
+      spi.sup_piece_id supPieceId,
+      spi.sup_piece_name supPieceName,
+      spi.market_date marketDate,
+      spi.ncl ncl,
+      spi.sup_piece_content supPieceContent,
+      spp.url url,
+      spp.base_picture_type fileType,
+      spp.sort sort
+    from
+      sup_piece_info spi
+      left join sup_piece_picture spp on spi.id = spp.sup_piece_id
+    where
+      spi.id = #{id}
+    order by
+      spp.sort
+  </select>
+  <resultMap id="infoResultMap" type="com.wisea.transac.common.vo.seller.SupPieceInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="baseId" property="baseId" jdbcType="BIGINT" />
+    <result column="supPieceId" property="supPieceId" jdbcType="BIGINT" />
+    <result column="supPieceName" property="supPieceName" jdbcType="VARCHAR" />
+    <result column="marketDate" property="marketDate" jdbcType="VARCHAR" />
+    <result column="ncl" property="ncl" jdbcType="DOUBLE" />
+    <result column="supPieceContent" property="supPieceContent" jdbcType="VARCHAR" />
+    <collection property="files" ofType="com.wisea.transac.common.vo.FileVo">
+      <result column="url" property="fileUrl"/>
+      <result column="fileType" property="fileType"/>
+      <result column="sort" property="sort"/>
+    </collection>
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sup_piece_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sup_piece_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.SupPieceInfo" >
+    insert into sup_piece_info (id, base_id, sup_piece_id,
+      sup_piece_name, market_date, ncl,
+      sup_piece_content, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{baseId,jdbcType=BIGINT}, #{supPieceId,jdbcType=BIGINT},
+      #{supPieceName,jdbcType=VARCHAR}, #{marketDate,jdbcType=VARCHAR}, #{ncl,jdbcType=DOUBLE},
+      #{supPieceContent,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.SupPieceInfo" >
+    insert into sup_piece_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="baseId != null" >
+        base_id,
+      </if>
+      <if test="supPieceId != null" >
+        sup_piece_id,
+      </if>
+      <if test="supPieceName != null" >
+        sup_piece_name,
+      </if>
+      <if test="marketDate != null" >
+        market_date,
+      </if>
+      <if test="ncl != null" >
+        ncl,
+      </if>
+      <if test="supPieceContent != null" >
+        sup_piece_content,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="baseId != null" >
+        #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="supPieceId != null" >
+        #{supPieceId,jdbcType=BIGINT},
+      </if>
+      <if test="supPieceName != null" >
+        #{supPieceName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketDate != null" >
+        #{marketDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ncl != null" >
+        #{ncl,jdbcType=DOUBLE},
+      </if>
+      <if test="supPieceContent != null" >
+        #{supPieceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.SupPieceInfo" >
+    update sup_piece_info
+    <set >
+      <if test="baseId != null" >
+        base_id = #{baseId,jdbcType=BIGINT},
+      </if>
+      <if test="supPieceId != null" >
+        sup_piece_id = #{supPieceId,jdbcType=BIGINT},
+      </if>
+      <if test="supPieceName != null" >
+        sup_piece_name = #{supPieceName,jdbcType=VARCHAR},
+      </if>
+      <if test="marketDate != null" >
+        market_date = #{marketDate,jdbcType=VARCHAR},
+      </if>
+      <if test="ncl != null" >
+        ncl = #{ncl,jdbcType=DOUBLE},
+      </if>
+      <if test="supPieceContent != null" >
+        sup_piece_content = #{supPieceContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.SupPieceInfo" >
+    update sup_piece_info
+    set base_id = #{baseId,jdbcType=BIGINT},
+      sup_piece_id = #{supPieceId,jdbcType=BIGINT},
+      sup_piece_name = #{supPieceName,jdbcType=VARCHAR},
+      market_date = #{marketDate,jdbcType=VARCHAR},
+      ncl = #{ncl,jdbcType=DOUBLE},
+      sup_piece_content = #{supPieceContent,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="countAllByBaseId" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(id) from sup_piece_info where del_flag = '0' and base_id = #{baseId}
+  </select>
+  <select id="findCataList" resultType="com.wisea.transac.common.vo.seller.BaseCataListVo">
+    select csc.id             catgId,
+           csc.catg_name      catgName,
+           spi.sup_piece_id   supPieceId,
+           spi.sup_piece_name supPieceName,
+           css.comm_name      commName,
+           count(bi.id)       `count`
+    from comm_sale_set css
+           left join comm_sale_catg csc on csc.id = css.comm_sale_catg_id
+           left join comm_variet_mage cvm on css.comm_id = cvm.comm_id
+           left join sup_piece_info spi on spi.sup_piece_id = cvm.id
+           left join base_info bi on spi.base_id = bi.id
+    where css.del_flag = '0'
+      and csc.del_flag = '0'
+      and spi.del_flag = '0'
+      and bi.del_flag = '0'
+      and bi.abroad_id is null
+    group by csc.id
+  </select>
+  <select id="findAbroadCataList" resultType="com.wisea.transac.common.vo.seller.BaseCataListVo">
+    select csc.id             catgId,
+           csc.catg_name      catgName,
+           spi.sup_piece_id   supPieceId,
+           spi.sup_piece_name supPieceName,
+           css.comm_name      commName,
+           count(bi.id)       `count`
+    from comm_sale_set css
+           left join comm_sale_catg csc on csc.id = css.comm_sale_catg_id
+           left join comm_variet_mage cvm on css.comm_id = cvm.comm_id
+           left join sup_piece_info spi on spi.sup_piece_id = cvm.id
+           left join base_info bi on spi.base_id = bi.id
+    where css.del_flag = '0'
+      and csc.del_flag = '0'
+      and spi.del_flag = '0'
+      and bi.del_flag = '0'
+      and bi.abroad_id is not null
+    group by csc.id
+  </select>
+
+  <select id="findSupPieceInfoList" resultType="com.wisea.transac.common.vo.FindSupPieceListVo" parameterType="com.wisea.transac.common.po.seller.FindSupPieceListPo">
+    select
+    <include refid="Base_Column_List" />
+    from sup_piece_info
+    where del_flag='0'
+    and  base_id = #{baseId,jdbcType=BIGINT}
+    order by update_date desc
+  </select>
+ </mapper>

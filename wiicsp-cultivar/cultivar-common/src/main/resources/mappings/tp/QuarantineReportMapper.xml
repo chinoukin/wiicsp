@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.QuarantineReportMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.QuarantineReport" >
+    <id column="qrId" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="quarantine_num" property="quarantineNum" jdbcType="VARCHAR" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="sl_dw" property="slDw" jdbcType="VARCHAR" />
+    <result column="origin_place" property="originPlace" jdbcType="VARCHAR" />
+    <result column="shipper" property="shipper" jdbcType="VARCHAR" />
+    <result column="issue_date" property="issueDate" jdbcType="TIMESTAMP" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="labelLitInfoId" property="labelLitInfoId" jdbcType="BIGINT"/>
+  </resultMap>
+    <resultMap id="ResultMap" type="com.wisea.cultivar.common.vo.tp.QuarantineReportGetVo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="memb_id" property="membId" jdbcType="BIGINT" />
+        <result column="quarantine_num" property="quarantineNum" jdbcType="VARCHAR" />
+        <result column="product_name" property="productName" jdbcType="VARCHAR" />
+        <result column="sl_dw" property="slDw" jdbcType="VARCHAR" />
+        <result column="origin_place" property="originPlace" jdbcType="VARCHAR" />
+        <result column="shipper" property="shipper" jdbcType="VARCHAR" />
+        <result column="issue_date" property="issueDate" jdbcType="TIMESTAMP" />
+        <result column="tel" property="tel" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+        <collection property="quarantinePictureGetVo" ofType="com.wisea.cultivar.common.vo.tp.QuarantinePictureGetVo">
+            <result column="qId" property="id" jdbcType="BIGINT"/>
+            <result column="quarantine_url" property="url" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, quarantine_num, product_name, sl_dw, origin_place, shipper, issue_date,
+    tel, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <!-- 根据id查询详情 -->
+    <select id="selectDetailById" resultMap="ResultMap" parameterType="java.lang.Long">
+        SELECT
+          qr.id, memb_id, quarantine_num, product_name, sl_dw, origin_place, shipper, issue_date,
+          tel, qr.del_flag, qq.id qId, qq.quarantine_url
+        FROM quarantine_report qr
+        LEFT JOIN quarantine_picture qq ON qq.quarantine_report_id = qr.id
+        WHERE qr.id = #{id,jdbcType=BIGINT} and qr.del_flag = '0'
+    </select>
+    <!-- 查询检疫报告列表信息 -->
+    <select id="findPage" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.po.tp.QuarantineReportPagePo">
+      SELECT
+        qr.id AS 'qrId', qr.memb_id, quarantine_num, product_name, sl_dw, origin_place, shipper, issue_date,
+        tel, qr.del_flag
+        <if test="commPubInfoId != null and commPubInfoId != ''">
+            ,lli.id AS 'labelLitInfoId'
+        </if>
+      FROM quarantine_report qr
+        <if test="commPubInfoId != null and commPubInfoId != ''">
+            LEFT JOIN label_lit_info lli ON (lli.url = qr.id
+            AND lli.label_rela_type = '4'
+            AND lli.comm_pub_id = #{commPubInfoId})
+        </if>
+      WHERE qr.del_flag = '0' AND qr.memb_id = #{membId,jdbcType=BIGINT}
+        <if test="search != null and search != ''">
+            AND (
+            qr.quarantine_num LIKE CONCAT('%', #{search}, '%')
+            OR qr.product_name LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="searchTimeStart != null">
+            AND qr.issue_date > #{searchTimeStart}
+        </if>
+        <if test="searchTimeEnd != null">
+            AND qr.issue_date &lt;= #{searchTimeEnd}
+        </if>
+        ORDER BY qr.issue_date DESC
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from quarantine_report
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from quarantine_report
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.QuarantineReport" >
+    insert into quarantine_report (id, memb_id, quarantine_num,
+      product_name, sl_dw, origin_place,
+      shipper, issue_date, tel,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{quarantineNum,jdbcType=VARCHAR},
+      #{productName,jdbcType=VARCHAR}, #{slDw,jdbcType=VARCHAR}, #{originPlace,jdbcType=VARCHAR},
+      #{shipper,jdbcType=VARCHAR}, #{issueDate,jdbcType=TIMESTAMP}, #{tel,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.QuarantineReport" >
+    insert into quarantine_report
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="quarantineNum != null" >
+        quarantine_num,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="slDw != null" >
+        sl_dw,
+      </if>
+      <if test="originPlace != null" >
+        origin_place,
+      </if>
+      <if test="shipper != null" >
+        shipper,
+      </if>
+      <if test="issueDate != null" >
+        issue_date,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="quarantineNum != null" >
+        #{quarantineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="slDw != null" >
+        #{slDw,jdbcType=VARCHAR},
+      </if>
+      <if test="originPlace != null" >
+        #{originPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="shipper != null" >
+        #{shipper,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null" >
+        #{issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.QuarantineReport" >
+    update quarantine_report
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="quarantineNum != null" >
+        quarantine_num = #{quarantineNum,jdbcType=VARCHAR},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="slDw != null" >
+        sl_dw = #{slDw,jdbcType=VARCHAR},
+      </if>
+      <if test="originPlace != null" >
+        origin_place = #{originPlace,jdbcType=VARCHAR},
+      </if>
+      <if test="shipper != null" >
+        shipper = #{shipper,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null" >
+        issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.QuarantineReport" >
+    update quarantine_report
+    set memb_id = #{membId,jdbcType=BIGINT},
+      quarantine_num = #{quarantineNum,jdbcType=VARCHAR},
+      product_name = #{productName,jdbcType=VARCHAR},
+      sl_dw = #{slDw,jdbcType=VARCHAR},
+      origin_place = #{originPlace,jdbcType=VARCHAR},
+      shipper = #{shipper,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=TIMESTAMP},
+      tel = #{tel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

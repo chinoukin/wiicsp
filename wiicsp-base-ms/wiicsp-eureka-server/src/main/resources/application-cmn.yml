@@ -1,0 +1,6 @@
+server:
+  port: 2105
+
+spring:
+  application:
+    name: wiicsp-eureka-server

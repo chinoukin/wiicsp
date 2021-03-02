@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.DeadLineMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.DeadLineMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="dead_line_type" property="deadLineType" jdbcType="VARCHAR" />
+    <result column="limit_days" property="limitDays" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, dead_line_type, limit_days, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from dead_line_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from dead_line_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.DeadLineMage" >
+    insert into dead_line_mage (id, dead_line_type, limit_days,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{deadLineType,jdbcType=VARCHAR}, #{limitDays,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.DeadLineMage" >
+    insert into dead_line_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="deadLineType != null" >
+        dead_line_type,
+      </if>
+      <if test="limitDays != null" >
+        limit_days,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="deadLineType != null" >
+        #{deadLineType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitDays != null" >
+        #{limitDays,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.DeadLineMage" >
+    update dead_line_mage
+    <set >
+      <if test="deadLineType != null" >
+        dead_line_type = #{deadLineType,jdbcType=VARCHAR},
+      </if>
+      <if test="limitDays != null" >
+        limit_days = #{limitDays,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.DeadLineMage" >
+    update dead_line_mage
+    set dead_line_type = #{deadLineType,jdbcType=VARCHAR},
+      limit_days = #{limitDays,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.DeadLineMageListVo" parameterType="com.wisea.cultivar.common.po.tp.DeadLineMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from dead_line_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.DeadLineMageListVo" parameterType="com.wisea.cultivar.common.po.tp.DeadLineMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from dead_line_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.DeadLineMage" >
+    update dead_line_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findOneByType" parameterType="java.lang.String" resultType="com.wisea.cultivar.common.vo.tp.DeadLineMageListVo">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    dead_line_mage
+    WHERE
+    dead_line_type = #{type}
+    AND del_flag = "0"
+  </select>
+  <update id="updateAllDeadlineDelFlagByType" parameterType="map">
+    UPDATE dead_line_mage
+    SET del_flag = "1" ,
+      update_date = #{updateDate} ,
+      update_by = #{updateBy}
+    WHERE
+        del_flag = "0"
+        AND dead_line_type = #{type}
+  </update>
+  <select id="countDeadlineByTypeAndDelFlag" parameterType="map" resultType="java.lang.Integer">
+    SELECT
+        count( id )
+    FROM
+        dead_line_mage
+    WHERE
+        dead_line_type = #{type}
+        AND del_flag = #{delFlag}
+  </select>
+</mapper>

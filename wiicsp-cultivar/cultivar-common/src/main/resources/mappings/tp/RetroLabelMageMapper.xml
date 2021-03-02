@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.RetroLabelMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.RetroLabelMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="appl_count" property="applCount" jdbcType="INTEGER" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="retro_label_type" property="retroLabelType" jdbcType="VARCHAR" />
+    <result column="retro_label_state" property="retroLabelState" jdbcType="VARCHAR" />
+    <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+    <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_pub_id, appl_count, appl_date, retro_label_type, retro_label_state, rece_name,
+    address_prov, address_city, address_cou, address_detail, zip_code, tel, logistics_comp_name,
+    logistics_num, file_url, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <!-- 查询可申请追溯标签商品列表 -->
+  <select id="findRetroCommList" parameterType="com.wisea.cultivar.common.po.tp.retro.RetroCommListPo" resultType="com.wisea.cultivar.common.vo.tp.retro.RetroCommListVo">
+    select
+      cpi.id,
+      cpi.comm_num commNum,
+      cpi.comm_art_num commArtNum,
+      cpi.comm_name commName,
+      bm.brand_name brandName,
+      cpi.comm_state_type commStateType,
+      rlm_.last_apply_date lastApplyDate,
+      rlm_.appl_total_count applTotalCount
+    from
+      comm_pub_info cpi
+      inner join brand_mage bm on cpi.brand_id = bm.id
+      inner join entp_data_info edi on cpi.memb_id = edi.memb_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+      left join (
+        SELECT
+          rlm.comm_pub_id,
+          max(appl_date) last_apply_date,
+          IFNULL(sum(rlm.appl_count), 0) appl_total_count
+        FROM
+          retro_label_mage rlm
+        WHERE
+          rlm.comm_pub_id IN (
+            SELECT
+              cpi2.id
+            FROM
+              comm_pub_info cpi2
+            WHERE
+              cpi2.memb_id = #{sellerId}
+          )
+        GROUP BY
+          rlm.comm_pub_id
+      ) rlm_ on rlm_.comm_pub_id = cpi.id
+    where
+      cpi.memb_id = #{sellerId}
+      and cpi.del_flag != '1'
+      <if test="query != null and query != ''">
+        and (
+          cpi.comm_name like CONCAT('%', #{query}, '%')
+          or edi.comp_name like CONCAT('%', #{query}, '%')
+        )
+      </if>
+      <if test="brandId != null">
+        and cpi.brand_id = #{brandId}
+      </if>
+    order by cpi.create_date desc
+  </select>
+  <!-- 查询发布商品已申请总数量 -->
+  <select id="findApplyCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select
+      sum(rlm.appl_count)
+    from
+      retro_label_mage rlm
+    where
+      rlm.comm_pub_id = #{id}
+    group by
+      rlm.comm_pub_id
+  </select>
+  <!-- 查询发布商品信息 -->
+  <select id="findCommPubInfo" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.retro.RetroLabelVo">
+    select
+      cpi.comm_num commNum,
+      cpi.comm_name commName,
+      edi.comp_name compName
+    from
+      comm_pub_info cpi
+      inner join entp_data_info edi on edi.memb_id = cpi.memb_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+    where
+      cpi.id = #{id}
+  </select>
+  <!-- 查询追溯标签申请列表 -->
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.retro.RetroLabelMageListVo" parameterType="com.wisea.cultivar.common.po.tp.retro.RetroLabelMageListPo" >
+    select
+      rlm.id,
+      cpi.comm_num commNum,
+      cpi.comm_art_num commArtNum,
+      cpi.comm_name commName,
+      bm.brand_name brandName,
+      edi.comp_name compName,
+      rlm.appl_count applCount,
+      rlm.appl_date applDate,
+      rlm.retro_label_type retroLabelType,
+      rlm.retro_label_state retroLabelState,
+      rlm.file_url fileUrl
+    from retro_label_mage rlm
+      inner join comm_pub_info cpi on cpi.id = rlm.comm_pub_id
+      inner join brand_mage bm on bm.id = cpi.brand_id
+      inner join entp_data_info edi on edi.memb_id = cpi.memb_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+    where
+      rlm.del_flag = '0'
+      <if test="startApplDate != null">
+        and rlm.appl_date >= #{startApplDate}
+      </if>
+      <if test="startApplDate != null">
+        and rlm.appl_date <![CDATA[ <= ]]> #{endApplDate}
+      </if>
+      <if test="retroLabelType != null and retroLabelType != ''">
+        and rlm.retro_label_type = #{retroLabelType}
+      </if>
+      <if test="retroLabelState != null and retroLabelState != ''">
+        and rlm.retro_label_state = #{retroLabelState}
+      </if>
+      <if test="sellerId != null">
+        and cpi.memb_id = #{sellerId}
+      </if>
+      <if test="query != null and query != ''">
+        and (
+        cpi.comm_name like CONCAT('%', #{query}, '%')
+        <choose>
+          <when test="sellerId != null">
+            or cpi.comm_num like CONCAT('%', #{query}, '%')
+          </when>
+          <otherwise>
+            or edi.comp_name like CONCAT('%', #{query}, '%')
+          </otherwise>
+        </choose>
+        )
+      </if>
+    order by rlm.appl_date desc
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from retro_label_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from retro_label_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.RetroLabelMage" >
+    insert into retro_label_mage (id, comm_pub_id, appl_count,
+      appl_date, retro_label_type, retro_label_state,
+      rece_name, address_prov, address_city,
+      address_cou, address_detail, zip_code,
+      tel, logistics_comp_name, logistics_num,
+      file_url, create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT}, #{applCount,jdbcType=INTEGER},
+      #{applDate,jdbcType=TIMESTAMP}, #{retroLabelType,jdbcType=VARCHAR}, #{retroLabelState,jdbcType=VARCHAR},
+      #{receName,jdbcType=VARCHAR}, #{addressProv,jdbcType=VARCHAR}, #{addressCity,jdbcType=VARCHAR},
+      #{addressCou,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{logisticsCompName,jdbcType=VARCHAR}, #{logisticsNum,jdbcType=VARCHAR},
+      #{fileUrl,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.RetroLabelMage" >
+    insert into retro_label_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="applCount != null" >
+        appl_count,
+      </if>
+      <if test="applDate != null" >
+        appl_date,
+      </if>
+      <if test="retroLabelType != null" >
+        retro_label_type,
+      </if>
+      <if test="retroLabelState != null" >
+        retro_label_state,
+      </if>
+      <if test="receName != null" >
+        rece_name,
+      </if>
+      <if test="addressProv != null" >
+        address_prov,
+      </if>
+      <if test="addressCity != null" >
+        address_city,
+      </if>
+      <if test="addressCou != null" >
+        address_cou,
+      </if>
+      <if test="addressDetail != null" >
+        address_detail,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name,
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num,
+      </if>
+      <if test="fileUrl != null" >
+        file_url,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="applCount != null" >
+        #{applCount,jdbcType=INTEGER},
+      </if>
+      <if test="applDate != null" >
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retroLabelType != null" >
+        #{retroLabelType,jdbcType=VARCHAR},
+      </if>
+      <if test="retroLabelState != null" >
+        #{retroLabelState,jdbcType=VARCHAR},
+      </if>
+      <if test="receName != null" >
+        #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCompName != null" >
+        #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.RetroLabelMage" >
+    update retro_label_mage
+    <set >
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="applCount != null" >
+        appl_count = #{applCount,jdbcType=INTEGER},
+      </if>
+      <if test="applDate != null" >
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="retroLabelType != null" >
+        retro_label_type = #{retroLabelType,jdbcType=VARCHAR},
+      </if>
+      <if test="retroLabelState != null" >
+        retro_label_state = #{retroLabelState,jdbcType=VARCHAR},
+      </if>
+      <if test="receName != null" >
+        rece_name = #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        address_prov = #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        address_city = #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        address_cou = #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.RetroLabelMage" >
+    update retro_label_mage
+    set comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      appl_count = #{applCount,jdbcType=INTEGER},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      retro_label_type = #{retroLabelType,jdbcType=VARCHAR},
+      retro_label_state = #{retroLabelState,jdbcType=VARCHAR},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.retro.RetroLabelMageListVo" parameterType="com.wisea.cultivar.common.po.tp.retro.RetroLabelMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from retro_label_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.RetroLabelMage" >
+    update retro_label_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.BrandMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.BrandMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="serial_num" property="serialNum" jdbcType="VARCHAR" />
+    <result column="brand_logo" property="brandLogo" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="brand_story" property="brandStory" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, serial_num, brand_logo, brand_name, brand_story, sort, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from brand_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from brand_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.BrandMage" >
+    insert into brand_mage (id, serial_num, brand_logo,
+      brand_name, brand_story, sort,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{serialNum,jdbcType=VARCHAR}, #{brandLogo,jdbcType=VARCHAR},
+      #{brandName,jdbcType=VARCHAR}, #{brandStory,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.BrandMage" >
+    insert into brand_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="serialNum != null" >
+        serial_num,
+      </if>
+      <if test="brandLogo != null" >
+        brand_logo,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="brandStory != null" >
+        brand_story,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="serialNum != null" >
+        #{serialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="brandLogo != null" >
+        #{brandLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandStory != null" >
+        #{brandStory,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.BrandMage" >
+    update brand_mage
+    <set >
+      <if test="serialNum != null" >
+        serial_num = #{serialNum,jdbcType=VARCHAR},
+      </if>
+      <if test="brandLogo != null" >
+        brand_logo = #{brandLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="brandStory != null" >
+        brand_story = #{brandStory,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.BrandMage" >
+    update brand_mage
+    set serial_num = #{serialNum,jdbcType=VARCHAR},
+      brand_logo = #{brandLogo,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      brand_story = #{brandStory,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.BrandMagePageListVo" parameterType="com.wisea.transac.common.po.BrandMagePageListPo" >
+    select
+	  id id,
+	  serial_num serialNum,
+	  brand_logo brandLogo,
+	  brand_name brandName,
+	  brand_story brandStory,
+	  sort sort
+	from
+	  brand_mage
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.BrandMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  serial_num serialNum,
+	  brand_logo brandLogo,
+	  brand_name brandName,
+	  brand_story brandStory,
+	  sort sort
+	from
+	  brand_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+    <!--检索全部品牌-->
+    <select id="selectBrandList" parameterType="com.wisea.transac.common.po.product.BrandMagePagePo"
+            resultType="com.wisea.transac.common.vo.product.BrandMageListVo">
+        SELECT bm.id, serial_num, brand_logo, brand_name, brand_story, bm.sort, bm.del_flag,su.login_name,
+        ifnull(bm.update_by, bm.create_by) AS 'updateBy',
+        IFNULL(bm.update_date, bm.create_date) AS 'updateDate'
+        FROM brand_mage bm
+        LEFT JOIN sys_user su on su.id = IFNULL(bm.update_by, bm.create_by)
+        <where>
+            <if test="brandName != null and brandName != '' ">
+                AND instr(brand_name,#{brandName}) != 0
+            </if>
+            AND bm.del_flag != '1'
+            <if test="remarks != null and remarks != '' ">
+                ORDER BY bm.sort ASC
+            </if>
+        </where>
+    </select>
+    <!--品牌接口-->
+    <select id="brandInterface" resultType="com.wisea.transac.common.vo.product.BrandMageListVo">
+        SELECT id,brand_name
+        FROM brand_mage
+        WHERE del_flag != '1'
+    </select>
+    <!-- 查询名称是否重复 -->
+    <select id="selectbyName" parameterType="com.wisea.transac.common.entity.BrandMage"
+            resultType="com.wisea.transac.common.vo.product.BrandMageListVo">
+        SELECT brand_name
+        FROM brand_mage
+        WHERE brand_name = #{brandName} AND del_flag != '1'
+    </select>
+    <!-- 查询名称和id是否重复   -->
+    <select id="selectbyNameAndId" parameterType="com.wisea.transac.common.entity.BrandMage"
+            resultType="com.wisea.transac.common.vo.product.BrandMageListVo">
+        SELECT brand_name
+        FROM brand_mage
+        WHERE brand_name = #{brandName} AND del_flag != '1' AND id != #{id}
+    </select>
+    <select id="selectCommByBrandId" parameterType="java.lang.Long" resultType="com.wisea.transac.common.entity.CommPubInfo">
+      SELECT brand_mage_id FROM comm_pub_info WHERE brand_mage_id = #{id} and comm_state_type = '0'
+    </select>
+    <select id="selectSortIsNotNull" resultType="com.wisea.transac.common.entity.BrandMage">
+      SELECT sort FROM brand_mage WHERE sort IS NOT NULL
+    </select>
+    <select id="noAuthNoPageBrandList" parameterType="com.wisea.transac.common.po.product.BrandMagePagePo"
+            resultType="com.wisea.transac.common.vo.product.BrandMageListVo">
+        SELECT
+        brand_name,
+        brand_story,
+        brand_logo,
+        id
+        FROM
+        brand_mage
+        <where>
+            del_flag != '1'
+            <if test="remarks != null and remarks != '' ">
+                ORDER BY sort ASC
+            </if>
+            <if test="remarks == null and remarks == '' ">
+                ORDER BY create_date ASC
+            </if>
+        </where>
+    </select>
+    <!-- 删除对应品牌   -->
+    <update id="deleteLogic" parameterType="com.wisea.transac.common.entity.BrandMage">
+    update brand_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.ReceAddressMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.ReceAddress" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+    <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+    <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="default_flag" property="defaultFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, area_prov, area_city, area_cou, address, name, tel, default_flag, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rece_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rece_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.ReceAddress" >
+    insert into rece_address (id, memb_id, area_prov,
+      area_city, area_cou, address,
+      name, tel, default_flag,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{areaProv,jdbcType=VARCHAR},
+      #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.ReceAddress" >
+    insert into rece_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="areaProv != null" >
+        area_prov,
+      </if>
+      <if test="areaCity != null" >
+        area_city,
+      </if>
+      <if test="areaCou != null" >
+        area_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="areaProv != null" >
+        #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.ReceAddress" >
+    update rece_address
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="areaProv != null" >
+        area_prov = #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        area_city = #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        area_cou = #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultFlag != null" >
+        default_flag = #{defaultFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.ReceAddress" >
+    update rece_address
+    set memb_id = #{membId,jdbcType=BIGINT},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.ReceAddressPageListVo" parameterType="com.wisea.transac.common.po.ReceAddressPageListPo" >
+    select
+      ra.id id,
+	  memb_id membId,
+	  area_prov areaProv,
+	  sa.name areaProvName,
+	  area_city areaCity,
+	  sa2.name areaCityName,
+	  area_cou areaCou,
+	  sa3.name areaCouName,
+	  address address,
+	  ra.name name,
+	  tel tel,
+	  default_flag defaultFlag
+	from
+	  rece_address ra  left join sys_area sa on ra.area_prov=sa.code
+                       left join sys_area sa2 on ra.area_city=sa2.code
+                       left join sys_area sa3 on ra.area_cou=sa3.code
+    where
+          memb_id = #{membId}
+      and ra.del_flag = '0'
+
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.ReceAddressInfoVo" parameterType="java.lang.Long" >
+    select
+      ra.id id,
+	  memb_id membId,
+	  area_prov areaProv,
+      sa.name areaProvName,
+      area_city areaCity,
+      sa2.name areaCityName,
+      area_cou areaCou,
+      sa3.name areaCouName,
+	  address address,
+	  ra.name name,
+	  tel tel,
+	  default_flag defaultFlag
+	from
+      rece_address ra  left join sys_area sa on ra.area_prov=sa.code
+                       left join sys_area sa2 on ra.area_city=sa2.code
+                       left join sys_area sa3 on ra.area_cou=sa3.code
+	where
+	  ra.del_flag = '0'
+	  and ra.id = #{id}
+  </select>
+
+  <select id="buyerFindDefault" resultType="com.wisea.transac.common.vo.ReceAddressInfoVo" parameterType="java.lang.Long" >
+    select
+            ra.id id,
+            memb_id membId,
+            area_prov areaProv,
+            sa.name areaProvName,
+            area_city areaCity,
+            sa2.name areaCityName,
+            area_cou areaCou,
+            sa3.name areaCouName,
+            address address,
+            ra.name name,
+            tel tel,
+            default_flag defaultFlag
+    from
+            rece_address ra  left join sys_area sa on ra.area_prov=sa.code
+                             left join sys_area sa2 on ra.area_city=sa2.code
+                             left join sys_area sa3 on ra.area_cou=sa3.code
+    where
+            ra.del_flag = '0'
+      and default_flag = '0'
+  </select>
+
+  <select id="findByDefault" resultType="com.wisea.transac.common.entity.ReceAddress" parameterType="java.lang.Long" >
+    select
+           id id,
+           memb_id      membId,
+           area_prov    areaProv,
+           area_city    areaCity,
+           area_cou     areaCou,
+           address      address,
+           name         name,
+           tel          tel,
+           default_flag defaultFlag
+    from rece_address
+    where del_flag = '0'
+      and default_flag = '0';
+  </select>
+</mapper>

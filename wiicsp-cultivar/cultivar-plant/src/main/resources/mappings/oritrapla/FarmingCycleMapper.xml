@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.FarmingCycleMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="planting_method_id" property="plantingMethodId" jdbcType="BIGINT"/>
+        <result column="cycle_name" property="cycleName" jdbcType="VARCHAR"/>
+        <result column="start_days" property="startDays" jdbcType="INTEGER"/>
+        <result column="end_days" property="endDays" jdbcType="INTEGER"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <!-- 农事周期详细信息 -->
+      <resultMap id="CycleMap" type="com.wisea.cultivar.plant.vo.oritrapla.FarmingCyclInfoVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="planting_method_id" property="plantingMethodId" jdbcType="BIGINT"/>
+        <result column="cycle_name" property="cycleName" jdbcType="VARCHAR"/>
+        <result column="cycleStart" property="cycleStart" jdbcType="INTEGER"/>
+        <result column="cycleEnd" property="cycleEnd" jdbcType="INTEGER"/>
+        <collection property="farmingStageInfoVo" ofType="com.wisea.cultivar.plant.vo.oritrapla.FarmingStageInfoVo">
+        	<result column="farmingStageId" property="farmingStageId" jdbcType="BIGINT"/>
+	        <result column="start_days" property="startDays" jdbcType="INTEGER"/>
+	        <result column="end_days" property="endDays" jdbcType="INTEGER"/>
+	        <result column="farm_work_type_id" property="farmWorkTypeId" jdbcType="BIGINT"/>
+	        <result column="farming_require" property="farmingRequire" jdbcType="VARCHAR"/>
+	        <result column="video_url" property="videoUrl" jdbcType="VARCHAR"/>
+	        <result column="us_agricultural_materials" property="usAgriculturalMaterials" jdbcType="VARCHAR"/>
+	        <result column="cycle_interval" property="cycleInterval" jdbcType="CHAR"/>
+	        <result column="farmName" property="farmName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, planting_method_id, cycle_name, start_days, end_days, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from farming_cycle
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from farming_cycle
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+    insert into farming_cycle (id, planting_method_id, cycle_name,
+      start_days, end_days, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{plantingMethodId,jdbcType=BIGINT}, #{cycleName,jdbcType=VARCHAR},
+      #{startDays,jdbcType=INTEGER}, #{endDays,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+        insert into farming_cycle
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="plantingMethodId != null">
+                planting_method_id,
+            </if>
+            <if test="cycleName != null">
+                cycle_name,
+            </if>
+            <if test="startDays != null">
+                start_days,
+            </if>
+            <if test="endDays != null">
+                end_days,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="plantingMethodId != null">
+                #{plantingMethodId,jdbcType=BIGINT},
+            </if>
+            <if test="cycleName != null">
+                #{cycleName,jdbcType=VARCHAR},
+            </if>
+            <if test="startDays != null">
+                #{startDays,jdbcType=INTEGER},
+            </if>
+            <if test="endDays != null">
+                #{endDays,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+        update farming_cycle
+        <set>
+            <if test="plantingMethodId != null">
+                planting_method_id = #{plantingMethodId,jdbcType=BIGINT},
+            </if>
+            <if test="cycleName != null">
+                cycle_name = #{cycleName,jdbcType=VARCHAR},
+            </if>
+            <if test="startDays != null">
+                start_days = #{startDays,jdbcType=INTEGER},
+            </if>
+            <if test="endDays != null">
+                end_days = #{endDays,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+    update farming_cycle
+    set planting_method_id = #{plantingMethodId,jdbcType=BIGINT},
+      cycle_name = #{cycleName,jdbcType=VARCHAR},
+      start_days = #{startDays,jdbcType=INTEGER},
+      end_days = #{endDays,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.plant.vo.oritrapla.FarmingCycleListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.FarmingCyclePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from farming_cycle
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.plant.vo.oritrapla.FarmingCycleListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.FarmingCycleListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from farming_cycle
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+    update farming_cycle
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT into farming_cycle (id, cycle_name, start_days, end_days, create_by, create_date,del_flag)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.cycleName},#{item.startDays},
+            #{item.endDays},#{item.createBy},#{item.createDate},#{item.delFlag})
+        </foreach>
+    </insert>
+    <select id="getAllCycle" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.plant.entity.oritrapla.FarmingCycle">
+        SELECT id,planting_method_id,cycle_name,start_days,end_days
+         FROM farming_cycle WHERE planting_method_id = #{id} AND del_flag = '0'
+    </select>
+    <update id="deleteAllCycle" parameterType="java.lang.Long">
+        UPDATE farming_cycle set del_flag = '1' WHERE planting_method_id = #{id} AND del_flag = '0'
+    </update>
+
+     <!-- 农事周期详细信息 -->
+    <select id="selCycAndStageByMethod" resultMap="CycleMap" parameterType="java.lang.Long">
+    	SELECT
+		  t1.id,
+		  t1.planting_method_id,
+		  t1.cycle_name,
+		  t1.start_days   as   cycleStart,
+		  t1.end_days     as   cycleEnd,
+		  t2.id                        AS farmingStageId,
+		  t2.start_days,
+		  t2.end_days,
+		  t2.farm_work_type_id,
+		  t2.farming_require,
+		  t2.video_url,
+		  t2.us_agricultural_materials,
+		  t2.cycle_interval,
+		  t3.name                      AS farmName
+		FROM farming_cycle t1
+		  LEFT JOIN farming_stage t2
+		    ON t2.farming_cycle_id = t1.id
+		    AND t2.del_flag = '0'
+		  LEFT JOIN farm_work_type_dict t3
+		    ON t3.id = t2.farm_work_type_id
+		      AND t3.del_flag = '0'
+		where 1=1
+		  and t1.del_flag = '0'
+		  and t1.planting_method_id = #{id}
+    </select>
+</mapper>

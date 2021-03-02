@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.CommPictureMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.CommPicture">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="url" property="url" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, comm_id, url, sort, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <!-- 根据商品id查询图片 -->
+    <select id="selCommPictureUrl" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        SELECT
+          url
+        FROM comm_picture cp
+        WHERE cp.del_flag= '0'
+        AND cp.sort = '0'
+        AND cp.comm_id = #{id}
+    </select>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.CommPicture">
+    insert into comm_picture (id, comm_id, sort,
+      url, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{sort,jdbcType=INTEGER},
+      #{url,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <!-- 根据商品ID删除图片 -->
+    <delete id="delByCommPubInfoId" parameterType="java.lang.Long">
+        DELETE FROM comm_picture WHERE comm_id = #{id}
+    </delete>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into comm_picture (id, comm_id, sort,url,
+        create_by, create_date, update_by,update_date, remarks, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.commId,jdbcType=BIGINT},
+            #{item.sort,jdbcType=INTEGER},#{item.url,jdbcType=VARCHAR},
+            #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.CommPicture">
+        insert into comm_picture
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="commId != null">
+                comm_id,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="url != null">
+                url,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null">
+                #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="url != null">
+                #{url,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.CommPictureListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.CommPicturePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from comm_picture
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.CommPictureListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.CommPictureListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from comm_picture
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.CommPicture">
+    update comm_picture
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+  </update>
+
+  <!-- 根据商品的发布ID查询最新的一张商品图片 -->
+  <select id="selectMinPictureByCommId" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.CommPicture">
+        select url
+        from comm_picture
+        where comm_id = #{commId}
+        AND del_flag = '0'
+   		order by sort  limit 1
+  </select>
+</mapper>

@@ -1,0 +1,187 @@
+package com.wisea.cultivar.common.po.tp.system;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.wisea.cultivar.common.vo.tp.system.JyncgscgjeMageListVo;
+import com.wisea.cloud.model.annotation.IdSerializer;
+import com.wisea.cloud.model.po.PagePo;
+import io.swagger.annotations.ApiModelProperty;
+
+/**
+ * JyncgscgjeMagePagePo
+ * 2019/09/04 15:07:41
+ */
+public class JyncgscgjeMagePagePo extends PagePo<JyncgscgjeMageListVo> {
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * id
+     */
+    @JsonSerialize(using = IdSerializer.class)
+    @ApiModelProperty(value = "id")
+    private Long id;
+
+    /**
+     * 企业名称
+     */
+    @ApiModelProperty(value = "企业名称")
+    private String entpName;
+
+    /**
+     * 联系人
+     */
+    @ApiModelProperty(value = "联系人")
+    private String contacts;
+
+    /**
+     * 购买金额
+     */
+    @ApiModelProperty(value = "购买金额")
+    private Double buyAmount;
+
+    /**
+     * 地区
+     */
+    @ApiModelProperty(value = "地区")
+    private String area;
+
+    /**
+     * 联系电话
+     */
+    @ApiModelProperty(value = "联系电话")
+    private String tel;
+
+    /**
+     * 备注
+     */
+    @ApiModelProperty(value = "备注")
+    private String remarks;
+
+    /**
+     * 删除标记
+     */
+    @ApiModelProperty(value = "删除标记")
+    private String delFlag;
+
+    @ApiModelProperty(value = "查询字段")
+    private String search;
+
+    public String getSearch() {
+        return search;
+    }
+
+    public void setSearch(String search) {
+        this.search = search;
+    }
+
+    /**
+     * 获取id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * 设置id
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    /**
+     * 获取企业名称
+     */
+    public String getEntpName() {
+        return entpName;
+    }
+
+    /**
+     * 设置企业名称
+     */
+    public void setEntpName(String entpName) {
+        this.entpName = entpName == null ? null : entpName.trim();
+    }
+
+    /**
+     * 获取联系人
+     */
+    public String getContacts() {
+        return contacts;
+    }
+
+    /**
+     * 设置联系人
+     */
+    public void setContacts(String contacts) {
+        this.contacts = contacts == null ? null : contacts.trim();
+    }
+
+    /**
+     * 获取购买金额
+     */
+    public Double getBuyAmount() {
+        return buyAmount;
+    }
+
+    /**
+     * 设置购买金额
+     */
+    public void setBuyAmount(Double buyAmount) {
+        this.buyAmount = buyAmount;
+    }
+
+    /**
+     * 获取地区
+     */
+    public String getArea() {
+        return area;
+    }
+
+    /**
+     * 设置地区
+     */
+    public void setArea(String area) {
+        this.area = area == null ? null : area.trim();
+    }
+
+    /**
+     * 获取联系电话
+     */
+    public String getTel() {
+        return tel;
+    }
+
+    /**
+     * 设置联系电话
+     */
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
+    }
+
+    /**
+     * 获取备注
+     */
+    public String getRemarks() {
+        return remarks;
+    }
+
+    /**
+     * 设置备注
+     */
+    public void setRemarks(String remarks) {
+        this.remarks = remarks == null ? null : remarks.trim();
+    }
+
+    /**
+     * 获取删除标记
+     */
+    public String getDelFlag() {
+        return delFlag;
+    }
+
+    /**
+     * 设置删除标记
+     */
+    public void setDelFlag(String delFlag) {
+        this.delFlag = delFlag == null ? null : delFlag.trim();
+    }
+}

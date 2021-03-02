@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ShopCommMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_info_mage_id" property="shopInfoMageId" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="pids" property="pids" jdbcType="VARCHAR" />
+    <result column="comm_num" property="commNum" jdbcType="VARCHAR" />
+    <result column="p_comm_catg_name" property="pCommCatgName" jdbcType="VARCHAR" />
+    <result column="comm_catg_name" property="commCatgName" jdbcType="VARCHAR" />
+    <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="catg_icon_url" property="catgIconUrl" jdbcType="VARCHAR" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="catg_remarks" property="catgRemarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, shop_info_mage_id, pid, pids, comm_num, p_comm_catg_name, comm_catg_name, effe_inval_state,
+    sort, catg_icon_url, key_word, catg_remarks, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from shop_comm_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_comm_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    insert into shop_comm_mage (id, shop_info_mage_id, pid,
+      pids, comm_num, p_comm_catg_name,
+      comm_catg_name, effe_inval_state, sort,
+      catg_icon_url, key_word, catg_remarks,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{shopInfoMageId,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT},
+      #{pids,jdbcType=VARCHAR}, #{commNum,jdbcType=VARCHAR}, #{pCommCatgName,jdbcType=VARCHAR},
+      #{commCatgName,jdbcType=VARCHAR}, #{effeInvalState,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{catgIconUrl,jdbcType=VARCHAR}, #{keyWord,jdbcType=VARCHAR}, #{catgRemarks,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    insert into shop_comm_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopInfoMageId != null" >
+        shop_info_mage_id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pids != null" >
+        pids,
+      </if>
+      <if test="commNum != null" >
+        comm_num,
+      </if>
+      <if test="pCommCatgName != null" >
+        p_comm_catg_name,
+      </if>
+      <if test="commCatgName != null" >
+        comm_catg_name,
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="catgIconUrl != null" >
+        catg_icon_url,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="catgRemarks != null" >
+        catg_remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="shopInfoMageId != null" >
+        #{shopInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pids != null" >
+        #{pids,jdbcType=VARCHAR},
+      </if>
+      <if test="commNum != null" >
+        #{commNum,jdbcType=VARCHAR},
+      </if>
+      <if test="pCommCatgName != null" >
+        #{pCommCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="commCatgName != null" >
+        #{commCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="effeInvalState != null" >
+        #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="catgIconUrl != null" >
+        #{catgIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="catgRemarks != null" >
+        #{catgRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    update shop_comm_mage
+    <set >
+      <if test="shopInfoMageId != null" >
+        shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pids != null" >
+        pids = #{pids,jdbcType=VARCHAR},
+      </if>
+      <if test="commNum != null" >
+        comm_num = #{commNum,jdbcType=VARCHAR},
+      </if>
+      <if test="pCommCatgName != null" >
+        p_comm_catg_name = #{pCommCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="commCatgName != null" >
+        comm_catg_name = #{commCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="catgIconUrl != null" >
+        catg_icon_url = #{catgIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="catgRemarks != null" >
+        catg_remarks = #{catgRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    update shop_comm_mage
+    set shop_info_mage_id = #{shopInfoMageId,jdbcType=BIGINT},
+      pid = #{pid,jdbcType=BIGINT},
+      pids = #{pids,jdbcType=VARCHAR},
+      comm_num = #{commNum,jdbcType=VARCHAR},
+      p_comm_catg_name = #{pCommCatgName,jdbcType=VARCHAR},
+      comm_catg_name = #{commCatgName,jdbcType=VARCHAR},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      catg_icon_url = #{catgIconUrl,jdbcType=VARCHAR},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      catg_remarks = #{catgRemarks,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    update shop_comm_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicForSelOrTree" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommMage" >
+    update shop_comm_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT} OR FIND_IN_SET(#{id,jdbcType=BIGINT},pids)
+  </update>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.memb.ShopCommMageTreeVo"
+  						parameterType="com.wisea.cultivar.common.po.tp.memb.ShopCommMageTreeListPo" >
+    SELECT T1.*
+	FROM shop_comm_mage T1
+	WHERE T1.del_flag = '0'
+		  AND T1.shop_info_mage_id= #{shopInfoMageId}
+		  <if test="catgName != null and catgName != ''">
+		      AND T1.comm_catg_name like CONCAT('%', #{catgName}, '%')
+		  </if>
+		  <if test="effeInvalState != null and effeInvalState != ''">
+		  	  AND T1.effe_inval_state = #{effeInvalState}
+		  </if>
+		 ORDER BY T1.sort
+  </select>
+  <select id="getShopCommMageById" resultType="com.wisea.cultivar.common.vo.tp.memb.ShopCommMageTreeVo" parameterType="java.lang.Long">
+  	SELECT T1.*,T2.comm_catg_name AS 'parentCatgName'
+	FROM shop_comm_mage T1
+	LEFT JOIN shop_comm_mage T2 ON T2.id = T1.pid
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findChildList" parameterType="java.lang.Long" resultType="java.lang.Long">
+  	SELECT id FROM shop_comm_mage WHERE del_flag = '0' AND pid = #{pid}
+  </select>
+</mapper>

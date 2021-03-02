@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.portal.mapper.ZhfwCultureVideoListMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.portal.entity.ZhfwCultureVideoList">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="video_source_type" jdbcType="VARCHAR" property="videoSourceType" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="if_requ" jdbcType="CHAR" property="ifRequ" />
+    <result column="pub_date" jdbcType="TIMESTAMP" property="pubDate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, title, video_source_type, url, sort, if_requ, pub_date, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_culture_video_list
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from zhfw_culture_video_list
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.portal.entity.ZhfwCultureVideoList">
+    insert into zhfw_culture_video_list (id, title, video_source_type,
+      url, sort, if_requ, pub_date,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{videoSourceType,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{ifRequ,jdbcType=CHAR}, #{pubDate,jdbcType=TIMESTAMP},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.portal.entity.ZhfwCultureVideoList">
+    insert into zhfw_culture_video_list
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="videoSourceType != null">
+        video_source_type,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="ifRequ != null">
+        if_requ,
+      </if>
+      <if test="pubDate != null">
+        pub_date,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="videoSourceType != null">
+        #{videoSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="ifRequ != null">
+        #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="pubDate != null">
+        #{pubDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.portal.entity.ZhfwCultureVideoList">
+    update zhfw_culture_video_list
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="videoSourceType != null">
+        video_source_type = #{videoSourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="ifRequ != null">
+        if_requ = #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="pubDate != null">
+        pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.portal.entity.ZhfwCultureVideoList">
+    update zhfw_culture_video_list
+    set title = #{title,jdbcType=VARCHAR},
+      video_source_type = #{videoSourceType,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      if_requ = #{ifRequ,jdbcType=CHAR},
+      pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.portal.po.ZhfwCultureVideoListPagePo" resultType="com.wisea.cultivar.portal.vo.ZhfwCultureVideoListListVo">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_culture_video_list
+    where del_flag = '0'
+    <include refid="query_where"/>
+    order by create_date desc,sort desc
+  </select>
+
+  <sql id="query_where">
+    <if test="title != null and title != ''">
+        and  title like  CONCAT('%', #{title,jdbcType=VARCHAR}, '%')
+    </if>
+    <if test="pubDateStart != null and pubDateEnd != null">
+        and pub_date &gt;= DATE_FORMAT(#{pubDateStart},'%Y-%m-%d %H:%i:%s') and pub_date &lt;=  DATE_FORMAT(#{pubDateEnd},'%Y-%m-%d %H:%i:%s')
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.wisea.cultivar.portal.po.ZhfwCultureVideoListListPo" resultType="com.wisea.cultivar.portal.vo.ZhfwCultureVideoListListVo">
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_culture_video_list
+    where del_flag = '0' order by create_date desc,sort desc
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.portal.entity.ZhfwCultureVideoList">
+    update zhfw_culture_video_list
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

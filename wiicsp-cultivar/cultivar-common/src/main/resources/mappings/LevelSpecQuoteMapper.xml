@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.LevelSpecQuoteMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.LevelSpecQuote" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+    <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="net_weight" property="netWeight" jdbcType="DOUBLE" />
+    <result column="start_ord_expres" property="startOrdExpres" jdbcType="VARCHAR" />
+    <result column="price_expres" property="priceExpres" jdbcType="VARCHAR" />
+    <result column="version_num" property="versionNum" jdbcType="VARCHAR" />
+    <result column="transaction_amount" property="transactionAmount" jdbcType="DOUBLE" />
+    <result column="sales_volume" property="salesVolume" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <!-- 查询预订单商品列表 -->
+   <resultMap id="PreCommListMap" type="com.wisea.cultivar.common.vo.trade.ImportStallsListVo" >
+    <id column="stallsMageId" property="stallsMageId" jdbcType="BIGINT"/>
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+    <result column="stalls_name" property="stallsName" jdbcType="VARCHAR" />
+    <result column="stalls_house_num" property="stallsHouseNum" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="business_date" property="businessDate" jdbcType="VARCHAR" />
+    <result column="business_time" property="businessTime" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="prov" property="prov" jdbcType="VARCHAR" />
+    <result column="cou" property="cou" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="base_name" property="baseName" jdbcType="VARCHAR" />
+    <result column="base_type" property="baseType" jdbcType="VARCHAR" />
+    <result column="place_origin_name" property="placeOriginName" jdbcType="VARCHAR" />
+    <collection property="importCommList" ofType="com.wisea.cultivar.common.vo.trade.ImportCommListVo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="memb_id" property="membId" jdbcType="BIGINT" />
+        <result column="purchase_staff_id" property="purchaseStaffId" jdbcType="BIGINT" />
+        <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+        <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR" />
+        <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+        <result column="count" property="count" jdbcType="INTEGER" />
+        <result column="comm_spec" property="commSpec" jdbcType="VARCHAR" />
+        <result column="price" property="price" jdbcType="VARCHAR" />
+        <result column="price_expres" property="priceExpres" jdbcType="VARCHAR" />
+        <result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
+        <result column="level_spec_quote_id" property="levelSpecQuoteId" jdbcType="BIGINT" />
+        <result column="meas_unit" property="measUnit" jdbcType="VARCHAR" />
+        <result column="net_weight" property="netWeight" jdbcType="DOUBLE" />
+        <result column="levelVersion" property="levelVersion" jdbcType="VARCHAR" />
+        <result column="commVersion" property="commVersion" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_pub_id, avai_supply_count, meas_unit_id, spec, net_weight, start_ord_expres,
+    price_expres, version_num, transaction_amount, sales_volume, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+
+    <!-- 根据商品发布id 查询等级报价信息   -->
+    <select id="findListByCommPubId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select id, comm_pub_id, avai_supply_count, meas_unit_id, spec, net_weight, start_ord_expres,
+        price_expres, version_num, transaction_amount, sales_volume
+        from zhfw_level_spec_quote
+        where comm_pub_id = #{id,jdbcType=BIGINT}
+        AND del_flag = '0'
+    </select>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into zhfw_level_spec_quote (id, comm_pub_id, avai_supply_count,meas_unit_id, spec, net_weight,
+        start_ord_expres,price_expres, version_num, transaction_amount, sales_volume,
+        create_by, create_date, update_by, update_date, remarks, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.commPubId,jdbcType=BIGINT},
+            #{item.avaiSupplyCount,jdbcType=DOUBLE},#{item.measUnitId,jdbcType=BIGINT},#{item.spec,jdbcType=VARCHAR},
+            #{item.netWeight,jdbcType=DOUBLE},#{item.startOrdExpres,jdbcType=VARCHAR},#{item.priceExpres,jdbcType=VARCHAR},
+            #{item.versionNum,jdbcType=VARCHAR},#{item.transactionAmount,jdbcType=DOUBLE}, #{item.salesVolume,jdbcType=DOUBLE},
+            #{item.createBy,jdbcType=VARCHAR},#{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
+    <!-- 删除计量单位前查看是否有规格在使用   -->
+    <select id="beforeDelSelectMeas" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.LevelSpecQuoteInfoVo">
+        SELECT id
+        FROM zhfw_level_spec_quote
+        WHERE meas_unit_id = #{id}
+        AND del_flag = '0'
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_level_spec_quote
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zhfw_level_spec_quote
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.LevelSpecQuote" >
+    insert into zhfw_level_spec_quote (id, comm_pub_id, avai_supply_count,
+      meas_unit_id, spec, net_weight,
+      start_ord_expres, price_expres, version_num,
+      transaction_amount, sales_volume, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT}, #{avaiSupplyCount,jdbcType=DOUBLE},
+      #{measUnitId,jdbcType=BIGINT}, #{spec,jdbcType=VARCHAR}, #{netWeight,jdbcType=DOUBLE},
+      #{startOrdExpres,jdbcType=VARCHAR}, #{priceExpres,jdbcType=VARCHAR}, #{versionNum,jdbcType=VARCHAR},
+      #{transactionAmount,jdbcType=DOUBLE}, #{salesVolume,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.LevelSpecQuote" >
+    insert into zhfw_level_spec_quote
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commPubId != null" >
+          comm_pub_id,
+      </if>
+      <if test="avaiSupplyCount != null" >
+        avai_supply_count,
+      </if>
+      <if test="measUnitId != null" >
+        meas_unit_id,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="netWeight != null" >
+        net_weight,
+      </if>
+      <if test="startOrdExpres != null" >
+        start_ord_expres,
+      </if>
+      <if test="priceExpres != null" >
+        price_expres,
+      </if>
+      <if test="versionNum != null" >
+        version_num,
+      </if>
+      <if test="transactionAmount != null" >
+        transaction_amount,
+      </if>
+      <if test="salesVolume != null" >
+        sales_volume,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="avaiSupplyCount != null" >
+        #{avaiSupplyCount,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnitId != null" >
+        #{measUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="netWeight != null" >
+        #{netWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="startOrdExpres != null" >
+        #{startOrdExpres,jdbcType=VARCHAR},
+      </if>
+      <if test="priceExpres != null" >
+        #{priceExpres,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNum != null" >
+        #{versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionAmount != null" >
+        #{transactionAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="salesVolume != null" >
+        #{salesVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.LevelSpecQuote" >
+    update zhfw_level_spec_quote
+    <set >
+      <if test="commPubId != null" >
+          comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="avaiSupplyCount != null" >
+        avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnitId != null" >
+        meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="netWeight != null" >
+        net_weight = #{netWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="startOrdExpres != null" >
+        start_ord_expres = #{startOrdExpres,jdbcType=VARCHAR},
+      </if>
+      <if test="priceExpres != null" >
+        price_expres = #{priceExpres,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNum != null" >
+        version_num = #{versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="transactionAmount != null" >
+        transaction_amount = #{transactionAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="salesVolume != null" >
+        sales_volume = #{salesVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.LevelSpecQuote" >
+    update zhfw_level_spec_quote
+    set comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+      meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+      spec = #{spec,jdbcType=VARCHAR},
+      net_weight = #{netWeight,jdbcType=DOUBLE},
+      start_ord_expres = #{startOrdExpres,jdbcType=VARCHAR},
+      price_expres = #{priceExpres,jdbcType=VARCHAR},
+      version_num = #{versionNum,jdbcType=VARCHAR},
+      transaction_amount = #{transactionAmount,jdbcType=DOUBLE},
+      sales_volume = #{salesVolume,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.common.vo.LevelSpecQuotePageListVo" parameterType="com.wisea.cultivar.common.po.LevelSpecQuotePageListPo" >
+    select
+	  id id,
+	  comm_pub_id commPubId,
+	  avai_supply_count avaiSupplyCount,
+	  meas_unit_id measUnitId,
+	  spec spec,
+	  net_weight netWeight,
+	  start_ord_expres startOrdExpres,
+	  price_expres priceExpres,
+	  version_num versionNum,
+	  transaction_amount transactionAmount,
+	  sales_volume salesVolume
+	from
+	  zhfw_level_spec_quote
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.LevelSpecQuoteInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  comm_pub_id commPubId,
+	  avai_supply_count avaiSupplyCount,
+	  meas_unit_id measUnitId,
+	  spec spec,
+	  net_weight netWeight,
+	  start_ord_expres startOrdExpres,
+	  price_expres priceExpres,
+	  version_num versionNum,
+	  transaction_amount transactionAmount,
+	  sales_volume salesVolume
+	from
+	  zhfw_level_spec_quote
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+  <!-- 预订单商品信息 -->
+  <select id="findPreCommList" resultMap="PreCommListMap" parameterType="com.wisea.cultivar.common.po.trade.ImportListPo">
+    SELECT
+	  t2.id                AS zhfw_level_spec_quote_id,
+	  t3.memb_id           AS seller_id,
+	  t2.spec              AS comm_spec,
+	  t2.comm_pub_id,
+	  t2.net_weight,
+	  mm.meas_unit_name    AS meas_unit,
+	  t2.version_num       AS levelVersion,
+	  t2.price_expres      AS price,
+	  t2.start_ord_expres,
+	  t2.avai_supply_count,
+	  t3.comm_title,
+	  t3.comm_state_type,
+	  t3.stalls_mage_id,
+	  t3.version_num       AS commVersion,
+	  <choose>
+       <when test="transType != null and '1'.toString() == transType">
+          t4.id                AS stallsMageId,
+	      t4.base_name,
+	      t4.address,
+	      t4.base_type,
+	      t5.place_origin_name,
+	      t6.cont_tel          AS cont_tel,
+	      t6.conter            AS contacts,
+       </when>
+       <otherwise>
+          t4.id                AS stallsMageId,
+	      t4.stalls_name,
+	      t4.stalls_house_num,
+	      t4.contacts,
+	      t4.cont_tel,
+	      t4.business_date,
+	      t4.business_time,
+	      t4.address,
+       </otherwise>
+      </choose>
+	  s1.name              as prov,
+	  s2.name              as cou,
+	  s3.name              as city
+	from zhfw_level_spec_quote t2
+	  left join zhfw_comm_pub_info t3
+	    on t3.id = t2.comm_pub_id
+	  <choose>
+	   <when test="transType != null and '1'.toString() == transType">
+	     LEFT JOIN base_info t4
+            ON t4.id = t3.base_id
+          LEFT JOIN place_origin_mage t5
+            ON t5.id = t4.abroad_id
+          LEFT JOIN entp_auth t6
+            ON t6.memb_id = t3.memb_id
+              AND t6.del_flag = '0'
+              AND t6.auth_state_type = '3'
+	   </when>
+	   <otherwise>
+		   left join stalls_mage t4
+	          on t4.id = t3.stalls_mage_id
+	   </otherwise>
+	  </choose>
+	  left join meas_unit_mage mm
+	    on mm.id = t2.meas_unit_id
+	  left join sys_area s1
+	    on s1.code = t4.area_prov
+	  left join sys_area s2
+	    on s2.code = t4.area_cou
+	  left join sys_area s3
+	    on s3.code = t4.area_city
+	where t2.del_flag = '0'
+	  and t3.del_flag = '0'
+        <if test="importIds != null and importIds != ''">
+            and t2.id in (${importIds})
+        </if>
+  </select>
+
+  <!-- 查询商品信息 -->
+  <select id="selCommLeveInfo" resultType="com.wisea.cultivar.common.vo.trade.ImportCommListVo" parameterType="java.lang.Long">
+    SELECT
+	  t1.id                AS zhfw_level_spec_quote_id,
+	  t2.memb_id           AS seller_id,
+	  t1.spec              AS comm_spec,
+	  t1.comm_pub_id,
+	  t1.net_weight,
+	  t1.sales_volume,
+	  t1.transaction_amount,
+	  t1.version_num       AS levelVersion,
+	  t1.price_expres      AS price,
+	  t1.start_ord_expres,
+	  t1.avai_supply_count,
+	  t2.comm_title,
+	  t2.comm_state_type,
+	  t2.base_id,
+	  t2.stalls_mage_id,
+	  t3.meas_unit_name    AS meas_unit,
+	  t3.dimensions_type,
+	  t2.version_num       AS commVersion
+	FROM zhfw_level_spec_quote t1
+	  LEFT JOIN zhfw_comm_pub_info t2
+	    ON t2.id = t1.comm_pub_id
+	  left join meas_unit_mage t3
+        on t3.id = t1.meas_unit_id
+	WHERE t1.del_flag = '0'
+	    AND t2.del_flag = '0'
+        and t1.id = #{id}
+  </select>
+
+    <delete id="deleteLogicByPrimaryKey" parameterType="java.lang.Long">
+        update zhfw_level_spec_quote set del_flag = '1' where id = #{id}
+    </delete>
+</mapper>

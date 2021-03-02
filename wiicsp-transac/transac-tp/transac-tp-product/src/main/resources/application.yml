@@ -1,0 +1,24 @@
+server:
+  port: 8943
+spring:
+  application:
+    name: transac-tp-product
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务-商品服务(商品管理、搜索) #标题
+  quartz:
+    timer:
+      job: transac.tp.product.timer.job # 任务分组
+      trigger: transac.tp.product.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": transac_tp_product_scheduler
+management:
+  endpoint:
+    logviewer:
+      enabled: true # 开启实时日志节点
+  health:
+    elasticsearch:
+      enabled: false # 排除elastic健康监控 虽然backup工程引用了es的包，但配置是在页面进行的 这里启动不需要连接

@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.EntpAppVersionMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.EntpAppVersionMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="app_version_type" property="appVersionType" jdbcType="VARCHAR"/>
+        <result column="source_type" property="sourceType" jdbcType="VARCHAR"/>
+        <result column="app_version_name" property="appVersionName" jdbcType="VARCHAR"/>
+        <result column="version_num" property="versionNum" jdbcType="VARCHAR"/>
+        <result column="if_display_type" property="ifDisplayType" jdbcType="VARCHAR"/>
+        <result column="update_url" property="updateUrl" jdbcType="VARCHAR"/>
+        <result column="update_content" property="updateContent" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id,
+    source_type , app_version_type, app_version_name, version_num, if_display_type, update_url,
+    update_content, create_by, create_date, update_by, update_date, remarks, del_flag
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from entp_app_version_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from entp_app_version_mage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.EntpAppVersionMage">
+        insert into entp_app_version_mage (id, source_type,app_version_type, app_version_name,
+                                           version_num, if_display_type, update_url,
+                                           update_content, create_by, create_date,
+                                           update_by, update_date, remarks,
+                                           del_flag)
+        values (#{id,jdbcType=BIGINT}, #{sourceType,jdbcType=VARCHAR},#{appVersionType,jdbcType=VARCHAR}, #{appVersionName,jdbcType=VARCHAR},
+                #{versionNum,jdbcType=VARCHAR}, #{ifDisplayType,jdbcType=VARCHAR}, #{updateUrl,jdbcType=VARCHAR},
+                #{updateContent,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+                #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+                #{delFlag,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.EntpAppVersionMage">
+        insert into entp_app_version_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="appVersionType != null">
+                app_version_type,
+            </if>
+            <if test="sourceType != null">
+                source_type,
+            </if>
+            <if test="appVersionName != null">
+                app_version_name,
+            </if>
+            <if test="versionNum != null">
+                version_num,
+            </if>
+            <if test="ifDisplayType != null">
+                if_display_type,
+            </if>
+            <if test="updateUrl != null">
+                update_url,
+            </if>
+            <if test="updateContent != null">
+                update_content,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="sourceType != null">
+                #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersionType != null">
+                #{appVersionType,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersionName != null">
+                #{appVersionName,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNum != null">
+                #{versionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="ifDisplayType != null">
+                #{ifDisplayType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUrl != null">
+                #{updateUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updateContent != null">
+                #{updateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.EntpAppVersionMage">
+        update entp_app_version_mage
+        <set>
+            <if test="sourceType != null">
+                source_type = #{sourceType,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersionType != null">
+                app_version_type = #{appVersionType,jdbcType=VARCHAR},
+            </if>
+            <if test="appVersionName != null">
+                app_version_name = #{appVersionName,jdbcType=VARCHAR},
+            </if>
+            <if test="versionNum != null">
+                version_num = #{versionNum,jdbcType=VARCHAR},
+            </if>
+            <if test="ifDisplayType != null">
+                if_display_type = #{ifDisplayType,jdbcType=VARCHAR},
+            </if>
+            <if test="updateUrl != null">
+                update_url = #{updateUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="updateContent != null">
+                update_content = #{updateContent,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.EntpAppVersionMage">
+        update entp_app_version_mage
+        set
+            source_type = #{sourceType,jdbcType=VARCHAR},
+            app_version_type = #{appVersionType,jdbcType=VARCHAR},
+            app_version_name = #{appVersionName,jdbcType=VARCHAR},
+            version_num      = #{versionNum,jdbcType=VARCHAR},
+            if_display_type  = #{ifDisplayType,jdbcType=VARCHAR},
+            update_url       = #{updateUrl,jdbcType=VARCHAR},
+            update_content   = #{updateContent,jdbcType=VARCHAR},
+            create_by        = #{createBy,jdbcType=VARCHAR},
+            create_date      = #{createDate,jdbcType=TIMESTAMP},
+            update_by        = #{updateBy,jdbcType=VARCHAR},
+            update_date      = #{updateDate,jdbcType=TIMESTAMP},
+            remarks          = #{remarks,jdbcType=VARCHAR},
+            del_flag         = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findPageList" resultType="com.wisea.transac.common.vo.EntpAppVersionMagePageListVo"
+            parameterType="com.wisea.transac.common.po.EntpAppVersionMagePageListPo">
+        select id               id,
+               source_type      sourceType,
+               app_version_type appVersionType,
+               app_version_name appVersionName,
+               version_num      versionNum,
+               if_display_type  ifDisplayType,
+               update_url       updateUrl,
+               update_content   updateContent,
+               remarks,
+               update_by,
+               update_date
+        from entp_app_version_mage
+        where del_flag = '0'
+        <if test="sourceType!=null and sourceType!=''">
+            AND source_type = #{sourceType}
+        </if>
+        <if test="oprdateFront!=null and oprdateBack!=null">
+            and update_date between #{oprdateFront} and #{oprdateBack}
+        </if>
+        <if test="appVersionName != null and appVersionName != '' ">
+            AND instr(app_version_name,#{appVersionName}) != 0
+        </if>
+        <if test="appVersionType != null and appVersionType != '' ">
+            AND app_version_type = #{appVersionType}
+        </if>
+    </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.EntpAppVersionMageInfoVo" parameterType="java.lang.Long">
+        select id               id,
+               source_type      sourceType,
+               app_version_type appVersionType,
+               app_version_name appVersionName,
+               version_num      versionNum,
+               if_display_type  ifDisplayType,
+               update_url       updateUrl,
+               update_content   updateContent,
+               remarks,
+               update_by,
+               update_date
+        from entp_app_version_mage
+        where del_flag = '0'
+          and id = #{id}
+    </select>
+    <select id="findLatest" resultType="com.wisea.transac.common.vo.EntpAppVersionMageInfoVo"
+            parameterType="com.wisea.transac.common.po.AppVersionPo">
+        select id               id,
+               source_type      sourceType,
+               app_version_type appVersionType,
+               app_version_name appVersionName,
+               version_num      versionNum,
+               if_display_type  ifDisplayType,
+               update_url       updateUrl,
+               update_content   updateContent,
+               remarks,
+               update_by,
+               update_date
+        from entp_app_version_mage
+        where del_flag = '0'
+          and app_version_type = #{appVersionType}
+          and source_type      = #{sourceType}
+        order by version_num desc
+        limit 1
+    </select>
+    <select id="findList" resultType="com.wisea.transac.common.vo.EntpAppVersionMagePageListVo"
+            parameterType="com.wisea.transac.common.po.EntpAppVersionMagePageListPo">
+        select
+        id id,
+        source_type      sourceType,
+        app_version_type appVersionType,
+        app_version_name appVersionName,
+        version_num versionNum,
+        if_display_type ifDisplayType,
+        update_url updateUrl,
+        update_content updateContent,
+        create_date createDate,
+        remarks,
+        update_by,
+        update_date
+        from
+        entp_app_version_mage
+        <where>
+            AND del_flag = '0'
+            <if test="appVersionName != null and appVersionName != '' ">
+                AND instr(app_version_name,#{appVersionName}) != 0
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.RealPersonAuthMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.RealPersonAuth" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="face_collection" property="faceCollection" jdbcType="VARCHAR" />
+    <result column="auth_date" property="authDate" jdbcType="TIMESTAMP" />
+    <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+    <result column="auth_state_type" property="authStateType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, real_name, id_card_num, face_collection, auth_date, entp_auth_state_type,
+    auth_state_type, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from real_person_auth
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from real_person_auth
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.RealPersonAuth" >
+    insert into real_person_auth (id, memb_id, real_name,
+      id_card_num, face_collection, auth_date,
+      entp_auth_state_type, auth_state_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{realName,jdbcType=VARCHAR},
+      #{idCardNum,jdbcType=VARCHAR}, #{faceCollection,jdbcType=VARCHAR}, #{authDate,jdbcType=TIMESTAMP},
+      #{entpAuthStateType,jdbcType=VARCHAR}, #{authStateType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.RealPersonAuth" >
+    insert into real_person_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="realName != null" >
+        real_name,
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num,
+      </if>
+      <if test="faceCollection != null" >
+        face_collection,
+      </if>
+      <if test="authDate != null" >
+        auth_date,
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type,
+      </if>
+      <if test="authStateType != null" >
+        auth_state_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="realName != null" >
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNum != null" >
+        #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faceCollection != null" >
+        #{faceCollection,jdbcType=VARCHAR},
+      </if>
+      <if test="authDate != null" >
+        #{authDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entpAuthStateType != null" >
+        #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="authStateType != null" >
+        #{authStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.RealPersonAuth" >
+    update real_person_auth
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="realName != null" >
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="faceCollection != null" >
+        face_collection = #{faceCollection,jdbcType=VARCHAR},
+      </if>
+      <if test="authDate != null" >
+        auth_date = #{authDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="authStateType != null" >
+        auth_state_type = #{authStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.RealPersonAuth" >
+    update real_person_auth
+    set memb_id = #{membId,jdbcType=BIGINT},
+      real_name = #{realName,jdbcType=VARCHAR},
+      id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      face_collection = #{faceCollection,jdbcType=VARCHAR},
+      auth_date = #{authDate,jdbcType=TIMESTAMP},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      auth_state_type = #{authStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.RealPersonAuthPageListVo" parameterType="com.wisea.transac.common.po.RealPersonAuthPageListPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  real_name realName,
+	  id_card_num idCardNum,
+	  face_collection faceCollection,
+	  auth_date authDate,
+	  entp_auth_state_type entpAuthStateType,
+	  auth_state_type authStateType
+	from
+	  real_person_auth
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.RealPersonAuthInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  real_name realName,
+	  id_card_num idCardNum,
+	  face_collection faceCollection,
+	  auth_date authDate,
+	  entp_auth_state_type entpAuthStateType,
+	  auth_state_type authStateType
+	from
+	  real_person_auth
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <!--  根据用户ID查询个人认证信息-->
+  <select id="findInfoByUserId" resultType="com.wisea.transac.common.vo.RealPersonAuthInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  real_name realName,
+	  id_card_num idCardNum,
+	  face_collection faceCollection,
+	  auth_date authDate,
+	  entp_auth_state_type entpAuthStateType,
+	  auth_state_type authStateType
+	from
+	  real_person_auth
+	where
+	  del_flag = '0'
+	  and entp_auth_state_type = '0'
+	  and memb_id = #{id}
+  </select>
+  <resultMap id="personMembMap" type="com.wisea.transac.common.vo.memb.MembPersonDetailBackVo" >
+    <id column="id" property="personId" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <association property="personInfoVo" javaType="com.wisea.transac.common.vo.RealPersonAuthInfoVo">
+	    <id column="id" property="id" jdbcType="BIGINT" />
+    	<result column="memb_id" property="membId" jdbcType="BIGINT" />
+	    <result column="real_name" property="realName" jdbcType="VARCHAR" />
+	    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+	    <result column="face_collection" property="faceCollection" jdbcType="VARCHAR" />
+	    <result column="auth_date" property="authDate" jdbcType="TIMESTAMP" />
+	    <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+	    <result column="auth_state_type" property="authStateType" jdbcType="VARCHAR" />
+    </association>
+    <association property="regInfoVo" column="memb_id" select="getMemRegInfoByMembId"/>
+    <collection property="examRecdList" column="memb_id" select="findExamRecdList"/>
+  </resultMap>
+  <!-- 后台获取个人详细信息通过个人审核ID -->
+  <select id="getPersonMembDetail" parameterType="java.lang.Long" resultMap="personMembMap">
+  	SELECT * FROM real_person_auth WHERE del_flag = '0' AND id = #{_parameter}
+  </select>
+  <!-- 获取会员信息 -->
+  <select id="getMemRegInfoByMembId" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.memb.UserRegisterInfoVo">
+  	SELECT * FROM memb_info WHERE del_flag = '0' AND id = #{membId,jdbcType=BIGINT}
+  </select>
+  <!-- 获取会员审批信息 -->
+  <select id="findExamRecdList" resultType="com.wisea.transac.common.vo.memb.ExamRecdListVo" parameterType="java.lang.Long">
+  	select * from exam_recd
+    where del_flag = '0' and memb_id = #{membId,jdbcType=BIGINT}
+    Order by operat_date DESC
+  </select>
+  <select id="queryInfo" resultType="com.wisea.transac.common.vo.RealPersonAuthInfoVo" parameterType="com.wisea.transac.common.entity.RealPersonAuth">
+    select
+	  id id,
+	  memb_id membId,
+	  real_name realName,
+	  id_card_num idCardNum,
+	  face_collection faceCollection,
+	  auth_date authDate,
+	  entp_auth_state_type entpAuthStateType,
+	  auth_state_type authStateType
+	from
+	  real_person_auth
+	where
+	  del_flag = '0'
+	  and memb_id = #{membId}
+	  and id_card_num = #{idCardNum}
+  </select>
+</mapper>

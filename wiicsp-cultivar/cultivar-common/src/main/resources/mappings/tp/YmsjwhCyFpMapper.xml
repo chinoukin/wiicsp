@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.YmsjwhCyFpMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.YmsjwhCyFp" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="xynmjlmj" property="xynmjlmj" jdbcType="DOUBLE" />
+    <result column="zzznmjzs" property="zzznmjzs" jdbcType="INTEGER" />
+    <result column="ncl" property="ncl" jdbcType="DOUBLE" />
+    <result column="nmjzzzyhzs" property="nmjzzzyhzs" jdbcType="INTEGER" />
+    <result column="nmjbzhzzjd" property="nmjbzhzzjd" jdbcType="INTEGER" />
+    <result column="yylks" property="yylks" jdbcType="DOUBLE" />
+    <result column="nmjsjgclnl" property="nmjsjgclnl" jdbcType="DOUBLE" />
+    <result column="synh" property="synh" jdbcType="INTEGER" />
+    <result column="sypkh" property="sypkh" jdbcType="INTEGER" />
+    <result column="tprs_2018" property="tprs2018" jdbcType="INTEGER" />
+    <result column="tprs_2019" property="tprs2019" jdbcType="INTEGER" />
+    <result column="hjzs" property="hjzs" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="samb_floor_title" property="sambFloorTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, xynmjlmj, zzznmjzs, ncl, nmjzzzyhzs, nmjbzhzzjd, yylks, nmjsjgclnl, synh, sypkh,
+    tprs_2018, tprs_2019, hjzs, create_by, create_date, update_by, update_date, remarks,
+    del_flag, samb_floor_title
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ymsjwh_cy_fp
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ymsjwh_cy_fp
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.YmsjwhCyFp" >
+    insert into ymsjwh_cy_fp (id, xynmjlmj, zzznmjzs,
+      ncl, nmjzzzyhzs, nmjbzhzzjd,
+      yylks, nmjsjgclnl, synh,
+      sypkh, tprs_2018, tprs_2019,
+      hjzs, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, samb_floor_title)
+    values (#{id,jdbcType=BIGINT}, #{xynmjlmj,jdbcType=DOUBLE}, #{zzznmjzs,jdbcType=INTEGER},
+      #{ncl,jdbcType=DOUBLE}, #{nmjzzzyhzs,jdbcType=INTEGER}, #{nmjbzhzzjd,jdbcType=INTEGER},
+      #{yylks,jdbcType=DOUBLE}, #{nmjsjgclnl,jdbcType=DOUBLE}, #{synh,jdbcType=INTEGER},
+      #{sypkh,jdbcType=INTEGER}, #{tprs2018,jdbcType=INTEGER}, #{tprs2019,jdbcType=INTEGER},
+      #{hjzs,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{sambFloorTitle,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.YmsjwhCyFp" >
+    insert into ymsjwh_cy_fp
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="xynmjlmj != null" >
+        xynmjlmj,
+      </if>
+      <if test="zzznmjzs != null" >
+        zzznmjzs,
+      </if>
+      <if test="ncl != null" >
+        ncl,
+      </if>
+      <if test="nmjzzzyhzs != null" >
+        nmjzzzyhzs,
+      </if>
+      <if test="nmjbzhzzjd != null" >
+        nmjbzhzzjd,
+      </if>
+      <if test="yylks != null" >
+        yylks,
+      </if>
+      <if test="nmjsjgclnl != null" >
+        nmjsjgclnl,
+      </if>
+      <if test="synh != null" >
+        synh,
+      </if>
+      <if test="sypkh != null" >
+        sypkh,
+      </if>
+      <if test="tprs2018 != null" >
+        tprs_2018,
+      </if>
+      <if test="tprs2019 != null" >
+        tprs_2019,
+      </if>
+      <if test="hjzs != null" >
+        hjzs,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="sambFloorTitle != null" >
+        samb_floor_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="xynmjlmj != null" >
+        #{xynmjlmj,jdbcType=DOUBLE},
+      </if>
+      <if test="zzznmjzs != null" >
+        #{zzznmjzs,jdbcType=INTEGER},
+      </if>
+      <if test="ncl != null" >
+        #{ncl,jdbcType=DOUBLE},
+      </if>
+      <if test="nmjzzzyhzs != null" >
+        #{nmjzzzyhzs,jdbcType=INTEGER},
+      </if>
+      <if test="nmjbzhzzjd != null" >
+        #{nmjbzhzzjd,jdbcType=INTEGER},
+      </if>
+      <if test="yylks != null" >
+        #{yylks,jdbcType=DOUBLE},
+      </if>
+      <if test="nmjsjgclnl != null" >
+        #{nmjsjgclnl,jdbcType=DOUBLE},
+      </if>
+      <if test="synh != null" >
+        #{synh,jdbcType=INTEGER},
+      </if>
+      <if test="sypkh != null" >
+        #{sypkh,jdbcType=INTEGER},
+      </if>
+      <if test="tprs2018 != null" >
+        #{tprs2018,jdbcType=INTEGER},
+      </if>
+      <if test="tprs2019 != null" >
+        #{tprs2019,jdbcType=INTEGER},
+      </if>
+      <if test="hjzs != null" >
+        #{hjzs,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="sambFloorTitle != null" >
+        #{sambFloorTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.YmsjwhCyFp" >
+    update ymsjwh_cy_fp
+    <set >
+      <if test="xynmjlmj != null" >
+        xynmjlmj = #{xynmjlmj,jdbcType=DOUBLE},
+      </if>
+      <if test="zzznmjzs != null" >
+        zzznmjzs = #{zzznmjzs,jdbcType=INTEGER},
+      </if>
+      <if test="ncl != null" >
+        ncl = #{ncl,jdbcType=DOUBLE},
+      </if>
+      <if test="nmjzzzyhzs != null" >
+        nmjzzzyhzs = #{nmjzzzyhzs,jdbcType=INTEGER},
+      </if>
+      <if test="nmjbzhzzjd != null" >
+        nmjbzhzzjd = #{nmjbzhzzjd,jdbcType=INTEGER},
+      </if>
+      <if test="yylks != null" >
+        yylks = #{yylks,jdbcType=DOUBLE},
+      </if>
+      <if test="nmjsjgclnl != null" >
+        nmjsjgclnl = #{nmjsjgclnl,jdbcType=DOUBLE},
+      </if>
+      <if test="synh != null" >
+        synh = #{synh,jdbcType=INTEGER},
+      </if>
+      <if test="sypkh != null" >
+        sypkh = #{sypkh,jdbcType=INTEGER},
+      </if>
+      <if test="tprs2018 != null" >
+        tprs_2018 = #{tprs2018,jdbcType=INTEGER},
+      </if>
+      <if test="tprs2019 != null" >
+        tprs_2019 = #{tprs2019,jdbcType=INTEGER},
+      </if>
+      <if test="hjzs != null" >
+        hjzs = #{hjzs,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="sambFloorTitle != null" >
+        samb_floor_title = #{sambFloorTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.YmsjwhCyFp" >
+    update ymsjwh_cy_fp
+    set xynmjlmj = #{xynmjlmj,jdbcType=DOUBLE},
+      zzznmjzs = #{zzznmjzs,jdbcType=INTEGER},
+      ncl = #{ncl,jdbcType=DOUBLE},
+      nmjzzzyhzs = #{nmjzzzyhzs,jdbcType=INTEGER},
+      nmjbzhzzjd = #{nmjbzhzzjd,jdbcType=INTEGER},
+      yylks = #{yylks,jdbcType=DOUBLE},
+      nmjsjgclnl = #{nmjsjgclnl,jdbcType=DOUBLE},
+      synh = #{synh,jdbcType=INTEGER},
+      sypkh = #{sypkh,jdbcType=INTEGER},
+      tprs_2018 = #{tprs2018,jdbcType=INTEGER},
+      tprs_2019 = #{tprs2019,jdbcType=INTEGER},
+      hjzs = #{hjzs,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      samb_floor_title = #{sambFloorTitle,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.YmsjwhCyFp" >
+    update ymsjwh_cy_fp
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findOneNotDel" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ymsjwh_cy_fp
+    where del_flag = '0'
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ymsjwh_cy_fp
+    where del_flag = '0'
+  </select>
+
+</mapper>

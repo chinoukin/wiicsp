@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.QtXsYjInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.QtXsYjInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sub_entp_id" property="subEntpId" jdbcType="BIGINT" />
+    <result column="zddd_date" property="zdddDate" jdbcType="TIMESTAMP" />
+    <result column="place_origin_address" property="placeOriginAddress" jdbcType="VARCHAR" />
+    <result column="varit_name" property="varitName" jdbcType="VARCHAR" />
+    <result column="yj_type" property="yjType" jdbcType="VARCHAR" />
+    <result column="logistics_driver_tel" property="logisticsDriverTel" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sub_entp_id, zddd_date, place_origin_address, varit_name, yj_type, logistics_driver_tel,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from qt_xs_yj_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from qt_xs_yj_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.QtXsYjInfo" >
+    insert into qt_xs_yj_info (id, sub_entp_id, zddd_date,
+      place_origin_address, varit_name, yj_type,
+      logistics_driver_tel, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{subEntpId,jdbcType=BIGINT}, #{zdddDate,jdbcType=TIMESTAMP},
+      #{placeOriginAddress,jdbcType=VARCHAR}, #{varitName,jdbcType=VARCHAR}, #{yjType,jdbcType=VARCHAR},
+      #{logisticsDriverTel,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.QtXsYjInfo" >
+    insert into qt_xs_yj_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subEntpId != null" >
+        sub_entp_id,
+      </if>
+      <if test="zdddDate != null" >
+        zddd_date,
+      </if>
+      <if test="placeOriginAddress != null" >
+        place_origin_address,
+      </if>
+      <if test="varitName != null" >
+        varit_name,
+      </if>
+      <if test="yjType != null" >
+        yj_type,
+      </if>
+      <if test="logisticsDriverTel != null" >
+        logistics_driver_tel,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subEntpId != null" >
+        #{subEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="zdddDate != null" >
+        #{zdddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="placeOriginAddress != null" >
+        #{placeOriginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="varitName != null" >
+        #{varitName,jdbcType=VARCHAR},
+      </if>
+      <if test="yjType != null" >
+        #{yjType,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsDriverTel != null" >
+        #{logisticsDriverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.QtXsYjInfo" >
+    update qt_xs_yj_info
+    <set >
+      <if test="subEntpId != null" >
+        sub_entp_id = #{subEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="zdddDate != null" >
+        zddd_date = #{zdddDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="placeOriginAddress != null" >
+        place_origin_address = #{placeOriginAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="varitName != null" >
+        varit_name = #{varitName,jdbcType=VARCHAR},
+      </if>
+      <if test="yjType != null" >
+        yj_type = #{yjType,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsDriverTel != null" >
+        logistics_driver_tel = #{logisticsDriverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.QtXsYjInfo" >
+    update qt_xs_yj_info
+    set sub_entp_id = #{subEntpId,jdbcType=BIGINT},
+      zddd_date = #{zdddDate,jdbcType=TIMESTAMP},
+      place_origin_address = #{placeOriginAddress,jdbcType=VARCHAR},
+      varit_name = #{varitName,jdbcType=VARCHAR},
+      yj_type = #{yjType,jdbcType=VARCHAR},
+      logistics_driver_tel = #{logisticsDriverTel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.QtXsYjInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.QtXsYjInfoPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from qt_xs_yj_info
+    where del_flag = '0'
+    <if test="subEntpId != null and subEntpId != ''">
+    AND sub_entp_id = #{subEntpId}
+    </if>
+    <if test="placeOriginAddress != null and placeOriginAddress != ''">
+    AND place_origin_address LIKE CONCAT('%', #{placeOriginAddress}, '%')
+    </if>
+    <if test="yjType != null and yjType != ''">
+    AND yj_type = #{yjType}
+    </if>
+    <if test="logisticsDriverTel != null and logisticsDriverTel != ''">
+    AND logistics_driver_tel LIKE CONCAT('%', #{logisticsDriverTel}, '%')
+    </if>
+    ORDER BY zddd_date DESC,update_date DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.QtXsYjInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.QtXsYjInfoListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from qt_xs_yj_info
+    where del_flag = '0'
+    <if test="subEntpId != null and subEntpId != ''">
+    AND sub_entp_id = #{subEntpId}
+    </if>
+    <if test="placeOriginAddress != null and placeOriginAddress != ''">
+    AND place_origin_address LIKE CONCAT('%', #{placeOriginAddress}, '%')
+    </if>
+    <if test="yjType != null and yjType != ''">
+    AND yj_type = #{yjType}
+    </if>
+    <if test="logisticsDriverTel != null and logisticsDriverTel != ''">
+    AND logistics_driver_tel LIKE CONCAT('%', #{logisticsDriverTel}, '%')
+    </if>
+    ORDER BY zddd_date DESC,update_date DESC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.QtXsYjInfo" >
+    update qt_xs_yj_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

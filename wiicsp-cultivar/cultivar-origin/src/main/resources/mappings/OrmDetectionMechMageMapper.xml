@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.origin.dao.OrmDetectionMechMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.origin.entity.DetectionMechMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="org_num" property="orgNum" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="operator" property="operator" jdbcType="VARCHAR" />
+    <result column="operat_date" property="operatDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, org_num, org_name, operator, operat_date, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from detection_mech_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from detection_mech_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.origin.entity.DetectionMechMage" >
+    insert into detection_mech_mage (id, org_num, org_name,
+      operator, operat_date, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{orgNum,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR},
+      #{operator,jdbcType=VARCHAR}, #{operatDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.origin.entity.DetectionMechMage" >
+    insert into detection_mech_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orgNum != null" >
+        org_num,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="operator != null" >
+        operator,
+      </if>
+      <if test="operatDate != null" >
+        operat_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orgNum != null" >
+        #{orgNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatDate != null" >
+        #{operatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.origin.entity.DetectionMechMage" >
+    update detection_mech_mage
+    <set >
+      <if test="orgNum != null" >
+        org_num = #{orgNum,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null" >
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatDate != null" >
+        operat_date = #{operatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.origin.entity.DetectionMechMage" >
+    update detection_mech_mage
+    set org_num = #{orgNum,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      operat_date = #{operatDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+ <!--  分页查询检测机构列表 -->
+ <select id="findDetectionMechList"  parameterType="com.wisea.cultivar.origin.po.DetectionMechMageListPo"
+     resultType="com.wisea.cultivar.origin.vo.DetectionMechMageListVo">
+    select  id, org_num, org_name
+    from detection_mech_mage
+    where del_flag = '0'
+    ORDER BY
+	   update_date desc
+ </select>
+  <!-- 分页查询检测机构列表web -->
+  <select id="findDetectionMechListWeb" resultType="com.wisea.cultivar.origin.vo.DetectionMechMageListWebVo" parameterType="com.wisea.cultivar.origin.po.DetectionMechMageListWebPo">
+      SELECT T1.id, T1.org_num, T1.org_name, T2.user_name operator, T1.operat_date
+	  FROM detection_mech_mage T1
+	  LEFT JOIN memb_info T2 on T1.operator=T2.id
+	  WHERE T1.del_flag='0'
+  	  <if test="value != null and value != ''">
+		<if test="key == '0'.toString()">
+			AND T1.org_num LIKE CONCAT('%', #{value}, '%')
+		</if>
+		<if test="key == '1'.toString()">
+			AND T1.org_name LIKE CONCAT('%', #{value}, '%')
+		</if>
+      </if>
+      <if test="staDate != null">
+		AND T1.update_date  <![CDATA[ >= ]]>
+		#{staDate}
+	  </if>
+	  <if test="endDate != null">
+		AND T1.update_date  <![CDATA[ <= ]]>
+		#{endDate}
+	  </if>
+	  ORDER BY T1.operat_date DESC
+
+  </select>
+  <!--  校验机构编号 -->
+  <select id="checkOrgNum" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.origin.po.CheckOrgNumPo" >
+	select
+	<include refid="Base_Column_List" />
+    from (
+		select *
+		  from detection_mech_mage
+		   where org_num = #{orgNum,jdbcType=VARCHAR}
+		    <if test="id != null and id != ''">
+		     and id !=#{id,jdbcType=BIGINT}
+		    </if>
+		   and del_flag='0'
+    UNION
+		select *
+		  from detection_mech_mage
+		   where org_name= #{orgName,jdbcType=VARCHAR}
+		    <if test="id != null and id != ''">
+		     and id !=#{id,jdbcType=BIGINT}
+		    </if>
+		   and del_flag='0'
+	) a
+  </select>
+</mapper>

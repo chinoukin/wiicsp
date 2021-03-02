@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.ArchSetupMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.ArchSetup" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="mine_arch_id" property="mineArchId" jdbcType="BIGINT" />
+    <result column="arch_ed_name_flag" property="archEdNameFlag" jdbcType="CHAR" />
+    <result column="arch_ed_name" property="archEdName" jdbcType="VARCHAR" />
+    <result column="massif_ed_name_flag" property="massifEdNameFlag" jdbcType="CHAR" />
+    <result column="massif_ed_name" property="massifEdName" jdbcType="VARCHAR" />
+    <result column="crop_ed_flag" property="cropEdFlag" jdbcType="CHAR" />
+    <result column="plant_acre_ed_flag" property="plantAcreEdFlag" jdbcType="CHAR" />
+    <result column="plant_stand_ed_flag" property="plantStandEdFlag" jdbcType="CHAR" />
+    <result column="plant_start_ed_flag" property="plantStartEdFlag" jdbcType="CHAR" />
+    <result column="list_date_ed_flag" property="listDateEdFlag" jdbcType="CHAR" />
+    <result column="exam_info_ed_flag" property="examInfoEdFlag" jdbcType="CHAR" />
+    <result column="exam_info_type" property="examInfoType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mine_arch_id, arch_ed_name_flag, arch_ed_name, massif_ed_name_flag, massif_ed_name,
+    crop_ed_flag, plant_acre_ed_flag, plant_stand_ed_flag, plant_start_ed_flag, list_date_ed_flag,
+    exam_info_ed_flag, exam_info_type, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+
+  <!-- 根据我的档案ID查询我的档案设置信息 -->
+  <select id="findByMineArchId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from arch_setup
+    where mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from arch_setup
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from arch_setup
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ArchSetup" >
+    insert into arch_setup (id, mine_arch_id, arch_ed_name_flag,
+      arch_ed_name, massif_ed_name_flag, massif_ed_name,
+      crop_ed_flag, plant_acre_ed_flag, plant_stand_ed_flag,
+      plant_start_ed_flag, list_date_ed_flag, exam_info_ed_flag,
+      exam_info_type, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{mineArchId,jdbcType=BIGINT}, #{archEdNameFlag,jdbcType=CHAR},
+      #{archEdName,jdbcType=VARCHAR}, #{massifEdNameFlag,jdbcType=CHAR}, #{massifEdName,jdbcType=VARCHAR},
+      #{cropEdFlag,jdbcType=CHAR}, #{plantAcreEdFlag,jdbcType=CHAR}, #{plantStandEdFlag,jdbcType=CHAR},
+      #{plantStartEdFlag,jdbcType=CHAR}, #{listDateEdFlag,jdbcType=CHAR}, #{examInfoEdFlag,jdbcType=CHAR},
+      #{examInfoType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ArchSetup" >
+    insert into arch_setup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mineArchId != null" >
+        mine_arch_id,
+      </if>
+      <if test="archEdNameFlag != null" >
+        arch_ed_name_flag,
+      </if>
+      <if test="archEdName != null" >
+        arch_ed_name,
+      </if>
+      <if test="massifEdNameFlag != null" >
+        massif_ed_name_flag,
+      </if>
+      <if test="massifEdName != null" >
+        massif_ed_name,
+      </if>
+      <if test="cropEdFlag != null" >
+        crop_ed_flag,
+      </if>
+      <if test="plantAcreEdFlag != null" >
+        plant_acre_ed_flag,
+      </if>
+      <if test="plantStandEdFlag != null" >
+        plant_stand_ed_flag,
+      </if>
+      <if test="plantStartEdFlag != null" >
+        plant_start_ed_flag,
+      </if>
+      <if test="listDateEdFlag != null" >
+        list_date_ed_flag,
+      </if>
+      <if test="examInfoEdFlag != null" >
+        exam_info_ed_flag,
+      </if>
+      <if test="examInfoType != null" >
+        exam_info_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mineArchId != null" >
+        #{mineArchId,jdbcType=BIGINT},
+      </if>
+      <if test="archEdNameFlag != null" >
+        #{archEdNameFlag,jdbcType=CHAR},
+      </if>
+      <if test="archEdName != null" >
+        #{archEdName,jdbcType=VARCHAR},
+      </if>
+      <if test="massifEdNameFlag != null" >
+        #{massifEdNameFlag,jdbcType=CHAR},
+      </if>
+      <if test="massifEdName != null" >
+        #{massifEdName,jdbcType=VARCHAR},
+      </if>
+      <if test="cropEdFlag != null" >
+        #{cropEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="plantAcreEdFlag != null" >
+        #{plantAcreEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="plantStandEdFlag != null" >
+        #{plantStandEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="plantStartEdFlag != null" >
+        #{plantStartEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="listDateEdFlag != null" >
+        #{listDateEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="examInfoEdFlag != null" >
+        #{examInfoEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="examInfoType != null" >
+        #{examInfoType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ArchSetup" >
+    update arch_setup
+    <set >
+      <if test="mineArchId != null" >
+        mine_arch_id = #{mineArchId,jdbcType=BIGINT},
+      </if>
+      <if test="archEdNameFlag != null" >
+        arch_ed_name_flag = #{archEdNameFlag,jdbcType=CHAR},
+      </if>
+      <if test="archEdName != null" >
+        arch_ed_name = #{archEdName,jdbcType=VARCHAR},
+      </if>
+      <if test="massifEdNameFlag != null" >
+        massif_ed_name_flag = #{massifEdNameFlag,jdbcType=CHAR},
+      </if>
+      <if test="massifEdName != null" >
+        massif_ed_name = #{massifEdName,jdbcType=VARCHAR},
+      </if>
+      <if test="cropEdFlag != null" >
+        crop_ed_flag = #{cropEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="plantAcreEdFlag != null" >
+        plant_acre_ed_flag = #{plantAcreEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="plantStandEdFlag != null" >
+        plant_stand_ed_flag = #{plantStandEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="plantStartEdFlag != null" >
+        plant_start_ed_flag = #{plantStartEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="listDateEdFlag != null" >
+        list_date_ed_flag = #{listDateEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="examInfoEdFlag != null" >
+        exam_info_ed_flag = #{examInfoEdFlag,jdbcType=CHAR},
+      </if>
+      <if test="examInfoType != null" >
+        exam_info_type = #{examInfoType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ArchSetup" >
+    update arch_setup
+    set mine_arch_id = #{mineArchId,jdbcType=BIGINT},
+      arch_ed_name_flag = #{archEdNameFlag,jdbcType=CHAR},
+      arch_ed_name = #{archEdName,jdbcType=VARCHAR},
+      massif_ed_name_flag = #{massifEdNameFlag,jdbcType=CHAR},
+      massif_ed_name = #{massifEdName,jdbcType=VARCHAR},
+      crop_ed_flag = #{cropEdFlag,jdbcType=CHAR},
+      plant_acre_ed_flag = #{plantAcreEdFlag,jdbcType=CHAR},
+      plant_stand_ed_flag = #{plantStandEdFlag,jdbcType=CHAR},
+      plant_start_ed_flag = #{plantStartEdFlag,jdbcType=CHAR},
+      list_date_ed_flag = #{listDateEdFlag,jdbcType=CHAR},
+      exam_info_ed_flag = #{examInfoEdFlag,jdbcType=CHAR},
+      exam_info_type = #{examInfoType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.portal.mapper.UserMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.portal.entity.UserMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sys_user_id" jdbcType="BIGINT" property="sysUserId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sys_user_id, user_name, tel, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_mage
+    where id = #{id,jdbcType=BIGINT} and del_flag="0"
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.portal.entity.UserMage">
+    insert into user_mage (id, sys_user_id, user_name,
+      tel, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{sysUserId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.portal.entity.UserMage">
+    insert into user_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sysUserId != null">
+        #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.portal.entity.UserMage">
+    update user_mage
+    <set>
+      <if test="sysUserId != null">
+        sys_user_id = #{sysUserId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.portal.entity.UserMage">
+    update user_mage
+    set sys_user_id = #{sysUserId,jdbcType=BIGINT},
+      user_name = #{userName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.portal.po.UserMagePagePo" resultType="com.wisea.cultivar.portal.vo.UserMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from user_mage
+    where del_flag = '0'
+
+    <if test="nameAndPhone != '' and nameAndPhone != null">
+      AND CONCAT(user_name, tel) LIKE CONCAT('%',#{nameAndPhone},'%')
+    </if>
+    order by update_date desc
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.portal.po.UserMageListPo" resultType="com.wisea.cultivar.portal.vo.UserMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from user_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.portal.entity.UserMage">
+    update user_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="getByLoginName"  resultType="com.wisea.cloud.common.sys.entity.User">
+    select id,login_name loginName,password from sys_user
+    where login_name=#{loginName} and del_flag=0
+    <if test="id != '' and id != null">
+      and id !=#{id}
+    </if>
+  </select>
+
+
+
+  <select id="selectPage" parameterType="com.wisea.cultivar.portal.po.UserMagePagePo" resultType="com.wisea.cultivar.portal.vo.UserMageListVo">
+    select
+    a.id,a.sys_user_id sysUserId,a.user_name userName,a.tel,a.update_date updateDate,
+    b.login_name loginName,b.login_flag loginFlag,c.org_id orgId
+    from
+    user_mage  a
+    LEFT JOIN sys_user b ON a.sys_user_id=b.id
+    LEFT JOIN sys_org_user c ON  a.sys_user_id=c.user_id
+    where a.del_flag="0"
+    <if test="nameAndPhone != '' and nameAndPhone != null">
+      AND CONCAT(a.user_name,a.tel) LIKE CONCAT('%',#{nameAndPhone},'%')
+    </if>
+    order by a.update_date desc
+  </select>
+</mapper>

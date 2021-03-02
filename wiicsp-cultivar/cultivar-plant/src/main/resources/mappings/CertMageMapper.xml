@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.CertMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.CertMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_info_id" property="shopInfoId" jdbcType="BIGINT" />
+    <result column="cert_name" property="certName" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <resultMap id="CertMageResult" type="com.wisea.cultivar.plant.vo.CertMageInfoVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="shop_info_id" property="shopInfoId" jdbcType="BIGINT" />
+    <result column="cert_name" property="certName" jdbcType="VARCHAR" />
+   <collection property="certPictureInfoVoList" javaType="list" ofType="com.wisea.cultivar.plant.vo.CertPictureInfoVo">
+     <result column="cert_mage_id" property="certMageId" jdbcType="BIGINT" />
+     <result column="url" property="url" jdbcType="VARCHAR" />
+   </collection>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, shop_info_id, cert_name, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from cert_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cert_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.CertMage" >
+    insert into cert_mage (id, shop_info_id, cert_name,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{shopInfoId,jdbcType=BIGINT}, #{certName,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.CertMage" >
+    insert into cert_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="shopInfoId != null" >
+        shop_info_id,
+      </if>
+      <if test="certName != null" >
+        cert_name,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="shopInfoId != null" >
+        #{shopInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="certName != null" >
+        #{certName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.CertMage" >
+    update cert_mage
+    <set >
+      <if test="shopInfoId != null" >
+        shop_info_id = #{shopInfoId,jdbcType=BIGINT},
+      </if>
+      <if test="certName != null" >
+        cert_name = #{certName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.CertMage" >
+    update cert_mage
+    set shop_info_id = #{shopInfoId,jdbcType=BIGINT},
+      cert_name = #{certName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.CertMagePageListVo" parameterType="com.wisea.cultivar.plant.po.CertMagePageListPo" >
+    select
+	  shop_info_id shopInfoId,
+	  cert_name certName
+	from
+	  cert_mage
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.CertMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  shop_info_id shopInfoId,
+	  cert_name certName
+	from
+	  cert_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <select id="findListCertMage"   resultMap="CertMageResult">
+   select
+      cm.*,
+	  cp.*
+	from
+	  cert_mage cm left join cert_picture cp on cm.id=cp.cert_mage_id
+	where
+	  cm.del_flag = '0' and cp.del_flag='0'
+	  and cm.shop_info_id = #{shopId}
+  </select>
+
+  <!-- 条件查询-->
+  <select id="findByConditions" resultType="com.wisea.cultivar.plant.vo.CertMageInfoVo" parameterType="com.wisea.cultivar.plant.entity.CertMage" >
+    select
+      id,
+	  shop_info_id shopInfoId,
+	  cert_name certName
+	from
+	  cert_mage
+	where
+	  del_flag = '0'
+    <if test="shopInfoId != null" >
+      and shop_info_id = #{shopInfoId,jdbcType=BIGINT}
+    </if>
+    order by update_date desc
+  </select>
+  <select id="findByCertName" resultType="com.wisea.cultivar.plant.vo.CertMageInfoVo">
+    select id from cert_mage where del_flag = '0' and cert_name = #{certName} and shop_info_id = #{shopId} limit 1
+  </select>
+
+</mapper>

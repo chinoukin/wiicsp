@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.MrSerChargeMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.MrSerChargeMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="colle_meth_type" property="colleMethType" jdbcType="VARCHAR" />
+    <result column="sq_val" property="sqVal" jdbcType="DOUBLE" />
+    <result column="onece_min" property="oneceMin" jdbcType="DOUBLE" />
+    <result column="onece_max" property="oneceMax" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="BaseResult" type="com.wisea.transac.common.vo.system.MrSerChargeMageGetVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="colle_meth_type" property="colleMethType" jdbcType="VARCHAR" />
+    <result column="sq_val" property="sqVal" jdbcType="DOUBLE" />
+    <result column="onece_min" property="oneceMin" jdbcType="DOUBLE" />
+    <result column="onece_max" property="oneceMax" jdbcType="DOUBLE" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_id, colle_meth_type, sq_val, onece_min, onece_max, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 查询默认服务费的列表 -->
+  <select id="findSerChargeList" resultMap="BaseResultMap" parameterType="com.wisea.transac.common.po.system.MrSerChargeMagePagePo">
+    SELECT
+      <include refid="Base_Column_List" />
+    from
+      mr_ser_charge_mage mscm
+    WHERE
+      mscm.del_flag = '0'
+      <if test="commId != null and commId != ''">
+        AND mscm.comm_id = #{commId}
+      </if>
+  </select>
+  <!-- 重复性校验 -->
+  <select id="checkSaveOrUpdateMrSerChargeMage" resultMap="BaseResultMap" parameterType="com.wisea.transac.common.entity.MrSerChargeMage">
+    SELECT
+      mscm.id,
+      mscm.comm_id,
+      mscm.colle_meth_type,
+      mscm.sq_val,
+      mscm.onece_min,
+      mscm.onece_max
+    from
+      mr_ser_charge_mage mscm
+      LEFT JOIN comm_mage cm ON cm.id = mscm.comm_id
+    WHERE
+      mscm.del_flag = '0'
+      <if test="id != null and id != ''">
+        AND mscm.id != #{id}
+      </if>
+      AND cm.id = #{commId}
+  </select>
+  <!-- 查询服务费详情 -->
+  <select id="findById" resultMap="BaseResult" parameterType="com.wisea.transac.common.po.system.MrSerChargeMageGetPo">
+    SELECT
+      <include refid="Base_Column_List" />
+    from
+      mr_ser_charge_mage
+    where
+      id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 查询所有的默认服务费设置列表 -->
+  <select id="findList" parameterType="com.wisea.transac.common.entity.MrSerChargeMage" resultMap="BaseResultMap">
+    select
+      *
+    from
+      mr_ser_charge_mage mscm
+    where
+      mscm.del_flag = '0'
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from mr_ser_charge_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from mr_ser_charge_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.MrSerChargeMage" >
+    insert into mr_ser_charge_mage (id, comm_id, colle_meth_type,
+      sq_val, onece_min, onece_max,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{colleMethType,jdbcType=VARCHAR},
+      #{sqVal,jdbcType=DOUBLE}, #{oneceMin,jdbcType=DOUBLE}, #{oneceMax,jdbcType=DOUBLE},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.MrSerChargeMage" >
+    insert into mr_ser_charge_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="colleMethType != null" >
+        colle_meth_type,
+      </if>
+      <if test="sqVal != null" >
+        sq_val,
+      </if>
+      <if test="oneceMin != null" >
+        onece_min,
+      </if>
+      <if test="oneceMax != null" >
+        onece_max,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="colleMethType != null" >
+        #{colleMethType,jdbcType=VARCHAR},
+      </if>
+      <if test="sqVal != null" >
+        #{sqVal,jdbcType=DOUBLE},
+      </if>
+      <if test="oneceMin != null" >
+        #{oneceMin,jdbcType=DOUBLE},
+      </if>
+      <if test="oneceMax != null" >
+        #{oneceMax,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.MrSerChargeMage" >
+    update mr_ser_charge_mage
+    <set >
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="colleMethType != null" >
+        colle_meth_type = #{colleMethType,jdbcType=VARCHAR},
+      </if>
+      <if test="sqVal != null" >
+        sq_val = #{sqVal,jdbcType=DOUBLE},
+      </if>
+      <if test="oneceMin != null" >
+        onece_min = #{oneceMin,jdbcType=DOUBLE},
+      </if>
+      <if test="oneceMax != null" >
+        onece_max = #{oneceMax,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.MrSerChargeMage" >
+    update mr_ser_charge_mage
+    set comm_id = #{commId,jdbcType=BIGINT},
+      colle_meth_type = #{colleMethType,jdbcType=VARCHAR},
+      sq_val = #{sqVal,jdbcType=DOUBLE},
+      onece_min = #{oneceMin,jdbcType=DOUBLE},
+      onece_max = #{oneceMax,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

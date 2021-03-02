@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.BigdataMembInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.MembInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="xm_name" property="xmName" jdbcType="VARCHAR" />
+    <result column="bm_name" property="bmName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="qx_type" property="qxType" jdbcType="VARCHAR" />
+    <result column="zc_date" property="zcDate" jdbcType="TIMESTAMP" />
+    <result column="sfqy_flag" property="sfqyFlag" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_name, xm_name, bm_name, password, qx_type, zc_date, sfqy_flag, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.MembInfo" >
+    insert into memb_info (id, user_name, xm_name,
+      bm_name, password, qx_type,
+      zc_date, sfqy_flag, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{xmName,jdbcType=VARCHAR},
+      #{bmName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{qxType,jdbcType=VARCHAR},
+      #{zcDate,jdbcType=TIMESTAMP}, #{sfqyFlag,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.MembInfo" >
+    insert into memb_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="xmName != null" >
+        xm_name,
+      </if>
+      <if test="bmName != null" >
+        bm_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="qxType != null" >
+        qx_type,
+      </if>
+      <if test="zcDate != null" >
+        zc_date,
+      </if>
+      <if test="sfqyFlag != null" >
+        sfqy_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="xmName != null" >
+        #{xmName,jdbcType=VARCHAR},
+      </if>
+      <if test="bmName != null" >
+        #{bmName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="qxType != null" >
+        #{qxType,jdbcType=VARCHAR},
+      </if>
+      <if test="zcDate != null" >
+        #{zcDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfqyFlag != null" >
+        #{sfqyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.MembInfo" >
+    update memb_info
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="xmName != null" >
+        xm_name = #{xmName,jdbcType=VARCHAR},
+      </if>
+      <if test="bmName != null" >
+        bm_name = #{bmName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="qxType != null" >
+        qx_type = #{qxType,jdbcType=VARCHAR},
+      </if>
+      <if test="zcDate != null" >
+        zc_date = #{zcDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sfqyFlag != null" >
+        sfqy_flag = #{sfqyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.MembInfo" >
+    update memb_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      xm_name = #{xmName,jdbcType=VARCHAR},
+      bm_name = #{bmName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      qx_type = #{qxType,jdbcType=VARCHAR},
+      zc_date = #{zcDate,jdbcType=TIMESTAMP},
+      sfqy_flag = #{sfqyFlag,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.MembInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.MembInfoPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where del_flag = '0'
+    <if test="qxType!=null and qxType!=''">
+      and qx_type = #{qxType}
+    </if>
+    <if test="userName!=null and userName!=''">
+      and user_name like CONCAT('%',#{userName},'%')
+    </if>
+    ORDER BY
+    sfqy_flag DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.MembInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.MembInfoListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where del_flag = '0'
+  </select>
+  <select id="findAllEntity" resultType="com.wisea.cultivar.common.entity.bigdata.MembInfo"  >
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where del_flag = '0'
+    order by create_date desc
+  </select>
+  <select id="findAllByUsername" resultType="com.wisea.cultivar.common.vo.bigdata.MembInfoListVo"
+          parameterType="com.wisea.cultivar.common.po.bigdata.MembInfoListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where del_flag = '0'
+    and user_name = #{userName}
+    <if test="id!=null">
+      and id = #{id}
+    </if>
+  </select>
+
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.MembInfo" >
+    update memb_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

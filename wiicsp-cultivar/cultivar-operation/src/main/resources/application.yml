@@ -1,0 +1,34 @@
+server:
+  port: 8948
+spring:
+  application:
+    name: cultivar-operation
+
+wbfc:
+  mss:
+    security: CULTIVAR-OPERATION # mss远程 安全服务(用户、菜单、角色)
+    system: CULTIVAR-OPERATION # mss 系统服务(行政区划、数据字典)
+    files: CULTIVAR-OPERATION # mss文件服务
+  quartz:
+    timer:
+      job: cultivar.operation.timer.job # 任务分组
+      trigger: cultivar.operation.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": cultivar_operation_scheduler
+
+management:
+  #  endpoint:
+  #    database:
+  #      enabled: true # 开启数据库监控节点
+  #    logviewer:
+  #      enabled: true # 开启实时日志节点
+  health:
+    elasticsearch:
+      enabled: false # 排除elastic健康监控 虽然backup工程引用了es的包，但配置是在页面进行的 这里启动不需要连接
+
+tpb:
+  tim:
+    notice:
+      users:
+        "ser": { id: "NoticeSender_ser",nick: "服务单助手"}

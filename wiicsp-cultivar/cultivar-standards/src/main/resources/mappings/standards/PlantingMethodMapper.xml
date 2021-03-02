@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.standards.mapper.PlantingMethodMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.standards.entity.PlantingMethod">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="plant_standard_mage_id" jdbcType="BIGINT" property="plantStandardMageId" />
+    <result column="comm_id" jdbcType="BIGINT" property="commId" />
+    <result column="plant_type" jdbcType="VARCHAR" property="plantType" />
+    <result column="massif_type" jdbcType="VARCHAR" property="massifType" />
+    <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, plant_standard_mage_id, comm_id, plant_type, massif_type, source_type, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from planting_method
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from planting_method
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.standards.entity.PlantingMethod">
+    insert into planting_method (id, plant_standard_mage_id, comm_id,
+      plant_type, massif_type, source_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{plantStandardMageId,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT},
+      #{plantType,jdbcType=VARCHAR}, #{massifType,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.standards.entity.PlantingMethod">
+    insert into planting_method
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="plantStandardMageId != null">
+        plant_standard_mage_id,
+      </if>
+      <if test="commId != null">
+        comm_id,
+      </if>
+      <if test="plantType != null">
+        plant_type,
+      </if>
+      <if test="massifType != null">
+        massif_type,
+      </if>
+      <if test="sourceType != null">
+        source_type,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="plantStandardMageId != null">
+        #{plantStandardMageId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null">
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="plantType != null">
+        #{plantType,jdbcType=VARCHAR},
+      </if>
+      <if test="massifType != null">
+        #{massifType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.standards.entity.PlantingMethod">
+    update planting_method
+    <set>
+      <if test="plantStandardMageId != null">
+        plant_standard_mage_id = #{plantStandardMageId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null">
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="plantType != null">
+        plant_type = #{plantType,jdbcType=VARCHAR},
+      </if>
+      <if test="massifType != null">
+        massif_type = #{massifType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        source_type = #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.standards.entity.PlantingMethod">
+    update planting_method
+    set plant_standard_mage_id = #{plantStandardMageId,jdbcType=BIGINT},
+      comm_id = #{commId,jdbcType=BIGINT},
+      plant_type = #{plantType,jdbcType=VARCHAR},
+      massif_type = #{massifType,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.standards.po.PlantingMethodPagePo" resultType="com.wisea.cultivar.standards.vo.PlantingMethodListVo">
+    select
+    <include refid="Base_Column_List" />
+    from planting_method
+    where del_flag = '0'
+    <if test="commId!=null">
+      and comm_id = #{commId}
+    </if>
+    <if test="plantType!=null and plantType!=''">
+      and plant_type = #{plantType}
+    </if>
+    <if test="massifType!=null and massifType!=''">
+      and massif_type = #{massifType}
+    </if>
+    <if test="startTime!=null and endTime!=null">
+      and create_date between #{startTime} and #{endTime}
+    </if>
+    order by update_date desc
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.standards.po.PlantingMethodListPo" resultType="com.wisea.cultivar.standards.vo.PlantingMethodListVo">
+    select
+    <include refid="Base_Column_List" />
+    from planting_method
+    where del_flag = '0'
+  </select>
+  <select id="findPlantStandardMageId" parameterType="com.wisea.cultivar.standards.po.PlantingMethodListPo" resultType="com.wisea.cultivar.standards.vo.PlantingMethodListVo">
+    select
+    <include refid="Base_Column_List" />
+    from planting_method
+    where del_flag = '0'
+    <if test="plantStandardMageId!=null">
+      and plant_standard_mage_id = #{plantStandardMageId}
+    </if>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.standards.entity.PlantingMethod">
+    update planting_method
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteAllPlatMethod" parameterType="java.lang.Long">
+        update planting_method
+        set del_flag = '1'
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

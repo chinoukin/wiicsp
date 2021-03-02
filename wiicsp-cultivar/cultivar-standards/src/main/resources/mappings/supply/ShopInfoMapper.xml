@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.supply.mapper.ShopInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.supply.entity.ShopInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="back_ground_url" property="backGroundUrl" jdbcType="VARCHAR" />
+    <result column="shop_signature" property="shopSignature" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, shop_name, back_ground_url, shop_signature, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from shop_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectShopHomeByMembId" resultType="com.wisea.cultivar.supply.vo.ShopHomeVo">
+    select
+      b.id as shop_id,
+      ifnull(b.shop_name, ifnull(a.entp_name, a.cont_name)) as shop_name,
+      b.back_ground_url,
+      ifnull(c.auth_type, '2') as auth_type,
+      if(b.shop_name is null, '0', '1') as is_change
+    from zhfw_memb_info a
+           left join shop_info b on a.id = b.memb_id and b.del_flag = '0'
+           left join entp_auth c on a.id = c.memb_id and c.del_flag = '0'
+    where a.id = #{membId}
+      and a.del_flag = '0'
+  </select>
+  <select id="findShopCert" resultType="com.wisea.cultivar.supply.vo.CertPictureVo">
+    select b.cert_name as name, c.url, b.id
+    from shop_info a
+           inner join cert_mage b on a.id = b.shop_info_id
+           left join (select *
+                       from (
+                              select distinct cert_mage_id, url
+                              from cert_picture
+                              where del_flag = '0'
+                              order by create_date desc) a
+                       group by cert_mage_id) c on c.cert_mage_id = b.id
+    where a.del_flag = '0' and b.del_flag = '0' and a.memb_id = #{membId} order by b.create_date desc
+  </select>
+  <select id="selectByMembId" resultType="com.wisea.cultivar.supply.entity.ShopInfo">
+    select <include refid="Base_Column_List"/> from shop_info where del_flag = '0' and memb_id = #{membId}
+  </select>
+  <select id="selectByShopName" resultType="com.wisea.cultivar.supply.entity.ShopInfo">
+    select <include refid="Base_Column_List"/> from shop_info where del_flag = '0' and shop_name = #{shopName} limit 1
+  </select>
+  <select id="getMembBaseInfo" resultType="com.wisea.cultivar.supply.vo.MembAuthVo">
+    select id as auth_id, entp_auth_state_type as auth_state_type, auth_type from zhfw_memb_info where del_flag = '0' and id = #{id}
+  </select>
+    <select id="getAuthState" resultType="com.wisea.cultivar.supply.vo.MembAuthVo">
+        select ${membId} as auth_id, auth_state_type from ${tableName} where memb_id = #{membId} and del_flag = '0'
+    </select>
+  <select id="selectSerListPrice" resultType="java.lang.String">
+    select
+      if(a.total_price is null, '0', if(a.total_price >= 10000, concat(truncate(a.total_price / 10000, 2), '万'), concat(a.total_price, '元'))) as ser_list_price
+    from (select sum(b.total_price) as total_price
+          from zhfw_comm_pub_info a
+                 inner join ser_list_mage b on a.id = b.comm_pub_id
+          where a.del_flag = '0' and b.del_flag = '0' and b.ser_list_state_type = '4' and a.memb_id = #{membId}
+         ) a
+  </select>
+  <select id="selectClientCount" resultType="java.lang.String">
+    select count(b.comm_pub_id) as total_count from zhfw_comm_pub_info a
+    inner join (select comm_pub_id from ser_list_mage where ser_list_state_type = '4' and del_flag = '0' group by comm_pub_id, memb_id) b on a.id = b.comm_pub_id
+      and a.memb_id = #{membId}
+  </select>
+  <select id="selectFocusCount" resultType="java.lang.String">
+    select count(1) as focus_count
+    from memb_attention
+    where del_flag = '0'
+      and memb_attention_type = '1'
+      and memb_attention_id = #{membId}
+  </select>
+  <select id="selectSerListCount" resultType="java.lang.String">
+    select ifnull(sum(b.total_count) , '0') as total_count from zhfw_comm_pub_info a
+    inner join (select comm_pub_id, count(1) as total_count from ser_list_mage where ser_list_state_type = '4' and del_flag = '0' group by comm_pub_id) b on a.id = b.comm_pub_id
+      and a.memb_id = #{membId}
+  </select>
+  <select id="findAccount" resultType="com.wisea.cultivar.common.vo.MembInfoInfoVo">
+    select b.logo_url, b.cont_name, a.login_name, a.mobile as regist_tel, b.sex_type, b.entp_name
+    from sys_user a
+           left join zhfw_memb_info b on a.id = b.id and b.del_flag = '0'
+    where a.del_flag = '0' and a.id = #{membId}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.supply.entity.ShopInfo" >
+    insert into shop_info (id, memb_id, shop_name,
+      back_ground_url, shop_signature, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR},
+      #{backGroundUrl,jdbcType=VARCHAR}, #{shopSignature,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.supply.entity.ShopInfo" >
+    insert into shop_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="backGroundUrl != null" >
+        back_ground_url,
+      </if>
+      <if test="shopSignature != null" >
+        shop_signature,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="backGroundUrl != null" >
+        #{backGroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shopSignature != null" >
+        #{shopSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.supply.entity.ShopInfo" >
+    update shop_info
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="backGroundUrl != null" >
+        back_ground_url = #{backGroundUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="shopSignature != null" >
+        shop_signature = #{shopSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.supply.entity.ShopInfo" >
+    update shop_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      shop_name = #{shopName,jdbcType=VARCHAR},
+      back_ground_url = #{backGroundUrl,jdbcType=VARCHAR},
+      shop_signature = #{shopSignature,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.FruitsPriceMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="fp_date" property="fpDate" jdbcType="TIMESTAMP" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+    <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+    <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, fp_date, comm_id, comm_variet_id, area_prov, area_city, area_cou, price, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from fruits_price
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from fruits_price
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    insert into fruits_price (id, fp_date, comm_id,
+      comm_variet_id, area_prov, area_city,
+      area_cou, price, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{fpDate,jdbcType=TIMESTAMP}, #{commId,jdbcType=BIGINT},
+      #{commVarietId,jdbcType=BIGINT}, #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR},
+      #{areaCou,jdbcType=VARCHAR}, #{price,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    insert into fruits_price
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="fpDate != null" >
+        fp_date,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id,
+      </if>
+      <if test="areaProv != null" >
+        area_prov,
+      </if>
+      <if test="areaCity != null" >
+        area_city,
+      </if>
+      <if test="areaCou != null" >
+        area_cou,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="fpDate != null" >
+        #{fpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="areaProv != null" >
+        #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    update fruits_price
+    <set >
+      <if test="fpDate != null" >
+        fp_date = #{fpDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="areaProv != null" >
+        area_prov = #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        area_city = #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        area_cou = #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="compUdType != null" >
+        comp_ud_type = #{compUdType,jdbcType=CHAR},
+      </if>
+      <if test="compValue != null" >
+        comp_value = #{compValue,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    update fruits_price
+    set fp_date = #{fpDate,jdbcType=TIMESTAMP},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsPricePageListPo"
+  						resultType="com.wisea.cultivar.common.vo.tp.portal.FruitsPriceInfoVo" >
+    SELECT *
+	FROM fruits_price
+	WHERE del_flag = '0'
+		  <if test="commId != null and commId !=''">
+		  	AND comm_id = #{commId}
+		  </if>
+		  <if test="commPid != null and commPid !=''">
+		  	AND comm_pid = #{commPid}
+		  </if>
+		  <if test="startDate != null">
+     	  	AND fp_date <![CDATA[ >= ]]> #{startDate}
+     	  </if>
+     	  <if test="endDate != null">
+     	  	AND fp_date <![CDATA[ <= ]]> #{endDate}
+     	  </if>
+     ORDER BY fp_date DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.FruitsPrice" parameterType="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    select
+    <include refid="Base_Column_List" />
+    from fruits_price
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.FruitsPrice" >
+    update fruits_price
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <insert id="batchFruitsPriceInsert"  parameterType="java.util.List">
+  	insert into fruits_price (id, fp_date, comm_id,
+      comm_variet_id, area_prov, area_city,
+      area_cou, price, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag,comm_pid,area_detail,comm_name,comm_variet_name,comp_ud_type,comp_value)
+    values
+      <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.fpDate,jdbcType=TIMESTAMP}, #{item.commId,jdbcType=BIGINT},
+      #{item.commVarietId,jdbcType=BIGINT}, #{item.areaProv,jdbcType=VARCHAR}, #{item.areaCity,jdbcType=VARCHAR},
+      #{item.areaCou,jdbcType=VARCHAR}, #{item.price,jdbcType=DOUBLE}, #{item.createBy,jdbcType=VARCHAR},
+      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+      #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR},#{item.commPid,jdbcType=BIGINT},
+      #{item.areaDetail,jdbcType=VARCHAR},#{item.commName,jdbcType=VARCHAR},#{item.commVarietName,jdbcType=VARCHAR},
+      #{item.compUdType,jdbcType=VARCHAR},#{item.compValue,jdbcType=DOUBLE})
+      </foreach>
+  </insert>
+  <!-- 批量删除处理 -->
+  <update id="batchDelLogic" parameterType="java.util.List">
+  	update fruits_price
+    set del_flag = '1'
+    where id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+    </foreach>
+  </update>
+  <select id="findNotAuthList" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsPriceNotAuthPo"
+    						   resultType="com.wisea.cultivar.common.vo.tp.portal.FruitsPricePortalVo">
+  	SELECT id,fp_date,area_detail,remarks AS 'commName',price,
+	IF(date_format(fp_date,'%Y-%m-%d')=date_format(#{nowDate},'%Y-%m-%d'),'1',IF(date_format(fp_date,'%Y-%m-%d')=date_format(#{yesterday},'%Y-%m-%d'),'2','0'))AS 'isShowNow'
+	FROM fruits_price
+	WHERE del_flag = '0' AND comm_pid = #{commPid}
+	GROUP BY comm_variet_id,comm_id,fp_date
+	ORDER BY fp_date DESC
+  </select>
+  <select id="getCommPidList" resultType="java.lang.Long">
+  	SELECT comm_pid
+	FROM fruits_price
+	WHERE del_flag = '0'
+	GROUP BY comm_pid
+  </select>
+  <!-- 首页分页查询价格比较列表 -->
+  <select id="findPageForIndex" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsPriceCompPo"
+  						resultType="com.wisea.cultivar.common.vo.tp.portal.FruitsPriceCompPageVo">
+  	SELECT *
+	FROM fruits_price
+	WHERE del_flag = '0'
+		  <if test="commId != null and commId !=''">
+		  	AND comm_id = #{commId}
+		  </if>
+		  <if test="commPid != null and commPid !=''">
+		  	AND comm_pid = #{commPid}
+		  </if>
+		  <if test="commVarietId != null and commVarietId !=''">
+		  	AND comm_variet_id = #{commVarietId}
+		  </if>
+		  <if test="areaCode != null and areaCode !=''">
+		  	AND area_prov = #{areaCode}
+		  </if>
+		  <if test="startDate != null">
+     	  	AND fp_date <![CDATA[ >= ]]> #{startDate}
+     	  </if>
+     	  <if test="endDate != null">
+     	  	AND fp_date <![CDATA[ <= ]]> #{endDate}
+     	  </if>
+     ORDER BY fp_date DESC, comm_pid,comm_id,comm_variet_id,area_prov,area_city,area_cou
+  </select>
+  <!--  查询后一天的记录信息 -->
+  <select id="getBackFruitsPrice" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsPriceInsPo"
+  						resultType="com.wisea.cultivar.common.entity.tp.FruitsPrice">
+  	SELECT *
+	FROM fruits_price
+	WHERE del_flag = '0' AND fp_date = DATE_SUB(#{fpDate},INTERVAL 1 DAY)
+		  <if test="commVarietId !=null and commVarietId !=''">
+		  	AND comm_variet_id = #{commVarietId}
+		  </if>
+		  <if test="commVarietId ==null or commVarietId ==''">
+			  AND comm_id = #{commId}
+		  </if>
+		  AND area_cou = #{areaCou}
+
+  </select>
+  <!--  查询前一天的记录信息 -->
+  <select id="getFrontFruitsPrice" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsPriceInsPo"
+  						resultType="com.wisea.cultivar.common.entity.tp.FruitsPrice">
+  	SELECT *
+	FROM fruits_price
+	WHERE del_flag = '0' AND fp_date = DATE_SUB(#{fpDate},INTERVAL -1 DAY)
+		  <if test="commVarietId !=null and commVarietId !=''">
+		  	AND comm_variet_id = #{commVarietId}
+		  </if>
+		  <if test="commVarietId ==null or commVarietId ==''">
+			  AND comm_id = #{commId}
+		  </if>
+		  AND area_cou = #{areaCou}
+
+  </select>
+  <!-- 验证每天每个地区只能有一种商品 -->
+  <select id="checkFruitsPrice" parameterType="com.wisea.cultivar.common.po.tp.portal.FruitsPriceInsPo"
+  								resultType="com.wisea.cultivar.common.entity.tp.FruitsPrice">
+  	SELECT T1.*
+	FROM fruits_price T1
+	WHERE T1.del_flag = '0'
+		AND (
+		<foreach collection="list" item="item" separator="OR" open="(" close=")">
+	        T1.fp_date = #{item.fpDate} AND T1.comm_id = #{item.commId} AND T1.comm_variet_id  = #{item.commVarietId}
+	        AND T1.area_prov = #{item.areaProv} AND T1.area_city= #{item.areaCity} AND T1.area_cou = #{item.areaCou}
+	    </foreach>
+	    )
+  </select>
+</mapper>

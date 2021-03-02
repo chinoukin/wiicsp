@@ -1,0 +1,1035 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.LtaRefundCommApplMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.LtaRefundCommAppl" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="lta_ord_comm_id" property="ltaOrdCommId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <result column="ser_num" property="serNum" jdbcType="VARCHAR" />
+    <result column="refund_comm_state" property="refundCommState" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="refund_mode_type" property="refundModeType" jdbcType="VARCHAR" />
+    <result column="refund_reason_id" property="refundReasonId" jdbcType="BIGINT" />
+    <result column="refund_desc" property="refundDesc" jdbcType="VARCHAR" />
+    <result column="refund_counts" property="refundCounts" jdbcType="INTEGER" />
+    <result column="should_refund_amount" property="shouldRefundAmount" jdbcType="DOUBLE" />
+    <result column="should_yf_amount" property="shouldYfAmount" jdbcType="DOUBLE" />
+    <result column="comm_total_amount" property="commTotalAmount" jdbcType="DOUBLE" />
+    <result column="platf_cost" property="platfCost" jdbcType="DOUBLE" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+    <result column="rece_tel" property="receTel" jdbcType="VARCHAR" />
+    <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="handle_type" property="handleType" jdbcType="VARCHAR" />
+    <result column="ser_type" property="serType" jdbcType="VARCHAR" />
+    <result column="exam_ser_bill_date" property="examSerBillDate" jdbcType="TIMESTAMP" />
+    <result column="send_date" property="sendDate" jdbcType="TIMESTAMP" />
+    <result column="done_date" property="doneDate" jdbcType="TIMESTAMP" />
+    <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+    <result column="goods_state_type" property="goodsStateType" jdbcType="VARCHAR" />
+    <result column="reje_reason" property="rejeReason" jdbcType="VARCHAR" />
+    <result column="out_request_no" property="outRequestNo" jdbcType="VARCHAR" />
+    <result column="seller_handle_remarks" property="sellerHandleRemarks" jdbcType="VARCHAR" />
+    <result column="buyer_send_type" property="buyerSendType" jdbcType="VARCHAR" />
+    <result column="sender" property="sender" jdbcType="VARCHAR" />
+    <result column="sender_tel" property="senderTel" jdbcType="VARCHAR" />
+    <result column="cch_num" property="cchNum" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="handler_type" property="handlerType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, lta_ord_comm_id, buyer_id, seller_id, ord_num, ser_num, refund_comm_state, cust_name,
+    tel, refund_mode_type, refund_reason_id, refund_desc, refund_counts, should_refund_amount,
+    should_yf_amount, comm_total_amount, platf_cost, appl_date, rece_name, rece_tel,
+    address_prov, address_city, address_cou, address_detail, zip_code, handle_type, ser_type,
+    exam_ser_bill_date, send_date, done_date, logistics_comp_name, logistics_num, goods_state_type,
+    reje_reason, out_request_no, seller_handle_remarks, buyer_send_type, sender, sender_tel,
+    cch_num, create_by, create_date, update_by, update_date, remarks, del_flag, handler_type
+  </sql>
+
+  <!-- 查询退货退款申请列表 -->
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaRefundCommApplListVo" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaRefundCommApplListPo">
+    SELECT
+      lrca.id,
+      lrca.ser_num serNum,
+      lrca.appl_date applDate,
+      loi.lta_ord_numb ordNum,
+      loi.lta_cont_numb ltaContNumb,
+      lci.buyer_id buyerId,
+      mi1.user_name buyerAccount,
+      lci.seller_id sellerId,
+      mi2.user_name sellerAccount,
+      lrca.should_refund_amount shouldRefundAmount,
+      lrca.comm_total_amount commTotalAmount,
+      lrca.cust_name custName,
+      lrca.refund_comm_state refundCommState,
+      lrca.exam_ser_bill_date examSerBillDate,
+      lrca.done_date doneDate,
+      lrca.handler_type handlerType,
+      lrca.platf_cost platfCost,
+      ROUND(locr.price * lrca.refund_counts - lrca.platf_cost + lrca.should_yf_amount, 2) sellerRefund
+    FROM
+      lta_refund_comm_appl lrca
+      INNER JOIN lta_ord_comm_rela locr ON lrca.lta_ord_comm_id = locr.id
+      INNER JOIN lta_ord_info loi ON locr.lta_ord_id = loi.id
+      inner join lta_cont_info lci on lci.id = loi.lta_cont_id
+      INNER JOIN memb_info mi1 ON mi1.id = lci.buyer_id
+      INNER JOIN memb_info mi2 ON mi2.id = lci.seller_id
+    WHERE lrca.del_flag = '0'
+    <if test="refundCommState != null and refundCommState != ''">
+      and lrca.refund_comm_state = #{refundCommState}
+    </if>
+    <if test="startDate != null">
+      and lrca.appl_date >= #{startDate}
+    </if>
+    <if test="endDate != null">
+      and lrca.appl_date <![CDATA[ <= ]]> #{endDate}
+    </if>
+    <if test="sellerId != null">
+      and lrca.seller_id = #{sellerId}
+    </if>
+    <if test="handlerType != null and handlerType != ''">
+      and lrca.handler_type = #{handlerType}
+    </if>
+    <if test="query != null and query != ''">
+      and (
+        loi.lta_ord_numb like CONCAT('%', #{query}, '%')
+        or loi.lta_cont_numb like CONCAT('%', #{query}, '%')
+        or lrca.ser_num like CONCAT('%', #{query}, '%')
+        or mi1.user_name like CONCAT('%', #{query}, '%')
+        <if test="queryUserFlag != null and queryUserFlag = '1'.toString()">
+          or lrca.cust_name like CONCAT('%', #{query}, '%')
+        </if>
+        <if test="queryUserFlag != null and queryUserFlag = '0'.toString()">
+          or mi2.user_name like CONCAT('%', #{query}, '%')
+        </if>
+      )
+    </if>
+    order by
+      lrca.appl_date desc
+  </select>
+
+  <!-- 查询各状态下申请数量 -->
+  <select id="findCountByState" parameterType="com.wisea.cultivar.common.po.tp.lta.LtaRefundCommApplListPo" resultType="com.wisea.cultivar.common.vo.tp.StateTypeVo">
+    select
+      lrca.refund_comm_state stateType,
+      COUNT(lrca.refund_comm_state) count
+    FROM
+      lta_refund_comm_appl lrca
+      INNER JOIN lta_ord_comm_rela locr ON lrca.lta_ord_comm_id = locr.id
+      INNER JOIN lta_ord_info loi ON locr.lta_ord_id = loi.id
+      inner join lta_cont_info lci on lci.id = loi.lta_cont_id
+      INNER JOIN memb_info mi1 ON mi1.id = lci.buyer_id
+      INNER JOIN memb_info mi2 ON mi2.id = lci.seller_id
+    WHERE lrca.del_flag = '0'
+    <if test="startDate != null">
+      and lrca.appl_date >= #{startDate}
+    </if>
+    <if test="endDate != null">
+      and lrca.appl_date <![CDATA[ <= ]]> #{endDate}
+    </if>
+    <if test="sellerId != null">
+      and lrca.seller_id = #{sellerId}
+    </if>
+    <if test="handlerType != null and handlerType != ''">
+      and lrca.handler_type = #{handlerType}
+    </if>
+    <if test="query != null and query != ''">
+      and (
+      loi.lta_ord_numb like CONCAT('%', #{query}, '%')
+      or loi.lta_cont_numb like CONCAT('%', #{query}, '%')
+      or lrca.ser_num like CONCAT('%', #{query}, '%')
+      or mi1.user_name like CONCAT('%', #{query}, '%')
+      <if test="queryUserFlag != null and queryUserFlag = '1'.toString()">
+        or lrca.cust_name like CONCAT('%', #{query}, '%')
+      </if>
+      <if test="queryUserFlag != null and queryUserFlag = '0'.toString()">
+        or mi2.user_name like CONCAT('%', #{query}, '%')
+      </if>
+      )
+    </if>
+    group by
+      lrca.refund_comm_state
+  </select>
+
+  <!-- 查询退货申请详细信息 -->
+  <select id="findInfo" parameterType="com.wisea.cultivar.common.po.tp.LongIdPo" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaRefundCommApplInfoVo" resultMap="infoResultMap">
+    select
+      lrca.id,
+      lrca.ser_num serNum,
+      lrca.ser_type serType,
+      lrca.refund_comm_state refundCommState,
+      loi.id ltaOrdId,
+      loi.lta_ord_numb ltaOrdNumb,
+      lci.id ltaContId,
+      lci.lta_cont_numb ltaContNumb,
+      lrca.appl_date applDate,
+      mi1.id buyerId,
+      mi1.user_name buyerAccount,
+      lrca.cust_name buyerCustName,
+      lrca.tel buyerTel,
+      edi2.comp_name buyerCompName,
+      mi2.id sellerId,
+      mi2.user_name sellerAccount,
+      edi.contacts sellerContacts,
+      edi.bd_tel sellerCompTel,
+      loi.yf_amount yfAmount,
+      lrca.comm_total_amount commTotalAmount,
+      lrca.should_yf_amount shouldYfAmount,
+      lrca.should_refund_amount shouldRefundAmount,
+      lrca.platf_cost platfCost,
+      ROUND(lrca.should_refund_amount - lrca.platf_cost, 2) sellerShouldRefundAmount,
+      lrca.refund_reason_id refundReasonId,
+      rrm.refund_reason refundReason,
+      lrca.refund_desc refundDesc,
+      lrca.refund_counts  refundCounts,
+      lrca.rece_name receName,
+      lrca.rece_tel receTel,
+      max(CASE WHEN sa.`code` = lrca.address_prov THEN sa.`name` END)addressProv,
+      max(CASE WHEN sa.`code` = lrca.address_city THEN sa.`name` END)addressCity,
+      max(CASE WHEN sa.`code` = lrca.address_cou THEN sa.`name` END)addressCou,
+      lrca.address_detail addressDetail,
+      lrca.logistics_comp_name logisticsCompName,
+      lrca.logistics_num logisticsNum,
+      lrca.goods_state_type goodsStateType,
+      lrca.reje_reason rejeReason,
+      lrca.handler_type handlerType,
+      lrca.handle_type handleType,
+      lrca.send_date sendDate,
+      rr.create_date refundDate,
+      rr.trade_no tradeNo,
+      rr.refund_amount refundAmount,
+      rr.refund_state refundState,
+      loi.pay_method_type payMethodType,
+      lrca.buyer_send_type buyerSendType,
+      lrca.sender sender,
+      lrca.sender_tel senderTel,
+      lrca.cch_num cchNum
+    from
+      lta_refund_comm_appl lrca
+      inner join lta_ord_comm_rela locr on lrca.lta_ord_comm_id = locr.id
+      inner join lta_ord_info loi on loi.id = locr.lta_ord_id
+      inner join lta_cont_info lci on lci.id = loi.lta_cont_id
+      inner join memb_info mi1 on mi1.id = lci.buyer_id
+      inner join memb_info mi2 on mi2.id = lci.seller_id
+      inner join entp_data_info edi on edi.memb_id = mi2.id and edi.auth_exam_state = '1' and edi.del_flag = '0'
+      left join entp_data_info edi2 on edi2.memb_id = mi1.id and edi2.auth_exam_state = '1' and edi2.del_flag = '0'
+      left join refund_record rr on rr.out_request_no = lrca.out_request_no
+      left join refund_reason_mage rrm on rrm.id = lrca.refund_reason_id
+      LEFT JOIN sys_area sa ON sa.`code` = lrca.address_prov OR sa.`code` = lrca.address_city OR sa.`code` = lrca.address_cou
+    where lrca.id = #{id}
+  </select>
+
+  <resultMap id="infoResultMap" type="com.wisea.cultivar.common.vo.tp.lta.LtaRefundCommApplInfoVo">
+    <association property="ltaOrdCommRelaVo" column="id" select="selectOrderCommRela"></association>
+    <collection property="pictures" column="id" select="selectPictures"></collection>
+    <collection property="refundCommOperatorInfos" column="id" select="selectRefundCommOperatorInfos"></collection>
+  </resultMap>
+
+  <!-- 级联查询订单商品信息 -->
+  <select id="selectOrderCommRela" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.lta.LtaOrdCommRelaVo">
+    select
+      locr.lta_comm_rela_id ltaCommRelaId,
+      lcr.comm_pic_url commPicUrl,
+      lcr.comm_name commName,
+      bm.brand_name brandName,
+      locr.level level,
+      lcp.pack_instr packInstr,
+      locr.price price,
+      lcr.comm_hh commHh,
+      lcr.comm_num commNum,
+      locr.sl_num slNum,
+      mum.meas_unit_name measUnitName,
+      lcp.spec spec,
+      round(locr.price * locr.sl_num, 2) priceCount
+    from
+      lta_refund_comm_appl lrca
+      inner join lta_ord_comm_rela locr on lrca.lta_ord_comm_id = locr.id
+      inner join  lta_comm_rela lcr on locr.lta_comm_rela_id = lcr.id
+      left join lta_comm_pack lcp on lcp.id = locr.lta_comm_pack_id
+      left join brand_mage bm on bm.id = lcr.brand_id
+      left join meas_unit_mage mum on mum.id = lcp.meas_unit_id
+    where
+      lrca.id = #{id}
+  </select>
+
+  <!-- 级联查询图片列表 -->
+  <select id="selectPictures" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.PictureVo">
+    select
+      lrcp.url url,
+      lrcp.buy_sell_flag buySellFlag
+    from
+      lta_refund_comm_picture lrcp
+    where
+      lrcp.refund_appl_id = #{id}
+      and lrcp.del_flag = '0'
+    order by
+      lrcp.create_date
+  </select>
+
+  <!-- 级联查询是退货申请操作记录列表 -->
+  <select id="selectRefundCommOperatorInfos" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.RefundCommOperatorInfoVo">
+    select
+      lrcoi.operator operator,
+      lrcoi.opreat_date opreatDate,
+      lrcoi.opreat_content opreatContent
+    from
+      lta_refund_comm_operator_info lrcoi
+    where
+      lrcoi.refund_appl_id = #{id}
+      and lrcoi.del_flag = '0'
+    order by
+      lrcoi.create_date desc
+  </select>
+
+  <!-- 初始化退货拒绝退款 -->
+  <select id="initRefundCommAppl" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.lta.InitLtaRefundCommApplVo">
+    select
+      lrca.id,
+      mi1.id buyerId,
+      mi1.user_name buyerAccount,
+      lrca.cust_name buyerCustName,
+      lrca.tel buyerTel,
+      locr.lta_comm_rela_id ltaCommRelaId,
+      lcr.comm_pic_url commPicUrl,
+      lcr.comm_name commName,
+      bm.brand_name brandName,
+      lcr.level level,
+      lcp.pack_instr packInstr,
+      locr.price price,
+      lcr.comm_hh commHh,
+      lcr.comm_num commNum,
+      mum.meas_unit_name measUnitName,
+      lcp.spec spec,
+      round(locr.price * lrca.refund_counts, 2) priceCount,
+      lrca.refund_counts slNum
+    from
+      lta_refund_comm_appl lrca
+      inner join lta_ord_comm_rela locr on lrca.lta_ord_comm_id = locr.id
+      inner join lta_comm_rela lcr on lcr.id = locr.lta_comm_rela_id
+      inner join lta_comm_pack lcp on lcp.id = locr.lta_comm_pack_id
+      inner join lta_ord_info loi on loi.id = locr.lta_ord_id
+      inner join lta_cont_info lci on lci.id = loi.lta_cont_id
+      inner join memb_info mi1 on mi1.id = lci.buyer_id
+      left join brand_mage bm on bm.id = lcr.brand_id
+      left join meas_unit_mage mum on mum.id = lcp.meas_unit_id
+    where lrca.id = #{id};
+  </select>
+  <resultMap id="initRefundCommApplResultMap" type="com.wisea.cultivar.common.vo.tp.trade.InitRefundCommApplVo">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <result column="buyerId" property="buyerId" jdbcType="BIGINT"/>
+    <result column="buyerAccount" property="buyerAccount" jdbcType="VARCHAR"/>
+    <result column="buyerCustName" property="buyerCustName" jdbcType="VARCHAR"/>
+    <result column="buyerTel" property="buyerTel" jdbcType="VARCHAR"/>
+    <association property="orderCommRela" javaType="com.wisea.cultivar.common.vo.tp.lta.LtaOrdCommRelaVo">
+      <result property="ltaCommRelaId" column="ltaCommRelaId"/>
+      <result property="commPicUrl" column="commPicUrl"/>
+      <result property="commName" column="commName"/>
+      <result property="brandName" column="brandName"/>
+      <result property="level" column="level"/>
+      <result property="packInstr" column="packInstr"/>
+      <result property="price" column="price"/>
+      <result property="commHh" column="commHh"/>
+      <result property="commNum" column="commNum"/>
+      <result property="measUnitName" column="measUnitName"/>
+      <result property="spec" column="spec"/>
+      <result property="priceCount" column="priceCount"/>
+      <result property="slNum" column="slNum"/>
+    </association>
+  </resultMap>
+
+  <!-- 根据订单id查询已完成的退货申请列表 -->
+  <select id="findListByOrdIds" parameterType="java.util.List" resultMap="BaseResultMap">
+    select
+      *
+    from
+      lta_refund_comm_appl lrca
+    where
+      lrca.refund_comm_state = '3'
+      and lrca.lta_ord_comm_id in (
+        select
+          locr.id
+        from
+          lta_ord_comm_rela locr
+        where
+          locr.lta_ord_id in
+          <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+          </foreach>
+      )
+  </select>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into lta_refund_comm_appl (id, lta_ord_comm_id, buyer_id,
+      seller_id, ord_num, ser_num,
+      refund_comm_state, cust_name, tel,
+      refund_mode_type, refund_reason_id, refund_desc,
+      refund_counts, should_refund_amount, should_yf_amount,
+      comm_total_amount, platf_cost, appl_date,
+      rece_name, rece_tel, address_prov,
+      address_city, address_cou, address_detail,
+      zip_code, handle_type, ser_type,
+      exam_ser_bill_date, send_date, done_date,
+      logistics_comp_name, logistics_num, goods_state_type,
+      reje_reason, out_request_no, seller_handle_remarks,
+      buyer_send_type, sender, sender_tel,
+      cch_num, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, handler_type)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.ltaOrdCommId,jdbcType=BIGINT}, #{item.buyerId,jdbcType=BIGINT},
+      #{item.sellerId,jdbcType=BIGINT}, #{item.ordNum,jdbcType=VARCHAR}, #{item.serNum,jdbcType=VARCHAR},
+      #{item.refundCommState,jdbcType=VARCHAR}, #{item.custName,jdbcType=VARCHAR}, #{item.tel,jdbcType=VARCHAR},
+      #{item.refundModeType,jdbcType=VARCHAR}, #{item.refundReasonId,jdbcType=BIGINT}, #{item.refundDesc,jdbcType=VARCHAR},
+      #{item.refundCounts,jdbcType=INTEGER}, #{item.shouldRefundAmount,jdbcType=DOUBLE}, #{item.shouldYfAmount,jdbcType=DOUBLE},
+      #{item.commTotalAmount,jdbcType=DOUBLE}, #{item.platfCost,jdbcType=DOUBLE}, #{item.applDate,jdbcType=TIMESTAMP},
+      #{item.receName,jdbcType=VARCHAR}, #{item.receTel,jdbcType=VARCHAR}, #{item.addressProv,jdbcType=VARCHAR},
+      #{item.addressCity,jdbcType=VARCHAR}, #{item.addressCou,jdbcType=VARCHAR}, #{item.addressDetail,jdbcType=VARCHAR},
+      #{item.zipCode,jdbcType=VARCHAR}, #{item.handleType,jdbcType=VARCHAR}, #{item.serType,jdbcType=VARCHAR},
+      #{item.examSerBillDate,jdbcType=TIMESTAMP}, #{item.sendDate,jdbcType=TIMESTAMP}, #{item.doneDate,jdbcType=TIMESTAMP},
+      #{item.logisticsCompName,jdbcType=VARCHAR}, #{item.logisticsNum,jdbcType=VARCHAR}, #{item.goodsStateType,jdbcType=VARCHAR},
+      #{item.rejeReason,jdbcType=VARCHAR}, #{item.outRequestNo,jdbcType=VARCHAR}, #{item.sellerHandleRemarks,jdbcType=VARCHAR},
+      #{item.buyerSendType,jdbcType=VARCHAR}, #{item.sender,jdbcType=VARCHAR}, #{item.senderTel,jdbcType=VARCHAR},
+      #{item.cchNum,jdbcType=VARCHAR}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR}, #{item.handlerType,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from lta_refund_comm_appl
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from lta_refund_comm_appl
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundCommAppl" >
+    insert into lta_refund_comm_appl (id, lta_ord_comm_id, buyer_id,
+      seller_id, ord_num, ser_num,
+      refund_comm_state, cust_name, tel,
+      refund_mode_type, refund_reason_id, refund_desc,
+      refund_counts, should_refund_amount, should_yf_amount,
+      comm_total_amount, platf_cost, appl_date,
+      rece_name, rece_tel, address_prov,
+      address_city, address_cou, address_detail,
+      zip_code, handle_type, ser_type,
+      exam_ser_bill_date, send_date, done_date,
+      logistics_comp_name, logistics_num, goods_state_type,
+      reje_reason, out_request_no, seller_handle_remarks,
+      buyer_send_type, sender, sender_tel,
+      cch_num, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, handler_type)
+    values (#{id,jdbcType=BIGINT}, #{ltaOrdCommId,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT},
+      #{sellerId,jdbcType=BIGINT}, #{ordNum,jdbcType=VARCHAR}, #{serNum,jdbcType=VARCHAR},
+      #{refundCommState,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+      #{refundModeType,jdbcType=VARCHAR}, #{refundReasonId,jdbcType=BIGINT}, #{refundDesc,jdbcType=VARCHAR},
+      #{refundCounts,jdbcType=INTEGER}, #{shouldRefundAmount,jdbcType=DOUBLE}, #{shouldYfAmount,jdbcType=DOUBLE},
+      #{commTotalAmount,jdbcType=DOUBLE}, #{platfCost,jdbcType=DOUBLE}, #{applDate,jdbcType=TIMESTAMP},
+      #{receName,jdbcType=VARCHAR}, #{receTel,jdbcType=VARCHAR}, #{addressProv,jdbcType=VARCHAR},
+      #{addressCity,jdbcType=VARCHAR}, #{addressCou,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR},
+      #{zipCode,jdbcType=VARCHAR}, #{handleType,jdbcType=VARCHAR}, #{serType,jdbcType=VARCHAR},
+      #{examSerBillDate,jdbcType=TIMESTAMP}, #{sendDate,jdbcType=TIMESTAMP}, #{doneDate,jdbcType=TIMESTAMP},
+      #{logisticsCompName,jdbcType=VARCHAR}, #{logisticsNum,jdbcType=VARCHAR}, #{goodsStateType,jdbcType=VARCHAR},
+      #{rejeReason,jdbcType=VARCHAR}, #{outRequestNo,jdbcType=VARCHAR}, #{sellerHandleRemarks,jdbcType=VARCHAR},
+      #{buyerSendType,jdbcType=VARCHAR}, #{sender,jdbcType=VARCHAR}, #{senderTel,jdbcType=VARCHAR},
+      #{cchNum,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{handlerType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundCommAppl" >
+    insert into lta_refund_comm_appl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ltaOrdCommId != null" >
+        lta_ord_comm_id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="ordNum != null" >
+        ord_num,
+      </if>
+      <if test="serNum != null" >
+        ser_num,
+      </if>
+      <if test="refundCommState != null" >
+        refund_comm_state,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="refundModeType != null" >
+        refund_mode_type,
+      </if>
+      <if test="refundReasonId != null" >
+        refund_reason_id,
+      </if>
+      <if test="refundDesc != null" >
+        refund_desc,
+      </if>
+      <if test="refundCounts != null" >
+        refund_counts,
+      </if>
+      <if test="shouldRefundAmount != null" >
+        should_refund_amount,
+      </if>
+      <if test="shouldYfAmount != null" >
+        should_yf_amount,
+      </if>
+      <if test="commTotalAmount != null" >
+        comm_total_amount,
+      </if>
+      <if test="platfCost != null" >
+        platf_cost,
+      </if>
+      <if test="applDate != null" >
+        appl_date,
+      </if>
+      <if test="receName != null" >
+        rece_name,
+      </if>
+      <if test="receTel != null" >
+        rece_tel,
+      </if>
+      <if test="addressProv != null" >
+        address_prov,
+      </if>
+      <if test="addressCity != null" >
+        address_city,
+      </if>
+      <if test="addressCou != null" >
+        address_cou,
+      </if>
+      <if test="addressDetail != null" >
+        address_detail,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="handleType != null" >
+        handle_type,
+      </if>
+      <if test="serType != null" >
+        ser_type,
+      </if>
+      <if test="examSerBillDate != null" >
+        exam_ser_bill_date,
+      </if>
+      <if test="sendDate != null" >
+        send_date,
+      </if>
+      <if test="doneDate != null" >
+        done_date,
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name,
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num,
+      </if>
+      <if test="goodsStateType != null" >
+        goods_state_type,
+      </if>
+      <if test="rejeReason != null" >
+        reje_reason,
+      </if>
+      <if test="outRequestNo != null" >
+        out_request_no,
+      </if>
+      <if test="sellerHandleRemarks != null" >
+        seller_handle_remarks,
+      </if>
+      <if test="buyerSendType != null" >
+        buyer_send_type,
+      </if>
+      <if test="sender != null" >
+        sender,
+      </if>
+      <if test="senderTel != null" >
+        sender_tel,
+      </if>
+      <if test="cchNum != null" >
+        cch_num,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="handlerType != null" >
+        handler_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ltaOrdCommId != null" >
+        #{ltaOrdCommId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="ordNum != null" >
+        #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="serNum != null" >
+        #{serNum,jdbcType=VARCHAR},
+      </if>
+      <if test="refundCommState != null" >
+        #{refundCommState,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="refundModeType != null" >
+        #{refundModeType,jdbcType=VARCHAR},
+      </if>
+      <if test="refundReasonId != null" >
+        #{refundReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="refundDesc != null" >
+        #{refundDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="refundCounts != null" >
+        #{refundCounts,jdbcType=INTEGER},
+      </if>
+      <if test="shouldRefundAmount != null" >
+        #{shouldRefundAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="shouldYfAmount != null" >
+        #{shouldYfAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="commTotalAmount != null" >
+        #{commTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="platfCost != null" >
+        #{platfCost,jdbcType=DOUBLE},
+      </if>
+      <if test="applDate != null" >
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receName != null" >
+        #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="receTel != null" >
+        #{receTel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="handleType != null" >
+        #{handleType,jdbcType=VARCHAR},
+      </if>
+      <if test="serType != null" >
+        #{serType,jdbcType=VARCHAR},
+      </if>
+      <if test="examSerBillDate != null" >
+        #{examSerBillDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendDate != null" >
+        #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doneDate != null" >
+        #{doneDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsCompName != null" >
+        #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStateType != null" >
+        #{goodsStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="rejeReason != null" >
+        #{rejeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="outRequestNo != null" >
+        #{outRequestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerHandleRemarks != null" >
+        #{sellerHandleRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerSendType != null" >
+        #{buyerSendType,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="senderTel != null" >
+        #{senderTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cchNum != null" >
+        #{cchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="handlerType != null" >
+        #{handlerType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundCommAppl" >
+    update lta_refund_comm_appl
+    <set >
+      <if test="ltaOrdCommId != null" >
+        lta_ord_comm_id = #{ltaOrdCommId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="ordNum != null" >
+        ord_num = #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="serNum != null" >
+        ser_num = #{serNum,jdbcType=VARCHAR},
+      </if>
+      <if test="refundCommState != null" >
+        refund_comm_state = #{refundCommState,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="refundModeType != null" >
+        refund_mode_type = #{refundModeType,jdbcType=VARCHAR},
+      </if>
+      <if test="refundReasonId != null" >
+        refund_reason_id = #{refundReasonId,jdbcType=BIGINT},
+      </if>
+      <if test="refundDesc != null" >
+        refund_desc = #{refundDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="refundCounts != null" >
+        refund_counts = #{refundCounts,jdbcType=INTEGER},
+      </if>
+      <if test="shouldRefundAmount != null" >
+        should_refund_amount = #{shouldRefundAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="shouldYfAmount != null" >
+        should_yf_amount = #{shouldYfAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="commTotalAmount != null" >
+        comm_total_amount = #{commTotalAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="platfCost != null" >
+        platf_cost = #{platfCost,jdbcType=DOUBLE},
+      </if>
+      <if test="applDate != null" >
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="receName != null" >
+        rece_name = #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="receTel != null" >
+        rece_tel = #{receTel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        address_prov = #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        address_city = #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        address_cou = #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="handleType != null" >
+        handle_type = #{handleType,jdbcType=VARCHAR},
+      </if>
+      <if test="serType != null" >
+        ser_type = #{serType,jdbcType=VARCHAR},
+      </if>
+      <if test="examSerBillDate != null" >
+        exam_ser_bill_date = #{examSerBillDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendDate != null" >
+        send_date = #{sendDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="doneDate != null" >
+        done_date = #{doneDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsStateType != null" >
+        goods_state_type = #{goodsStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="rejeReason != null" >
+        reje_reason = #{rejeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="outRequestNo != null" >
+        out_request_no = #{outRequestNo,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerHandleRemarks != null" >
+        seller_handle_remarks = #{sellerHandleRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerSendType != null" >
+        buyer_send_type = #{buyerSendType,jdbcType=VARCHAR},
+      </if>
+      <if test="sender != null" >
+        sender = #{sender,jdbcType=VARCHAR},
+      </if>
+      <if test="senderTel != null" >
+        sender_tel = #{senderTel,jdbcType=VARCHAR},
+      </if>
+      <if test="cchNum != null" >
+        cch_num = #{cchNum,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="handlerType != null" >
+        handler_type = #{handlerType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.LtaRefundCommAppl" >
+    update lta_refund_comm_appl
+    set lta_ord_comm_id = #{ltaOrdCommId,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      ord_num = #{ordNum,jdbcType=VARCHAR},
+      ser_num = #{serNum,jdbcType=VARCHAR},
+      refund_comm_state = #{refundCommState,jdbcType=VARCHAR},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      refund_mode_type = #{refundModeType,jdbcType=VARCHAR},
+      refund_reason_id = #{refundReasonId,jdbcType=BIGINT},
+      refund_desc = #{refundDesc,jdbcType=VARCHAR},
+      refund_counts = #{refundCounts,jdbcType=INTEGER},
+      should_refund_amount = #{shouldRefundAmount,jdbcType=DOUBLE},
+      should_yf_amount = #{shouldYfAmount,jdbcType=DOUBLE},
+      comm_total_amount = #{commTotalAmount,jdbcType=DOUBLE},
+      platf_cost = #{platfCost,jdbcType=DOUBLE},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      rece_tel = #{receTel,jdbcType=VARCHAR},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      handle_type = #{handleType,jdbcType=VARCHAR},
+      ser_type = #{serType,jdbcType=VARCHAR},
+      exam_ser_bill_date = #{examSerBillDate,jdbcType=TIMESTAMP},
+      send_date = #{sendDate,jdbcType=TIMESTAMP},
+      done_date = #{doneDate,jdbcType=TIMESTAMP},
+      logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      goods_state_type = #{goodsStateType,jdbcType=VARCHAR},
+      reje_reason = #{rejeReason,jdbcType=VARCHAR},
+      out_request_no = #{outRequestNo,jdbcType=VARCHAR},
+      seller_handle_remarks = #{sellerHandleRemarks,jdbcType=VARCHAR},
+      buyer_send_type = #{buyerSendType,jdbcType=VARCHAR},
+      sender = #{sender,jdbcType=VARCHAR},
+      sender_tel = #{senderTel,jdbcType=VARCHAR},
+      cch_num = #{cchNum,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      handler_type = #{handlerType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 根据订单ID查询未完成的退货申请 -->
+  <select id="getOrderIfRefund" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.RefundCommAppl">
+    SELECT
+      t3.id AS id
+    FROM
+      lta_ord_info AS t1
+      LEFT JOIN lta_ord_comm_rela AS t2 ON t2.lta_ord_id = t1.id
+      LEFT JOIN lta_refund_comm_appl AS t3 ON t3.lta_ord_comm_id = t2.id
+    WHERE
+      t1.id = #{ordId}
+      AND t3.refund_comm_state NOT IN (3,4,5)
+  </select>
+
+  <select id="findRefundCommApplNum" parameterType="java.lang.String" resultType="java.lang.String">
+  	SELECT ser_num FROM lta_refund_comm_appl WHERE ser_num LIKE CONCAT(#{serNum}, '%')
+    </select>
+
+    <!-- 买家端退货退款列表 -->
+    <select id="buyerLtaRefundComList" parameterType="com.wisea.cultivar.common.po.tp.trade.BuyerRefundCommApplListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.trade.BuyerRefundCommApplListVo">
+        SELECT
+		  t1.id,
+		  t1.ser_num,
+		  t1.ord_num,
+		  t1.refund_counts,
+		  t1.should_refund_amount,
+		  t1.appl_date,
+		  t1.lta_ord_comm_id,
+		  t1.refund_comm_state,
+		  t3.comm_pic_url   AS  comm_url,
+		  CASE WHEN mi.comp_name IS NULL THEN t21.user_name ELSE mi.comp_name END buyerName,
+		  CASE WHEN se.comp_name IS NULL THEN t22.user_name ELSE se.comp_name END sellerName,
+		  t21.user_name    AS     buyerUserName,
+		  t3.comm_name,
+		  t4.pay_method_type,
+		  t1.exam_ser_bill_date
+		FROM lta_refund_comm_appl t1
+		  LEFT JOIN lta_ord_comm_rela t2
+		    ON t2.id = t1.lta_ord_comm_id
+		  LEFT JOIN lta_comm_rela t3
+		    ON t3.id = t2.lta_comm_rela_id
+		  LEFT JOIN lta_ord_info t4
+		    ON t4.id = t2.lta_ord_id
+		  LEFT JOIN lta_cont_info t6
+		    ON t6.id = t4.lta_cont_id
+		  LEFT JOIN memb_info t21
+		    ON t6.buyer_id = t21.id
+		  LEFT JOIN entp_data_info mi
+		    ON mi.memb_id = t21.id
+		  AND mi.auth_exam_state = '1' AND mi.del_flag != '1'
+		LEFT JOIN memb_info t22
+		    ON t6.seller_id = t22.id
+		  LEFT JOIN entp_data_info se
+		    ON se.memb_id = t22.id
+		  AND se.auth_exam_state = '1' AND se.del_flag != '1'
+		  LEFT JOIN settle_ord_rela t5
+		    ON t5.ord_id = t4.id
+		WHERE 1 = 1
+        <if test="refundCommState != null and refundCommState != ''">
+            and t1.refund_comm_state = #{refundCommState,jdbcType=VARCHAR}
+        </if>
+        <if test="startDate != null">
+            and t1.appl_date >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            and t1.appl_date <![CDATA[ <= ]]> #{endDate}
+        </if>
+        <if test="searchKey != null and searchKey != ''">
+            and (
+            t1.ser_num like CONCAT('%', #{searchKey}, '%')
+            or t1.ord_num like CONCAT('%', #{searchKey}, '%')
+            or t3.comm_name like CONCAT('%', #{searchKey}, '%')
+            or t3.comm_num like CONCAT('%', #{searchKey}, '%')
+            )
+        </if>
+        <if test="quereKey != null and quereKey != ''">
+            and (
+            t1.ser_num like CONCAT('%', #{quereKey}, '%')
+            or t1.ord_num like CONCAT('%', #{quereKey}, '%')
+            or mi.user_name like CONCAT('%', #{quereKey}, '%')
+            )
+        </if>
+        <if test="buyerId != null">
+            and t1.buyer_id = #{buyerId,jdbcType=BIGINT}
+        </if>
+        <if test="orderId != null and orderId !=''">
+            and t4.id = #{orderId,jdbcType=BIGINT}
+        </if>
+        <if test="settleId != null and settleId != ''">
+        	and t5.settle_id = #{settleId,jdbcType=BIGINT}
+        </if>
+        order by t1.appl_date desc
+    </select>
+</mapper>

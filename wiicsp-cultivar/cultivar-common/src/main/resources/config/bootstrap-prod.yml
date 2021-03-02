@@ -1,0 +1,28 @@
+spring:
+  profiles:
+    include: cmn
+  datasource: #spring boot数据源配置
+    type: com.alibaba.druid.pool.DruidDataSource # 使用druid连接池作为数据源
+    url: jdbc:mysql://mysql-pxc.percona-xtradb-cluster.svc:3306/wiicsp-cultivar?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: wiicsp-cultivar
+    password: NHezEf1g
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    database: 5 # Redis数据库索引(默认为0)
+    timeout: 20000 # 连接超时时间（毫秒）
+    sentinel:
+      master: mymaster
+      nodes:
+        - rfs-redisfailover.default.svc:26379
+  redisson:
+    enable: true
+    mode: sentinel
+    sentinel:
+      master: mymaster
+      failMax: 180000
+      nodes: rfs-redisfailover.default.svc:26379
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG
+    org.quartz: debug

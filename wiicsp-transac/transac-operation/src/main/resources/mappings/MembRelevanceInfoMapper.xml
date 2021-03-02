@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.operation.mapper.MembRelevanceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.operation.entity.MembRelevanceInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="rele_id" property="releId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="CHAR" />
+    <result column="open_id" property="openId" jdbcType="VARCHAR" />
+    <result column="open_type" property="openType" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, rele_id, type, open_id, open_type, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_relevance_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from memb_relevance_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" >
+    insert into memb_relevance_info (id, rele_id, type,
+      open_id, open_type, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{releId,jdbcType=BIGINT}, #{type,jdbcType=CHAR},
+      #{openId,jdbcType=VARCHAR}, #{openType,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" >
+    insert into memb_relevance_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="releId != null" >
+        rele_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="openId != null" >
+        open_id,
+      </if>
+      <if test="unionId != null" >
+        union_id,
+      </if>
+      <if test="openType != null" >
+        open_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="releId != null" >
+        #{releId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="unionId != null" >
+        #{unionId,jdbcType=VARCHAR},
+      </if>
+      <if test="openType != null" >
+        #{openType,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" >
+    update memb_relevance_info
+    <set >
+      <if test="releId != null" >
+        rele_id = #{releId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=CHAR},
+      </if>
+      <if test="openId != null" >
+        open_id = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="openType != null" >
+        open_type = #{openType,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" >
+    update memb_relevance_info
+    set rele_id = #{releId,jdbcType=BIGINT},
+      type = #{type,jdbcType=CHAR},
+      open_id = #{openId,jdbcType=VARCHAR},
+      open_type = #{openType,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" >
+    update memb_relevance_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getMembReleInfo" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" resultType="com.wisea.transac.operation.entity.MembRelevanceInfo">
+  	SELECT *
+	FROM memb_relevance_info
+	WHERE del_flag = '0'
+		  <if test="releId != null and releId != ''">
+		  AND rele_id = #{releId}
+		  </if>
+		  <if test="openType != null and openType != ''">
+		  AND open_type = #{openType}
+		  </if>
+		  <if test="type != null and type != ''">
+	 	  AND type = #{type}
+		  </if>
+  </select>
+  <!-- 根据openid查询用户信息 -->
+  <select id="getMembReleInfoByOpenid" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo"
+            resultType="com.wisea.transac.operation.entity.MembReleBaseInfo">
+        SELECT T2.id,T2.rele_id,T1.id AS 'membId',T2.type,T2.open_id,T2.open_type,'0' AS 'membFlag',T2.union_id,T1.regist_tel
+		FROM memb_relevance_info T2
+		INNER JOIN memb_info T1 ON T1.id = T2.rele_id
+		WHERE T1.del_flag = '0' AND T2.del_flag = '0'
+			  AND (T2.open_id = #{openId}
+			  	<if test="registTel != null and registTel != ''">
+			  	OR T1.regist_tel = #{registTel}
+			  	</if>
+			  )
+			  <if test="openType != null and openType != ''">
+			  	AND T2.open_type = #{openType}
+			  </if>
+			  <if test="type != null and type != ''">
+			  	AND T2.type = #{type}
+			  </if>
+  </select>
+  <!-- 根据用户名查询绑定的会员信息 -->
+  <select id="getMembByUserNameForWeChat" resultType="com.wisea.transac.operation.entity.MembRelevanceInfo"
+            parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo">
+        SELECT T1.*
+		FROM memb_relevance_info T1
+		INNER JOIN memb_info T2 ON T2.id = T1.rele_id
+		WHERE T1.del_flag = '0'
+			  <if test="userName != null and userName != ''">
+			  	AND T2.login_name = #{userName}
+			  </if>
+			  <if test="type != null and type != ''">
+			  	AND T1.type = #{type}
+			  </if>
+			  <if test="openType != null and openType != ''">
+			  	AND T1.open_type = #{openType}
+			  </if>
+  </select>
+  <!-- 根据unionid查询关联ID -->
+  <select id="getMembInfoByUnionId" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" resultType="java.lang.Long">
+  	SELECT rele_id FROM memb_relevance_info membr
+	WHERE membr.del_flag = '0' AND membr.type = #{type}
+	      AND membr.union_id = #{unionId}
+	GROUP BY rele_id
+  </select>
+  <!-- 验证该手机号的用户已经绑定了其他的微信 -->
+  <select id="checkMobileIfBd" parameterType="com.wisea.transac.operation.entity.MembRelevanceInfo" resultType="com.wisea.transac.operation.entity.MembRelevanceInfo">
+  	SELECT mri.*
+	FROM memb_relevance_info mri
+	INNER JOIN memb_info m ON m.id = mri.rele_id
+	WHERE mri.del_flag = '0' AND m.del_flag = '0'
+		  AND mri.union_id IS NOT NULL
+		  <if test="type != null and type != ''">
+		  AND mri.type = #{type}
+		  </if>
+		  <if test="registTel != null and registTel != ''">
+	      AND m.regist_tel = #{registTel}
+	      </if>
+  </select>
+</mapper>

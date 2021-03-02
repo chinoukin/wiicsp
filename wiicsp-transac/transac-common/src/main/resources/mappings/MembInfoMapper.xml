@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.MembInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.MembInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+    <result column="pet_name" property="petName" jdbcType="VARCHAR" />
+    <result column="cont_name" property="contName" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="sex_type" property="sexType" jdbcType="VARCHAR" />
+    <result column="autograph" property="autograph" jdbcType="VARCHAR" />
+    <result column="feed_back" property="feedBack" jdbcType="VARCHAR" />
+    <result column="bind_wechat" property="bindWechat" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="memb_type" property="membType" jdbcType="VARCHAR" />
+    <result column="regist_date" property="registDate" jdbcType="TIMESTAMP" />
+    <result column="acct_state" property="acctState" jdbcType="VARCHAR" />
+    <result column="agent_flag" property="agentFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+    <result column="locality_memb_type" property="localityMembType" jdbcType="VARCHAR" />
+    <result column="login_name_set_flag" property="loginNameSetFlag" jdbcType="VARCHAR" />
+    <result column="password_set_flag" property="passwordSetFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, logo_url, regist_tel, pet_name, cont_name, login_name, position, sex_type, autograph,
+    feed_back, bind_wechat, signature, memb_type, regist_date, acct_state, agent_flag,
+    create_by, create_date, update_by, update_date, remarks, del_flag,entp_auth_state_type,
+    locality_memb_type,login_name_set_flag,password_set_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.MembInfo" >
+    insert into memb_info (id, logo_url, regist_tel,
+      pet_name, cont_name, login_name,
+      position, sex_type, autograph,
+      feed_back, bind_wechat, signature,
+      memb_type, regist_date, acct_state,
+      agent_flag, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag,entp_auth_state_type,locality_memb_type,login_name_set_flag,password_set_flag)
+    values (#{id,jdbcType=BIGINT}, #{logoUrl,jdbcType=VARCHAR}, #{registTel,jdbcType=VARCHAR},
+      #{petName,jdbcType=VARCHAR}, #{contName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR},
+      #{position,jdbcType=VARCHAR}, #{sexType,jdbcType=VARCHAR}, #{autograph,jdbcType=VARCHAR},
+      #{feedBack,jdbcType=VARCHAR}, #{bindWechat,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR},
+      #{membType,jdbcType=VARCHAR}, #{registDate,jdbcType=TIMESTAMP}, #{acctState,jdbcType=VARCHAR},
+      #{agentFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR},#{entpAuthStateType,jdbcType=VARCHAR},#{localityMembType,jdbcType=VARCHAR},
+      #{loginNameSetFlag,jdbcType=VARCHAR},#{passwordSetFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.MembInfo" >
+    insert into memb_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="registTel != null" >
+        regist_tel,
+      </if>
+      <if test="petName != null" >
+        pet_name,
+      </if>
+      <if test="contName != null" >
+        cont_name,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="sexType != null" >
+        sex_type,
+      </if>
+      <if test="autograph != null" >
+        autograph,
+      </if>
+      <if test="feedBack != null" >
+        feed_back,
+      </if>
+      <if test="bindWechat != null" >
+        bind_wechat,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="membType != null" >
+        memb_type,
+      </if>
+      <if test="registDate != null" >
+        regist_date,
+      </if>
+      <if test="acctState != null" >
+        acct_state,
+      </if>
+      <if test="agentFlag != null" >
+        agent_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no,
+      </if>
+      <if test="loginNameSetFlag != null" >
+        login_name_set_flag,
+      </if>
+      <if test="passwordSetFlag != null" >
+        password_set_flag,
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="petName != null" >
+        #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="contName != null" >
+        #{contName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="autograph != null" >
+        #{autograph,jdbcType=VARCHAR},
+      </if>
+      <if test="feedBack != null" >
+        #{feedBack,jdbcType=VARCHAR},
+      </if>
+      <if test="bindWechat != null" >
+        #{bindWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="membType != null" >
+        #{membType,jdbcType=VARCHAR},
+      </if>
+      <if test="registDate != null" >
+        #{registDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acctState != null" >
+        #{acctState,jdbcType=VARCHAR},
+      </if>
+      <if test="agentFlag != null" >
+        #{agentFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="merchantNo != null" >
+        #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="loginNameSetFlag != null" >
+        #{loginNameSetFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSetFlag != null" >
+        #{passwordSetFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="entpAuthStateType != null" >
+        #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.MembInfo" >
+    update memb_info
+    <set >
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        regist_tel = #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="petName != null" >
+        pet_name = #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="contName != null" >
+        cont_name = #{contName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        sex_type = #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="autograph != null" >
+        autograph = #{autograph,jdbcType=VARCHAR},
+      </if>
+      <if test="feedBack != null" >
+        feed_back = #{feedBack,jdbcType=VARCHAR},
+      </if>
+      <if test="bindWechat != null" >
+        bind_wechat = #{bindWechat,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="membType != null" >
+        memb_type = #{membType,jdbcType=VARCHAR},
+      </if>
+      <if test="registDate != null" >
+        regist_date = #{registDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="acctState != null" >
+        acct_state = #{acctState,jdbcType=VARCHAR},
+      </if>
+      <if test="agentFlag != null" >
+        agent_flag = #{agentFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="apFlag != null" >
+        ap_flag = #{apFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="entpName != null" >
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="passwordSetFlag != null" >
+        password_set_flag = #{passwordSetFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="loginNameSetFlag != null" >
+        login_name_set_flag = #{loginNameSetFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="localityMembType != null" >
+        locality_memb_type = #{localityMembType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="batchUpdAcctStateByKey" parameterType="java.util.List">
+  	<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+        update memb_info
+        <set >
+        	acct_state = #{item.acctState,jdbcType=VARCHAR},
+        	update_by = #{item.updateBy,jdbcType=VARCHAR},
+      		update_date = #{item.updateDate,jdbcType=TIMESTAMP}
+        </set>
+        where id = #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.MembInfo" >
+    update memb_info
+    set logo_url = #{logoUrl,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      pet_name = #{petName,jdbcType=VARCHAR},
+      cont_name = #{contName,jdbcType=VARCHAR},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      sex_type = #{sexType,jdbcType=VARCHAR},
+      autograph = #{autograph,jdbcType=VARCHAR},
+      feed_back = #{feedBack,jdbcType=VARCHAR},
+      bind_wechat = #{bindWechat,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      memb_type = #{membType,jdbcType=VARCHAR},
+      regist_date = #{registDate,jdbcType=TIMESTAMP},
+      acct_state = #{acctState,jdbcType=VARCHAR},
+      agent_flag = #{agentFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.MembInfoPageListVo" parameterType="com.wisea.transac.common.po.MembInfoPageListPo" >
+    select
+	  id id,
+	  logo_url logoUrl,
+	  regist_tel registTel,
+	  pet_name petName,
+	  cont_name contName,
+	  login_name loginName,
+	  position position,
+	  sex_type sexType,
+	  autograph autograph,
+	  feed_back feedBack,
+	  bind_wechat bindWechat,
+	  signature signature,
+	  memb_type membType,
+	  regist_date registDate,
+	  acct_state acctState,
+	  agent_flag agentFlag
+	from
+	  memb_info
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.MembInfoInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  logo_url logoUrl,
+	  regist_tel registTel,
+	  pet_name petName,
+	  cont_name contName,
+	  login_name loginName,
+	  position position,
+	  sex_type sexType,
+	  autograph autograph,
+	  feed_back feedBack,
+	  bind_wechat bindWechat,
+	  signature signature,
+	  memb_type membType,
+	  regist_date registDate,
+	  acct_state acctState,
+	  agent_flag agentFlag
+	from
+	  memb_info
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <!-- 查询会员的基本信息 -->
+  <select id="getMembBaseInfo" parameterType="java.lang.Long" resultType="com.wisea.transac.common.entity.MembBaseInfo">
+  	SELECT m.id,IF(pm.id IS NULL,m.id,pm.id) AS 'membId',m.login_name,IF(pm.id IS NULL, m.locality_memb_type, pm.locality_memb_type) AS 'localityMembType',
+		   IF (pm.id IS NULL, m.agent_flag, pm.agent_flag) AS 'agentFlag',IF(pm.id IS NULL, b.id, pmb.id) AS 'baseId',
+		   m.acct_state,m.logo_url,m.pet_name,m.cont_name,m.memb_type,m.regist_date,m.regist_tel,m.merchant_no,
+		   IF(pur.id IS NULL,m.cont_name,pur.staff_name) AS 'purchaseName',IF(sale.id IS NULL,m.cont_name,sale.staff_name) AS 'saleName',
+		   pur.id AS 'purId',sale.id AS 'saleId',IF(pur.id IS NOT NULL AND sale.id IS NOT NULL,'3',IF(sale.id IS NOT NULL AND pur.id IS NULL,'2',IF(sale.id IS NULL AND pur.id IS NOT NULL,'1','0'))) AS 'membClass',
+		   pur.sf_admin_flag AS 'purSfAdminFlag',sale.sf_admin_flag AS 'saleSfAdminFlag','2' AS 'userSourceType',IF(pm.id IS NULL,m.entp_name,pm.entp_name) AS 'authName',
+		   IF(pm.id IS NULL,IF(m.entp_auth_state_type='1','3',m.memb_type),IF(pm.entp_auth_state_type='1','3',pm.memb_type)) AS 'authType',NULL AS 'marketId',NULL AS 'marketName',mrinfo.open_id AS 'wechatOpenId',
+		   m.entp_name AS 'selfAuthName',IF(m.entp_auth_state_type='1','3',m.memb_type) AS 'selfAuthType',m.login_name_set_flag,m.password_set_flag,
+		   pur.purchase_team_state AS 'purTeamState',sale.purchase_team_state AS 'saleTeamState', IF(pm.ap_flag IS NULL, m.ap_flag, pm.ap_flag) AS 'apFlag'
+	FROM memb_info m
+	LEFT JOIN purchase_staff_mage pur ON m.id = pur.purchase_staff_id AND pur.del_flag = '0' AND pur.purchase_team_state = '1'
+	LEFT JOIN sale_staff_info_mage sale ON m.id = sale.sale_staff_id AND sale.del_flag = '0' AND sale.purchase_team_state = '1' AND sale.effe_inval_state = '0'
+	LEFT JOIN memb_info pm ON (pm.id = pur.memb_id OR sale.memb_id = pm.id) AND pm.del_flag = '0'
+	LEFT JOIN memb_relevance_info mrinfo ON mrinfo.rele_id = m.id AND mrinfo.del_flag = '0' AND mrinfo.open_type = '0'
+	LEFT JOIN base_info b ON b.memb_id = m.id AND b.del_flag = '0'
+	LEFT JOIN base_info pmb ON pmb.memb_id = pm.id AND  pmb.del_flag = '0'
+	WHERE m.id = #{_parameter}
+	UNION
+	SELECT market.id,
+		   IF(market.sf_admin_flag = '1',IF(market.whole_sale_market_id IS NOT NULL,market1.id,(SELECT id FROM market_acct_num_mage WHERE del_flag = '0' AND whole_sale_market_id IS NULL AND sf_admin_flag = '0')),market.id) AS 'membId',
+	       market.login_name,null AS 'localityMembType',null AS 'agentFlag',NULL AS 'baseId',null AS 'acctState',NULL AS 'logoUrl',NULL AS 'petName',NULL AS 'contName',NULL AS 'membType',NULL AS'registDate',NULL AS 'registTel',NULL AS 'merchantNo',NULL AS 'purchaseName',NULL AS 'saleName',NULL AS 'purId',NULL AS 'saleId',
+	       NULL AS 'membClass',NULL AS 'purSfAdminFlag',NULL AS 'saleSfAdminFlag', IF(market.whole_sale_market_id IS NULL,'0','1') AS 'userSourceType',
+		   NULL AS 'authName',NULL AS 'authType', market.whole_sale_market_id AS marketId,whole.whole_sale_market_name AS 'marketName',NULL AS 'wechatOpenId',
+		   NULL AS 'selfAuthName',NULL AS 'selfAuthType',NULL AS 'loginNameSetFlag',NULL AS 'passwordSetFlag',NULL AS 'purTeamState',NULL AS 'saleTeamState',NULL AS 'apFlag'
+	FROM market_acct_num_mage market
+	LEFT JOIN market_acct_num_mage market1 ON market1.whole_sale_market_id = market.whole_sale_market_id AND market1.sf_admin_flag = '0'
+	LEFT JOIN whole_sale_market_mage whole ON whole.id = market.whole_sale_market_id AND whole.del_flag = '0'
+	WHERE market.del_flag = '0'
+	      AND market.id = #{_parameter}
+  </select>
+  <!-- 查询企业会员的基本信息 -->
+  <select id="sellerAppLoginCheck" parameterType="com.wisea.transac.common.po.memb.LoginNameOrMobilePo" resultType="com.wisea.transac.common.entity.MembLoginCityOrLocInfo">
+  	SELECT m.id,IF(pm.id IS NULL,m.id,pm.id) AS 'membId',m.login_name,m.regist_tel,m.memb_type,m.acct_state,
+		   IF(pm.id IS NULL, m.locality_memb_type, pm.locality_memb_type) AS 'localityMembType',
+		   IF (pm.id IS NULL, m.agent_flag, pm.agent_flag) AS 'agentFlag',pur.id AS 'purId',sale.id AS 'saleId',sale.effe_inval_state,
+	       IF(pur.id IS NOT NULL AND sale.id IS NOT NULL,'3',IF(sale.id IS NOT NULL AND pur.id IS NULL,'2',IF(sale.id IS NULL AND pur.id IS NOT NULL,'1','0'))) AS 'membClass',
+		   IF(pm.id IS NULL,IF(m.entp_auth_state_type='1','3',m.memb_type),IF(pm.entp_auth_state_type='1','3',pm.memb_type)) AS 'authType'
+	FROM memb_info m
+	LEFT JOIN purchase_staff_mage pur ON m.id = pur.purchase_staff_id AND pur.del_flag = '0' AND pur.purchase_team_state = '1'
+	LEFT JOIN sale_staff_info_mage sale ON m.id = sale.sale_staff_id AND sale.del_flag = '0' AND sale.purchase_team_state = '1'
+	LEFT JOIN memb_info pm ON (pm.id = pur.memb_id OR sale.memb_id = pm.id) AND pm.del_flag = '0'
+	WHERE 1=1  AND m.del_flag = '0'
+		  AND (
+		  	<if test="loginName != null and loginName != '' and mobile != null and mobile != ''">
+		  		m.login_name = #{loginName}
+	      		OR m.regist_tel = #{mobile}
+		  	</if>
+		  	<if test="loginName != null and loginName != '' and (mobile == null or mobile == '')">
+		  		m.login_name = #{loginName}
+		  	</if>
+		  	<if test="(loginName == null or loginName == '') and mobile != null and mobile != ''">
+		  		m.regist_tel = #{mobile}
+		  	</if>
+		  )
+  </select>
+  <!-- 验证用户名称是否已经存在 -->
+  <select id="checkLoginNameExist" parameterType="com.wisea.transac.common.po.memb.MembCheckLoginNamePo"
+            resultType="java.lang.Integer">
+	SELECT COUNT(*)
+	FROM(
+		SELECT id,login_name FROM memb_info WHERE del_flag = '0'
+		UNION
+		SELECT id,login_name FROM market_acct_num_mage WHERE del_flag = '0'
+	) tab
+	WHERE tab.login_name = #{loginName}
+		  <if test="membId != null and membId != ''">
+          	AND tab.id NOT IN(#{membId})
+          </if>
+  </select>
+  <!-- 验证手机号是否已经存在 -->
+  <select id="checkMobileExist" parameterType="com.wisea.transac.common.po.memb.MembCheckMobilePo"
+            resultType="java.lang.Integer">
+        SELECT COUNT(*)  FROM memb_info T1
+		WHERE T1.regist_tel= #{mobile}
+			<if test="membId != null and membId != ''">
+            	AND T1.id NOT IN(#{membId})
+        	</if>
+  </select>
+  <!-- 根据手机号码查询会员ID或则子账户ID -->
+  <select id="getMembInfoByMobile" resultType="com.wisea.transac.common.entity.MembBaseInfo" parameterType="java.lang.String">
+	SELECT T1.id,T1.id AS 'membId',T1.login_name,T1.regist_tel,T1.regist_date,
+  	       T1.agent_flag,T1.acct_state,T1.logo_url,T1.pet_name,T1.memb_type
+	FROM memb_info T1
+	WHERE T1.regist_tel = #{mobile,jdbcType=VARCHAR}
+  </select>
+  <!-- 更具用户输入的登录信息查询用户信息 -->
+    <select id="getLoginNameByUserNameOrMobile" parameterType="java.lang.String"
+            resultType="com.wisea.transac.common.entity.MembInfo">
+        SELECT T1.* FROM memb_info T1
+		WHERE T1.login_name = #{_paremeter} OR T1.regist_tel=#{_paremeter}
+    </select>
+    <!-- 通过注册手机号获取用户信息 -->
+    <select id="getMembInfoByRegTel" parameterType="java.lang.String"
+            resultType="com.wisea.transac.common.entity.MembInfo">
+    	SELECT T1.* FROM memb_info T1
+		WHERE T1.regist_tel=#{_paremeter} and T1.del_flag ='0'
+    </select>
+    <!-- 查询能够登录小程序端的用户  -->
+    <select id="findCanLoginWechat" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT membinfo.id
+		FROM purchase_staff_mage pur
+		INNER JOIN memb_info membinfo ON membinfo.id = pur.purchase_staff_id
+		WHERE pur.del_flag = '0' AND pur.purchase_team_state = '1'
+			  AND membinfo.regist_tel = #{_parameter}
+		UNION
+		SELECT membinfo.id
+		FROM memb_info membinfo
+		LEFT JOIN (SELECT sale_staff_id FROM sale_staff_info_mage WHERE del_flag = '0' AND purchase_team_state IN ('0','1')) sale ON sale.sale_staff_id = membinfo.id
+		WHERE sale.sale_staff_id IS NULL
+			  AND membinfo.regist_tel = #{_parameter}
+    </select>
+    <!-- 小程序我的设置中会员基本信息初期化查询 -->
+    <select id="getMembInfoForSet" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.memb.MembInfoForSetVo">
+    	SELECT memb.id,memb.logo_url,memb.pet_name,memb.regist_tel,rele.remarks AS 'registTel'
+		FROM memb_info memb
+		LEFT JOIN memb_relevance_info rele ON rele.rele_id = memb.id AND rele.del_flag = '0' AND rele.open_type = '0'
+		WHERE memb.del_flag ='0'
+		      AND memb.id = #{_parameter}
+    </select>
+    <!-- 验证输入的旧手机号是否正确 -->
+    <select id="checkOldMobile" parameterType="com.wisea.transac.common.po.memb.CheckOldMobilePo" resultType="java.lang.Integer">
+    	SELECT COUNT(*)
+		FROM memb_info WHERE del_flag = '0'
+		     AND id = #{id} AND regist_tel = #{mobile}
+    </select>
+    <!-- 查询运营平台或者某个市场的管理员ID -->
+    <select id="getAdminId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    	SELECT ID
+		FROM market_acct_num_mage
+		WHERE del_flag = '0'  AND sf_admin_flag  = '0'
+			  <choose>
+			  	<when test="_parameter != null and _parameter != ''">
+			  		AND whole_sale_market_id = #{_parameter}
+			  	</when>
+			  	<otherwise>
+			  		AND whole_sale_market_id IS NULL
+			  	</otherwise>
+			  </choose>
+
+    </select>
+    <!-- 发送消息查询全部会员列表 -->
+    <select id="findAllMembList" resultType="java.lang.String">
+    	SELECT m.id
+		FROM memb_info m
+		WHERE m.del_flag = '0';
+    </select>
+    <!-- 发送消息按条件查询会员信息列表 -->
+    <select id="findMembListForMsg" parameterType="java.util.List" resultType="java.lang.String">
+		SELECT DISTINCT T1.membId
+		FROM(
+		SELECT CASE WHEN  m.agent_flag = '0' AND m.memb_type = '0' THEN '3'
+								WHEN  m.agent_flag = '0' AND m.memb_type = '1' THEN '4'
+								WHEN  m.agent_flag = '1' AND m.memb_type = '0' THEN '5'
+								WHEN  m.agent_flag = '1' AND m.memb_type = '1' THEN '6'
+								WHEN  m.agent_flag = '1' AND m.memb_type = '2' THEN '7'
+					 END  'type', m.id AS 'membId'
+		FROM memb_info m
+		WHERE m.del_flag = '0'
+		UNION
+		SELECT CASE WHEN m.memb_type = '0' THEN '5'
+								WHEN m.memb_type = '1' THEN '6'
+								WHEN m.memb_type = '2' THEN '7'
+					 END 'type',pur.purchase_staff_id AS 'membId'
+		FROM purchase_staff_mage pur
+		INNER JOIN memb_info m ON pur.memb_id = m.id AND m.del_flag = '0'
+		WHERE pur.del_flag = '0' AND pur.purchase_team_state = '1'
+		UNION
+		SELECT CASE WHEN m.memb_type = '0' THEN '3'
+						    WHEN m.memb_type = '1' THEN '4'
+					 END 'type',sale.sale_staff_id AS 'membId'
+		FROM sale_staff_info_mage sale
+		INNER JOIN memb_info m ON sale.memb_id  = m.id AND m.del_flag = '0'
+		WHERE sale.del_flag = '0' AND sale.purchase_team_state = '1'
+		) T1 WHERE T1.type IN
+				<foreach collection="list" item ="type" open="(" close=")" separator=",">
+					#{type}
+				</foreach>
+    </select>
+    <!-- 冻结/修改手机号/重置密码时初期化会员基本信息 -->
+    <select id="getMembProveInit" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.memb.MembProveBaseInfoVo">
+    	SELECT m.id AS 'membId',m.login_name,m.regist_tel,m.entp_name,e.ctscc,e.legal_person_name
+		FROM memb_info m
+		LEFT JOIN entp_auth e ON e.memb_id = m.id AND e.auth_state_type = '3' AND e.del_flag = '0'
+		WHERE m.del_flag = '0' AND m.id = #{_parameter}
+    </select>
+    <!-- 查詢会员下采购员和销售员id列表 -->
+    <select id="getPruAndSaleList" parameterType="java.lang.Long" resultType="java.lang.Long">
+    	SELECT DISTINCT *
+		FROM(
+		SELECT purchase_staff_id AS 'id'
+		FROM purchase_staff_mage
+		WHERE del_flag = '0' AND purchase_team_state IN ('0','1') AND memb_id = #{_parameter}
+		UNION
+		SELECT sale_staff_id AS 'id'
+		FROM sale_staff_info_mage
+		WHERE del_flag = '0' AND purchase_team_state IN('0','1') AND memb_id = #{_parameter}
+		)T1
+    </select>
+    <!-- 查询所有的会员信息（注册的所有用户） -->
+  	<select id="findMembInfoAll" parameterType="com.wisea.transac.common.po.memb.EntpInfoForAllListPo"
+  					resultType="com.wisea.transac.common.vo.memb.EntpInfoForAllListVo">
+  		SELECT T1.id,T1.login_name AS 'userName',T1.regist_tel AS 'registTel',CONCAT(T1.login_name,'(',T1.regist_tel,')') AS 'nameAddtel'
+		FROM memb_info T1
+		WHERE T1.del_flag = '0' AND T1.acct_state = '0'
+		<if test="compName != null and compName != ''">
+			AND T1.login_name  LIKE CONCAT('%', #{compName}, '%')
+	 	</if>
+	 	<if test="otherId != null and otherId != ''">
+	 		AND T1.id not in (#{otherId})
+	 	</if>
+  	</select>
+  	<select id="membListForMsg" parameterType="com.wisea.transac.common.po.memb.MembListForMsgPo" resultType="com.wisea.transac.common.vo.memb.MembInfoListForMsgVo">
+    	SELECT T1.id,T1.login_name,T1.regist_tel,T1.regist_date,T1.acct_state,T1.agent_flag,
+		       T1.entp_auth_state_type,T1.memb_type,T1.entp_name
+		FROM memb_info T1
+		WHERE T1.del_flag = '0'
+			  <if test="key != null and key != ''">
+			  AND (T1.login_name LIKE CONCAT('%', #{key}, '%')
+			  	   OR T1.entp_name LIKE CONCAT('%', #{key}, '%')
+			  	   OR T1.regist_tel LIKE CONCAT('%', #{key}, '%')
+			  	)
+			  </if>
+    </select>
+    <select id="getPtMembByMobile" parameterType="java.lang.String" resultType="com.wisea.transac.common.vo.memb.ChcekMobileIsEntpVo">
+    	SELECT m.id AS 'membId',m.login_name,pur.id AS 'purId',sale.id AS 'saleId'
+		FROM memb_info m
+		LEFT JOIN purchase_staff_mage pur ON m.id = pur.purchase_staff_id AND pur.del_flag = '0' AND pur.purchase_team_state = '1'
+		LEFT JOIN sale_staff_info_mage sale ON m.id = sale.sale_staff_id AND sale.del_flag = '0' AND sale.purchase_team_state = '1'
+		WHERE m.del_flag = '0' AND m.locality_memb_type IS NULL
+			  AND m.regist_tel = #{_parameter}
+    </select>
+   <update id="updBindWechat" parameterType="com.wisea.transac.common.entity.MembInfo" >
+    update memb_info
+    set bind_wechat = null,
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!--    查询用户数量-->
+    <select id="findUser" parameterType="com.wisea.transac.common.po.trade.StaticOrderPo" resultType="com.wisea.transac.common.vo.trade.ChartVo">
+        select IFNULL(count(id),0) yValue,
+        DATE_FORMAT(create_date, '%Y-%m-%d') xPoint
+        from memb_info
+        where del_flag = 0
+        <if test="startDate != null">
+            AND create_date >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND create_date <![CDATA[<=]]> #{endDate}
+        </if>
+        group by DATE_FORMAT(create_date, '%Y年%m月%d日')
+        order by create_date;
+
+    </select>
+</mapper>

@@ -1,0 +1,14 @@
+wbfc:
+  swaggerui:
+    enable: false
+
+#风控联盟中样品的添加
+fklm :
+  web :
+    sampadd: http://203.86.72.227:80/web/a/ycm/uninc/addSampInfo
+    sampfreshen: http://203.86.72.227:80/web/a/ycm/uninc/getSampStateType
+    dataSourceType: 2 #云茶盟=0；果品 = 1；册亨 = 2；齐民农泽南京 = 4；冊亨油茶 = 6 ；祁东油茶=8；
+tencent :
+  mapapp :
+    mapurl : https://apis.map.qq.com/ws/geocoder/v1/?
+    mapkey : 5TQBZ-A5ZCG-4PHQT-IOGZI-2BHQQ-7AB7E

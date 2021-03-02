@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.seedlings.mapper.BuySproutInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.seedlings.entity.BuySproutInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="subsidy_appl_mage_id" jdbcType="BIGINT" property="subsidyApplMageId" />
+    <result column="ser_list_id" jdbcType="BIGINT" property="serListId" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, subsidy_appl_mage_id, ser_list_id, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from buy_sprout_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from buy_sprout_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.seedlings.entity.BuySproutInfo">
+    insert into buy_sprout_info (id, subsidy_appl_mage_id, ser_list_id,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{subsidyApplMageId,jdbcType=BIGINT}, #{serListId,jdbcType=BIGINT},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.seedlings.entity.BuySproutInfo">
+    insert into buy_sprout_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="subsidyApplMageId != null">
+        subsidy_appl_mage_id,
+      </if>
+      <if test="serListId != null">
+        ser_list_id,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subsidyApplMageId != null">
+        #{subsidyApplMageId,jdbcType=BIGINT},
+      </if>
+      <if test="serListId != null">
+        #{serListId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.seedlings.entity.BuySproutInfo">
+    update buy_sprout_info
+    <set>
+      <if test="subsidyApplMageId != null">
+        subsidy_appl_mage_id = #{subsidyApplMageId,jdbcType=BIGINT},
+      </if>
+      <if test="serListId != null">
+        ser_list_id = #{serListId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.seedlings.entity.BuySproutInfo">
+    update buy_sprout_info
+    set subsidy_appl_mage_id = #{subsidyApplMageId,jdbcType=BIGINT},
+      ser_list_id = #{serListId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.seedlings.po.BuySproutInfoPagePo" resultType="com.wisea.cultivar.seedlings.vo.BuySproutInfoListVo">
+        SELECT T.memb_id AS 'id',
+        (CASE WHEN T2.cont_name IS NULL THEN T2.login_name ELSE T2.cont_name END) AS 'plantName',
+        SUM(T.num) AS 'num',ROUND(SUM(T.total_price),2) AS 'totalPrice',T.ser_list_no FROM
+		ser_list_mage T
+		INNER JOIN zhfw_memb_info T2 ON T.memb_id = T2.id AND T2.del_flag = '0'
+		LEFT JOIN zhfw_comm_pub_info T3 ON T3.id = T.comm_pub_id  AND T3.del_flag = '0'
+		WHERE T.del_flag = '0'
+		GROUP BY T.memb_id ORDER BY num DESC
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.seedlings.po.BuySproutInfoListPo" resultType="com.wisea.cultivar.seedlings.vo.BuySproutInfoListVo">
+    SELECT bsi.id,slm.ser_list_no,slm.num,slm.total_price,
+			cpi.comm_title,otvm.oil_tea_variet_name,mi.org_name as 'entpName'
+        FROM buy_sprout_info bsi
+        LEFT JOIN subsidy_appl_mage sam ON bsi.subsidy_appl_mage_id = sam.id
+        LEFT JOIN ser_list_mage slm ON slm.id = bsi.ser_list_id
+        LEFT JOIN zhfw_comm_pub_info cpi ON cpi.id = slm.comm_pub_id
+        LEFT JOIN oil_tea_variet_mage otvm ON otvm.id = cpi.comm_variet_id
+        LEFT JOIN zhfw_memb_info mi ON mi.id = cpi.memb_id
+        WHERE bsi.subsidy_appl_mage_id = #{subsidyApplMageId}
+        and  bsi.del_flag = '0'
+        <!-- 会员类型为企业的已认证的服务商 -->
+        and mi.memb_type = '0' and mi.entp_auth_state_type = '0' and mi.auth_type = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.seedlings.entity.BuySproutInfo">
+    update buy_sprout_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="selectPorSeedlingById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.seedlings.vo.SeedlingsProVo">
+       SELECT  T.id, SUM(T2.num) AS 'num',ROUND(SUM(T2.total_price),2) AS 'totalPrice',
+            T4.comm_catg_name AS 'commVarietName' FROM zhfw_memb_info T
+            LEFT JOIN ser_list_mage T2 ON T.id = T2.memb_id
+            LEFT JOIN zhfw_comm_pub_info T3 ON T3.id = T2.comm_pub_id
+            LEFT JOIN zhfw_comm_mage T4 ON T3.comm_id = T4.id
+        WHERE T.del_flag = '0' AND T2.del_flag = '0' AND T3.del_flag = '0' AND T4.del_flag = '0'
+        AND T.id = #{id}
+        GROUP BY T4.id
+    </select>
+</mapper>

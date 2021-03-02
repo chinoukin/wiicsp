@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.origin.dao.OrmMembInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.origin.entity.MembInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="regist_tel" jdbcType="VARCHAR" property="registTel" />
+    <result column="regist_date" jdbcType="TIMESTAMP" property="registDate" />
+    <result column="entp_auth_state_type" jdbcType="VARCHAR" property="entpAuthStateType" />
+    <result column="agent_flag" jdbcType="CHAR" property="agentFlag" />
+    <result column="acct_state" jdbcType="VARCHAR" property="acctState" />
+    <result column="pet_name" jdbcType="VARCHAR" property="petName" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, regist_tel, regist_date, entp_auth_state_type, agent_flag, acct_state,
+    pet_name, url, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.origin.entity.MembInfo">
+    insert into memb_info (id, user_name, regist_tel,
+      regist_date, entp_auth_state_type, agent_flag,
+      acct_state, pet_name, url,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{registTel,jdbcType=VARCHAR},
+      #{registDate,jdbcType=TIMESTAMP}, #{entpAuthStateType,jdbcType=VARCHAR}, #{agentFlag,jdbcType=CHAR},
+      #{acctState,jdbcType=VARCHAR}, #{petName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.origin.entity.MembInfo">
+    insert into memb_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="registTel != null">
+        regist_tel,
+      </if>
+      <if test="registDate != null">
+        regist_date,
+      </if>
+      <if test="entpAuthStateType != null">
+        entp_auth_state_type,
+      </if>
+      <if test="agentFlag != null">
+        agent_flag,
+      </if>
+      <if test="acctState != null">
+        acct_state,
+      </if>
+      <if test="petName != null">
+        pet_name,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null">
+        #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="registDate != null">
+        #{registDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entpAuthStateType != null">
+        #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentFlag != null">
+        #{agentFlag,jdbcType=CHAR},
+      </if>
+      <if test="acctState != null">
+        #{acctState,jdbcType=VARCHAR},
+      </if>
+      <if test="petName != null">
+        #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.origin.entity.MembInfo">
+    update memb_info
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null">
+        regist_tel = #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="registDate != null">
+        regist_date = #{registDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entpAuthStateType != null">
+        entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="agentFlag != null">
+        agent_flag = #{agentFlag,jdbcType=CHAR},
+      </if>
+      <if test="acctState != null">
+        acct_state = #{acctState,jdbcType=VARCHAR},
+      </if>
+      <if test="petName != null">
+        pet_name = #{petName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.origin.entity.MembInfo">
+    update memb_info
+    set user_name = #{userName,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      regist_date = #{registDate,jdbcType=TIMESTAMP},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      agent_flag = #{agentFlag,jdbcType=CHAR},
+      acct_state = #{acctState,jdbcType=VARCHAR},
+      pet_name = #{petName,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   <!--   	分页查询采样企业列表 -->
+   <select id="findMembInfoList"  parameterType="com.wisea.cultivar.origin.po.MembListPo"
+		resultType="com.wisea.cultivar.origin.vo.MembListVo">
+	   SELECT
+			T1.id id,
+			T2.comp_name membName,
+			T2.contacts contacts,
+			T2.bd_tel tel,
+			T2.regist_address_prov,
+			T2.regist_address_city,
+			T2.regist_address_cou,
+			T2.address detailAddress
+		FROM
+			memb_info T1
+		INNER JOIN entp_data_info T2 ON T1.id = T2.memb_id
+		AND T2.auth_exam_state = '1'
+		WHERE T1.del_flag='0'
+		AND T2.del_flag='0'
+		<if test="membName != null and membName != ''">
+	     AND T2.comp_name LIKE CONCAT('%', #{membName}, '%')
+	    </if>
+		ORDER BY
+			T2.update_date DESC
+   </select>
+  <!-- 通过会员Id获取用户以及商户的信息 -->
+  <select id="getMembAndEntpByMembId" parameterType="java.lang.Long" resultType="com.wisea.cultivar.origin.entity.MembEntpInfo">
+  	SELECT T1.id,T2.comp_name,T2.regist_address_prov,
+	     T2.regist_address_city,T2.regist_address_cou,T2.address,T2.contacts,T2.bd_tel AS 'compTel'
+	FROM memb_info T1
+	INNER JOIN entp_data_info T2 ON T1.id = T2.memb_id
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

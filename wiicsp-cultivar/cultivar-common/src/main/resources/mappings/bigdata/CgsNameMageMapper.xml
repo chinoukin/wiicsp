@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.CgsNameMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.CgsNameMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cgs_name" property="cgsName" jdbcType="VARCHAR" />
+    <result column="cgs_jc" property="cgsJc" jdbcType="VARCHAR" />
+    <result column="cgs_address" property="cgsAddress" jdbcType="VARCHAR" />
+    <result column="cjje" property="cjje" jdbcType="DOUBLE" />
+    <result column="jd" property="jd" jdbcType="DOUBLE" />
+    <result column="wd" property="wd" jdbcType="DOUBLE" />
+    <result column="sfyx_flag" property="sfyxFlag" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, cgs_name, cgs_jc, cgs_address, cjje, jd, wd, sfyx_flag, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from cgs_name_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cgs_name_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.CgsNameMage" >
+    insert into cgs_name_mage (id, cgs_name, cgs_jc,
+      cgs_address, cjje, jd,
+      wd, sfyx_flag, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{cgsName,jdbcType=VARCHAR}, #{cgsJc,jdbcType=VARCHAR},
+      #{cgsAddress,jdbcType=VARCHAR}, #{cjje,jdbcType=DOUBLE}, #{jd,jdbcType=DOUBLE},
+      #{wd,jdbcType=DOUBLE}, #{sfyxFlag,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.CgsNameMage" >
+    insert into cgs_name_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cgsName != null" >
+        cgs_name,
+      </if>
+      <if test="cgsJc != null" >
+        cgs_jc,
+      </if>
+      <if test="cgsAddress != null" >
+        cgs_address,
+      </if>
+      <if test="cjje != null" >
+        cjje,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="wd != null" >
+        wd,
+      </if>
+      <if test="sfyxFlag != null" >
+        sfyx_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cgsName != null" >
+        #{cgsName,jdbcType=VARCHAR},
+      </if>
+      <if test="cgsJc != null" >
+        #{cgsJc,jdbcType=VARCHAR},
+      </if>
+      <if test="cgsAddress != null" >
+        #{cgsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cjje != null" >
+        #{cjje,jdbcType=DOUBLE},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="sfyxFlag != null" >
+        #{sfyxFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.CgsNameMage" >
+    update cgs_name_mage
+    <set >
+      <if test="cgsName != null" >
+        cgs_name = #{cgsName,jdbcType=VARCHAR},
+      </if>
+      <if test="cgsJc != null" >
+        cgs_jc = #{cgsJc,jdbcType=VARCHAR},
+      </if>
+      <if test="cgsAddress != null" >
+        cgs_address = #{cgsAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="cjje != null" >
+        cjje = #{cjje,jdbcType=DOUBLE},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="sfyxFlag != null" >
+        sfyx_flag = #{sfyxFlag,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.CgsNameMage" >
+    update cgs_name_mage
+    set cgs_name = #{cgsName,jdbcType=VARCHAR},
+      cgs_jc = #{cgsJc,jdbcType=VARCHAR},
+      cgs_address = #{cgsAddress,jdbcType=VARCHAR},
+      cjje = #{cjje,jdbcType=DOUBLE},
+      jd = #{jd,jdbcType=DOUBLE},
+      wd = #{wd,jdbcType=DOUBLE},
+      sfyx_flag = #{sfyxFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.CgsNameMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.CgsNameMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from cgs_name_mage
+    where del_flag = '0'
+    <if test="cgsName != null and cgsName != ''">
+        and cgs_name like concat('%',#{cgsName},'%')
+    </if>
+    <if test="sfyxFlag != null and sfyxFlag != ''">
+        and sfyx_flag = #{sfyxFlag,jdbcType=CHAR}
+    </if>
+    order by cjje desc
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.CgsNameMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.CgsNameMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from cgs_name_mage
+    where del_flag = '0'
+  </select>
+
+  <!-- 校验名称是否重复 -->
+  <select id="checkName" resultType="com.wisea.cultivar.common.vo.bigdata.CgsNameMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.CgsNameMageListPo">
+    select
+    <include refid="Base_Column_List" />
+    from cgs_name_mage
+    where del_flag = '0'
+    and cgs_name = #{cgsName,jdbcType=VARCHAR}
+    <if test="id != null and id != ''">
+        and id != #{id,jdbcType=BIGINT}
+    </if>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.CgsNameMage" >
+    update cgs_name_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 根据IDS批量删除 -->
+  <update id="delByIds" parameterType="java.lang.String" >
+    update cgs_name_mage
+    set del_flag = '1'
+    where id in (${ids})
+  </update>
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into cgs_name_mage
+    (id, cgs_name, cgs_jc,
+      cgs_address, cjje, jd,
+      wd, sfyx_flag, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.cgsName,jdbcType=VARCHAR}, #{item.cgsJc,jdbcType=VARCHAR},
+      #{item.cgsAddress,jdbcType=VARCHAR}, #{item.cjje,jdbcType=DOUBLE}, #{item.jd,jdbcType=DOUBLE},
+      #{item.wd,jdbcType=DOUBLE}, #{item.sfyxFlag,jdbcType=CHAR}, #{item.createBy,jdbcType=VARCHAR},
+      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+      #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+</mapper>

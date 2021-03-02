@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.supply.mapper.ZhfwCommAttriMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.ZhfwCommAttri" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="comm_attri_id" property="commAttriId" jdbcType="BIGINT" />
+    <result column="comm_attri_name" property="commAttriName" jdbcType="VARCHAR" />
+    <result column="comm_attri_column" property="commAttriColumn" jdbcType="VARCHAR" />
+    <result column="comm_attri_type" property="commAttriType" jdbcType="VARCHAR" />
+    <result column="comm_attri_val" property="commAttriVal" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="if_requ" property="ifRequ" jdbcType="CHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.ZhfwCommAttri" extends="BaseResultMap" >
+    <result column="dict_val" property="dictVal" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_pub_id, comm_attri_id, comm_attri_name, comm_attri_column, comm_attri_type,
+    comm_attri_val, length, if_requ, sort, create_by, create_date, update_by, update_date,
+    remarks, del_flag,dict_val
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_comm_attri
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByAttriId" resultType="com.wisea.cultivar.common.entity.ZhfwCommAttri">
+    select a.attri_id as comm_attri_id,
+           b.comm_attri_name,
+           b.comm_attri_column,
+           b.comm_attri_type,
+           b.dict_val,
+           b.length,
+           a.if_requ,
+           a.sort
+    from zhfw_comm_attri_set a
+           inner join zhfw_comm_attri_mage b on a.attri_id = b.id
+    where a.del_flag = '0'
+      and b.del_flag = '0'
+      and a.attri_id = #{attri}
+      and a.comm_id = #{commId}
+  </select>
+    <select id="findByCommPubId" resultType="com.wisea.cultivar.common.entity.ZhfwCommAttri">
+      select <include refid="Base_Column_List"/> from zhfw_comm_attri where del_flag = '0' and comm_pub_id = #{commPubId} order by sort
+    </select>
+    <select id="findByCommPubIdAndAttriId" resultType="com.wisea.cultivar.common.entity.ZhfwCommAttri">
+      select <include refid="Base_Column_List"/> from zhfw_comm_attri where del_flag = '0' and comm_pub_id = #{commPubId} and comm_attri_id = #{attriId}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zhfw_comm_attri
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByCommPubId">
+      delete from zhfw_comm_attri
+      where comm_pub_id = #{commPubId} and del_flag = '0'
+    </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttri" >
+    insert into zhfw_comm_attri (id, comm_pub_id, comm_attri_id,
+      comm_attri_name, comm_attri_column, comm_attri_type,
+      comm_attri_val, length, if_requ,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, dict_val)
+    values (#{id,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT}, #{commAttriId,jdbcType=BIGINT},
+      #{commAttriName,jdbcType=VARCHAR}, #{commAttriColumn,jdbcType=VARCHAR}, #{commAttriType,jdbcType=VARCHAR},
+      #{commAttriVal,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{ifRequ,jdbcType=CHAR},
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{dictVal,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttri" >
+    insert into zhfw_comm_attri
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="commAttriId != null" >
+        comm_attri_id,
+      </if>
+      <if test="commAttriName != null" >
+        comm_attri_name,
+      </if>
+      <if test="commAttriColumn != null" >
+        comm_attri_column,
+      </if>
+      <if test="commAttriType != null" >
+        comm_attri_type,
+      </if>
+      <if test="commAttriVal != null" >
+        comm_attri_val,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="ifRequ != null" >
+        if_requ,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="dictVal != null" >
+        dict_val,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="commAttriId != null" >
+        #{commAttriId,jdbcType=BIGINT},
+      </if>
+      <if test="commAttriName != null" >
+        #{commAttriName,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriColumn != null" >
+        #{commAttriColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriType != null" >
+        #{commAttriType,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriVal != null" >
+        #{commAttriVal,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="ifRequ != null" >
+        #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="dictVal != null" >
+        #{dictVal,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttri" >
+    update zhfw_comm_attri
+    <set >
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="commAttriId != null" >
+        comm_attri_id = #{commAttriId,jdbcType=BIGINT},
+      </if>
+      <if test="commAttriName != null" >
+        comm_attri_name = #{commAttriName,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriColumn != null" >
+        comm_attri_column = #{commAttriColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriType != null" >
+        comm_attri_type = #{commAttriType,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriVal != null" >
+        comm_attri_val = #{commAttriVal,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="ifRequ != null" >
+        if_requ = #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="dictVal != null" >
+        dict_val = #{dictVal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.ZhfwCommAttri" >
+    update zhfw_comm_attri
+    set comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      comm_attri_id = #{commAttriId,jdbcType=BIGINT},
+      comm_attri_name = #{commAttriName,jdbcType=VARCHAR},
+      comm_attri_column = #{commAttriColumn,jdbcType=VARCHAR},
+      comm_attri_type = #{commAttriType,jdbcType=VARCHAR},
+      comm_attri_val = #{commAttriVal,jdbcType=VARCHAR},
+      length = #{length,jdbcType=INTEGER},
+      if_requ = #{ifRequ,jdbcType=CHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

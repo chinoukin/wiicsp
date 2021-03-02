@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wisea</groupId>
+    <artifactId>cultivar-bigdata</artifactId>
+
+    <name>cultivar-bigdata</name>
+    <description>新盟风控果品产业互联网综合服务平台-种植综合服务-大数据平台</description>
+
+    <parent>
+        <groupId>com.wisea</groupId>
+        <artifactId>wiicsp-cultivar</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>cultivar-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wisea</groupId>
+            <artifactId>wbf-cloud-quartz</artifactId>
+            <version>${wbf-cloud.version}</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>ci</id>
+        </profile>
+        <profile>
+            <id>boot</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>lib-boot</id>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.EntpBankInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.EntpBankInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="merchant_auth_id" property="merchantAuthId" jdbcType="BIGINT" />
+    <result column="open_bank" property="openBank" jdbcType="VARCHAR" />
+    <result column="bank_acct_type" property="bankAcctType" jdbcType="VARCHAR" />
+    <result column="bank_reserved_tel" property="bankReservedTel" jdbcType="VARCHAR" />
+    <result column="khxkz_url" property="khxkzUrl" jdbcType="VARCHAR" />
+    <result column="entp_bank_num" property="entpBankNum" jdbcType="VARCHAR" />
+    <result column="acct_open_sub_bank" property="acctOpenSubBank" jdbcType="VARCHAR" />
+    <result column="bank_card_zm_url" property="bankCardZmUrl" jdbcType="VARCHAR" />
+    <result column="bank_card_fm_url" property="bankCardFmUrl" jdbcType="VARCHAR" />
+    <result column="kh_name" property="khName" jdbcType="VARCHAR" />
+    <result column="regist_agreement_file" property="registAgreementFile" jdbcType="VARCHAR" />
+    <result column="kh_prov" property="khProv" jdbcType="VARCHAR" />
+    <result column="kh_city" property="khCity" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, merchant_auth_id, open_bank, bank_acct_type, bank_reserved_tel, khxkz_url, entp_bank_num,
+    acct_open_sub_bank, bank_card_zm_url, bank_card_fm_url, kh_name, regist_agreement_file,
+    kh_prov, kh_city, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from entp_bank_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from entp_bank_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.EntpBankInfo" >
+    insert into entp_bank_info (id, merchant_auth_id, open_bank,
+      bank_acct_type, bank_reserved_tel, khxkz_url,
+      entp_bank_num, acct_open_sub_bank, bank_card_zm_url,
+      bank_card_fm_url, kh_name, regist_agreement_file,
+      kh_prov, kh_city, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{merchantAuthId,jdbcType=BIGINT}, #{openBank,jdbcType=VARCHAR},
+      #{bankAcctType,jdbcType=VARCHAR}, #{bankReservedTel,jdbcType=VARCHAR}, #{khxkzUrl,jdbcType=VARCHAR},
+      #{entpBankNum,jdbcType=VARCHAR}, #{acctOpenSubBank,jdbcType=VARCHAR}, #{bankCardZmUrl,jdbcType=VARCHAR},
+      #{bankCardFmUrl,jdbcType=VARCHAR}, #{khName,jdbcType=VARCHAR}, #{registAgreementFile,jdbcType=VARCHAR},
+      #{khProv,jdbcType=VARCHAR}, #{khCity,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.EntpBankInfo" >
+    insert into entp_bank_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="merchantAuthId != null" >
+        merchant_auth_id,
+      </if>
+      <if test="openBank != null" >
+        open_bank,
+      </if>
+      <if test="bankAcctType != null" >
+        bank_acct_type,
+      </if>
+      <if test="bankReservedTel != null" >
+        bank_reserved_tel,
+      </if>
+      <if test="khxkzUrl != null" >
+        khxkz_url,
+      </if>
+      <if test="entpBankNum != null" >
+        entp_bank_num,
+      </if>
+      <if test="acctOpenSubBank != null" >
+        acct_open_sub_bank,
+      </if>
+      <if test="bankCardZmUrl != null" >
+        bank_card_zm_url,
+      </if>
+      <if test="bankCardFmUrl != null" >
+        bank_card_fm_url,
+      </if>
+      <if test="khName != null" >
+        kh_name,
+      </if>
+      <if test="registAgreementFile != null" >
+        regist_agreement_file,
+      </if>
+      <if test="khProv != null" >
+        kh_prov,
+      </if>
+      <if test="khCity != null" >
+        kh_city,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="merchantAuthId != null" >
+        #{merchantAuthId,jdbcType=BIGINT},
+      </if>
+      <if test="openBank != null" >
+        #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcctType != null" >
+        #{bankAcctType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankReservedTel != null" >
+        #{bankReservedTel,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkzUrl != null" >
+        #{khxkzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="entpBankNum != null" >
+        #{entpBankNum,jdbcType=VARCHAR},
+      </if>
+      <if test="acctOpenSubBank != null" >
+        #{acctOpenSubBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardZmUrl != null" >
+        #{bankCardZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardFmUrl != null" >
+        #{bankCardFmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="khName != null" >
+        #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="registAgreementFile != null" >
+        #{registAgreementFile,jdbcType=VARCHAR},
+      </if>
+      <if test="khProv != null" >
+        #{khProv,jdbcType=VARCHAR},
+      </if>
+      <if test="khCity != null" >
+        #{khCity,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.EntpBankInfo" >
+    update entp_bank_info
+    <set >
+      <if test="merchantAuthId != null" >
+        merchant_auth_id = #{merchantAuthId,jdbcType=BIGINT},
+      </if>
+      <if test="openBank != null" >
+        open_bank = #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAcctType != null" >
+        bank_acct_type = #{bankAcctType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankReservedTel != null" >
+        bank_reserved_tel = #{bankReservedTel,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkzUrl != null" >
+        khxkz_url = #{khxkzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="entpBankNum != null" >
+        entp_bank_num = #{entpBankNum,jdbcType=VARCHAR},
+      </if>
+      <if test="acctOpenSubBank != null" >
+        acct_open_sub_bank = #{acctOpenSubBank,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardZmUrl != null" >
+        bank_card_zm_url = #{bankCardZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bankCardFmUrl != null" >
+        bank_card_fm_url = #{bankCardFmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="khName != null" >
+        kh_name = #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="registAgreementFile != null" >
+        regist_agreement_file = #{registAgreementFile,jdbcType=VARCHAR},
+      </if>
+      <if test="khProv != null" >
+        kh_prov = #{khProv,jdbcType=VARCHAR},
+      </if>
+      <if test="khCity != null" >
+        kh_city = #{khCity,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.EntpBankInfo" >
+    update entp_bank_info
+    set merchant_auth_id = #{merchantAuthId,jdbcType=BIGINT},
+      open_bank = #{openBank,jdbcType=VARCHAR},
+      bank_acct_type = #{bankAcctType,jdbcType=VARCHAR},
+      bank_reserved_tel = #{bankReservedTel,jdbcType=VARCHAR},
+      khxkz_url = #{khxkzUrl,jdbcType=VARCHAR},
+      entp_bank_num = #{entpBankNum,jdbcType=VARCHAR},
+      acct_open_sub_bank = #{acctOpenSubBank,jdbcType=VARCHAR},
+      bank_card_zm_url = #{bankCardZmUrl,jdbcType=VARCHAR},
+      bank_card_fm_url = #{bankCardFmUrl,jdbcType=VARCHAR},
+      kh_name = #{khName,jdbcType=VARCHAR},
+      regist_agreement_file = #{registAgreementFile,jdbcType=VARCHAR},
+      kh_prov = #{khProv,jdbcType=VARCHAR},
+      kh_city = #{khCity,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.memb.EntpBankInfoInitVo" parameterType="com.wisea.transac.common.po.EntpBankInfoPageListPo" >
+    select
+	  id id,
+	  merchant_auth_id merchantAuthId,
+	  open_bank openBank,
+	  bank_acct_type bankAcctType,
+	  bank_reserved_tel bankReservedTel,
+	  khxkz_url khxkzUrl,
+	  entp_bank_num entpBankNum,
+	  acct_open_sub_bank acctOpenSubBank,
+	  bank_card_zm_url bankCardZmUrl,
+	  bank_card_fm_url bankCardFmUrl,
+	  kh_name khName,
+	  regist_agreement_file registAgreementFile,
+	  kh_prov khProv,
+	  kh_city khCity
+	from
+	  entp_bank_info
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.memb.EntpBankInfoInitVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  merchant_auth_id merchantAuthId,
+	  open_bank openBank,
+	  bank_acct_type bankAcctType,
+	  bank_reserved_tel bankReservedTel,
+	  khxkz_url khxkzUrl,
+	  entp_bank_num entpBankNum,
+	  acct_open_sub_bank acctOpenSubBank,
+	  bank_card_zm_url bankCardZmUrl,
+	  bank_card_fm_url bankCardFmUrl,
+	  kh_name khName,
+	  regist_agreement_file registAgreementFile,
+	  kh_prov khProv,
+	  kh_city khCity
+	from
+	  entp_bank_info
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <update id="updDelByEntpId" parameterType="com.wisea.transac.common.entity.EntpAuth" >
+    update entp_bank_info
+    <set >
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      del_flag = '1'
+    </set>
+    where merchant_auth_id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

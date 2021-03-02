@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.CommVarietMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.CommVarietMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_name" property="commVarietName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <association property="commMage" column="comm_id" select="selectCommMage" ></association>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_id, comm_variet_name, sort, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+
+    <!-- 查询所有品种信息根据商品品类id筛选 -->
+    <select id="findCommVarierMageList" resultMap="BaseResultMap" parameterType="com.wisea.transac.common.po.product.CommVarietMagePagePo">
+        SELECT
+        id, comm_id, comm_variet_name, sort, del_flag
+        from comm_variet_mage cvm
+        where del_flag = '0'
+        <if test="commId != null and commId != ''">
+            AND cvm.comm_id = #{commId}
+        </if>
+        <if test="commVarietName != null and commVarietName != ''">
+            AND cvm.comm_variet_name like CONCAT('%',#{commVarietName},'%')
+        </if>
+        order by cvm.sort asc
+    </select>
+    <!-- 验证品种名称是否重复 -->
+    <select id="insertCheckCommVarierMage" resultMap="BaseResultMap">
+        SELECT
+        id,comm_variet_name
+        from comm_variet_mage cvm
+        WHERE cvm.del_flag = '0'
+        AND cvm.comm_id = #{commId}
+        AND cvm.comm_variet_name = #{commVarietName}
+        <if test="id != null and id != ''">
+            AND cvm.id NOT IN (#{id})
+        </if>
+    </select>
+    <!-- 查询所有品种   -->
+    <select id="listCommVariet" resultMap="BaseResultMap" parameterType="com.wisea.transac.common.entity.CommVarietMage" >
+        select
+        <include refid="Base_Column_List" />
+        from comm_variet_mage
+        where del_flag = '0'
+        <if test="commVarietName != null and commVarietName != ''">
+            and comm_variet_name = #{commVarietName}
+        </if>
+    </select>
+    <!-- 查询商品分类的名称 -->
+    <select id="selectCommMage" resultType="com.wisea.transac.common.entity.CommMage">
+        select comm_catg_name FROM comm_mage cm WHERE cm.id = #{commId}
+    </select>
+    <!-- 查询商品分类的名称 -->
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from comm_variet_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comm_variet_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.CommVarietMage" >
+    insert into comm_variet_mage (id, comm_id, comm_variet_name,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{commVarietName,jdbcType=VARCHAR},
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.CommVarietMage" >
+    insert into comm_variet_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commVarietName != null" >
+        comm_variet_name,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietName != null" >
+        #{commVarietName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.CommVarietMage" >
+    update comm_variet_mage
+    <set >
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietName != null" >
+        comm_variet_name = #{commVarietName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.CommVarietMage" >
+    update comm_variet_mage
+    set comm_id = #{commId,jdbcType=BIGINT},
+      comm_variet_name = #{commVarietName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.CommVarietMagePageListVo" parameterType="com.wisea.transac.common.po.CommVarietMagePageListPo" >
+    select
+	  id id,
+	  comm_id commId,
+	  comm_variet_name commVarietName,
+	  sort sort
+	from
+	  comm_variet_mage
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.CommVarietMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  comm_id commId,
+	  comm_variet_name commVarietName,
+	  sort sort
+	from
+	  comm_variet_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+</mapper>

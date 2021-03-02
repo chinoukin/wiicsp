@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.JydzMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.JydzMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sfkq_flag" property="sfkqFlag" jdbcType="VARCHAR" />
+    <result column="zddz_date" property="zddzDate" jdbcType="INTEGER" />
+    <result column="zddz_min" property="zddzMin" jdbcType="INTEGER" />
+    <result column="zddz_max" property="zddzMax" jdbcType="INTEGER" />
+    <result column="ydi_je" property="ydiJe" jdbcType="DOUBLE" />
+    <result column="gw_sfkq_flag" property="gwSfkqFlag" jdbcType="VARCHAR" />
+    <result column="gw_zddz_date" property="gwZddzDate" jdbcType="INTEGER" />
+    <result column="gw_zddz_min" property="gwZddzMin" jdbcType="INTEGER" />
+    <result column="gw_zddz_max" property="gwZddzMax" jdbcType="INTEGER" />
+    <result column="gw_ydi_je" property="gwYdiJe" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sfkq_flag, zddz_date, zddz_min, zddz_max, ydi_je, gw_sfkq_flag, gw_zddz_date,
+    gw_zddz_min, gw_zddz_max, gw_ydi_je, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from jydz_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from jydz_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.JydzMage" >
+    insert into jydz_mage (id, sfkq_flag, zddz_date,
+      zddz_min, zddz_max, ydi_je,
+      gw_sfkq_flag, gw_zddz_date, gw_zddz_min,
+      gw_zddz_max, gw_ydi_je, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{sfkqFlag,jdbcType=VARCHAR}, #{zddzDate,jdbcType=INTEGER},
+      #{zddzMin,jdbcType=INTEGER}, #{zddzMax,jdbcType=INTEGER}, #{ydiJe,jdbcType=DOUBLE},
+      #{gwSfkqFlag,jdbcType=VARCHAR}, #{gwZddzDate,jdbcType=INTEGER}, #{gwZddzMin,jdbcType=INTEGER},
+      #{gwZddzMax,jdbcType=INTEGER}, #{gwYdiJe,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.JydzMage" >
+    insert into jydz_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sfkqFlag != null" >
+        sfkq_flag,
+      </if>
+      <if test="zddzDate != null" >
+        zddz_date,
+      </if>
+      <if test="zddzMin != null" >
+        zddz_min,
+      </if>
+      <if test="zddzMax != null" >
+        zddz_max,
+      </if>
+      <if test="ydiJe != null" >
+        ydi_je,
+      </if>
+      <if test="gwSfkqFlag != null" >
+        gw_sfkq_flag,
+      </if>
+      <if test="gwZddzDate != null" >
+        gw_zddz_date,
+      </if>
+      <if test="gwZddzMin != null" >
+        gw_zddz_min,
+      </if>
+      <if test="gwZddzMax != null" >
+        gw_zddz_max,
+      </if>
+      <if test="gwYdiJe != null" >
+        gw_ydi_je,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sfkqFlag != null" >
+        #{sfkqFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="zddzDate != null" >
+        #{zddzDate,jdbcType=INTEGER},
+      </if>
+      <if test="zddzMin != null" >
+        #{zddzMin,jdbcType=INTEGER},
+      </if>
+      <if test="zddzMax != null" >
+        #{zddzMax,jdbcType=INTEGER},
+      </if>
+      <if test="ydiJe != null" >
+        #{ydiJe,jdbcType=DOUBLE},
+      </if>
+      <if test="gwSfkqFlag != null" >
+        #{gwSfkqFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gwZddzDate != null" >
+        #{gwZddzDate,jdbcType=INTEGER},
+      </if>
+      <if test="gwZddzMin != null" >
+        #{gwZddzMin,jdbcType=INTEGER},
+      </if>
+      <if test="gwZddzMax != null" >
+        #{gwZddzMax,jdbcType=INTEGER},
+      </if>
+      <if test="gwYdiJe != null" >
+        #{gwYdiJe,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.JydzMage" >
+    update jydz_mage
+    <set >
+      <if test="sfkqFlag != null" >
+        sfkq_flag = #{sfkqFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="zddzDate != null" >
+        zddz_date = #{zddzDate,jdbcType=INTEGER},
+      </if>
+      <if test="zddzMin != null" >
+        zddz_min = #{zddzMin,jdbcType=INTEGER},
+      </if>
+      <if test="zddzMax != null" >
+        zddz_max = #{zddzMax,jdbcType=INTEGER},
+      </if>
+      <if test="ydiJe != null" >
+        ydi_je = #{ydiJe,jdbcType=DOUBLE},
+      </if>
+      <if test="gwSfkqFlag != null" >
+        gw_sfkq_flag = #{gwSfkqFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="gwZddzDate != null" >
+        gw_zddz_date = #{gwZddzDate,jdbcType=INTEGER},
+      </if>
+      <if test="gwZddzMin != null" >
+        gw_zddz_min = #{gwZddzMin,jdbcType=INTEGER},
+      </if>
+      <if test="gwZddzMax != null" >
+        gw_zddz_max = #{gwZddzMax,jdbcType=INTEGER},
+      </if>
+      <if test="gwYdiJe != null" >
+        gw_ydi_je = #{gwYdiJe,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.JydzMage" >
+    update jydz_mage
+    set sfkq_flag = #{sfkqFlag,jdbcType=VARCHAR},
+      zddz_date = #{zddzDate,jdbcType=INTEGER},
+      zddz_min = #{zddzMin,jdbcType=INTEGER},
+      zddz_max = #{zddzMax,jdbcType=INTEGER},
+      ydi_je = #{ydiJe,jdbcType=DOUBLE},
+      gw_sfkq_flag = #{gwSfkqFlag,jdbcType=VARCHAR},
+      gw_zddz_date = #{gwZddzDate,jdbcType=INTEGER},
+      gw_zddz_min = #{gwZddzMin,jdbcType=INTEGER},
+      gw_zddz_max = #{gwZddzMax,jdbcType=INTEGER},
+      gw_ydi_je = #{gwYdiJe,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.JydzMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.JydzMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from jydz_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.JydzMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.JydzMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from jydz_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.JydzMage" >
+    update jydz_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

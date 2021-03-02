@@ -1,0 +1,7 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://127.0.0.1:2105/eureka/ # 指向配置eureka地址
+  instance:
+    preferIpAddress: true # 使用ip地址注册，否则会由于机器没有配置域名发生找不到地址的错误
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} # 地址格式=ip:端口

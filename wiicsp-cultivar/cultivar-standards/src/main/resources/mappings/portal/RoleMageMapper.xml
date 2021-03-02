@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.portal.mapper.RoleMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.portal.entity.RoleMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="sys_role_id" jdbcType="BIGINT" property="sysRoleId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="rtype" jdbcType="VARCHAR" property="rtype" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sys_role_id, code, name, rtype, sort, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from role_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from role_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.portal.entity.RoleMage">
+    insert into role_mage (id, sys_role_id, code,
+      name, rtype, sort,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{sysRoleId,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR},
+      #{name,jdbcType=VARCHAR}, #{rtype,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.portal.entity.RoleMage">
+    insert into role_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sysRoleId != null">
+        sys_role_id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="rtype != null">
+        rtype,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sysRoleId != null">
+        #{sysRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rtype != null">
+        #{rtype,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.portal.entity.RoleMage">
+    update role_mage
+    <set>
+      <if test="sysRoleId != null">
+        sys_role_id = #{sysRoleId,jdbcType=BIGINT},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="rtype != null">
+        rtype = #{rtype,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.portal.entity.RoleMage">
+    update role_mage
+    set sys_role_id = #{sysRoleId,jdbcType=BIGINT},
+      code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      rtype = #{rtype,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.portal.po.RoleMagePagePo" resultType="com.wisea.cultivar.portal.vo.RoleMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from role_mage
+    where del_flag = '0'
+
+    <if test="name != '' and name != null">
+      and name like concat(concat("%",#{name}),"%")
+    </if>
+    order by sort asc
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.portal.po.RoleMageListPo" resultType="com.wisea.cultivar.portal.vo.RoleMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from role_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.portal.entity.RoleMage">
+    update role_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByName"  resultType="com.wisea.cultivar.portal.vo.RoleMageListVo">
+    SELECT * FROM sys_role WHERE name=#{name}
+    and del_flag = '0'
+    <if test="id != '' and id != null">
+      and id !=#{id}
+    </if>
+  </select>
+  <select id="selectByCode"  resultType="com.wisea.cultivar.portal.vo.RoleMageListVo">
+    SELECT * FROM sys_role WHERE code=#{code}
+    and del_flag = '0'
+    <if test="id != '' and id != null">
+      and id!= #{id}
+    </if>
+  </select>
+
+  <select id="tree"  resultType="com.wisea.cultivar.portal.vo.ViewMenuVo">
+  SELECT
+         DISTINCT a.*
+      FROM
+          sys_menu a
+      JOIN (
+          SELECT
+              a.id
+          FROM
+              sys_menu a
+          WHERE
+              a.del_flag = '0'
+      ) b ON a.parent_ids LIKE CONCAT("%", b.id, ",%")
+      JOIN sys_role_menu rm ON rm.menu_id = a.id
+      JOIN sys_role r ON r.id = rm.role_id
+      JOIN sys_user_role ur ON ur.role_id = r.id
+      JOIN sys_user u ON u.id = ur.user_id
+      WHERE
+          a.del_flag = '0'
+      AND r.del_flag = '0'
+      AND u.del_flag = '0'
+      AND a.is_show = '1'
+      AND u.id = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.explorer.mapper.IndustryLayerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.explorer.entity.IndustryLayerInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="industry_layer_name" jdbcType="VARCHAR" property="industryLayerName" />
+    <result column="industry_layer_introduce" jdbcType="VARCHAR" property="industryLayerIntroduce" />
+    <result column="conter" jdbcType="VARCHAR" property="conter" />
+    <result column="cont_tel" jdbcType="VARCHAR" property="contTel" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, industry_layer_name, industry_layer_introduce, conter, cont_tel, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from industry_layer_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from industry_layer_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerInfo">
+    insert into industry_layer_info (id, industry_layer_name, industry_layer_introduce,
+      conter, cont_tel, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{industryLayerName,jdbcType=VARCHAR}, #{industryLayerIntroduce,jdbcType=VARCHAR},
+      #{conter,jdbcType=VARCHAR}, #{contTel,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerInfo">
+    insert into industry_layer_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="industryLayerName != null">
+        industry_layer_name,
+      </if>
+      <if test="industryLayerIntroduce != null">
+        industry_layer_introduce,
+      </if>
+      <if test="conter != null">
+        conter,
+      </if>
+      <if test="contTel != null">
+        cont_tel,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="industryLayerName != null">
+        #{industryLayerName,jdbcType=VARCHAR},
+      </if>
+      <if test="industryLayerIntroduce != null">
+        #{industryLayerIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null">
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerInfo">
+    update industry_layer_info
+    <set>
+      <if test="industryLayerName != null">
+        industry_layer_name = #{industryLayerName,jdbcType=VARCHAR},
+      </if>
+      <if test="industryLayerIntroduce != null">
+        industry_layer_introduce = #{industryLayerIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null">
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerInfo">
+    update industry_layer_info
+    set industry_layer_name = #{industryLayerName,jdbcType=VARCHAR},
+      industry_layer_introduce = #{industryLayerIntroduce,jdbcType=VARCHAR},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.explorer.po.IndustryLayerInfoPagePo" resultType="com.wisea.cultivar.explorer.vo.IndustryLayerInfoListVo">
+    select
+    <include refid="Base_Column_List" />
+    from industry_layer_info
+    where del_flag = '0'
+    <include refid="query_where"/>
+    order by create_date DESC
+  </select>
+
+  <sql id="query_where">
+    <if test="industryLayerName != null and industryLayerName != ''">
+      and industry_layer_name LIKE concat('%',#{industryLayerName,jdbcType=VARCHAR},'%')
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.wisea.cultivar.explorer.po.IndustryLayerInfoListPo" resultType="com.wisea.cultivar.explorer.vo.IndustryLayerInfoListVo">
+    select
+    <include refid="Base_Column_List" />
+    from industry_layer_info
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerInfo">
+    update industry_layer_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

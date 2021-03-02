@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.PlatfInfoMageMapper">
+	<resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.PlatfInfoMage">
+		<result column="org_name" property="orgName" jdbcType="VARCHAR" />
+		<result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+		<result column="address" property="address" jdbcType="VARCHAR" />
+		<result column="copyright" property="copyright" jdbcType="VARCHAR" />
+		<result column="introduce" property="introduce" jdbcType="LONGVARCHAR" />
+		<result column="user_ser_agreement" property="userSerAgreement"
+			jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Blob_Column_List">
+		org_name, cont_tel, address,
+		copyright, introduce,
+		user_ser_agreement
+	</sql>
+	<select id="findPlatfInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Blob_Column_List" />
+		from platf_info_mage
+	</select>
+	<insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlatfInfoMage">
+		insert into platf_info_mage
+		(org_name, cont_tel, address,
+		copyright, introduce, user_ser_agreement
+		)
+		values (#{orgName,jdbcType=VARCHAR}, #{contTel,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR},
+		#{copyright,jdbcType=VARCHAR},
+		#{introduce,jdbcType=LONGVARCHAR},
+		#{userSerAgreement,jdbcType=LONGVARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlatfInfoMage">
+		insert into platf_info_mage
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orgName != null">
+				org_name,
+			</if>
+			<if test="contTel != null">
+				cont_tel,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="copyright != null">
+				copyright,
+			</if>
+			<if test="introduce != null">
+				introduce,
+			</if>
+			<if test="userSerAgreement != null">
+				user_ser_agreement,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orgName != null">
+				#{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="contTel != null">
+				#{contTel,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="copyright != null">
+				#{copyright,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null">
+				#{introduce,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userSerAgreement != null">
+				#{userSerAgreement,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlatfInfoMage">
+		update platf_info_mage
+		<set>
+			<if test="orgName != null">
+				org_name = #{orgName,jdbcType=VARCHAR},
+			</if>
+			<if test="contTel != null">
+				cont_tel = #{contTel,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="copyright != null">
+				copyright = #{copyright,jdbcType=VARCHAR},
+			</if>
+			<if test="introduce != null">
+				introduce = #{introduce,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="userSerAgreement != null">
+				user_ser_agreement =
+				#{userSerAgreement,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+	</update>
+</mapper>

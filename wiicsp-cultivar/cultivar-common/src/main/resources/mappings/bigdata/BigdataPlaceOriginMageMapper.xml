@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.BigdataPlaceOriginMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.PlaceOriginMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="place_origin_type" property="placeOriginType" jdbcType="VARCHAR" />
+    <result column="place_origin_name" property="placeOriginName" jdbcType="VARCHAR" />
+    <result column="location_type" property="locationType" jdbcType="VARCHAR" />
+    <result column="jd_type" property="jdType" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="zzmj" property="zzmj" jdbcType="DOUBLE" />
+    <result column="jd" property="jd" jdbcType="DOUBLE" />
+    <result column="wd" property="wd" jdbcType="DOUBLE" />
+    <result column="place_origin_state" property="placeOriginState" jdbcType="VARCHAR" />
+    <result column="place_origin_url" property="placeOriginUrl" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, place_origin_type, place_origin_name, location_type, jd_type, category_id, zzmj, jd,
+    wd, place_origin_state, place_origin_url, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+	  t1.*,
+	  t2.category_name
+	from place_origin_mage t1
+	  left join category_mage t2
+    on t2.id = t1.category_id
+    where t1.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from place_origin_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.PlaceOriginMage" >
+    insert into place_origin_mage (id, place_origin_type, place_origin_name,
+      location_type, jd_type, category_id,
+      zzmj, jd, wd, place_origin_state,
+      place_origin_url, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{placeOriginType,jdbcType=VARCHAR}, #{placeOriginName,jdbcType=VARCHAR},
+      #{locationType,jdbcType=VARCHAR}, #{jdType,jdbcType=VARCHAR}, #{categoryId,jdbcType=BIGINT},
+      #{zzmj,jdbcType=DOUBLE}, #{jd,jdbcType=DOUBLE}, #{wd,jdbcType=DOUBLE}, #{placeOriginState,jdbcType=VARCHAR},
+      #{placeOriginUrl,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.PlaceOriginMage" >
+    insert into place_origin_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="placeOriginType != null" >
+        place_origin_type,
+      </if>
+      <if test="placeOriginName != null" >
+        place_origin_name,
+      </if>
+      <if test="locationType != null" >
+        location_type,
+      </if>
+      <if test="jdType != null" >
+        jd_type,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="zzmj != null" >
+        zzmj,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="wd != null" >
+        wd,
+      </if>
+      <if test="placeOriginState != null" >
+        place_origin_state,
+      </if>
+      <if test="placeOriginUrl != null" >
+        place_origin_url,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="placeOriginType != null" >
+        #{placeOriginType,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOriginName != null" >
+        #{placeOriginName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationType != null" >
+        #{locationType,jdbcType=VARCHAR},
+      </if>
+      <if test="jdType != null" >
+        #{jdType,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="zzmj != null" >
+        #{zzmj,jdbcType=DOUBLE},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="placeOriginState != null" >
+        #{placeOriginState,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOriginUrl != null" >
+        #{placeOriginUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.PlaceOriginMage" >
+    update place_origin_mage
+    <set >
+      <if test="placeOriginType != null" >
+        place_origin_type = #{placeOriginType,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOriginName != null" >
+        place_origin_name = #{placeOriginName,jdbcType=VARCHAR},
+      </if>
+      <if test="locationType != null" >
+        location_type = #{locationType,jdbcType=VARCHAR},
+      </if>
+      <if test="jdType != null" >
+        jd_type = #{jdType,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="zzmj != null" >
+        zzmj = #{zzmj,jdbcType=DOUBLE},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="placeOriginState != null" >
+        place_origin_state = #{placeOriginState,jdbcType=VARCHAR},
+      </if>
+      <if test="placeOriginUrl != null" >
+        place_origin_url = #{placeOriginUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.PlaceOriginMage" >
+    update place_origin_mage
+    set place_origin_type = #{placeOriginType,jdbcType=VARCHAR},
+      place_origin_name = #{placeOriginName,jdbcType=VARCHAR},
+      location_type = #{locationType,jdbcType=VARCHAR},
+      jd_type = #{jdType,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      zzmj = #{zzmj,jdbcType=DOUBLE},
+      jd = #{jd,jdbcType=DOUBLE},
+      wd = #{wd,jdbcType=DOUBLE},
+      place_origin_state = #{placeOriginState,jdbcType=VARCHAR},
+      place_origin_url = #{placeOriginUrl,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.PlaceOriginMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.PlaceOriginMagePagePo" >
+    select
+	  t1.id,
+	  t1.place_origin_type,
+	  t1.place_origin_name,
+	  t1.location_type,
+	  t1.jd_type,
+	  t1.category_id,
+	  t1.zzmj,
+	  t1.create_date,
+	  t1.jd,
+	  t1.wd,
+	  t1.place_origin_state,
+	  t1.place_origin_url,
+	  t2.category_name,
+	  t2.category_url
+	from place_origin_mage t1
+	left join category_mage t2 on t2.id = t1.category_id
+	where t1.del_flag = '0'
+    <if test="placeOriginType != null and placeOriginType != ''">
+        and t1.place_origin_type = #{placeOriginType,jdbcType=VARCHAR}
+    </if>
+    <if test="locationType != null and locationType != ''">
+        and t1.location_type = #{locationType,jdbcType=VARCHAR}
+    </if>
+    <if test="jdType != null and jdType != ''">
+        and t1.jd_type = #{jdType,jdbcType=VARCHAR}
+    </if>
+    <if test="jdTypeList != null">
+        and t1.jd_type in
+	    <foreach collection="jdTypeList" item ="val" open="(" close=")" separator=",">
+            #{val}
+        </foreach>
+    </if>
+    <if test="placeOriginState != null and placeOriginState != ''">
+        and t1.place_origin_state = #{placeOriginState,jdbcType=VARCHAR}
+    </if>
+    <if test="searchKey != null and searchKey != ''">
+        and (
+            t1.place_origin_name like concat('%',#{searchKey},'%')
+            or t2.category_name like concat('%',#{searchKey},'%')
+        )
+    </if>
+    order by t1.create_date desc
+  </select>
+  <!-- 查询角标 -->
+  <select id="findJbMemb" parameterType="com.wisea.cultivar.common.po.bigdata.PlaceOriginMagePagePo" resultType="com.wisea.cultivar.common.vo.bigdata.PlaceOriginMageMembVo">
+    SELECT
+	  jd_type  as  statKey,
+	  COUNT(*)  as  statCount
+	FROM place_origin_mage
+	WHERE del_flag = '0'
+    <if test="placeOriginType != null and placeOriginType != ''">
+        and place_origin_type = #{placeOriginType,jdbcType=VARCHAR}
+    </if>
+    <if test="locationType != null and locationType != ''">
+        and location_type = #{locationType,jdbcType=VARCHAR}
+    </if>
+    <if test="jdType != null and jdType != ''">
+        and jd_type = #{jdType,jdbcType=VARCHAR}
+    </if>
+    <if test="placeOriginState != null and placeOriginState != ''">
+        and place_origin_state = #{placeOriginState,jdbcType=VARCHAR}
+    </if>
+	GROUP BY jd_type
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.PlaceOriginMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.PlaceOriginMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from place_origin_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.PlaceOriginMage" >
+    update place_origin_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

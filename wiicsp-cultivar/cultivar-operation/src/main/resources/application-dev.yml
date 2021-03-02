@@ -1,0 +1,79 @@
+spring:
+  servlet:
+    multipart:
+      resolveLazily: true # 延迟文件解析
+      maxFileSize: -1 # 每一个文件的最大值，默认值1MB，-1表示没有限制。
+      maxRequestSize: -1 # 一次上传最大值，默认值为10MB， -1表示没有限制。
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-种植综合服务-基础服务-用户权限认证服务 #标题
+#    host: 127.0.0.1:8893 #确保通过路由访问服务正常
+  security:
+    ltype:
+      enabled: true # 启用多端登录
+    oauth:
+      enabled: false
+  tencent-im:
+    enabled: true
+    sdkAppId: 1400459109
+    key: 5b2a460fc20eaa8ffad4e804e8f17345f59b5aa7fe820be5979f598257072cd6
+  sms:
+    test: true # 短信测试 如果是测试 验证码都是999999 默认false false:非测试 true:测试
+    productName: 华信 # 第三方短信平台名称
+    dictType: sms_template_type # 短信模板数据字典类型 默认:sms_template_type
+    smsCodeLabel: smsCode # 手机验证码模板数据字典label 默认:smsCode
+    code:
+      type: 0 # 手机验证码类型类型(0:数字 1:英文 2：英数混合) 默认:0
+      length: 6 # 手机验证码长度 默认:6位
+      timeout: 600 # 手机验证码过期时间(默认:600秒)
+      reSend: 60 # 手机验证码重发间隔(默认:60秒)
+      maxCount: 10 # 同一手机号最大次数
+      maxRepeat: 86400 # 同一手机号最大次数校验间隔(默认:24*60*60秒=86400秒)(24小时)
+    recive:
+      timeout: 86400 # 短信接收过期时间(服务器收到短信缓存到redis的时间)(默认:24*60*60秒=86400秒)(24小时)
+    overage:
+      warning: true # 短信余额报警 false:不报警 true:报警
+      warningMin: 100 # 短信余额最小值边界 默认:100
+
+      emailUser: admin # 报警发送邮件用户(登录名，发送到邮箱,默认admin)
+      #email: xudl@wisea.com.cn # 报警发送邮件地址(此项与emailUser互斥)
+      emailTemplete: /emailFile/emailOverage.ftl # 短信余额报警邮件 默认：/src/main/resources/templates/emailFile/emailOverage.ftl /src/main/resources/templates为ftl模板文件默认目录
+    huaxin:
+      username: AC00524 # 华信用户名
+      password: AC0052484 # 华信密码
+      sendUrl: https://dx.ipyy.net/smsJson.aspx # 华信发送URL
+      overageUrl: https://dx.ipyy.net/smsJson.aspx # 华信获取余额URL
+  upload:
+    localStorage:
+      enable: true # 是否开启本地存储 优先级大于fastDFS 默认:false
+    useDatabase: true # 使用数据库(否则通过无法映射文件名进行下载)
+    fileMaxSize: 31457280 # 上传文件上限(单位：byte) 默认30M=30*1024(K)*1024(B)=31457280 bytes
+    imageMaxSize: 10485760 # 上传图片上限(单位：byte) 默认10M=10*1024(K)*1024(B)=10485760 bytes
+    videoMaxSize: 104857600 # 上传音视频上限(单位：byte) 默认100M=100*1024(K)*1024(B)=104857600 bytes
+    fileSuffix: "(xls|xlsx|xlsm|doc|docx|wps|pdf|txt|md|ppt|pptx|zip|rar|apk|wgt)$" # 上传文件类型(正则表达式) 默认:xls|xlsx|xlsm|doc|docx|wps|pdf|txt|md|ppt|pptx|zip|rar
+    imageSuffix: "(png|jpg|jpeg|bmp|gif)$" # 上传图片类型(正则表达式) 默认:png|jpg|jpeg|bmp|gif
+    videoSuffix: "(mp3|mp4|wmv|rm|rmvb|wav|lrc|mov)$" # 上传音视频类型(正则表达式) 默认:mp3|mp4|wmv|rm|rmvb|wav|lrc
+    mappingTimeout: 86400 # fastdfs映射缓存时间
+
+management:
+  endpoint:
+    database:
+      enabled: true # 开启数据库监控节点
+    logviewer:
+      enabled: true # 开启实时日志节点
+#fdfs: # fastDFS配置
+#  web-server-url: http://192.168.20.11 # 读取时间
+#  so-timeout: 1500 # 连接超时时间
+#  connect-timeout: 600
+#  tracker-list: #TrackerList参数,支持多个
+#  - 192.168.20.11:22122
+#  - 192.168.20.12:22122
+#logging:
+#  level:
+#    com.wisea: DEBUG
+# tx-manager 配置
+#tx-lcn:
+#  client:
+#    manager-address: 192.168.20.5:9503

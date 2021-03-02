@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.InformationMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="information_type" property="informationType" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="information_digest" property="informationDigest" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="if_show" property="ifShow" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, information_type, title, keywords, information_digest, image, if_show, create_by,
+    create_date, update_by, update_date, remarks, del_flag,content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from information_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from information_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    insert into information_mage (id, information_type, title,
+      keywords, information_digest, image,
+      if_show, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, content)
+    values (#{id,jdbcType=BIGINT}, #{informationType,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{keywords,jdbcType=VARCHAR}, #{informationDigest,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR},
+      #{ifShow,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    insert into information_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="informationType != null" >
+        information_type,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="informationDigest != null" >
+        information_digest,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+      <if test="ifShow != null" >
+        if_show,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="informationType != null" >
+        #{informationType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="informationDigest != null" >
+        #{informationDigest,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    update information_mage
+    <set >
+      <if test="informationType != null" >
+        information_type = #{informationType,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="keywords != null" >
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="informationDigest != null" >
+        information_digest = #{informationDigest,jdbcType=VARCHAR},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        if_show = #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    update information_mage
+    set information_type = #{informationType,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      information_digest = #{informationDigest,jdbcType=VARCHAR},
+      image = #{image,jdbcType=VARCHAR},
+      if_show = #{ifShow,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.portal.InformationMagePageListVo"
+  						parameterType="com.wisea.cultivar.common.po.tp.portal.InformationMagePageListPo" >
+    SELECT T1.*
+	FROM information_mage T1
+	WHERE T1.del_flag = '0'
+	      <if test="key != null and key !=''">
+	       	AND (T1.title LIKE CONCAT('%', #{key}, '%')
+	       		 OR T1.keywords LIKE CONCAT('%', #{key}, '%'))
+	      </if>
+     	  <if test="informationType != null and informationType !=''">
+     	  	AND T1.information_type = #{informationType}
+     	  </if>
+     	  <if test="startDate != null and startDate !=''">
+     	  	AND T1.update_date <![CDATA[ >= ]]> #{startDate}
+     	  </if>
+     	  <if test="endDate != null and endDate !=''">
+     	  	AND T1.update_date <![CDATA[ <= ]]> #{endDate}
+     	  </if>
+     ORDER BY update_date DESC
+  </select>
+  <!-- 首页分页显示资讯信息的查询 -->
+  <select id="findPageListNotAuth" resultType="com.wisea.cultivar.common.vo.tp.portal.InformationMagePageListVo"
+  								   parameterType="com.wisea.cultivar.common.po.tp.portal.InfomaMagNotAuthPagePo">
+	SELECT T1.*
+	FROM information_mage T1
+	WHERE T1.del_flag = '0' AND T1.if_show = '0'
+     	  <if test="informationType != null and informationType !=''">
+     	  	AND T1.information_type = #{informationType}
+     	  </if>
+     ORDER BY update_date DESC
+  </select>
+  <!-- 首页显示的查询 -->
+  <select id="findListNotAuth" parameterType="com.wisea.cultivar.common.po.tp.portal.InfomaMagNotAuthPo"
+  							   resultType="com.wisea.cultivar.common.vo.tp.portal.InformationMagePageListVo">
+  	SELECT T1.*
+	FROM information_mage T1
+	WHERE T1.del_flag = '0' AND T1.if_show = '0'
+     	  <if test="informationTypes != null and informationTypes.size != 0">
+     	  	AND T1.information_type IN
+     	  	<foreach collection="informationTypes" item="type" index="index" open="(" close=")" separator=",">
+     	  		'${type}'
+     	  	</foreach>
+     	  </if>
+     	  <if test="removeId != null and removeId !=''">
+     	  	AND T1.Id NOT IN ('#{removeId}')
+     	  </if>
+     ORDER BY update_date DESC
+     <if test="count != null and count !=''">
+     LIMIT #{count}
+     </if>
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.InformationMage" parameterType="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    select
+    <include refid="Base_Column_List" />
+    from information_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.InformationMage" >
+    update information_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   <!-- 批量删除处理 -->
+  <update id="batchDelLogic" parameterType="java.util.List">
+  	update information_mage
+    set del_flag = '1'
+    where id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+    </foreach>
+  </update>
+  <select id="getDetail" parameterType="com.wisea.cultivar.common.po.tp.portal.InfomationMageNotAuthPo"
+                         resultType="com.wisea.cultivar.common.vo.tp.portal.InformationMageDetailVo">
+  	SELECT * FROM(
+  		SELECT T1.*,@arownum :=@arownum + 1 rowNum
+	FROM information_mage T1, (SELECT @arownum := 0) t
+	WHERE T1.del_flag = '0' AND T1.if_show = '0'
+     	  <if test="informationTypes != null and informationTypes.size != 0">
+     	  	AND T1.information_type IN
+     	  	<foreach collection="informationTypes" item="type" index="index" open="(" close=")" separator=",">
+     	  		'${type}'
+     	  	</foreach>
+     	  </if>
+     ORDER BY update_date DESC
+  	) T2 WHERE T2.ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getDetailPreAndNext" parameterType="com.wisea.cultivar.common.po.tp.portal.InfomationMageNotAuthPo"
+                         resultType="com.wisea.cultivar.common.vo.tp.portal.InformationMageDetailVo">
+  	SELECT * FROM(
+  		SELECT T1.*,@arownum :=@arownum + 1 rowNum
+	FROM information_mage T1, (SELECT @arownum := 0) t
+	WHERE T1.del_flag = '0' AND T1.if_show = '0'
+     	  <if test="informationTypes != null and informationTypes.size != 0">
+     	  	AND T1.information_type IN
+     	  	<foreach collection="informationTypes" item="type" index="index" open="(" close=")" separator=",">
+     	  		'${type}'
+     	  	</foreach>
+     	  </if>
+     ORDER BY update_date DESC
+  	) T2 WHERE rowNum IN (#{rowNum}-1,#{rowNum}+1)
+  </select>
+</mapper>

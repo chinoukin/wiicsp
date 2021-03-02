@@ -1,0 +1,903 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.ZhfwMembInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.ZhfwMembInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="cont_name" property="contName" jdbcType="VARCHAR" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+    <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="acct_state" property="acctState" jdbcType="VARCHAR" />
+    <result column="sex_type" property="sexType" jdbcType="VARCHAR" />
+    <result column="memb_type" property="membType" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="area_code_prov" property="areaCodeProv" jdbcType="VARCHAR" />
+    <result column="area_code_city" property="areaCodeCity" jdbcType="VARCHAR" />
+    <result column="area_code_cou" property="areaCodeCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="subject_type" property="subjectType" jdbcType="VARCHAR" />
+    <result column="acct_status" property="acctStatus" jdbcType="VARCHAR" />
+    <result column="acct_type" property="acctType" jdbcType="VARCHAR" />
+    <result column="jd" property="jd" jdbcType="VARCHAR" />
+    <result column="wd" property="wd" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="auth_type" property="authType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.plant.entity.ZhfwMembInfo" extends="BaseResultMap" >
+    <result column="introduce" property="introduce" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pid, login_name, cont_name, logo_url, entp_name, regist_tel, register_date, entp_auth_state_type,
+    position, acct_state, sex_type, memb_type, signature, org_name, area_code_prov, area_code_city,
+    area_code_cou, address, cont_tel, subject_type, acct_status, acct_type, jd, wd, create_by,
+    create_date, update_by, update_date, remarks, del_flag, auth_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    introduce
+  </sql>
+
+  <!-- 基本信息的查询(登录成功后调用) -->
+  <select id="getBaseInfoById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.LoginBaseInfoVo">
+  	SELECT id,pid,logo_url,org_name,cont_name,sex_type,position,cont_tel,login_name,signature
+  	FROM zhfw_memb_info
+  	WHERE id =  #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 根据父级ID查询子账户IDs -->
+  <select id="findIdsByParentId" parameterType="java.lang.Long" resultType="java.lang.Long">
+    SELECT id FROM zhfw_memb_info WHERE pid =  #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 注册时用户名的不重复的验证 -->
+  <select id="checkUsername" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM zhfw_memb_info WHERE login_name =  #{str,jdbcType=VARCHAR} AND del_flag = '0'
+  </select>
+  <!-- 注册的时候手机号不重复的验证 -->
+  <select id="checkMobile" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM zhfw_memb_info WHERE cont_tel =  #{str,jdbcType=VARCHAR} AND del_flag = '0'
+  </select>
+  <!-- 注册时验证公司名称是否已经存在 -->
+  <select id="checkOrgName" parameterType="java.lang.String" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM zhfw_memb_info WHERE org_name = #{str,jdbcType=VARCHAR}
+  </select>
+  <!-- 根据用户名称查询用户是否存在 -->
+  <select id="getMembInfoByUserName" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zhfw_memb_info
+    where login_name = #{str,jdbcType=BIGINT}
+  </select>
+  <!-- 查询主体信息 -->
+  <resultMap  id="membMainInfoMap" type="com.wisea.cultivar.plant.vo.oritrapla.MembMainInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="cont_name" property="contName" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="area_code_prov" property="areaCodeProv" jdbcType="VARCHAR" />
+    <result column="area_code_city" property="areaCodeCity" jdbcType="VARCHAR" />
+    <result column="area_code_cou" property="areaCodeCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="subject_type" property="subjectType" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="memb_type" property="membType" jdbcType="VARCHAR" />
+    <collection property="membPicList" column="id" select="selMembPicInfoByMembId"/>
+    <collection property="membBrandInfoList" column="id" select="selMembBrandByMembId"/>
+  </resultMap>
+  <select id="getMainMembInfo" parameterType="java.lang.Long" resultMap="membMainInfoMap">
+  	SELECT id,logo_url,org_name,cont_name,cont_tel,area_code_prov,area_code_city,
+  			area_code_cou,address,subject_type,introduce, memb_type
+    FROM zhfw_memb_info
+    WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 根据会员id查询图片信息列表 -->
+  <select id="selMembPicInfoByMembId" parameterType="java.lang.Long" resultType="java.lang.String">
+  	SELECT url FROM memb_picture_info
+  	WHERE memb_id = #{id,jdbcType=BIGINT}
+  	ORDER BY create_date DESC
+  </select>
+  <!-- 根据会员id查询品牌信息 -->
+  <resultMap id="membBrandListMap" type="com.wisea.cultivar.plant.vo.oritrapla.MembBrandInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="brand_intr" property="brandIntr" jdbcType="VARCHAR" />
+    <result column="firstUrl" property="firstUrl" jdbcType="VARCHAR" />
+    <collection property="brandPicList" column="id" select="selBrandPicInfoByBrandId"/>
+  </resultMap>
+  <select id="selMembBrandByMembId" parameterType="java.lang.Long" resultMap="membBrandListMap">
+  	SELECT T1.id,T1.brand_name,T1.brand_intr,T3.url as firstUrl
+	FROM brand_info T1
+	LEFT JOIN (SELECT T2.id,T2.url,T2.brand_id FROM (SELECT * FROM brand_picture ORDER BY create_date DESC ) AS T2
+				GROUP BY T2.brand_id) T3 ON T3.brand_id = T1.id
+	WHERE T1.del_flag = '0'
+		AND T1.memb_id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 根据品牌id查询品牌图像列表信息 -->
+  <select id="selBrandPicInfoByBrandId" parameterType="java.lang.Long" resultType="java.lang.String">
+  	SELECT url FROM brand_picture
+  	WHERE brand_id = #{id,jdbcType=BIGINT}
+  	ORDER BY create_date DESC
+  </select>
+  <!-- 分页查询人员管理列表 -->
+  <select id="findMembInfoList" parameterType="com.wisea.cultivar.plant.po.oritrapla.SelSubMembPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.SubMembInfoVo">
+    SELECT id,cont_name,login_name,position,cont_tel,acct_status FROM zhfw_memb_info
+    WHERE del_flag = '0'
+    AND pid = #{pid,jdbcType=BIGINT}
+    <if test="strKey != null and strKey != ''">
+      and (cont_name LIKE CONCAT('%', #{strKey}, '%')
+      OR cont_tel LIKE CONCAT('%', #{strKey}, '%')
+      OR login_name LIKE CONCAT('%', #{strKey}, '%')
+      )
+    </if>
+  </select>
+  <!-- 分页查询会员管理列表 -->
+  <select id="getMembInfoList" parameterType="com.wisea.cultivar.plant.po.oritrapla.WebMembListPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.MembListInfoVo">
+    SELECT T1.id,T1.login_name,T1.cont_name,T1.cont_tel,T1.position,IFNULL(T1.org_name,T4.org_name)AS 'org_name',T1.sex_type,T1.subject_type,
+    tab1.pidCount AS subCount,T1.acct_status,T1.register_date,T3.login_name AS updateName,T1.update_date
+    FROM zhfw_memb_info T1
+    JOIN sys_user su ON  T1.id = su.id
+    LEFT JOIN(SELECT COUNT(T2.pid) AS pidCount,T2.pid FROM zhfw_memb_info T2
+    WHERE T2.acct_type = '1'
+    GROUP BY T2.pid) AS tab1 ON tab1.pid = T1.id
+    LEFT JOIN zhfw_memb_info T3 ON T3.id = T1.update_by
+    LEFT JOIN zhfw_memb_info T4 ON T1.pid = T4.id
+    WHERE T1.acct_type= #{acctType} and T1.del_flag = "0"
+    and (T1.memb_type = '1' or T1.memb_type = '2')
+    <if test="value != null and value != ''">
+      <if test="key == '0'.toString()">
+        AND T1.login_name LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="key == '1'.toString()">
+        AND T1.cont_name LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="key == '2'.toString()">
+        AND T1.cont_tel LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="key == '3'.toString()">
+        <if test="acctType == '0'.toString()">
+          AND T1.org_name LIKE CONCAT('%', #{value}, '%')
+        </if>
+        <if test="acctType == '1'.toString()">
+          AND T4.org_name LIKE CONCAT('%', #{value}, '%')
+        </if>
+      </if>
+    </if>
+    <if test="subjectType != null and subjectType != ''">
+      AND T1.subject_type = #{subjectType}
+    </if>
+    <if test="acctStatus != null and acctStatus != ''">
+      AND T1.acct_status = #{acctStatus}
+    </if>
+    <if test="regStaDate != null">
+      AND T1.register_date  <![CDATA[ >= ]]> #{regStaDate ,jdbcType=TIMESTAMP}
+    </if>
+    <if test="regEndDate != null">
+      AND T1.register_date  <![CDATA[ <= ]]> #{regEndDate ,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updStaDate != null">
+      AND T1.update_date  <![CDATA[ >= ]]> #{updStaDate ,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updEndDate != null">
+      AND T1.update_date  <![CDATA[ <= ]]> #{updEndDate ,jdbcType=TIMESTAMP}
+    </if>
+    ORDER BY T1.register_date DESC
+  </select>
+
+  <!-- 分页查询会员后台管理列表 -->
+  <select id="getMembInfoBackManList" parameterType="com.wisea.cultivar.plant.po.oritrapla.WebMembListPo" resultType="com.wisea.cultivar.plant.vo.oritrapla.MembListInfoVo">
+    SELECT T1.id,T1.login_name,T1.cont_name,T1.cont_tel,T1.position,T1.org_name,T1.sex_type,T1.subject_type,
+    tab1.pidCount AS subCount,T1.acct_status,T1.register_date,su.login_name AS updateName,T1.update_date
+    FROM zhfw_memb_info T1
+    JOIN sys_user su ON  T1.update_by = su.id
+    LEFT JOIN(SELECT COUNT(T2.pid) AS pidCount,T2.pid FROM zhfw_memb_info T2
+    WHERE T2.acct_type = '1'
+    GROUP BY T2.pid) AS tab1 ON tab1.pid = T1.id
+    WHERE T1.acct_type= #{acctType} and T1.del_flag = "0"
+    <if test="value != null and value != ''">
+      <if test="key == '0'.toString()">
+        AND T1.login_name LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="key == '1'.toString()">
+        AND T1.cont_name LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="key == '2'.toString()">
+        AND T1.cont_tel LIKE CONCAT('%', #{value}, '%')
+      </if>
+      <if test="key == '3'.toString()">
+        AND T1.org_name LIKE CONCAT('%', #{value}, '%')
+      </if>
+    </if>
+    <if test="subjectType != null and subjectType != ''">
+      AND T1.subject_type = #{subjectType}
+    </if>
+    <if test="acctStatus != null and acctStatus != ''">
+      AND T1.acct_status = #{acctStatus}
+    </if>
+    <if test="regStaDate != null">
+      AND T1.register_date  <![CDATA[ >= ]]> #{regStaDate ,jdbcType=TIMESTAMP}
+    </if>
+    <if test="regEndDate != null">
+      AND T1.register_date  <![CDATA[ <= ]]> #{regEndDate ,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updStaDate != null">
+      AND T1.update_date  <![CDATA[ >= ]]> #{updStaDate ,jdbcType=TIMESTAMP}
+    </if>
+    <if test="updEndDate != null">
+      AND T1.update_date  <![CDATA[ <= ]]> #{updEndDate ,jdbcType=TIMESTAMP}
+    </if>
+    ORDER BY T1.update_date DESC
+  </select>
+  <!--批量冻结/解冻会员 管理员  -->
+  <update id="batchMembLoginFlag" parameterType="java.util.Map">
+    UPDATE zhfw_memb_info
+    SET acct_status = #{acctStatus}
+    WHERE id IN
+    <foreach collection="idList" item="item" index="index" open="(" close=")" separator=",">
+      #{item}
+    </foreach>
+  </update>
+  <!-- 根据id查询会员的详细信息 -->
+  <!-- 查询会员详细信息 -->
+  <resultMap  id="getDetaiInfoMap" type="com.wisea.cultivar.plant.vo.oritrapla.MembDetailInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="logo_url" property="logoUrl" jdbcType="VARCHAR" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="cont_name" property="contName" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="sex_type" property="sexType" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="finalLoginTime" property="finalLoginTime" jdbcType="TIMESTAMP" />
+    <result column="org_name" property="orgName" jdbcType="VARCHAR" />
+    <result column="subject_type" property="subjectType" jdbcType="VARCHAR" />
+    <result column="area_code_prov" property="areaCodeProv" jdbcType="VARCHAR" />
+    <result column="area_code_city" property="areaCodeCity" jdbcType="VARCHAR" />
+    <result column="area_code_cou" property="areaCodeCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <collection property="membPicList" column="id" select="selMembPicInfoByMembId"/>
+    <collection property="membBrandInfoList" column="id" select="selMembBrandByMembId"/>
+  </resultMap>
+  <select id="getDetaiInfo" parameterType="java.lang.Long" resultMap="getDetaiInfoMap">
+  	SELECT * FROM zhfw_memb_info
+  	LEFT JOIN(select max(login_date) AS finalLoginTime,memb_id from memb_login_his
+				group by memb_id order by login_date desc) AS TAB1 ON TAB1.memb_id = ID
+	WHERE id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 查询会员基础信息 -->
+  <select id="getMembBaseInfoById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.MembBaseInfoVo">
+  	SELECT T1.id,IFNULL(T1.org_name,T2.org_name)AS 'org_name',T1.cont_name,T1.sex_type,T1.position,T1.cont_tel,T1.login_name,T1.signature
+  	FROM zhfw_memb_info T1
+	LEFT JOIN zhfw_memb_info T2 ON T2.id = T1.pid
+  	WHERE T1.id =  #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 根据id查询管理员的基础信息 -->
+  <select id="getManInfoById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.ManUserVo">
+  	SELECT id,cont_name,position,cont_tel,login_name,signature
+  	FROM zhfw_memb_info
+  	WHERE id =  #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 查询当前登录所有关联账号 -->
+  <select id="findAccountAll" parameterType="java.lang.Long" resultType="java.lang.String">
+    select ifnull(id,0) id from zhfw_memb_info where id=#{id,jdbcType=BIGINT} and del_flag='0'
+    union all
+    select ifnull(id,0) id  from zhfw_memb_info where pid=#{id,jdbcType=BIGINT} and del_flag='0'
+    union all
+    select  ifnull(pid,0) id  from zhfw_memb_info where id=#{id,jdbcType=BIGINT} and del_flag='0'
+  </select>
+
+  <!-- 模糊查询主体名称 -->
+  <select id="searchOrgName" resultType="com.wisea.cultivar.plant.entity.oritrapla.MembInfo">
+  	SELECT
+  	  id,
+      org_name
+    FROM zhfw_memb_info
+    WHERE org_name != ""
+  </select>
+
+  <!-- 根据手机号精确查询会员信息 -->
+  <select id="selByMembTel" parameterType="java.lang.String" resultType="com.wisea.cultivar.plant.vo.oritrapla.MembMainInfoVo">
+  	SELECT
+  	  t1.id,
+	  (CASE WHEN ISNULL(t1.cont_name) THEN t1.login_name ELSE t1.cont_name END) AS 'contName',
+	  t1.cont_tel,
+	  (CASE WHEN ISNULL(t1.org_name) THEN t2.org_name ELSE t1.org_name END) AS 'orgName',
+	  (CASE WHEN ISNULL(t1.logo_url) THEN t2.logo_url ELSE t1.logo_url END) AS 'logoUrl',
+	  (CASE WHEN ISNULL(t1.area_code_prov) THEN t2.area_code_prov ELSE t1.area_code_prov END) AS 'areaCodeProv',
+	  (CASE WHEN ISNULL(t1.area_code_city) THEN t2.area_code_city ELSE t1.area_code_city END) AS 'areaCodeCity',
+	  (CASE WHEN ISNULL(t1.area_code_cou) THEN t2.area_code_cou ELSE t1.area_code_cou END) AS 'areaCodeCou',
+	  (CASE WHEN ISNULL(t1.address) THEN t2.address ELSE t1.address END) AS 'address'
+	FROM zhfw_memb_info t1
+	  LEFT JOIN zhfw_memb_info t2
+	    ON t1.pid = t2.id
+	WHERE 1 = 1
+	AND t1.del_flag = 0
+	and t1.cont_tel = #{contTel,jdbcType=VARCHAR}
+  </select>
+  <update id="updMembLatLng" parameterType="com.wisea.cultivar.plant.po.oritrapla.MembLatLngSetPo">
+  	update zhfw_memb_info
+    set jd = #{lng,jdbcType=VARCHAR},
+        wd = #{lat,jdbcType=VARCHAR}
+    where id = #{membId,jdbcType=BIGINT}
+  </update>
+  <select id="getMembLatLng" parameterType="java.lang.Long" resultType="com.wisea.cultivar.plant.vo.oritrapla.MembLatLngInfoVo">
+  	SELECT org_name,wd AS 'lat',jd AS 'lng' FROM zhfw_memb_info
+  	WHERE del_flag = '0' AND id = #{id,jdbcType=BIGINT}
+  </select>
+
+
+
+
+
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from zhfw_memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zhfw_memb_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.ZhfwMembInfo" >
+    insert into zhfw_memb_info (id, pid, login_name,
+      cont_name, logo_url, entp_name,
+      regist_tel, register_date, entp_auth_state_type,
+      position, acct_state, sex_type,
+      memb_type, signature, org_name,
+      area_code_prov, area_code_city, area_code_cou,
+      address, cont_tel, subject_type,
+      acct_status, acct_type, jd,
+      wd, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, introduce, auth_type)
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR},
+      #{contName,jdbcType=VARCHAR}, #{logoUrl,jdbcType=VARCHAR}, #{entpName,jdbcType=VARCHAR},
+      #{registTel,jdbcType=VARCHAR}, #{registerDate,jdbcType=TIMESTAMP}, #{entpAuthStateType,jdbcType=VARCHAR},
+      #{position,jdbcType=VARCHAR}, #{acctState,jdbcType=VARCHAR}, #{sexType,jdbcType=VARCHAR},
+      #{membType,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR},
+      #{areaCodeProv,jdbcType=VARCHAR}, #{areaCodeCity,jdbcType=VARCHAR}, #{areaCodeCou,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{contTel,jdbcType=VARCHAR}, #{subjectType,jdbcType=VARCHAR},
+      #{acctStatus,jdbcType=VARCHAR}, #{acctType,jdbcType=VARCHAR}, #{jd,jdbcType=VARCHAR},
+      #{wd,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{introduce,jdbcType=LONGVARCHAR}, #{authType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.ZhfwMembInfo" >
+    insert into zhfw_memb_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="contName != null" >
+        cont_name,
+      </if>
+      <if test="logoUrl != null" >
+        logo_url,
+      </if>
+      <if test="entpName != null" >
+        entp_name,
+      </if>
+      <if test="registTel != null" >
+        regist_tel,
+      </if>
+      <if test="registerDate != null" >
+        register_date,
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="acctState != null" >
+        acct_state,
+      </if>
+      <if test="sexType != null" >
+        sex_type,
+      </if>
+      <if test="membType != null" >
+        memb_type,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="orgName != null" >
+        org_name,
+      </if>
+      <if test="areaCodeProv != null" >
+        area_code_prov,
+      </if>
+      <if test="areaCodeCity != null" >
+        area_code_city,
+      </if>
+      <if test="areaCodeCou != null" >
+        area_code_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="contTel != null" >
+        cont_tel,
+      </if>
+      <if test="subjectType != null" >
+        subject_type,
+      </if>
+      <if test="acctStatus != null" >
+        acct_status,
+      </if>
+      <if test="acctType != null" >
+        acct_type,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="wd != null" >
+        wd,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="contName != null" >
+        #{contName,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="entpName != null" >
+        #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entpAuthStateType != null" >
+        #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="acctState != null" >
+        #{acctState,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="membType != null" >
+        #{membType,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCodeProv != null" >
+        #{areaCodeProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCodeCity != null" >
+        #{areaCodeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCodeCou != null" >
+        #{areaCodeCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="acctStatus != null" >
+        #{acctStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null" >
+        #{acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.ZhfwMembInfo" >
+    update zhfw_memb_info
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="contName != null" >
+        cont_name = #{contName,jdbcType=VARCHAR},
+      </if>
+      <if test="logoUrl != null" >
+        logo_url = #{logoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="entpName != null" >
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        regist_tel = #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="acctState != null" >
+        acct_state = #{acctState,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        sex_type = #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="membType != null" >
+        memb_type = #{membType,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="orgName != null" >
+        org_name = #{orgName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCodeProv != null" >
+        area_code_prov = #{areaCodeProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCodeCity != null" >
+        area_code_city = #{areaCodeCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCodeCou != null" >
+        area_code_cou = #{areaCodeCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectType != null" >
+        subject_type = #{subjectType,jdbcType=VARCHAR},
+      </if>
+      <if test="acctStatus != null" >
+        acct_status = #{acctStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="acctType != null" >
+        acct_type = #{acctType,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="momentsBjtUrl != null">
+        moments_bjt_url = #{momentsBjtUrl},
+      </if>
+      <if test="authType != null">
+        auth_type = #{authType},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.plant.entity.ZhfwMembInfo" >
+    update zhfw_memb_info
+    set pid = #{pid,jdbcType=BIGINT},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      cont_name = #{contName,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      acct_state = #{acctState,jdbcType=VARCHAR},
+      sex_type = #{sexType,jdbcType=VARCHAR},
+      memb_type = #{membType,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      area_code_prov = #{areaCodeProv,jdbcType=VARCHAR},
+      area_code_city = #{areaCodeCity,jdbcType=VARCHAR},
+      area_code_cou = #{areaCodeCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      subject_type = #{subjectType,jdbcType=VARCHAR},
+      acct_status = #{acctStatus,jdbcType=VARCHAR},
+      acct_type = #{acctType,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=VARCHAR},
+      wd = #{wd,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      introduce = #{introduce,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.ZhfwMembInfo" >
+    update zhfw_memb_info
+    set pid = #{pid,jdbcType=BIGINT},
+      login_name = #{loginName,jdbcType=VARCHAR},
+      cont_name = #{contName,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      acct_state = #{acctState,jdbcType=VARCHAR},
+      sex_type = #{sexType,jdbcType=VARCHAR},
+      memb_type = #{membType,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      org_name = #{orgName,jdbcType=VARCHAR},
+      area_code_prov = #{areaCodeProv,jdbcType=VARCHAR},
+      area_code_city = #{areaCodeCity,jdbcType=VARCHAR},
+      area_code_cou = #{areaCodeCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      subject_type = #{subjectType,jdbcType=VARCHAR},
+      acct_status = #{acctStatus,jdbcType=VARCHAR},
+      acct_type = #{acctType,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=VARCHAR},
+      wd = #{wd,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.ZhfwMembInfoPageListVo" parameterType="com.wisea.cultivar.plant.po.ZhfwMembInfoPageListPo" >
+    select
+	  pid pid,
+	  login_name loginName,
+	  cont_name contName,
+	  logo_url logoUrl,
+	  entp_name entpName,
+	  regist_tel registTel,
+	  register_date registerDate,
+	  entp_auth_state_type entpAuthStateType,
+	  position position,
+	  acct_state acctState,
+	  sex_type sexType,
+	  memb_type membType,
+	  signature signature,
+	  org_name orgName,
+	  area_code_prov areaCodeProv,
+	  area_code_city areaCodeCity,
+	  area_code_cou areaCodeCou,
+	  address address,
+	  cont_tel contTel,
+	  subject_type subjectType,
+	  acct_status acctStatus,
+	  acct_type acctType,
+	  jd jd,
+	  wd wd
+	from
+	  zhfw_memb_info
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.ZhfwMembInfoInfoVo" parameterType="java.lang.Long" >
+    select
+	  t1.pid pid,
+	  t1.login_name loginName,
+	  t1.cont_name contName,
+	  t1.logo_url logoUrl,
+	  t1.entp_name entpName,
+	  t1.regist_tel registTel,
+	  t1.register_date registerDate,
+	  t1.entp_auth_state_type entpAuthStateType,
+	  t1.position position,
+	  t1.acct_state acctState,
+	  t1.sex_type sexType,
+	  t1.memb_type membType,
+	  t1.signature signature,
+	  t1.org_name orgName,
+	  t1.area_code_prov areaCodeProv,
+	  t1.area_code_city areaCodeCity,
+	  t1.area_code_cou areaCodeCou,
+	  t1.address address,
+	  t1.cont_tel contTel,
+	  t1.subject_type subjectType,
+	  t1.acct_status acctStatus,
+	  t1.acct_type acctType,
+	  t1.jd jd,
+	  t1.wd wd,
+	  t1.auth_type authType,
+	  t1.moments_bjt_url momentsBjtUrl,
+	  t2.name areaCodeProvName,
+	  t3.name areaCodeCityName,
+	  t4.name areaCodeCouName
+	from
+	  zhfw_memb_info t1
+	  left join sys_area t2 on t1.area_code_prov = t2.code
+	  left join sys_area t3 on t1.area_code_city = t3.code
+	  left join sys_area t4 on t1.area_code_cou = t4.code
+	where
+	  t1.del_flag = '0'
+	  and t1.id = #{id}
+  </select>
+<!--判断该手机号是否已经被注册绑定-->
+  <select id="findByMobile" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+    from
+      zhfw_memb_info
+    where
+      del_flag = '0'
+      and regist_tel = #{mobile}
+  </select>
+
+  <!-- // cyq 种植会员管理列表 -->
+  <select id="findZhfwMembList" resultType="com.wisea.cultivar.plant.vo.ZhfwMembInfoFindListVo" parameterType="com.wisea.cultivar.plant.po.ZhfwMembInfoFindListPo" >
+    select
+       entp_name entpName,
+	   login_name loginName,
+	   regist_tel registTel,
+	   register_date registerDate,
+	   entp_auth_state_type entpAuthStateType,
+	   acct_state acctState
+	from
+	  zhfw_memb_info
+	where
+	  del_flag = '0'
+      <if test="searchText != null" >
+        and
+        (login_name = #{searchText}
+        or entp_name = #{searchText}
+        or regist_tel = #{searchText}
+        )
+      </if>
+      <if test="entpAuthStateType != null">
+        and entp_auth_state_type = #{entpAuthStateType}
+      </if>
+      <if test="acctState != null">
+        and acct_state = #{acctState}
+      </if>
+      order by update_date desc
+  </select>
+
+  <!-- // cyq 服务商列表 -->
+  <select id="findZhfwMembFwsList" resultType="com.wisea.cultivar.plant.vo.ZhfwMembInfoFindListVo" parameterType="com.wisea.cultivar.plant.po.ZhfwMembInfoFindListPo" >
+    select * from (
+      select
+      t1.auth_type authType,
+      CASE WHEN t1.auth_type ='0' THEN t2.entp_name ELSE '' END entpName,
+      t1.login_name loginName,
+      t1.regist_tel registTel,
+      t1.register_date registerDate,
+      t1.entp_auth_state_type entpAuthStateType,
+      t1.acct_state acctState,
+      CASE WHEN t1.auth_type ='0' THEN t2.auth_state_type ELSE t3.auth_state_type END authStateType
+      from
+      zhfw_memb_info t1
+      left join entp_auth t2 on t1.id = t2.memb_id
+      left join real_person_auth t3 on t1.id = t3.memb_id
+      where
+      t1.del_flag = '0'
+      and t1.memb_type= '0'
+      order by t1.update_date desc
+    ) tt where 1=1
+    <if test="searchText != null" >
+      and
+      (tt.loginName = #{searchText}
+      or tt.entpName = #{searchText}
+      or tt.registTel = #{searchText}
+      )
+    </if>
+    <if test="authType != null">
+      and tt.authType = #{authType}
+    </if>
+    <if test="authStateType != null">
+      and tt.authStateType = #{authStateType}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.PersonAuthMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.PersonAuth" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex_type" property="sexType" jdbcType="VARCHAR" />
+    <result column="id_card_num" property="idCardNum" jdbcType="VARCHAR" />
+    <result column="term_validity_date" property="termValidityDate" jdbcType="TIMESTAMP" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="sfz_zm_url" property="sfzZmUrl" jdbcType="VARCHAR" />
+    <result column="sfz_fm_url" property="sfzFmUrl" jdbcType="VARCHAR" />
+    <result column="sfz_sc_url" property="sfzScUrl" jdbcType="VARCHAR" />
+    <result column="auth_exam_state" property="authExamState" jdbcType="VARCHAR" />
+    <result column="exam_fail_reason" property="examFailReason" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, name, sex_type, id_card_num, term_validity_date, tel, sfz_zm_url, sfz_fm_url,
+    sfz_sc_url, auth_exam_state, exam_fail_reason, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from person_auth
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from person_auth
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.PersonAuth" >
+    insert into person_auth (id, memb_id, name,
+      sex_type, id_card_num, term_validity_date,
+      tel, sfz_zm_url, sfz_fm_url,
+      sfz_sc_url, auth_exam_state, exam_fail_reason,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+      #{sexType,jdbcType=VARCHAR}, #{idCardNum,jdbcType=VARCHAR}, #{termValidityDate,jdbcType=TIMESTAMP},
+      #{tel,jdbcType=VARCHAR}, #{sfzZmUrl,jdbcType=VARCHAR}, #{sfzFmUrl,jdbcType=VARCHAR},
+      #{sfzScUrl,jdbcType=VARCHAR}, #{authExamState,jdbcType=VARCHAR}, #{examFailReason,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.PersonAuth" >
+    insert into person_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sexType != null" >
+        sex_type,
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num,
+      </if>
+      <if test="termValidityDate != null" >
+        term_validity_date,
+      </if>
+      <if test="tel != null" >
+        tel,
+      </if>
+      <if test="sfzZmUrl != null" >
+        sfz_zm_url,
+      </if>
+      <if test="sfzFmUrl != null" >
+        sfz_fm_url,
+      </if>
+      <if test="sfzScUrl != null" >
+        sfz_sc_url,
+      </if>
+      <if test="authExamState != null" >
+        auth_exam_state,
+      </if>
+      <if test="examFailReason != null" >
+        exam_fail_reason,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNum != null" >
+        #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="termValidityDate != null" >
+        #{termValidityDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tel != null" >
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzZmUrl != null" >
+        #{sfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzFmUrl != null" >
+        #{sfzFmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzScUrl != null" >
+        #{sfzScUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="authExamState != null" >
+        #{authExamState,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null" >
+        #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.PersonAuth" >
+    update person_auth
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        sex_type = #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNum != null" >
+        id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      </if>
+      <if test="termValidityDate != null" >
+        term_validity_date = #{termValidityDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="tel != null" >
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzZmUrl != null" >
+        sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzFmUrl != null" >
+        sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzScUrl != null" >
+        sfz_sc_url = #{sfzScUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="authExamState != null" >
+        auth_exam_state = #{authExamState,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null" >
+        exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.PersonAuth" >
+    update person_auth
+    set memb_id = #{membId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      sex_type = #{sexType,jdbcType=VARCHAR},
+      id_card_num = #{idCardNum,jdbcType=VARCHAR},
+      term_validity_date = #{termValidityDate,jdbcType=TIMESTAMP},
+      tel = #{tel,jdbcType=VARCHAR},
+      sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+      sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+      sfz_sc_url = #{sfzScUrl,jdbcType=VARCHAR},
+      auth_exam_state = #{authExamState,jdbcType=VARCHAR},
+      exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 通过会员Id查询已经通过审核的个人认证信息 -->
+  <select id="getAuthPassPersonInfoByMembId"  parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.PersonAuth">
+  	select * from person_auth
+    where memb_id = #{membId,jdbcType=BIGINT}
+  </select>
+  <!-- 通过会员ID查询最新的个人认证信息 -->
+  <select id="getZxPersonInfoByMembId" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.PersonAuth">
+  	SELECT T1.*
+  	FROM person_auth_copy T1
+	WHERE T1.memb_id = #{membId,jdbcType=BIGINT} AND T1.del_flag IN ('0','1')
+	GROUP BY T1.create_date DESC
+	LIMIT 1
+  </select>
+  <resultMap id="PersonInfoDetail" type="com.wisea.cultivar.common.vo.tp.memb.MembPersonDetailVo">
+  	<id column="id" property="id" jdbcType="BIGINT" />
+  	<association property="userRegisterInfoVo" javaType="com.wisea.cultivar.common.vo.tp.memb.UserRegisterInfoVo">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+        <result column="contacts_name" property="contactsName" jdbcType="VARCHAR" />
+        <result column="comp_name" property="compName" jdbcType="VARCHAR" />
+        <result column="regist_date" property="registDate" jdbcType="TIMESTAMP" />
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+        <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+        <result column="member_type" property="memberType" jdbcType="VARCHAR" />
+        <result column="agent_flag" property="agentFlag" jdbcType="CHAR" />
+        <result column="acct_state" property="acctState" jdbcType="VARCHAR" />
+    </association>
+  	<association property="membPersonAutoVo" column="id" select="getPersonAuthById"/>
+  	<collection property="examRecdList" column="id" select="findExamRecdList"/>
+  </resultMap>
+  <!-- 后台查询个人认证审核信息 -->
+  <select id="getPersonAuthById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.memb.MembPersonAutoVo">
+  	SELECT T1.* FROM person_auth_copy T1
+	WHERE T1.memb_id = #{membId,jdbcType=BIGINT} AND T1.del_flag in('0','1')
+	GROUP BY T1.create_date DESC
+	LIMIT 1
+  </select>
+  <select id="getPersonInfoDetailById" parameterType="java.lang.Long" resultMap="PersonInfoDetail">
+  	SELECT * FROM memb_info WHERE id = #{membId,jdbcType=BIGINT}
+  </select>
+  <!-- 根据企业id查询审核列表信息 -->
+  <select id="findExamRecdList" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.ExamRecdListVo">
+  	select * from exam_recd
+    where del_flag = '0' and memb_id = #{id,jdbcType=BIGINT}
+    Order by operat_date DESC
+  </select>
+</mapper>

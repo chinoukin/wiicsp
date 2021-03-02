@@ -1,0 +1,18 @@
+server:
+  port: 8946
+  servlet:
+    context-path: /dashboard
+spring:
+  application:
+    name: cultivar-data-dashboard
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-种植综合服务-大数据展示平台 #标题
+  quartz:
+    timer:
+      job: cultivar.dashboard.timer.job # 任务分组
+      trigger: cultivar.dashboard.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": cultivar_dashboard_scheduler

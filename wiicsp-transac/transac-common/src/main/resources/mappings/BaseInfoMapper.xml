@@ -1,0 +1,576 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.BaseInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.BaseInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="base_name" property="baseName" jdbcType="VARCHAR"/>
+        <result column="base_content" property="baseContent" jdbcType="VARCHAR"/>
+        <result column="vr_url" property="vrUrl" jdbcType="VARCHAR"/>
+        <result column="vr_video_url" property="vrVideoUrl" jdbcType="VARCHAR"/>
+        <result column="base_type" property="baseType" jdbcType="VARCHAR"/>
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR"/>
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR"/>
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="jd" property="jd" jdbcType="VARCHAR"/>
+        <result column="wd" property="wd" jdbcType="VARCHAR"/>
+        <result column="abroad_id" property="abroadId" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, memb_id, base_name, base_content, vr_url, vr_video_url, base_type, area_prov,
+      area_city, area_cou, address, jd, wd, abroad_id, create_by, create_date, update_by,
+      update_date, remarks, del_flag
+  </sql>
+
+  <!-- 查询基地首页信息 -->
+  <select id="findBaseHome" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.seller.BaseInfoHomeVo">
+    select
+      bi.id id,
+      bi.memb_id membId,
+      bi.base_name baseName,
+      mi.memb_type membType,
+      bi.vr_url vrUrl,
+      bi.vr_video_url vrVideoUrl,
+      bp.url baseBackImg,
+      spi_.sup_piece_count supPieceCount,
+      spi_.url supPieceImg,
+      sf_.sorting_factory_count sortingFactoryCount,
+      sf_.url sortingFactoryImg,
+      sp_.storage_count storageCount,
+      sp_.url storageImg,
+      pi_.plantation_count plantationCount,
+      pi_.url plantationImg
+    from
+      base_info bi
+      inner join memb_info mi on bi.memb_id = mi.id
+      left join base_picture bp on bi.id = bp.base_id and bp.base_picture_type = '0'
+      left join (
+        select spi.base_id, count(DISTINCT spi.id) sup_piece_count, spp.url from sup_piece_info spi left join sup_piece_picture spp on spi.id = spp.sup_piece_id where spi.del_flag = '0' group by spi.base_id
+      ) spi_ on spi_.base_id = bi.id
+      left join (
+        select sf.base_id, count(DISTINCT sf.id) sorting_factory_count, sfp.url from sorting_factory sf left join sorting_factory_picture sfp on sf.id = sfp.sorting_factory_id where sf.del_flag = '0' group by sf.base_id
+      ) sf_ on sf_.base_id = bi.id
+      left join (
+        select si.base_id, count(DISTINCT si.id) storage_count, sp.url from storage_info si left join storage_picture sp on si.id = sp.storage_id where si.del_flag = '0' group by si.base_id
+      ) sp_ on sp_.base_id = bi.id
+      left join (
+        select pi.base_id, count(DISTINCT pi.id) plantation_count, pp.url from plantation_info pi left join plantation_picture pp on pi.id = pp.plantation_id where pi.del_flag = '0' group by pi.base_id
+      ) pi_ on pi_.base_id = bi.id
+    where
+      bi.memb_id = #{membId}
+    group by
+      bi.id
+  </select>
+  <!-- 根据用户查询基地信息 -->
+  <select id="findByMembId" resultType="com.wisea.transac.common.vo.seller.BaseInfoVo" resultMap="infoResultMap">
+    select
+      bi.id id,
+      bi.memb_id membId,
+      bi.base_name baseName,
+      bi.base_content baseContent,
+      bi.vr_url vrUrl,
+      bi.vr_video_url vrVideoUrl,
+      bi.base_type baseType,
+      bi.area_prov areaProv,
+      bi.area_city areaCity,
+      bi.area_cou areaCou,
+      max(CASE WHEN sa.`code` = bi.area_prov THEN sa.`name` END) areaProvStr,
+      max(CASE WHEN sa.`code` = bi.area_city THEN sa.`name` END) areaCityStr,
+      max(CASE WHEN sa.`code` = bi.area_cou THEN sa.`name` END) areaCouStr,
+      bi.address address,
+      bi.jd jd,
+      bi.wd wd,
+      bi.abroad_id abroadId,
+      pom.place_origin_name abroadName,
+      mi.memb_type membType,
+      bi.remarks remarks
+    from
+      base_info bi
+      inner join memb_info mi on bi.memb_id = mi.id
+      left join place_origin_mage pom on pom.id = bi.abroad_id
+      LEFT JOIN sys_area sa ON sa.`code` = bi.area_prov OR sa.`code` = bi.area_city OR sa.`code` = bi.area_cou
+    where bi.memb_id = #{membId}
+  </select>
+
+  <resultMap id="infoResultMap" type="com.wisea.transac.common.vo.seller.BaseInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <collection property="files" column="id" select="selectFiles"/>
+  </resultMap>
+  <!-- 级联查询基地图片列表 -->
+  <select id="selectFiles" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.FileVo">
+    select
+      bp.url fileUrl,
+      bp.base_picture_type fileType,
+      bp.sort sort
+    from
+      base_picture bp
+    where
+      bp.base_id = #{id}
+    order by
+      bp.sort
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from base_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from base_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.BaseInfo" >
+    insert into base_info (id, memb_id, base_name,
+      base_content, vr_url, vr_video_url,
+      base_type, area_prov, area_city,
+      area_cou, address, jd,
+      wd, abroad_id, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{baseName,jdbcType=VARCHAR},
+      #{baseContent,jdbcType=VARCHAR}, #{vrUrl,jdbcType=VARCHAR}, #{vrVideoUrl,jdbcType=VARCHAR},
+      #{baseType,jdbcType=VARCHAR}, #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR},
+      #{areaCou,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{jd,jdbcType=VARCHAR},
+      #{wd,jdbcType=VARCHAR}, #{abroadId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.BaseInfo" >
+    insert into base_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="baseName != null" >
+        base_name,
+      </if>
+      <if test="baseContent != null" >
+        base_content,
+      </if>
+      <if test="vrUrl != null" >
+        vr_url,
+      </if>
+      <if test="vrVideoUrl != null" >
+        vr_video_url,
+      </if>
+      <if test="baseType != null" >
+        base_type,
+      </if>
+      <if test="areaProv != null" >
+        area_prov,
+      </if>
+      <if test="areaCity != null" >
+        area_city,
+      </if>
+      <if test="areaCou != null" >
+        area_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="jd != null" >
+        jd,
+      </if>
+      <if test="wd != null" >
+        wd,
+      </if>
+      <if test="abroadId != null" >
+        abroad_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="baseName != null" >
+        #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseContent != null" >
+        #{baseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="vrUrl != null" >
+        #{vrUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vrVideoUrl != null" >
+        #{vrVideoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="baseType != null" >
+        #{baseType,jdbcType=VARCHAR},
+      </if>
+      <if test="areaProv != null" >
+        #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=VARCHAR},
+      </if>
+      <if test="abroadId != null" >
+        #{abroadId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.BaseInfo" >
+    update base_info
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="baseName != null" >
+        base_name = #{baseName,jdbcType=VARCHAR},
+      </if>
+      <if test="baseContent != null" >
+        base_content = #{baseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="vrUrl != null" >
+        vr_url = #{vrUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="vrVideoUrl != null" >
+        vr_video_url = #{vrVideoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="baseType != null" >
+        base_type = #{baseType,jdbcType=VARCHAR},
+      </if>
+      <if test="areaProv != null" >
+        area_prov = #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        area_city = #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        area_cou = #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=VARCHAR},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=VARCHAR},
+      </if>
+      <if test="abroadId != null" >
+        abroad_id = #{abroadId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.BaseInfo" >
+    update base_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      base_name = #{baseName,jdbcType=VARCHAR},
+      base_content = #{baseContent,jdbcType=VARCHAR},
+      vr_url = #{vrUrl,jdbcType=VARCHAR},
+      vr_video_url = #{vrVideoUrl,jdbcType=VARCHAR},
+      base_type = #{baseType,jdbcType=VARCHAR},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=VARCHAR},
+      wd = #{wd,jdbcType=VARCHAR},
+      abroad_id = #{abroadId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <select id="findForPage" resultMap="infoResultMap" resultType="com.wisea.transac.common.vo.seller.BaseInfoVo"
+            parameterType="com.wisea.transac.common.po.seller.BaseInfoPagePo">
+        select distinct bi.*,
+        pom.place_origin_name placeOriginName,
+        IF(sf.id is null
+        , '0', '1') factoy,
+        IF(si.id is null
+        , '0', '1') store,
+        IF(pi.id is null
+        , '0', '1') planting,
+        spiSub.supPieceName
+        from base_info bi
+        left join sup_piece_info spi on spi.base_id = bi.id and spi.del_flag = '0'
+        left join place_origin_mage pom on bi.abroad_id = pom.id and pom.del_flag = '0'
+        left join (SELECT GROUP_CONCAT(spi2.sup_piece_name) supPieceName,
+        spi2.base_id base_id
+        FROM sup_piece_info spi2
+        WHERE spi2.del_flag = '0'
+        GROUP BY spi2.base_id) spiSub on spiSub.base_id = bi.id
+        LEFT JOIN sorting_factory sf on sf.base_id = bi.id and sf.del_flag = '0'
+        LEFT JOIN storage_info si on si.base_id = bi.id and si.del_flag = '0'
+        LEFT JOIN plantation_info pi on pi.base_id = bi.id and pi.del_flag = '0'
+        left join comm_pub_info cpi on cpi.base_id = bi.id and cpi.del_flag = '0'
+        where bi.del_flag = '0'
+        <if test="supPieceId!=null and supPieceId!=''">
+            and spi.sup_piece_id = #{supPieceId}
+        </if>
+        <if test='xianhuo=="1"'>
+            and cpi.storage_type = '0'
+        </if>
+        <if test="baseName!=null and baseName!=''">
+            and instr(bi.base_name,#{baseName})!=0
+        </if>
+        <if test="baseType!=null and baseType!=''">
+            and bi.base_type = #{baseType}
+        </if>
+        <if test="supPieceName!=null and supPieceName!=''">
+            and instr(spi.sup_piece_name, #{supPieceName}) != 0
+        </if>
+        <if test='isAbraod=="0" and (abroadId==null or abroadId=="")'>
+            and bi.abroad_id is not null
+        </if>
+        <if test='isAbraod=="0" and abroadId!=null and abroadId!=""'>
+            and bi.abroad_id = #{abroadId}
+        </if>
+        <if test='isAbraod=="1" and (areaProv==null or areaProv=="")'>
+            and bi.abroad_id is null
+        </if>
+        <if test='isAbraod=="1" and areaProv!=null and areaProv!=""'>
+            and bi.area_prov = #{areaProv}
+        </if>
+    </select>
+    <select id="findAllAndCount" resultType="com.wisea.transac.common.vo.seller.BaseListVo">
+        select sa.code      areaProv,
+               sa.name      areaProvName,
+               count(bi.id) `count`
+        from sys_area sa
+                 left join base_info bi on bi.area_prov = sa.code
+        where sa.del_flag = '0'
+          and bi.del_flag = '0'
+        group by sa.code
+    </select>
+
+    <select id="baseInfoAndCont" parameterType="java.lang.Long" resultType="com.wisea.transac.common.vo.seller.BaseInfoVo">
+        SELECT
+		  t1.*,
+		  t2.cont_tel,
+		  t2.conter
+		from base_info t1
+		  left join entp_auth t2
+		    on t1.memb_id = t2.memb_id
+		      AND t2.del_flag = '0'
+		      AND t2.auth_state_type = '3'
+		where t1.id = #{id,jdbcType=BIGINT}
+    </select>
+    <select id="findByid" resultType="com.wisea.transac.common.vo.seller.FindBaseInfoVo" parameterType="com.wisea.transac.common.po.seller.FindBaseInfoPo">
+    select
+        bi.id id,
+        bi.base_content baseContent,
+        bi.jd jd,
+        bi.wd wd,
+        max(CASE WHEN sa.`code` = bi.area_prov THEN sa.`name` END) areaProv,
+        max(CASE WHEN sa.`code` = bi.area_city THEN sa.`name` END) areaCity,
+        max(CASE WHEN sa.`code` = bi.area_cou THEN sa.`name` END) areaCou,
+        bi.address address
+      from
+        base_info bi
+      LEFT JOIN sys_area sa ON sa.`code` = bi.area_prov OR sa.`code` = bi.area_city OR sa.`code` = bi.area_cou
+      where bi.del_flag = '0'
+      and bi.id = #{baseId}
+    </select>
+
+    <select id="findRecBaseByid" resultType="com.wisea.transac.common.vo.seller.RecBaseInfoVo" parameterType="com.wisea.transac.common.po.seller.RecBaseInfoPo">
+         SELECT
+          bi.id id,
+          bi.memb_id membId,
+          bi.base_name baseName,
+          bi.base_content baseContent,
+          bi.vr_url vrUrl,
+          bi.vr_video_url vrVideoUrl,
+          bi.base_type baseType,
+          max(
+          CASE
+                  WHEN sa.`code` = bi.area_prov THEN
+                  sa.`name`
+              END
+              ) areaProv,
+              max(
+              CASE
+                      WHEN sa.`code` = bi.area_city THEN
+                      sa.`name`
+                  END
+                  ) areaCity,
+                  max(
+                  CASE
+                          WHEN sa.`code` = bi.area_cou THEN
+                          sa.`name`
+                      END
+                      ) areaCou,
+                      bi.address address,
+                      bi.jd jd,
+                      bi.wd wd,
+                      bi.abroad_id abroadId,
+                      getDistance (
+                          bi.jd,
+                          bi.wd,
+                          #{jd},
+                          #{wd}
+                      ) AS distance,
+                      '1'  baseTag,
+                  IF
+                      ( sf.id IS NULL, '0', '1' ) factoryTag,
+                  IF
+                      ( si.id IS NULL, '0', '1' ) storageTag,
+                  IF
+                      ( pi.id IS NULL, '0', '1' ) plantationTag,
+                      t3.supPieceName,
+                      T2.url
+                  FROM
+                      base_info bi
+                      LEFT JOIN (SELECT GROUP_CONCAT( spi.sup_piece_name ) supPieceName,
+                      spi.base_id base_id
+                  FROM
+                      sup_piece_info spi
+                  WHERE
+                      spi.del_flag = '0'
+                  GROUP BY
+                      spi.base_id )t3 ON t3.base_id = bi.id
+                      LEFT JOIN (
+                      SELECT
+                          t1.base_id,
+                          t1.url,
+                          t1.sort
+                      FROM
+                          base_picture t1
+                          INNER JOIN (
+                          SELECT
+                              base_id,
+                              min( sort ) AS sort
+                          FROM
+                              base_picture
+                          WHERE
+                              del_flag = '0'
+                          AND (base_picture_type ='0' or base_picture_type ='1')
+                          GROUP BY
+                              base_id
+                          ) t2 ON t1.base_id = t2.base_id
+                          AND t1.sort = t2.sort
+                      ) T2 ON bi.id = T2.base_id
+                      LEFT JOIN sorting_factory sf ON sf.base_id = bi.id
+                      AND sf.del_flag = '0'
+                      LEFT JOIN storage_info si ON si.base_id = bi.id
+                      AND si.del_flag = '0'
+                      LEFT JOIN plantation_info pi ON pi.base_id = bi.id
+                      AND pi.del_flag = '0'
+                      LEFT JOIN sys_area sa ON sa.`code` = bi.area_prov
+                      OR sa.`code` = bi.area_city
+                      OR sa.`code` = bi.area_cou
+                  WHERE
+                      bi.del_flag = '0'
+                  AND bi.base_type is not null
+                  AND bi.id != #{id}
+                  AND bi.abroad_id is null
+                  GROUP BY
+                      bi.id
+                  ORDER BY
+                      distance
+                  LIMIT 0,2
+    </select>
+
+    <select id="findBaseInfoById" resultType="com.wisea.transac.common.vo.seller.BaseInfoVo" resultMap="infoResultMap">
+        select
+            bi.id id,
+            bi.memb_id membId,
+            bi.base_name baseName,
+            bi.base_content baseContent,
+            bi.vr_url vrUrl,
+            bi.vr_video_url vrVideoUrl,
+            bi.base_type baseType,
+            sa1.name              areaProv,
+            sa2.name              areaCity,
+            sa3.name              areaCou,
+            bi.address address,
+            bi.jd jd,
+            bi.wd wd,
+            bi.abroad_id abroadId,
+            pom.place_origin_name abroadName
+        from
+            base_info bi
+                left join place_origin_mage pom on pom.id = bi.abroad_id
+                LEFT JOIN sys_area sa1 ON sa1.`code` = bi.area_prov
+                LEFT JOIN sys_area sa2 ON sa2.`code` = bi.area_city
+                LEFT JOIN sys_area sa3 ON sa3.`code` = bi.area_cou
+        where bi.id = #{id}
+    </select>
+
+</mapper>

@@ -1,0 +1,60 @@
+spring:
+  profiles:
+    include: cmn
+  datasource: #spring boot数据源配置
+    type: com.alibaba.druid.pool.DruidDataSource # 使用druid连接池作为数据源
+    url: jdbc:mysql://192.168.20.229:3306/wiicsp-cultivar?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: dbuser
+    password: dbus24^*
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    druid: # 初始化大小，最小，最大
+      state-view:
+        enabled: true # 开启监控页面
+        loginUsername: root # 账户
+        loginPassword: 123456 # 密码
+        resetEnable: false # 是否能够重置数据
+  redis:
+    host: 192.168.20.249 # Redis服务器地址
+    database: 25 # Redis数据库索引(默认为0)
+    timeout: 20000 # 连接超时时间（毫秒）
+  redisson:
+    enable: true
+    address: redis://${spring.redis.host}:${spring.redis.port:6379}
+
+#InfluxDB（时序数据库）配置
+influx:
+  enable: true
+  openurl: http://192.168.20.5:8086
+  username:
+  password:
+  database: wiicsp_cultivar
+  retentionPolicy: wiicsp_cultivar_policy
+  dataDuration: INF #数据永久有效
+
+equipment:
+  xaircraft: #极飞物联配置 V5
+    enable: false
+    account: yuntea #用户名
+    password: leon123123 #密码（明文）
+    clientID: s35SQbEAyxk #客户端唯一标示
+    secret: 49eb15d52436d9c2 #密钥
+    baseUrl: https://api.iot.xa.com
+    loginUrl: /v5/login
+    deviceInfoUrl: /v5/clients/{0}/devices/{1} #/v5/clients/:account/devices/:device_id
+    lastPointUrl: /v5/clients/{0}/devices/{1}/datapoints/last #/v5/clients/:account/devices/:device_id/datapoints/last
+  jxiotcity:
+    enable: false
+    port: 8888
+    pingInterval: 5
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.20.5:2105/eureka/ # 指向配置eureka地址
+  instance:
+    preferIpAddress: true # 使用ip地址注册，否则会由于机器没有配置域名发生找不到地址的错误
+    instance-id: ${spring.cloud.client.ip-address}:${server.port} # 地址格式=ip:端口
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG

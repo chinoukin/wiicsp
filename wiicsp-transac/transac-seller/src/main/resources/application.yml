@@ -1,0 +1,17 @@
+server:
+  port: 8942
+spring:
+  application:
+    name: transac-seller
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务-商家服务 #标题
+management:
+  endpoint:
+    logviewer:
+      enabled: true # 开启实时日志节点
+  health:
+    elasticsearch:
+      enabled: false # 排除elastic健康监控 虽然backup工程引用了es的包，但配置是在页面进行的 这里启动不需要连接

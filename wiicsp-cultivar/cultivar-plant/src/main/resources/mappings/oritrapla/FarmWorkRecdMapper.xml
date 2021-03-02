@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.FarmWorkRecdMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkRecd" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="arch_id" property="archId" jdbcType="BIGINT" />
+    <result column="farm_work_type_id" property="farmWorkTypeId" jdbcType="BIGINT" />
+    <result column="operat_content" property="operatContent" jdbcType="VARCHAR" />
+    <result column="operat_date" property="operatDate" jdbcType="TIMESTAMP" />
+    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="us_agricultural_materials" property="usAgriculturalMaterials" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <resultMap id="FindListMap" type="com.wisea.cultivar.plant.vo.oritrapla.FarmWorkRecdVo">
+    <id column="farmWorkRecdId" property="farmWorkRecdId" jdbcType="BIGINT" />
+    <result column="arch_id" property="archId" jdbcType="BIGINT" />
+    <result column="farm_work_type_id" property="farmWorkTypeId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="operat_content" property="operatContent" jdbcType="VARCHAR" />
+    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="us_agricultural_materials" property="usAgriculturalMaterials" jdbcType="VARCHAR" />
+    <result column="record_status" property="recordStatus" jdbcType="VARCHAR" />
+    <result column="operat_date" property="operatDate" jdbcType="TIMESTAMP" />
+    <result column="createByName" property="createByName" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <collection property="farmWorkPictureList" ofType="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkPicture">
+    	<id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="farm_work_recd_id" property="farmWorkRecdId" jdbcType="BIGINT" />
+	    <result column="url" property="url" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, arch_id, farm_work_type_id, operat_content, operat_date, video_url,
+    us_agricultural_materials, record_status, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from farm_work_recd
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from farm_work_recd
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkRecd" >
+    insert into farm_work_recd (id, arch_id, farm_work_type_id,
+      operat_content, operat_date, video_url, us_agricultural_materials, record_status,
+      create_by, create_date, update_by, update_date, remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{archId,jdbcType=BIGINT}, #{farmWorkTypeId,jdbcType=BIGINT},
+      #{operatContent,jdbcType=VARCHAR}, #{operatDate,jdbcType=TIMESTAMP}, #{videoUrl,jdbcType=VARCHAR},
+      #{usAgriculturalMaterials,jdbcType=VARCHAR},#{recordStatus,jdbcType=VARCHAR},#{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkRecd" >
+    insert into farm_work_recd
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="archId != null" >
+        arch_id,
+      </if>
+      <if test="farmWorkTypeId != null" >
+        farm_work_type_id,
+      </if>
+      <if test="operatContent != null" >
+        operat_content,
+      </if>
+      <if test="videoUrl != null" >
+        video_url,
+      </if>
+      <if test="usAgriculturalMaterials != null" >
+        us_agricultural_materials,
+      </if>
+      <if test="recordStatus != null" >
+        record_status,
+      </if>
+      <if test="operatDate != null" >
+        operat_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="archId != null" >
+        #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="farmWorkTypeId != null" >
+        #{farmWorkTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="operatContent != null" >
+        #{operatContent,jdbcType=VARCHAR},
+      </if>
+      <if test="videoUrl != null" >
+        #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usAgriculturalMaterials != null" >
+        #{usAgriculturalMaterials,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+        #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="operatDate != null" >
+        #{operatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkRecd" >
+    update farm_work_recd
+    <set >
+      <if test="archId != null" >
+        arch_id = #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="farmWorkTypeId != null" >
+        farm_work_type_id = #{farmWorkTypeId,jdbcType=BIGINT},
+      </if>
+      <if test="operatContent != null" >
+        operat_content = #{operatContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operatDate != null" >
+        operat_date = #{operatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="videoUrl != null" >
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="usAgriculturalMaterials != null" >
+        us_agricultural_materials = #{usAgriculturalMaterials,jdbcType=VARCHAR},
+      </if>
+      <if test="recordStatus != null" >
+       record_status = #{recordStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.FarmWorkRecd" >
+    update farm_work_recd
+    set arch_id = #{archId,jdbcType=BIGINT},
+      farm_work_type_id = #{farmWorkTypeId,jdbcType=BIGINT},
+      operat_content = #{operatContent,jdbcType=VARCHAR},
+      operat_date = #{operatDate,jdbcType=TIMESTAMP},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      us_agricultural_materials = #{usAgriculturalMaterials,jdbcType=VARCHAR},
+      record_status = #{recordStatus,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 根据档案id查询列表 -->
+  <select id="findListByArchId" parameterType="com.wisea.cultivar.plant.po.oritrapla.FarmWorkSelPo" resultMap="FindListMap">
+  	SELECT
+	  t1.id                AS farmWorkRecdId,
+	  t1.arch_id,
+	  t1.farm_work_type_id,
+	  t1.operat_content,
+	  t1.operat_date,
+	  t1.video_url,
+	  t1.us_agricultural_materials,
+	  t1.record_status,
+	  t1.remarks,
+	  t1.create_by,
+	  t2.name,
+	  (CASE WHEN ISNULL(t3.cont_name) THEN t3.login_name ELSE t3.cont_name END) AS 'createByName',
+	  t4.url
+	FROM farm_work_recd t1
+	  LEFT JOIN farm_work_type_dict t2
+	    ON t2.id = t1.farm_work_type_id
+	  LEFT JOIN zhfw_memb_info t3
+	    ON t3.id = t1.create_by
+	  LEFT JOIN farm_work_picture t4
+	    ON t4.farm_work_recd_id = t1.id
+	    and t4.del_flag = '0'
+	  where 1=1
+	  and t1.del_flag = '0'
+	  and t1.arch_id = #{id,jdbcType=BIGINT}
+	  <if test="recordStatus != null">
+	  	and t1.record_status = #{recordStatus,jdbcType=VARCHAR}
+	  </if>
+	   <if test="searchKey != null">
+	  	and t2.name like concat('%',#{searchKey},'%')
+	  </if>
+	  <choose>
+	  	<when test='recordStatus != null and recordStatus == "0"'>
+	  		order by t1.operat_date asc
+	  	</when>
+	  	<otherwise>
+	  		order by t1.operat_date desc
+	  	</otherwise>
+	  </choose>
+  </select>
+
+  <!-- 查询记录详情 -->
+  <select id="findRecdInfo" parameterType="java.lang.Long" resultMap="FindListMap">
+  	SELECT
+	  t1.id                AS farmWorkRecdId,
+	  t1.arch_id,
+	  t1.farm_work_type_id,
+	  t1.operat_content,
+	  t1.video_url,
+	  t1.us_agricultural_materials,
+	  t1.record_status,
+	  t1.operat_date,
+	  t1.remarks,
+	  t1.create_by,
+	  t1.update_date,
+	  t2.name,
+	  (CASE WHEN ISNULL(t3.cont_name) THEN t3.login_name ELSE t3.cont_name END) AS 'createByName',
+	  t4.url
+	FROM farm_work_recd t1
+	  LEFT JOIN farm_work_type_dict t2
+	    ON t2.id = t1.farm_work_type_id
+	  LEFT JOIN zhfw_memb_info t3
+	    ON t3.id = t1.create_by
+	  LEFT JOIN farm_work_picture t4
+	    ON t4.farm_work_recd_id = t1.id
+	  where 1=1
+	  and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <!-- 逻辑删除记录 -->
+   <update id="delById" parameterType="java.lang.Long" >
+    update farm_work_recd
+    set
+      del_flag = '1'
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updRecordToNot">
+  	UPDATE farm_work_recd
+	SET record_status = '2'
+	WHERE record_status = '4'
+	    AND operat_date &lt;= #{minDate,jdbcType=TIMESTAMP}
+  </update>
+
+  <update id="updRecordToNext">
+  	UPDATE farm_work_recd
+	SET record_status = '4'
+	WHERE record_status = '0'
+	    AND operat_date &lt;= #{maxDate,jdbcType=TIMESTAMP}
+	    AND operat_date >= #{minDate,jdbcType=TIMESTAMP}
+  </update>
+</mapper>

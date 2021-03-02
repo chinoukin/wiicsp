@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.LocalityOrdInvoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.LocalityOrdInvo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+    <result column="invo_type" property="invoType" jdbcType="VARCHAR" />
+    <result column="invo_form" property="invoForm" jdbcType="VARCHAR" />
+    <result column="invo_catg_type" property="invoCatgType" jdbcType="VARCHAR" />
+    <result column="invo_title" property="invoTitle" jdbcType="VARCHAR" />
+    <result column="tax_ident_num" property="taxIdentNum" jdbcType="VARCHAR" />
+    <result column="regist_address" property="registAddress" jdbcType="VARCHAR" />
+    <result column="regist_tel" property="registTel" jdbcType="VARCHAR" />
+    <result column="bank_name" property="bankName" jdbcType="VARCHAR" />
+    <result column="bank_acc_num" property="bankAccNum" jdbcType="VARCHAR" />
+    <result column="rece_name" property="receName" jdbcType="VARCHAR" />
+    <result column="consignee_tel" property="consigneeTel" jdbcType="VARCHAR" />
+    <result column="address_prov" property="addressProv" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_cou" property="addressCou" jdbcType="VARCHAR" />
+    <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+    <result column="zip_code" property="zipCode" jdbcType="VARCHAR" />
+    <result column="appl_num" property="applNum" jdbcType="VARCHAR" />
+    <result column="appl_date" property="applDate" jdbcType="TIMESTAMP" />
+    <result column="draw_date" property="drawDate" jdbcType="TIMESTAMP" />
+    <result column="draw_amount" property="drawAmount" jdbcType="DOUBLE" />
+    <result column="invo_state" property="invoState" jdbcType="VARCHAR" />
+    <result column="invo_content_type" property="invoContentType" jdbcType="VARCHAR" />
+    <result column="logistics_comp_name" property="logisticsCompName" jdbcType="VARCHAR" />
+    <result column="logistics_num" property="logisticsNum" jdbcType="VARCHAR" />
+    <result column="entry_open_invo_type" property="entryOpenInvoType" jdbcType="VARCHAR" />
+    <result column="appl_remarks" property="applRemarks" jdbcType="VARCHAR" />
+    <result column="open_invo_remarks" property="openInvoRemarks" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_id, invo_type, invo_form, invo_catg_type, invo_title, tax_ident_num, regist_address,
+    regist_tel, bank_name, bank_acc_num, rece_name, consignee_tel, address_prov, address_city,
+    address_cou, address_detail, zip_code, appl_num, appl_date, draw_date, draw_amount,
+    invo_state, invo_content_type, logistics_comp_name, logistics_num, entry_open_invo_type,
+    appl_remarks, open_invo_remarks, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from locality_ord_invo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from locality_ord_invo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.LocalityOrdInvo" >
+    insert into locality_ord_invo (id, ord_id, invo_type,
+      invo_form, invo_catg_type, invo_title,
+      tax_ident_num, regist_address, regist_tel,
+      bank_name, bank_acc_num, rece_name,
+      consignee_tel, address_prov, address_city,
+      address_cou, address_detail, zip_code,
+      appl_num, appl_date, draw_date,
+      draw_amount, invo_state, invo_content_type,
+      logistics_comp_name, logistics_num, entry_open_invo_type,
+      appl_remarks, open_invo_remarks, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT}, #{invoType,jdbcType=VARCHAR},
+      #{invoForm,jdbcType=VARCHAR}, #{invoCatgType,jdbcType=VARCHAR}, #{invoTitle,jdbcType=VARCHAR},
+      #{taxIdentNum,jdbcType=VARCHAR}, #{registAddress,jdbcType=VARCHAR}, #{registTel,jdbcType=VARCHAR},
+      #{bankName,jdbcType=VARCHAR}, #{bankAccNum,jdbcType=VARCHAR}, #{receName,jdbcType=VARCHAR},
+      #{consigneeTel,jdbcType=VARCHAR}, #{addressProv,jdbcType=VARCHAR}, #{addressCity,jdbcType=VARCHAR},
+      #{addressCou,jdbcType=VARCHAR}, #{addressDetail,jdbcType=VARCHAR}, #{zipCode,jdbcType=VARCHAR},
+      #{applNum,jdbcType=VARCHAR}, #{applDate,jdbcType=TIMESTAMP}, #{drawDate,jdbcType=TIMESTAMP},
+      #{drawAmount,jdbcType=DOUBLE}, #{invoState,jdbcType=VARCHAR}, #{invoContentType,jdbcType=VARCHAR},
+      #{logisticsCompName,jdbcType=VARCHAR}, #{logisticsNum,jdbcType=VARCHAR}, #{entryOpenInvoType,jdbcType=VARCHAR},
+      #{applRemarks,jdbcType=VARCHAR}, #{openInvoRemarks,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.LocalityOrdInvo" >
+    insert into locality_ord_invo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="invoType != null" >
+        invo_type,
+      </if>
+      <if test="invoForm != null" >
+        invo_form,
+      </if>
+      <if test="invoCatgType != null" >
+        invo_catg_type,
+      </if>
+      <if test="invoTitle != null" >
+        invo_title,
+      </if>
+      <if test="taxIdentNum != null" >
+        tax_ident_num,
+      </if>
+      <if test="registAddress != null" >
+        regist_address,
+      </if>
+      <if test="registTel != null" >
+        regist_tel,
+      </if>
+      <if test="bankName != null" >
+        bank_name,
+      </if>
+      <if test="bankAccNum != null" >
+        bank_acc_num,
+      </if>
+      <if test="receName != null" >
+        rece_name,
+      </if>
+      <if test="consigneeTel != null" >
+        consignee_tel,
+      </if>
+      <if test="addressProv != null" >
+        address_prov,
+      </if>
+      <if test="addressCity != null" >
+        address_city,
+      </if>
+      <if test="addressCou != null" >
+        address_cou,
+      </if>
+      <if test="addressDetail != null" >
+        address_detail,
+      </if>
+      <if test="zipCode != null" >
+        zip_code,
+      </if>
+      <if test="applNum != null" >
+        appl_num,
+      </if>
+      <if test="applDate != null" >
+        appl_date,
+      </if>
+      <if test="drawDate != null" >
+        draw_date,
+      </if>
+      <if test="drawAmount != null" >
+        draw_amount,
+      </if>
+      <if test="invoState != null" >
+        invo_state,
+      </if>
+      <if test="invoContentType != null" >
+        invo_content_type,
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name,
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num,
+      </if>
+      <if test="entryOpenInvoType != null" >
+        entry_open_invo_type,
+      </if>
+      <if test="applRemarks != null" >
+        appl_remarks,
+      </if>
+      <if test="openInvoRemarks != null" >
+        open_invo_remarks,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="invoType != null" >
+        #{invoType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoForm != null" >
+        #{invoForm,jdbcType=VARCHAR},
+      </if>
+      <if test="invoCatgType != null" >
+        #{invoCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoTitle != null" >
+        #{invoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taxIdentNum != null" >
+        #{taxIdentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddress != null" >
+        #{registAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNum != null" >
+        #{bankAccNum,jdbcType=VARCHAR},
+      </if>
+      <if test="receName != null" >
+        #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTel != null" >
+        #{consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applNum != null" >
+        #{applNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applDate != null" >
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawDate != null" >
+        #{drawDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawAmount != null" >
+        #{drawAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="invoState != null" >
+        #{invoState,jdbcType=VARCHAR},
+      </if>
+      <if test="invoContentType != null" >
+        #{invoContentType,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCompName != null" >
+        #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="entryOpenInvoType != null" >
+        #{entryOpenInvoType,jdbcType=VARCHAR},
+      </if>
+      <if test="applRemarks != null" >
+        #{applRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="openInvoRemarks != null" >
+        #{openInvoRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.LocalityOrdInvo" >
+    update locality_ord_invo
+    <set >
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="invoType != null" >
+        invo_type = #{invoType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoForm != null" >
+        invo_form = #{invoForm,jdbcType=VARCHAR},
+      </if>
+      <if test="invoCatgType != null" >
+        invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="invoTitle != null" >
+        invo_title = #{invoTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="taxIdentNum != null" >
+        tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddress != null" >
+        regist_address = #{registAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="registTel != null" >
+        regist_tel = #{registTel,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        bank_name = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="bankAccNum != null" >
+        bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      </if>
+      <if test="receName != null" >
+        rece_name = #{receName,jdbcType=VARCHAR},
+      </if>
+      <if test="consigneeTel != null" >
+        consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProv != null" >
+        address_prov = #{addressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        address_city = #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCou != null" >
+        address_cou = #{addressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="addressDetail != null" >
+        address_detail = #{addressDetail,jdbcType=VARCHAR},
+      </if>
+      <if test="zipCode != null" >
+        zip_code = #{zipCode,jdbcType=VARCHAR},
+      </if>
+      <if test="applNum != null" >
+        appl_num = #{applNum,jdbcType=VARCHAR},
+      </if>
+      <if test="applDate != null" >
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawDate != null" >
+        draw_date = #{drawDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="drawAmount != null" >
+        draw_amount = #{drawAmount,jdbcType=DOUBLE},
+      </if>
+      <if test="invoState != null" >
+        invo_state = #{invoState,jdbcType=VARCHAR},
+      </if>
+      <if test="invoContentType != null" >
+        invo_content_type = #{invoContentType,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsCompName != null" >
+        logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      </if>
+      <if test="logisticsNum != null" >
+        logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      </if>
+      <if test="entryOpenInvoType != null" >
+        entry_open_invo_type = #{entryOpenInvoType,jdbcType=VARCHAR},
+      </if>
+      <if test="applRemarks != null" >
+        appl_remarks = #{applRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="openInvoRemarks != null" >
+        open_invo_remarks = #{openInvoRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.LocalityOrdInvo" >
+    update locality_ord_invo
+    set ord_id = #{ordId,jdbcType=BIGINT},
+      invo_type = #{invoType,jdbcType=VARCHAR},
+      invo_form = #{invoForm,jdbcType=VARCHAR},
+      invo_catg_type = #{invoCatgType,jdbcType=VARCHAR},
+      invo_title = #{invoTitle,jdbcType=VARCHAR},
+      tax_ident_num = #{taxIdentNum,jdbcType=VARCHAR},
+      regist_address = #{registAddress,jdbcType=VARCHAR},
+      regist_tel = #{registTel,jdbcType=VARCHAR},
+      bank_name = #{bankName,jdbcType=VARCHAR},
+      bank_acc_num = #{bankAccNum,jdbcType=VARCHAR},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      consignee_tel = #{consigneeTel,jdbcType=VARCHAR},
+      address_prov = #{addressProv,jdbcType=VARCHAR},
+      address_city = #{addressCity,jdbcType=VARCHAR},
+      address_cou = #{addressCou,jdbcType=VARCHAR},
+      address_detail = #{addressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      appl_num = #{applNum,jdbcType=VARCHAR},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      draw_date = #{drawDate,jdbcType=TIMESTAMP},
+      draw_amount = #{drawAmount,jdbcType=DOUBLE},
+      invo_state = #{invoState,jdbcType=VARCHAR},
+      invo_content_type = #{invoContentType,jdbcType=VARCHAR},
+      logistics_comp_name = #{logisticsCompName,jdbcType=VARCHAR},
+      logistics_num = #{logisticsNum,jdbcType=VARCHAR},
+      entry_open_invo_type = #{entryOpenInvoType,jdbcType=VARCHAR},
+      appl_remarks = #{applRemarks,jdbcType=VARCHAR},
+      open_invo_remarks = #{openInvoRemarks,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.OrdInvoInfoVo" parameterType="java.lang.Long" >
+    SELECT
+      t1.id                      id,
+      t1.ord_id                  ordId,
+      t1.invo_type               invoType,
+      t1.invo_form               invoForm,
+      t1.invo_catg_type          invoCatgType,
+      t1.invo_title              invoTitle,
+      t1.tax_ident_num           taxIdentNum,
+      t1.regist_address          registAddress,
+      t1.regist_tel              registTel,
+      t1.bank_name               bankName,
+      t1.bank_acc_num            bankAccNum,
+      t1.rece_name               receName,
+      t1.consignee_tel           consigneeTel,
+      s1.name                    prov,
+      s3.name                    city,
+      s2.name                    cou,
+      t1.address_prov,
+      t1.address_city,
+      t1.address_cou,
+      t1.address_detail          addressDetail,
+      t1.logistics_comp_name,
+      t1.logistics_num,
+      t1.appl_remarks,
+      t1.open_invo_remarks,
+      t1.entry_open_invo_type,
+      t1.zip_code                zipCode,
+      t1.appl_num                applNum,
+      t1.appl_date               applDate,
+      t1.draw_date               drawDate,
+      t1.draw_amount             drawAmount,
+      t1.invo_state              invoState,
+      t1.invo_content_type       invoContentType,
+      t2.buyer_id,
+      t2.ord_num,
+      t2.refer_ord_date,
+      t3.login_name,
+      t3.entp_name
+    from locality_ord_invo t1
+      left join sys_area s1
+        on s1.code = t1.address_prov
+      left join sys_area s2
+        on s2.code = t1.address_cou
+      left join sys_area s3
+        on s3.code = t1.address_city
+      LEFT JOIN locality_order_info t2
+        ON t1.ord_id = t2.id
+      JOIN memb_info t3
+        ON t3.id = t2.buyer_id
+    where t1.del_flag = '0'
+      and t1.id = #{id}
+  </select>
+</mapper>

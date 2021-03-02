@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.PjcsmxMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_attri_name" property="commAttriName" jdbcType="VARCHAR" />
+    <result column="comm_attri_column" property="commAttriColumn" jdbcType="VARCHAR" />
+    <result column="comm_attri_type" property="commAttriType" jdbcType="VARCHAR" />
+    <result column="length" property="length" jdbcType="INTEGER" />
+    <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+    <result column="decimal_dig" property="decimalDig" jdbcType="INTEGER" />
+    <result column="max_val" property="maxVal" jdbcType="DOUBLE" />
+    <result column="min_val" property="minVal" jdbcType="DOUBLE" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.tp.PjcsmxMage" extends="BaseResultMap" >
+    <result column="dict_val" property="dictVal" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_attri_name, comm_attri_column, comm_attri_type, length, effe_inval_state,
+    decimal_dig, max_val, min_val, sort, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    dict_val
+  </sql>
+    <!--查询属性的集合-->
+    <select id="beforeInsertAttriList" resultType="com.wisea.cultivar.common.vo.tp.product.PjcsmxMageGetVo">
+        SELECT id,comm_attri_name,comm_attri_column,effe_inval_state AS effeInvalState
+        FROM pjcsmx_mage
+        WHERE del_flag != '1'
+    </select>
+    <!--属性字段的唯一验证-->
+    <select id="getAttriColumnOnlyState" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage"
+            resultType="com.wisea.cultivar.common.vo.tp.product.PjcsmxMageGetVo">
+        SELECT comm_attri_column
+        FROM pjcsmx_mage
+        WHERE comm_attri_column = #{commAttriColumn} AND del_flag != '1'
+    </select>
+    <!--查询商品分类的集合-->
+    <select id="beforeInsertGetCatgList" resultType="com.wisea.cultivar.common.entity.tp.CommTree">
+        SELECT id,pid AS parentId,pids,comm_num,comm_catg_name,effe_inval_state
+        FROM comm_mage
+        WHERE del_flag != '1'
+    </select>
+    <!--查询评价属性列表-->
+    <select id="selectList" parameterType="com.wisea.cultivar.common.po.tp.product.PjcsmxMagePo"
+            resultType="com.wisea.cultivar.common.vo.tp.product.PjcsmxMageListVo">
+        SELECT
+        distinct t1.id,
+        t1.comm_attri_name,
+        t1.comm_attri_column,
+        t1.comm_attri_type,
+        t1.length,
+        t1.effe_inval_state,
+        t1.sort
+        FROM
+        pjcsmx_mage AS t1
+        LEFT JOIN pjcsmx_set AS t2 ON t1.id = t2.pjcs_id
+        <where>
+            <if test="commAttriName != null and commAttriName != '' ">
+                AND instr(t1.comm_attri_name,#{commAttriName}) != 0
+            </if>
+            <if test="effeInvalState != null and effeInvalState != '' ">
+                AND instr(t1.effe_inval_state,#{effeInvalState}) != 0
+            </if>
+            AND t1.del_flag != '1'
+        </where>
+        ORDER BY t1.sort ASC
+    </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pjcsmx_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from pjcsmx_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    insert into pjcsmx_mage (id, comm_attri_name, comm_attri_column,
+      comm_attri_type, length, effe_inval_state,
+      decimal_dig, max_val, min_val,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, dict_val)
+    values (#{id,jdbcType=BIGINT}, #{commAttriName,jdbcType=VARCHAR}, #{commAttriColumn,jdbcType=VARCHAR},
+      #{commAttriType,jdbcType=VARCHAR}, #{length,jdbcType=INTEGER}, #{effeInvalState,jdbcType=VARCHAR},
+      #{decimalDig,jdbcType=INTEGER}, #{maxVal,jdbcType=DOUBLE}, #{minVal,jdbcType=DOUBLE},
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{dictVal,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    insert into pjcsmx_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commAttriName != null" >
+        comm_attri_name,
+      </if>
+      <if test="commAttriColumn != null" >
+        comm_attri_column,
+      </if>
+      <if test="commAttriType != null" >
+        comm_attri_type,
+      </if>
+      <if test="length != null" >
+        length,
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state,
+      </if>
+      <if test="decimalDig != null" >
+        decimal_dig,
+      </if>
+      <if test="maxVal != null" >
+        max_val,
+      </if>
+      <if test="minVal != null" >
+        min_val,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="dictVal != null" >
+        dict_val,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commAttriName != null" >
+        #{commAttriName,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriColumn != null" >
+        #{commAttriColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriType != null" >
+        #{commAttriType,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        #{length,jdbcType=INTEGER},
+      </if>
+      <if test="effeInvalState != null" >
+        #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="decimalDig != null" >
+        #{decimalDig,jdbcType=INTEGER},
+      </if>
+      <if test="maxVal != null" >
+        #{maxVal,jdbcType=DOUBLE},
+      </if>
+      <if test="minVal != null" >
+        #{minVal,jdbcType=DOUBLE},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="dictVal != null" >
+        #{dictVal,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    update pjcsmx_mage
+    <set >
+      <if test="commAttriName != null" >
+        comm_attri_name = #{commAttriName,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriColumn != null" >
+        comm_attri_column = #{commAttriColumn,jdbcType=VARCHAR},
+      </if>
+      <if test="commAttriType != null" >
+        comm_attri_type = #{commAttriType,jdbcType=VARCHAR},
+      </if>
+      <if test="length != null" >
+        length = #{length,jdbcType=INTEGER},
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="decimalDig != null" >
+        decimal_dig = #{decimalDig,jdbcType=INTEGER},
+      </if>
+      <if test="maxVal != null" >
+        max_val = #{maxVal,jdbcType=DOUBLE},
+      </if>
+      <if test="minVal != null" >
+        min_val = #{minVal,jdbcType=DOUBLE},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="dictVal != null" >
+        dict_val = #{dictVal,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    update pjcsmx_mage
+    set comm_attri_name = #{commAttriName,jdbcType=VARCHAR},
+      comm_attri_column = #{commAttriColumn,jdbcType=VARCHAR},
+      comm_attri_type = #{commAttriType,jdbcType=VARCHAR},
+      length = #{length,jdbcType=INTEGER},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      decimal_dig = #{decimalDig,jdbcType=INTEGER},
+      max_val = #{maxVal,jdbcType=DOUBLE},
+      min_val = #{minVal,jdbcType=DOUBLE},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      dict_val = #{dictVal,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    update pjcsmx_mage
+    set comm_attri_name = #{commAttriName,jdbcType=VARCHAR},
+      comm_attri_column = #{commAttriColumn,jdbcType=VARCHAR},
+      comm_attri_type = #{commAttriType,jdbcType=VARCHAR},
+      length = #{length,jdbcType=INTEGER},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      decimal_dig = #{decimalDig,jdbcType=INTEGER},
+      max_val = #{maxVal,jdbcType=DOUBLE},
+      min_val = #{minVal,jdbcType=DOUBLE},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pjcsmx_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from pjcsmx_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.PjcsmxMage" >
+    update pjcsmx_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

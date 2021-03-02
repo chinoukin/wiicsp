@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.KnowledgeBaseMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.KnowledgeBaseMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="catg_type" property="catgType" jdbcType="VARCHAR" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="info_sources" property="infoSources" jdbcType="VARCHAR" />
+    <result column="outline" property="outline" jdbcType="VARCHAR" />
+    <result column="if_show" property="ifShow" jdbcType="VARCHAR" />
+    <result column="rele_date" property="releDate" jdbcType="TIMESTAMP" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.plant.entity.KnowledgeBaseMage" extends="BaseResultMap" >
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, catg_type, key_word, info_sources, outline, if_show, rele_date, views,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <sql id="Blob_Column_List" >
+    content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from knowledge_base_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from knowledge_base_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.KnowledgeBaseMage" >
+    insert into knowledge_base_mage (id, title, catg_type,
+      key_word, info_sources, outline,
+      if_show, rele_date, views,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,
+      content)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{catgType,jdbcType=VARCHAR},
+      #{keyWord,jdbcType=VARCHAR}, #{infoSources,jdbcType=VARCHAR}, #{outline,jdbcType=VARCHAR},
+      #{ifShow,jdbcType=VARCHAR}, #{releDate,jdbcType=TIMESTAMP}, #{views,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.KnowledgeBaseMage" >
+    insert into knowledge_base_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="catgType != null" >
+        catg_type,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="infoSources != null" >
+        info_sources,
+      </if>
+      <if test="outline != null" >
+        outline,
+      </if>
+      <if test="ifShow != null" >
+        if_show,
+      </if>
+      <if test="releDate != null" >
+        rele_date,
+      </if>
+      <if test="views != null" >
+        views,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="catgType != null" >
+        #{catgType,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="infoSources != null" >
+        #{infoSources,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null" >
+        #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="releDate != null" >
+        #{releDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="views != null" >
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.KnowledgeBaseMage" >
+    update knowledge_base_mage
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="catgType != null" >
+        catg_type = #{catgType,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="infoSources != null" >
+        info_sources = #{infoSources,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null" >
+        outline = #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        if_show = #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="releDate != null" >
+        rele_date = #{releDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="views != null" >
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.KnowledgeBaseMage" >
+    update knowledge_base_mage
+    set title = #{title,jdbcType=VARCHAR},
+      catg_type = #{catgType,jdbcType=VARCHAR},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      info_sources = #{infoSources,jdbcType=VARCHAR},
+      outline = #{outline,jdbcType=VARCHAR},
+      if_show = #{ifShow,jdbcType=VARCHAR},
+      rele_date = #{releDate,jdbcType=TIMESTAMP},
+      views = #{views,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.KnowledgeBaseMagePageListVo" parameterType="com.wisea.cultivar.plant.po.KnowledgeBaseMagePageListPo" >
+    select
+      k.id id,
+	  k.title title,
+	  k.catg_type catgType,
+	  k.key_word keyWord,
+	  k.info_sources infoSources,
+	  k.outline outline,
+	  k.if_show ifShow,
+	  k.rele_date releDate,
+	  k.views views
+	from
+	  knowledge_base_mage k
+    <where>
+      k.del_flag = '0' and k.catg_type=#{catgType} and k.if_show='0'
+    <if test="title != null and title != '' ">
+      AND title like concat('%',#{title},'%')
+    </if>
+    </where>
+    ORDER BY k.rele_date desc
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.KnowledgeBaseMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  title title,
+	  catg_type catgType,
+	  key_word keyWord,
+	  info_sources infoSources,
+	  outline outline,
+	  if_show ifShow,
+	  rele_date releDate,
+	  content content,
+	  views views
+	from
+	  knowledge_base_mage
+	where
+	  del_flag = '0'
+	  and id = #{id} AND if_show='0'
+  </select>
+  <update id="updateViewsByKey" parameterType="java.lang.Long">
+    update knowledge_base_mage set views=views+1 where id=#{id}
+  </update>
+</mapper>

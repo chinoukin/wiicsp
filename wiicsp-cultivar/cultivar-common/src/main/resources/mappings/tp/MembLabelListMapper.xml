@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.MembLabelListMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.MembLabelList">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="label_catg_type" property="labelCatgType" jdbcType="VARCHAR"/>
+        <result column="cert_type" property="certType" jdbcType="VARCHAR"/>
+        <result column="label_name" property="labelName" jdbcType="VARCHAR"/>
+        <result column="alredy_act_url" property="alredyActUrl" jdbcType="VARCHAR"/>
+        <result column="not_act_url" property="notActUrl" jdbcType="VARCHAR"/>
+        <result column="label_desc" property="labelDesc" jdbcType="VARCHAR"/>
+        <result column="sort" property="sort" jdbcType="INTEGER"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, label_catg_type,cert_type,label_name, alredy_act_url, not_act_url, label_desc, sort, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_label_list
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from memb_label_list
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.MembLabelList">
+    insert into memb_label_list (id, label_catg_type, cert_type, label_name,
+      alredy_act_url, not_act_url, label_desc,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{labelCatgType,jdbcType=VARCHAR},#{certType,jdbcType=VARCHAR}, #{labelName,jdbcType=VARCHAR},
+      #{alredyActUrl,jdbcType=VARCHAR}, #{notActUrl,jdbcType=VARCHAR}, #{labelDesc,jdbcType=VARCHAR},
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.MembLabelList">
+        insert into memb_label_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="labelCatgType != null">
+                label_catg_type,
+            </if>
+            <if test="labelName != null">
+                label_name,
+            </if>
+            <if test="alredyActUrl != null">
+                alredy_act_url,
+            </if>
+            <if test="notActUrl != null">
+                not_act_url,
+            </if>
+            <if test="labelDesc != null">
+                label_desc,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="labelCatgType != null">
+                #{labelCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="labelName != null">
+                #{labelName,jdbcType=VARCHAR},
+            </if>
+            <if test="alredyActUrl != null">
+                #{alredyActUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="notActUrl != null">
+                #{notActUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="labelDesc != null">
+                #{labelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.MembLabelList">
+        update memb_label_list
+        <set>
+            <if test="labelCatgType != null">
+                label_catg_type = #{labelCatgType,jdbcType=VARCHAR},
+            </if>
+            cert_type = #{certType,jdbcType=VARCHAR},
+            <if test="labelName != null">
+                label_name = #{labelName,jdbcType=VARCHAR},
+            </if>
+            <if test="alredyActUrl != null">
+                alredy_act_url = #{alredyActUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="notActUrl != null">
+                not_act_url = #{notActUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="labelDesc != null">
+                label_desc = #{labelDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.MembLabelList">
+    update memb_label_list
+    set label_catg_type = #{labelCatgType,jdbcType=VARCHAR},
+      label_name = #{labelName,jdbcType=VARCHAR},
+      alredy_act_url = #{alredyActUrl,jdbcType=VARCHAR},
+      not_act_url = #{notActUrl,jdbcType=VARCHAR},
+      label_desc = #{labelDesc,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.MembLabelListListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.MembLabelListPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_label_list
+        where del_flag = '0'
+    </select>
+    <!-- 查询会员标签列表信息 -->
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.MembLabelListListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.MembLabelListListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_label_list
+        where del_flag = '0'
+        <if test="labelCatgType != null and labelCatgType != ''">
+            AND label_catg_type = #{labelCatgType,jdbcType=VARCHAR}
+        </if>
+        <if test="useFlag != null and useFlag == '1'.toString()">
+        	AND label_catg_type in ('0','2','3','4')
+        </if>
+        ORDER BY sort
+    </select>
+    <!-- 查询会员标签详细信息 -->
+    <select id="getDetailById" resultType="com.wisea.cultivar.common.vo.tp.MembLabelListGetVo" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from memb_label_list
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.MembLabelList">
+    update memb_label_list
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- app端查询产地联盟的tablist -->
+  <select id="findLableTabList" resultType="com.wisea.cultivar.common.vo.tp.MembLabelListGetVo">
+  	SELECT * FROM memb_label_list
+	WHERE del_flag = '0' AND label_catg_type = '0' AND cert_type = '1'
+	ORDER BY sort ASC
+  </select>
+</mapper>

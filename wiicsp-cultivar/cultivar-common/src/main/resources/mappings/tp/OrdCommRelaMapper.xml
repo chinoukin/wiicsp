@@ -1,0 +1,586 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.OrdCommRelaMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.OrdCommRela">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+        <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+        <result column="import_bill_id" property="importBillId" jdbcType="BIGINT" />
+        <result column="count" property="count" jdbcType="INTEGER" />
+        <result column="price" property="price" jdbcType="DOUBLE" />
+        <result column="comm_art_num" property="commArtNum" jdbcType="VARCHAR" />
+        <result column="comm_url" property="commUrl" jdbcType="VARCHAR" />
+        <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+        <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+        <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+        <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+        <result column="platf_cost" property="platfCost" jdbcType="DOUBLE" />
+        <result column="comm_spec" property="commSpec" jdbcType="DOUBLE" />
+        <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR" />
+        <result column="pref_amount" property="prefAmount" jdbcType="DOUBLE" />
+        <result column="ysbz_bds" property="ysbzBds" jdbcType="VARCHAR" />
+        <result column="comm_level_type" property="commLevelType" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, ord_id, comm_pub_id, import_bill_id, count, price, comm_art_num, comm_url, comm_name,
+        create_by, create_date, update_by, update_date, remarks, del_flag, platf_cost, comm_spec,
+        meas_unit_name, pref_amount, ysbz_bds, comm_level_type
+    </sql>
+    <!-- 批量更新订单商品单价 -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        UPDATE
+        ord_comm_rela
+        SET
+        price =
+        CASE id
+        <foreach collection="list" index="index" item="item" separator=" ">
+            WHEN #{item.id} THEN #{item.price}
+        </foreach>
+        END
+        ,
+        platf_cost =
+        CASE id
+        <foreach collection="list" index="index" item="item" separator=" ">
+            WHEN #{item.id} THEN #{item.platfCost}
+        </foreach>
+        END
+        ,
+        update_date =
+        CASE id
+        <foreach collection="list" index="index" item="item" separator=" ">
+            WHEN #{item.id} THEN #{item.updateDate}
+        </foreach>
+        END
+        ,
+        update_by =
+        CASE id
+        <foreach collection="list" index="index" item="item" separator=" ">
+            WHEN #{item.id} THEN #{item.updateBy}
+        </foreach>
+        END
+        WHERE
+        id IN
+        <foreach collection="list" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
+
+    <!-- 根据订单ID查询订单商品列表 -->
+    <select id="findByOrderIds" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        *
+        from
+        ord_comm_rela ocr
+        where
+        ocr.ord_id in
+        <foreach collection="list" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </select>
+
+    <!-- 根据订单ID查询订单商品列表 -->
+    <select id="findByIds" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        *
+        from
+        ord_comm_rela ocr
+        where
+        ocr.ord_id in (${ordIds})
+    </select>
+
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+        select
+        <include refid="Base_Column_List" />
+        from ord_comm_rela
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ord_comm_rela
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.OrdCommRela" >
+    insert into ord_comm_rela (id, ord_id, comm_pub_id,
+      import_bill_id, count, price,
+      comm_art_num, comm_url, comm_name,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,
+      platf_cost, comm_spec, meas_unit_name,
+      pref_amount, ysbz_bds, comm_level_type
+      )
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT},
+      #{importBillId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE},
+      #{commArtNum,jdbcType=VARCHAR}, #{commUrl,jdbcType=VARCHAR}, #{commName,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{platfCost,jdbcType=DOUBLE}, #{commSpec,jdbcType=DOUBLE}, #{measUnitName,jdbcType=VARCHAR},
+      #{prefAmount,jdbcType=DOUBLE}, #{ysbzBds,jdbcType=VARCHAR}, #{commLevelType,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.OrdCommRela" >
+        insert into ord_comm_rela
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="ordId != null" >
+                ord_id,
+            </if>
+            <if test="commPubId != null" >
+                comm_pub_id,
+            </if>
+            <if test="importBillId != null" >
+                import_bill_id,
+            </if>
+            <if test="count != null" >
+                count,
+            </if>
+            <if test="price != null" >
+                price,
+            </if>
+            <if test="commArtNum != null" >
+                comm_art_num,
+            </if>
+            <if test="commUrl != null" >
+                comm_url,
+            </if>
+            <if test="commName != null" >
+                comm_name,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateBy != null" >
+                update_by,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="remarks != null" >
+                remarks,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+            <if test="platfCost != null" >
+                platf_cost,
+            </if>
+            <if test="commSpec != null" >
+                comm_spec,
+            </if>
+            <if test="measUnitName != null" >
+                meas_unit_name,
+            </if>
+            <if test="prefAmount != null" >
+                pref_amount,
+            </if>
+            <if test="ysbzBds != null" >
+                ysbz_bds,
+            </if>
+            <if test="commLevelType != null" >
+                comm_level_type,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="ordId != null" >
+                #{ordId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubId != null" >
+                #{commPubId,jdbcType=BIGINT},
+            </if>
+            <if test="importBillId != null" >
+                #{importBillId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null" >
+                #{count,jdbcType=INTEGER},
+            </if>
+            <if test="price != null" >
+                #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="commArtNum != null" >
+                #{commArtNum,jdbcType=VARCHAR},
+            </if>
+            <if test="commUrl != null" >
+                #{commUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="commName != null" >
+                #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="platfCost != null" >
+                #{platfCost,jdbcType=DOUBLE},
+            </if>
+            <if test="commSpec != null" >
+                #{commSpec,jdbcType=DOUBLE},
+            </if>
+            <if test="measUnitName != null" >
+                #{measUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="prefAmount != null" >
+                #{prefAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="ysbzBds != null" >
+                #{ysbzBds,jdbcType=VARCHAR},
+            </if>
+            <if test="commLevelType != null" >
+                #{commLevelType,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.OrdCommRela" >
+        update ord_comm_rela
+        <set >
+            <if test="ordId != null" >
+                ord_id = #{ordId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubId != null" >
+                comm_pub_id = #{commPubId,jdbcType=BIGINT},
+            </if>
+            <if test="importBillId != null" >
+                import_bill_id = #{importBillId,jdbcType=BIGINT},
+            </if>
+            <if test="count != null" >
+                count = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="price != null" >
+                price = #{price,jdbcType=DOUBLE},
+            </if>
+            <if test="commArtNum != null" >
+                comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+            </if>
+            <if test="commUrl != null" >
+                comm_url = #{commUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="commName != null" >
+                comm_name = #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="platfCost != null" >
+                platf_cost = #{platfCost,jdbcType=DOUBLE},
+            </if>
+            <if test="commSpec != null" >
+                comm_spec = #{commSpec,jdbcType=DOUBLE},
+            </if>
+            <if test="measUnitName != null" >
+                meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+            </if>
+            <if test="prefAmount != null" >
+                pref_amount = #{prefAmount,jdbcType=DOUBLE},
+            </if>
+            <if test="ysbzBds != null" >
+                ysbz_bds = #{ysbzBds,jdbcType=VARCHAR},
+            </if>
+            <if test="commLevelType != null" >
+                comm_level_type = #{commLevelType,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.OrdCommRela" >
+    update ord_comm_rela
+    set ord_id = #{ordId,jdbcType=BIGINT},
+      comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      import_bill_id = #{importBillId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+      comm_url = #{commUrl,jdbcType=VARCHAR},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      platf_cost = #{platfCost,jdbcType=DOUBLE},
+      comm_spec = #{commSpec,jdbcType=DOUBLE},
+      meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      pref_amount = #{prefAmount,jdbcType=DOUBLE},
+      ysbz_bds = #{ysbzBds,jdbcType=VARCHAR},
+      comm_level_type = #{commLevelType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.OrdCommRelaListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.OrdCommRelaPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from ord_comm_rela
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.OrdCommRelaListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.OrdCommRelaListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from ord_comm_rela
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.OrdCommRela">
+    update ord_comm_rela
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="getCommDetails" parameterType="com.wisea.cultivar.common.po.tp.OrderInfoListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.OrderCommDataVo">
+        SELECT
+        t1.id AS ordId,
+        t2.comm_name,
+        t2.comm_spec,
+        t2.meas_unit_name,
+        t2.count,
+        t2.price,
+        CASE WHEN t3.refund_comm_state IN ('3') THEN t3.refund_counts
+        ELSE '0' END AS refundCounts
+        FROM
+        order_info AS t1
+        LEFT JOIN ord_comm_rela AS t2 ON t2.ord_id = t1.id
+        LEFT JOIN refund_comm_appl AS t3 ON t3.ord_comm_id = t2.id
+        WHERE t1.id = #{ordId}
+        <if test="returnNotes!=null">
+            AND t3.appl_date = (select max(appl_date) from refund_comm_appl where ord_comm_id=t2.id)
+        </if>
+    </select>
+
+    <!-- 提交退货申请详情页 -->
+    <select id="commitRefundCommInvo" resultType="com.wisea.cultivar.common.vo.tp.trade.RefundCommApplCitVo"
+            parameterType="java.lang.Long">
+   	SELECT
+	  t1.id,
+	  t1.ord_id,
+	  t1.comm_pub_id,
+	  t1.count,
+	  t1.price,
+	  t1.platf_cost,
+	  t1.comm_name,
+	  t1.comm_spec,
+	  t1.comm_url,
+	  t1.comm_art_num,
+	  t1.meas_unit_name,
+	  t2.seller_id,
+	  t2.ord_num,
+	  t2.buyer_id,
+	  t2.confirm_date,
+	  t2.order_state_type,
+	  t2.pay_method_type,
+	  t2.deposit_amount,
+	  t2.tail_amount,
+	  t3.comp_name      AS sellerCompName,
+	  CASE WHEN t4.refundCount IS NULL THEN (t1.count) ELSE 0 END subCount
+	FROM ord_comm_rela t1
+	  LEFT JOIN order_info t2
+	    ON t2.id = t1.ord_id
+	  LEFT JOIN entp_data_info t3
+	    ON t3.memb_id = t2.seller_id
+	    AND t3.auth_exam_state = '1'
+	    AND t3.del_flag = '0'
+	  LEFT JOIN (SELECT
+               CASE WHEN SUM(refund_counts) IS NULL THEN 1 ELSE SUM(refund_counts) END refundCount,
+               ord_comm_id
+             FROM refund_comm_appl
+             WHERE del_flag = '0'
+                 AND (refund_comm_state IN('0','1','2','3'))
+                 GROUP BY ord_comm_id) t4
+	    ON t1.id = t4.ord_comm_id
+	WHERE 1 = 1
+	and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into ord_comm_rela (id, ord_id, comm_pub_id,
+	      import_bill_id, count, price,
+	      comm_art_num, comm_url, comm_name,
+	      create_by, create_date, update_by,
+	      update_date, remarks, del_flag,
+	      platf_cost, comm_spec, meas_unit_name,
+	      pref_amount, ysbz_bds, comm_level_type)
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id,jdbcType=BIGINT}, #{item.ordId,jdbcType=BIGINT}, #{item.commPubId,jdbcType=BIGINT},
+	      #{item.importBillId,jdbcType=BIGINT}, #{item.count,jdbcType=INTEGER}, #{item.price,jdbcType=DOUBLE},
+	      #{item.commArtNum,jdbcType=VARCHAR}, #{item.commUrl,jdbcType=VARCHAR}, #{item.commName,jdbcType=VARCHAR},
+	      #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+	      #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR},
+	      #{item.platfCost,jdbcType=DOUBLE}, #{item.commSpec,jdbcType=DOUBLE}, #{item.measUnitName,jdbcType=VARCHAR},
+	      #{item.prefAmount,jdbcType=DOUBLE}, #{item.ysbzBds,jdbcType=VARCHAR}, #{item.commLevelType,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <!--根据订单的ID查询订单商品信息  -->
+    <select id="findOrdCommPubInfoList" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from ord_comm_rela
+        where ord_id = #{ordId,jdbcType=BIGINT}
+        AND del_flag = '0'
+    </select>
+
+    <!-- 查询商品销售统计 -->
+    <select id="statisComm" resultType="com.wisea.cultivar.common.vo.tp.statistics.CommStaticsVo"
+            parameterType="com.wisea.cultivar.common.po.tp.statistics.CommStatisTimePo">
+        SELECT
+        COUNT(DISTINCT(t2.buyer_id)) as personPayCount,
+        SUM(t1.count) as saleCount,
+        ROUND(SUM(t1.count*t1.price),2) AS saleNum,
+        t3.comm_name,
+        t4.comp_name
+        FROM ord_comm_rela t1
+        LEFT JOIN order_info t2
+        ON t1.ord_id = t2.id
+        LEFT JOIN comm_pub_info t3
+        ON t3.id = t1.comm_pub_id
+        LEFT JOIN entp_data_info t4
+        ON t4.memb_id = t2.seller_id
+        WHERE order_state_type IN ('2', '3', '4','6')
+        <if test="timeStart != null">
+            AND t2.refer_ord_date >= #{timeStart}
+        </if>
+        <if test="timeEnd != null">
+            AND t2.refer_ord_date &lt;= #{timeEnd}
+        </if>
+        <if test="sellerId != null and sellerId !=''">
+            AND t2.seller_id = #{sellerId}
+        </if>
+        GROUP BY t2.seller_id, t1.comm_pub_id
+        ORDER BY SUM(t1.count * t1.price) desc
+    </select>
+
+    <!-- 查询热卖商品销售统计 -->
+    <select id="statisCommHot" resultType="com.wisea.cultivar.common.vo.tp.statistics.CommStaticsVo"
+            parameterType="com.wisea.cultivar.common.po.tp.statistics.CommStatisTimePo">
+        SELECT
+        COUNT(DISTINCT(t2.buyer_id)) as personPayCount,
+        SUM(t1.count) as saleCount,
+        ROUND(SUM(t1.count*t1.price),2) AS saleNum,
+        t3.comm_name,
+        t4.comp_name
+        FROM ord_comm_rela t1
+        LEFT JOIN order_info t2
+        ON t1.ord_id = t2.id
+        LEFT JOIN comm_pub_info t3
+        ON t3.id = t1.comm_pub_id
+        LEFT JOIN entp_data_info t4
+        ON t4.memb_id = t2.seller_id
+        WHERE t2.order_state_type IN ('0', '1', '2', '3','4','6')
+        <if test="timeStart != null">
+            AND t2.refer_ord_date >= #{timeStart}
+        </if>
+        <if test="timeEnd != null">
+            AND t2.refer_ord_date &lt;= #{timeEnd}
+        </if>
+        <if test="sellerId != null and sellerId !=''">
+            AND t2.seller_id = #{sellerId}
+        </if>
+        GROUP BY t2.seller_id, t1.comm_pub_id
+        <if test="seleckey != null and seleckey == '1'">
+            ORDER BY SUM(t1.count) desc
+        </if>
+        <if test="seleckey != null and seleckey == '0'">
+            ORDER BY SUM(t1.count * t1.price) desc
+        </if>
+        limit 10
+    </select>
+
+    <!-- 山系、树龄销售统计 -->
+    <select id="staticsMoutOrShuling" parameterType="com.wisea.cultivar.common.po.tp.statistics.CommStatisTimePo"
+            resultType="com.wisea.cultivar.common.vo.tp.statistics.MountainStatisVo">
+        SELECT
+        t4.name AS staticsName,
+        SUM(t1.count) AS saleCount,
+        ROUND(SUM(t1.count*t1.price),2) AS saleNum
+        FROM
+        ord_comm_rela t1
+        INNER JOIN comm_attri t2 ON t1.comm_pub_id = t2.comm_pub_id
+        INNER JOIN order_info t3 ON t1.ord_id = t3.id
+        INNER JOIN (
+        SELECT
+        SUBSTR(NAME, 1, LOCATE(':', NAME) - 1) AS NAME,
+        SUBSTR(
+        NAME,
+        LOCATE(':', NAME) + 1,
+        LOCATE(',', NAME) - LOCATE(':', NAME) - 1
+        ) AS CODE
+        FROM
+        (
+        SELECT DISTINCT
+        SUBSTRING_INDEX(
+        SUBSTRING_INDEX(
+        a.dict_val,
+        ';',
+        b.help_topic_id + 1
+        ),
+        ';' ,- 1
+        ) NAME
+        FROM
+        comm_attri_mage a
+        JOIN topic b ON b.help_topic_id &lt; (
+        LENGTH(a.dict_val) - LENGTH(REPLACE(a.dict_val, ';', '')) + 1
+        )
+        WHERE
+        <if test="seachkey =='0'.toString()">
+            a.comm_attri_name = "茶山"
+        </if>
+        <if test="seachkey =='1'.toString()">
+            a.comm_attri_name = "树龄"
+        </if>
+        ) a
+        ) t4 ON t2.comm_attri_val = t4.code
+        WHERE
+        t3.order_state_type IN ('0', '1', '2', '3', '4', '6')
+        <if test="seachkey =='0'.toString()">
+            AND t2.comm_attri_name = "茶山"
+        </if>
+        <if test="seachkey =='1'.toString()">
+            AND t2.comm_attri_name = "树龄"
+        </if>
+        <if test="timeStart != null">
+            AND t3.refer_ord_date >= #{timeStart}
+        </if>
+        <if test="timeEnd!= null">
+            AND t3.refer_ord_date &lt;= #{timeEnd}
+        </if>
+        AND t2.comm_attri_val IS NOT NULL
+        GROUP BY t4.name
+    </select>
+</mapper>

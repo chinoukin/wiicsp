@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.ExamRecdRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRela" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <id column="mine_arch_id" property="mineArchId" jdbcType="BIGINT" />
+    <result column="arch_id" property="archId" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <resultMap id="ExamRecdMap" type="com.wisea.cultivar.plant.vo.oritrapla.ExamRecdVo" >
+    <result column="examRecdId" property="examRecdId" jdbcType="BIGINT" />
+    <result column="mine_arch_id" property="mineArchId" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="examId" property="examId" jdbcType="BIGINT" />
+    <result column="exam_conc" property="examConc" jdbcType="VARCHAR" />
+    <result column="exam_date" property="examDate" jdbcType="TIMESTAMP" />
+    <result column="exam_mode_type" property="examModeType" jdbcType="VARCHAR" />
+    <result column="exam_org" property="examOrg" jdbcType="VARCHAR" />
+    <result column="exam_conc" property="examConc" jdbcType="VARCHAR" />
+    <result column="exam_prjet" property="examPrjet" jdbcType="VARCHAR" />
+    <result column="exam_result_type" property="examResultType" jdbcType="VARCHAR" />
+    <collection property="examReportPicture" ofType="com.wisea.cultivar.plant.entity.oritrapla.ExamReportPicture">
+    	<result column="url" property="url" jdbcType="VARCHAR" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, mine_arch_id, arch_id, memb_id, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRelaKey" >
+    select
+    <include refid="Base_Column_List" />
+    from exam_recd_rela
+    where id = #{id,jdbcType=BIGINT}
+      and mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRelaKey" >
+    delete from exam_recd_rela
+    where id = #{id,jdbcType=BIGINT}
+      and mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRela" >
+    insert into exam_recd_rela (id, mine_arch_id, arch_id,
+      memb_id, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{mineArchId,jdbcType=BIGINT}, #{archId,jdbcType=BIGINT},
+      #{membId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRela" >
+    insert into exam_recd_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="mineArchId != null" >
+        mine_arch_id,
+      </if>
+      <if test="archId != null" >
+        arch_id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="mineArchId != null" >
+        #{mineArchId,jdbcType=BIGINT},
+      </if>
+      <if test="archId != null" >
+        #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRela" >
+    update exam_recd_rela
+    <set >
+      <if test="archId != null" >
+        arch_id = #{archId,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+      and mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.ExamRecdRela" >
+    update exam_recd_rela
+    set arch_id = #{archId,jdbcType=BIGINT},
+      memb_id = #{membId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+      and mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+  </update>
+  <!-- 根据检测记录关系查询 -->
+  <select id="examRecdList" parameterType="com.wisea.cultivar.plant.po.oritrapla.ExamRecdRelaKeyVo" resultMap="ExamRecdMap">
+  	SELECT
+  	  t1.id           as    examRecdId,
+  	  t1.mine_arch_id,
+  	  t1.memb_id,
+  	  t2.id           as    examId,
+	  t2.exam_conc,
+	  t2.exam_date,
+	  t2.exam_mode_type,
+	  t2.exam_org,
+	  t2.exam_prjet,
+	  t2.exam_result_type,
+	  t2.recd_belong_memb_id,
+	  t3.url
+	from exam_recd_rela t1
+		<if test="flag == '0'.toString()">
+	  		inner join ori_exam_recd t2
+	  	</if>
+	  	<if test="flag == '1'.toString()">
+	  		left join ori_exam_recd t2
+	  	</if>
+	    on t1.id = t2.exam_recd_rela_id
+	    and t2.del_flag = '0'
+	  left join exam_report_picture t3
+	    on t3.exam_recd_id = t2.id
+	    and t3.del_flag = '0'
+	   where 1=1
+	   <if test="mineArchId != null and mineArchId != ''">
+	     and t1.mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+	   </if>
+	   <if test="id != null and id != ''">
+	     and t1.id = #{id,jdbcType=BIGINT}
+	   </if>
+	   <if test="membId != null and membId != ''">
+	     and t1.memb_id = #{membId,jdbcType=BIGINT}
+	   </if>
+	   order by t2.exam_date desc,
+      t3.remarks+0 asc
+  </select>
+
+  <!-- 根据检测记录关系查询检测关系 -->
+  <select id="examRecdListByKey" parameterType="com.wisea.cultivar.plant.po.oritrapla.ExamRecdRelaKeyVo" resultMap="ExamRecdMap">
+  	SELECT
+  	  t1.id           as    examRecdId,
+  	  t1.mine_arch_id,
+  	  t1.memb_id
+	from exam_recd_rela t1
+	   where 1=1
+	   <if test="mineArchId != null and mineArchId != ''">
+	     and t1.mine_arch_id = #{mineArchId,jdbcType=BIGINT}
+	   </if>
+	   <if test="id != null and id != ''">
+	     and t1.id = #{id,jdbcType=BIGINT}
+	   </if>
+	   <if test="membId != null and membId != ''">
+	     and t1.memb_id = #{membId,jdbcType=BIGINT}
+	   </if>
+  </select>
+
+  <!-- 批量插入 -->
+  <insert id="bethInsert" parameterType="java.util.List" >
+    insert into exam_recd_rela (id, mine_arch_id, arch_id,
+      memb_id, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+       values
+    <foreach collection ="list" item="item" index= "index" separator =",">
+      (#{item.id,jdbcType=BIGINT}, #{item.mineArchId,jdbcType=BIGINT}, #{item.archId,jdbcType=BIGINT},
+      #{item.membId,jdbcType=BIGINT}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR})
+    </foreach >
+  </insert>
+</mapper>

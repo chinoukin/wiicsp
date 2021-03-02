@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.HpCatgMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pid" property="pid" jdbcType="BIGINT" />
+    <result column="pids" property="pids" jdbcType="VARCHAR" />
+    <result column="comm_num" property="commNum" jdbcType="VARCHAR" />
+    <result column="parent_catg_name" property="parentCatgName" jdbcType="VARCHAR" />
+    <result column="catg_name" property="catgName" jdbcType="VARCHAR" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="catg_icon_url" property="catgIconUrl" jdbcType="VARCHAR" />
+    <result column="key_word" property="keyWord" jdbcType="VARCHAR" />
+    <result column="catg_remarks" property="catgRemarks" jdbcType="VARCHAR" />
+    <result column="if_show" property="ifShow" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, pid, pids, comm_num, parent_catg_name, catg_name, enable_flag, sort, catg_icon_url,
+    key_word, catg_remarks, if_show, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from hp_catg
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from hp_catg
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    insert into hp_catg (id, pid, pids,
+      comm_num, parent_catg_name, catg_name,
+      enable_flag, sort, catg_icon_url,
+      key_word, catg_remarks, if_show,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{pids,jdbcType=VARCHAR},
+      #{commNum,jdbcType=VARCHAR}, #{parentCatgName,jdbcType=VARCHAR}, #{catgName,jdbcType=VARCHAR},
+      #{enableFlag,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{catgIconUrl,jdbcType=VARCHAR},
+      #{keyWord,jdbcType=VARCHAR}, #{catgRemarks,jdbcType=VARCHAR}, #{ifShow,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    insert into hp_catg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pids != null" >
+        pids,
+      </if>
+      <if test="commNum != null" >
+        comm_num,
+      </if>
+      <if test="parentCatgName != null" >
+        parent_catg_name,
+      </if>
+      <if test="catgName != null" >
+        catg_name,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="catgIconUrl != null" >
+        catg_icon_url,
+      </if>
+      <if test="keyWord != null" >
+        key_word,
+      </if>
+      <if test="catgRemarks != null" >
+        catg_remarks,
+      </if>
+      <if test="ifShow != null" >
+        if_show,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pids != null" >
+        #{pids,jdbcType=VARCHAR},
+      </if>
+      <if test="commNum != null" >
+        #{commNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCatgName != null" >
+        #{parentCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null" >
+        #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="catgIconUrl != null" >
+        #{catgIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="catgRemarks != null" >
+        #{catgRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    update hp_catg
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pids != null" >
+        pids = #{pids,jdbcType=VARCHAR},
+      </if>
+      <if test="commNum != null" >
+        comm_num = #{commNum,jdbcType=VARCHAR},
+      </if>
+      <if test="parentCatgName != null" >
+        parent_catg_name = #{parentCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null" >
+        catg_name = #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="catgIconUrl != null" >
+        catg_icon_url = #{catgIconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="keyWord != null" >
+        key_word = #{keyWord,jdbcType=VARCHAR},
+      </if>
+      <if test="catgRemarks != null" >
+        catg_remarks = #{catgRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        if_show = #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    update hp_catg
+    set pid = #{pid,jdbcType=BIGINT},
+      pids = #{pids,jdbcType=VARCHAR},
+      comm_num = #{commNum,jdbcType=VARCHAR},
+      parent_catg_name = #{parentCatgName,jdbcType=VARCHAR},
+      catg_name = #{catgName,jdbcType=VARCHAR},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      catg_icon_url = #{catgIconUrl,jdbcType=VARCHAR},
+      key_word = #{keyWord,jdbcType=VARCHAR},
+      catg_remarks = #{catgRemarks,jdbcType=VARCHAR},
+      if_show = #{ifShow,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.entity.tp.HpCatg" parameterType="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    select
+    <include refid="Base_Column_List" />
+    from hp_catg
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.portal.HpCatgTreeVo"
+  						parameterType="com.wisea.cultivar.common.po.tp.portal.HpCatgTreeListPo" >
+    SELECT T1.*
+	FROM hp_catg T1
+	WHERE T1.del_flag = '0'
+		  <if test="catgName != null and catgName != ''">
+		      AND T1.catg_name like CONCAT('%', #{catgName}, '%')
+		  </if>
+		  <if test="enableFlag != null and enableFlag != ''">
+		  	  AND T1.enable_flag = #{enableFlag}
+		  </if>
+		  <if test="ifShow != null and ifShow != ''">
+		  	  AND T1.if_show = #{ifShow}
+		  </if>
+		 ORDER BY T1.sort
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.HpCatg" >
+    update hp_catg
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT} OR pid = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getHpCatgInfoById" resultType="com.wisea.cultivar.common.vo.tp.portal.HpCatgTreeVo" parameterType="java.lang.Long">
+  	SELECT T1.*,T2.catg_name AS 'parentCatgName'
+	FROM hp_catg T1
+	LEFT JOIN hp_catg T2 ON T2.id = T1.pid
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

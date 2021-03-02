@@ -1,0 +1,35 @@
+payconfig:
+  yspay:
+    partnerId: denghaoji
+    partnerName: 重庆洪九果品股份有限公司
+    privateKeyPassword: denghaoji
+    privateKeyPath: cert/hjgp.pfx #加密
+    publicKeyPath: cert/yspay.cer #解密
+    appid: wx0d8afc941e7e2579
+    appSecret: 25250c9b630e72d98f0b2ad362553f76
+    baseNotifyUrl: http://203.86.72.240:8450
+    entpRegNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/entpAuthenticate/notify
+    notifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/pay/notify
+    refundNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/refund/notify
+    divisionNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/division/notify
+    scanReportNotifyUrl: ${payconfig.yspay.baseNotifyUrl}/tp/trade/yspay/scanReport/notify
+    returnUrl: ${payconfig.yspay.baseNotifyUrl}/paySuccess?id=%s&payType=%s
+    subject: 洪九果品
+    trade-safeguard:
+      enabled: true
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 新盟风控果品产业互联网综合服务平台-交易服务(买家买家操作流程、支付功能) #标题
+  mssurl:
+    cultivar-bigdata: http://cultivar-bigdata
+    tp-product: http://transac-tp-product
+    security: http://transac-operation
+    system: http://transac-operation
+    files: http://transac-operation
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG
+    org.quartz: debug

@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.MembCollectionMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.MembCollection" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="collection_type" property="collectionType" jdbcType="BIGINT" />
+    <result column="collection_id" property="collectionId" jdbcType="BIGINT" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, collection_type, collection_id, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from memb_collection
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from memb_collection
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.MembCollection" >
+    insert into memb_collection (id, memb_id, collection_type,
+      collection_id, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{collectionType,jdbcType=BIGINT},
+      #{collectionId,jdbcType=BIGINT}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.MembCollection" >
+    insert into memb_collection
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="collectionType != null" >
+        collection_type,
+      </if>
+      <if test="collectionId != null" >
+        collection_id,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="collectionType != null" >
+        #{collectionType,jdbcType=BIGINT},
+      </if>
+      <if test="collectionId != null" >
+        #{collectionId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.MembCollection" >
+    update memb_collection
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="collectionType != null" >
+        collection_type = #{collectionType,jdbcType=BIGINT},
+      </if>
+      <if test="collectionId != null" >
+        collection_id = #{collectionId,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.MembCollection" >
+    update memb_collection
+    set memb_id = #{membId,jdbcType=BIGINT},
+      collection_type = #{collectionType,jdbcType=BIGINT},
+      collection_id = #{collectionId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.MembCollectionPageListVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo" >
+    select
+	  memb_id membId,
+	  collection_type collectionType,
+	  collection_id collectionId
+	from
+	  memb_collection
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.MembCollectionInfoVo" parameterType="java.lang.Long" >
+    select
+      id id,
+	  memb_id membId,
+	  collection_type collectionType,
+	  collection_id collectionId
+	from
+	  memb_collection
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <select id="seeExist" resultType="com.wisea.cultivar.plant.vo.MembCollectionInfoVo" parameterType="java.lang.Long">
+    select
+        id id,
+	  memb_id membId,
+	  collection_type collectionType,
+	  collection_id collectionId
+	from
+	  memb_collection
+	where
+	  del_flag = '0'
+	  and collection_id = #{collectionId}
+	  and memb_id=#{membId}
+	  limit 1
+  </select>
+<!--  根据收藏查看用户的求购信息列表-->
+  <select id="findQGList" resultType="com.wisea.cultivar.plant.vo.CommQgPubInfoInfoVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo" >
+    select
+    cqpi.id id,
+    cqpi.comm_qg_type  commQgType,
+    cqpi.pub_qg_title pubQgTitle,
+    cqpi.cgl cgl,
+    cqpi.wish_price wishPrice,
+    cqpi.qg_state_type qgStateType,
+    cqpi.contacts_num contactsNum,
+    cqpi.views views,
+    cqpi.qtcgyq qtcgyq,
+    mc.id membCollectionId,
+    if((cqpi.qg_state_type='0' and cqpi.del_flag='0'),0,1) as status,
+    zmum1.meas_unit_name cglMeasUnitName,
+    zmum2.meas_unit_name wishPriceMeasUnitName
+    from memb_collection mc left  join  comm_qg_pub_info cqpi on mc.collection_id=cqpi.id
+    left join zhfw_meas_unit_mage zmum1 on cqpi.cgl_meas_unit_id=zmum1.id
+    left join  zhfw_meas_unit_mage zmum2 on cqpi.wish_price_meas_unit_id=zmum2.id
+    where
+    mc.collection_type=#{collectionType}
+    and
+    mc.memb_id=#{membId}
+    and
+    mc.del_flag = '0'
+    order by mc.create_date desc
+  </select>
+  <!--  根据收藏查看用户的供应信息列表-->
+  <select id="findGYList" resultType="com.wisea.cultivar.plant.vo.CommGyPubInfoPageListVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo" >
+   select
+      cgpi.id id,
+	  cgpi.memb_id membId,
+	  cgpi.comm_qg_type commQgType,
+	  cgpi.pub_gy_title pubGyTitle,
+	  cgpi.list_count listCount,
+	  cgpi.wish_price wishPrice,
+	  cgpi.cpbz_type cpbzType,
+	  cgpi.delivery_mode deliveryMode,
+	  cgpi.contacts_name contactsName,
+	  cgpi.contacts_tel contactsTel,
+	  cgpi.pub_date pubDate,
+	  cgpi.qg_state_type qgStateType,
+	  cgpi.contacts_num contactsNum,
+	  cgpi.views views,
+	  cgpi.qtcgyq qtcgyq,
+	  mc.id membCollectionId,
+	  if((cgpi.qg_state_type='0' and cgpi.del_flag='0'),0,1) as status,
+	  zmum1.meas_unit_name cglMeasUnitName,
+      zmum2.meas_unit_name wishPriceMeasUnitName
+    from memb_collection mc left  join  comm_gy_pub_info cgpi on mc.collection_id=cgpi.id
+    left join zhfw_meas_unit_mage zmum1 on cgpi.cgl_meas_unit_id=zmum1.id
+    left  join  zhfw_meas_unit_mage zmum2 on cgpi.wish_price_meas_unit_id=zmum2.id
+    where
+    mc.collection_type=#{collectionType}
+    and
+    mc.memb_id=#{membId}
+    and
+    mc.del_flag = '0'
+    order by mc.create_date desc
+  </select>
+  <select id="knowledgeBaseMageList" resultType="com.wisea.cultivar.plant.vo.KnowledgeBaseMageInfoVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo">
+   select
+      k.id id,
+      p.url url,
+	  k.title title,
+	  k.catg_type catgType,
+	  k.key_word keyWord,
+	  k.info_sources infoSources,
+	  k.outline outline,
+	  k.if_show ifShow,
+	  k.rele_date releDate,
+	  k.views views,
+	  mc.id membCollectionId,
+	  if(( k.if_show='0' AND k.del_flag='0'),0,1) status
+    from memb_collection mc left  join  knowledge_base_mage k on mc.collection_id=k.id
+    left join (select * from knowledge_base_picture where del_flag='0' ) p on k.id=p.knowledge_base_mage_id
+    where
+    mc.del_flag = '0'
+    and  mc.memb_id=#{membId}
+    and mc.collection_type=#{collectionType}
+    order by  mc.create_date desc
+  </select>
+  <select id="findPadMageList" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadMageListVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo">
+     select
+      pm.id id,
+	  pm.comm_id commId,
+	  pm.pad_name padName,
+	  pm.pad_url padUrl,
+	  pm.pad_type padType,
+	  pm.pad_ssl padSsl,
+	  pm.pathogeny pathogeny,
+	  pm.symptom symptom,
+	  pm.pathogenic_conditions pathogenicConditions,
+	  pm.agr_control agrControl,
+	  pm.phy_control phyControl,
+	  pm.biology_control biologyControl,
+	  pm.chemistry_control chemistryControl,
+	  pm.organic_control organicControl,
+	  pm.vulnerable_months vulnerableMonths,
+	  pm.max_temperature maxTemperature,
+	  pm.min_temperature minTemperature,
+	  pm.max_humidity maxHumidity,
+	  pm.min_humidity minHumidity,
+	  pm.bf_time bfTime,
+	  pm.views views,
+	  mc.id membCollectionId,
+	  if(pm.del_flag='0',0,1) status
+    from memb_collection mc left  join  pad_mage pm  on mc.collection_id=pm.id
+    where
+    mc.collection_type=#{collectionType}
+    and
+    mc.memb_id=#{membId}
+    and
+    mc.del_flag = '0'
+    order by mc.create_date desc
+  </select>
+  <select id="findStandardRuleMageInfoVoList" resultType="com.wisea.cultivar.plant.vo.StandardRuleMageInfoVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo">
+    select
+      srm.id id,
+	  srm.standard_type_mage_id standardTypeMageId,
+	  srm.link_mage_id linkMageId,
+	  srm.ics_class_mage_id icsClassMageId,
+	  srm.china_standard_type_mage_id chinaStandardTypeMageId,
+	  srm.standard_rule_type standardRuleType,
+	  srm.standard_rule_no standardRuleNo,
+	  srm.cn_title cnTitle,
+	  srm.en_title enTitle,
+	  srm.pub_date pubDate,
+	  srm.imple_date impleDate,
+	  srm.pub_dept pubDept,
+	  srm.standard_rule_abstract standardRuleAbstract,
+	  srm.replace_standard_rule replaceStandardRule,
+	  srm.active_standard_rule activeStandardRule,
+	  srm.modify_list modifyList,
+	  mc.id membCollectionId,
+	  if(srm.del_flag="0",0,1) status
+   from memb_collection mc left  join  standard_rule_mage srm  on mc.collection_id=srm.id
+    where
+    mc.collection_type=#{collectionType}
+    and
+    mc.memb_id=#{membId}
+    and
+    mc.del_flag = '0'
+    order by mc.create_date desc
+
+  </select>
+    <select id="findCommPubInfoList" resultType="com.wisea.cultivar.plant.vo.ZhfwCommPubInfoPageListVo" parameterType="com.wisea.cultivar.plant.po.MembCollectionPageListPo">
+        select
+        zcpi.id id,
+        zcpi.memb_id membId,
+        zcpi.comm_title commTitle,
+        zcpi.comm_id commId,
+        zcpi.comm_variet_id commVarietId,
+        zcpi.comm_send_prov commSendProv,
+        zcpi.comm_send_city commSendCity,
+        zcpi.comm_send_cou commSendCou,
+        zcpi.comm_send_address commSendAddress,
+        zcpi.comm_signature commSignature,
+        zcpi.notes_to_buy notesToBuy,
+        zcpi.zhfw_comm_state_type commStateType,
+        zcpi.reject_reason rejectReason,
+        zcpi.exam_id examId,
+        zcpi.sales_volume salesVolume,
+        zmi.entp_name entpName,
+        p.url url,
+        cmm.max priceMax,
+        cmm.min priceMin,
+        mc.id membCollectionId,
+        if((zcpi.zhfw_comm_state_type='0' AND zcpi.del_flag='0'),0,1) status
+        from
+        memb_collection mc
+        left join zhfw_comm_pub_info zcpi on mc.collection_id=zcpi.id
+        left join zhfw_comm_mage zcm on zcpi.comm_id=zcm.id
+        left join zhfw_memb_info zmi on zcpi.memb_id=zmi.id
+        left join (select * from zhfw_comm_picture where del_flag='0'   and sort='0' and  main_picture_type='0' and comm_picture_type='0' order by sort asc ) p on p.comm_pub_id = zcpi.id
+        left join (SELECT
+        a.comm_pub_id,
+        min(substring_index(
+        substring_index(
+        a.price_expres,
+        ',',
+        b.help_topic_id + 1
+        ),
+        ',' ,- 1
+        )+0) AS min,
+        max(substring_index(
+        substring_index(
+        a.price_expres,
+        ',',
+        b.help_topic_id + 1
+        ),
+        ',' ,- 1
+        )+0) AS max
+        FROM
+        zhfw_level_spec_quote a
+        JOIN
+           mysql.help_topic b ON b.help_topic_id <![CDATA[< ]]>(
+        length(a.price_expres) - length(
+        REPLACE (a.price_expres, ',', '')
+         ) + 1
+         )
+         where a.del_flag='0'
+        group by  a.comm_pub_id
+        order by price_expres)  cmm on cmm.comm_pub_id=zcpi.id
+        where
+        mc.collection_type=#{collectionType}
+        and
+        mc.memb_id=#{membId}
+        and
+        mc.del_flag = '0'
+        order by mc.create_date desc
+    </select>
+
+
+
+
+    <select id="ifStatus" resultType="java.lang.Long" parameterType="com.wisea.cultivar.plant.po.PolicyTechnologyInfoPo">
+        select
+        id
+        from
+        memb_collection
+        where
+        del_flag='0'
+        and memb_id=#{membId}
+        and collection_id=#{id}
+        and collection_type=#{collectionType}
+  </select>
+    <select id="findListByMemberIdAndCollectionId" resultType="com.wisea.cultivar.plant.vo.MembCollectionInfoVo">
+        select
+         id id,
+	    memb_id membId,
+	    collection_type collectionType,
+	    collection_id collectionId
+        from
+        memb_collection
+        where
+        del_flag='0'
+        and memb_id=#{membId}
+        and collection_id=#{collectionId}
+        and collection_type=#{collectionType}
+
+    </select>
+</mapper>

@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.explorer.mapper.DemonsBaseInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.explorer.entity.DemonsBaseInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="entp_info_mage_id" jdbcType="BIGINT" property="entpInfoMageId" />
+    <result column="demons_base_name" jdbcType="VARCHAR" property="demonsBaseName" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+      <result column="area_prov" jdbcType="VARCHAR" property="areaProv" />
+      <result column="area_city" jdbcType="VARCHAR" property="areaCity" />
+      <result column="area_cou" jdbcType="VARCHAR" property="areaCou" />
+    <result column="demons_base_acre" jdbcType="DOUBLE" property="demonsBaseAcre" />
+    <result column="field_address" jdbcType="VARCHAR" property="fieldAddress" />
+    <result column="jd" jdbcType="DOUBLE" property="jd" />
+    <result column="wd" jdbcType="DOUBLE" property="wd" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, entp_info_mage_id, demons_base_name, area_code,area_prov,area_city,area_cou, demons_base_acre, field_address,
+    jd, wd, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from demons_base_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from demons_base_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="delInfoByEnterId" parameterType="java.lang.Long">
+    DELETE a,b,c
+    FROM demons_base_info a
+           LEFT JOIN demons_base_introduce b ON a.id = b.demons_base_id
+           LEFT JOIN demons_base_massif c ON a.id = c.demons_base_id
+    WHERE a.entp_info_mage_id = #{enterpriseId}
+  </delete>
+
+  <delete id="delMassifByDemonsBaseId">
+    DELETE b,c
+    FROM demons_base_info a
+           LEFT JOIN demons_base_introduce b ON a.id = b.demons_base_id
+           LEFT JOIN demons_base_massif c ON a.id = c.demons_base_id
+    WHERE a.id = #{delId}
+  </delete>
+
+  <insert id="insert" parameterType="com.wisea.cultivar.explorer.entity.DemonsBaseInfo">
+    insert into demons_base_info (id, entp_info_mage_id, demons_base_name,
+      area_code,area_prov,area_city,area_cou, demons_base_acre, field_address,
+      jd, wd, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{entpInfoMageId,jdbcType=BIGINT}, #{demonsBaseName,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR},#{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+       #{demonsBaseAcre,jdbcType=DOUBLE}, #{fieldAddress,jdbcType=VARCHAR},
+      #{jd,jdbcType=DOUBLE}, #{wd,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.explorer.entity.DemonsBaseInfo">
+    insert into demons_base_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="entpInfoMageId != null">
+        entp_info_mage_id,
+      </if>
+      <if test="demonsBaseName != null">
+        demons_base_name,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+        <if test="areaProv != null">
+            area_prov,
+        </if>
+        <if test="areaCity != null">
+            area_city,
+        </if>
+        <if test="areaCou != null">
+            area_cou,
+        </if>
+      <if test="demonsBaseAcre != null">
+        demons_base_acre,
+      </if>
+      <if test="fieldAddress != null">
+        field_address,
+      </if>
+      <if test="jd != null">
+        jd,
+      </if>
+      <if test="wd != null">
+        wd,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entpInfoMageId != null">
+        #{entpInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="demonsBaseName != null">
+        #{demonsBaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaProv != null">
+            #{areaProv,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCity != null">
+            #{areaCity,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCou != null">
+            #{areaCou,jdbcType=VARCHAR},
+        </if>
+      <if test="demonsBaseAcre != null">
+        #{demonsBaseAcre,jdbcType=DOUBLE},
+      </if>
+      <if test="fieldAddress != null">
+        #{fieldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null">
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null">
+        #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.explorer.entity.DemonsBaseInfo">
+    update demons_base_info
+    <set>
+      <if test="entpInfoMageId != null">
+        entp_info_mage_id = #{entpInfoMageId,jdbcType=BIGINT},
+      </if>
+      <if test="demonsBaseName != null">
+        demons_base_name = #{demonsBaseName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaProv != null">
+            area_prov =  #{areaProv,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCity != null">
+            area_city =   #{areaCity,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCou != null">
+            area_cou =   #{areaCou,jdbcType=VARCHAR},
+        </if>
+      <if test="demonsBaseAcre != null">
+        demons_base_acre = #{demonsBaseAcre,jdbcType=DOUBLE},
+      </if>
+      <if test="fieldAddress != null">
+        field_address = #{fieldAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null">
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null">
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.explorer.entity.DemonsBaseInfo">
+    update demons_base_info
+    set entp_info_mage_id = #{entpInfoMageId,jdbcType=BIGINT},
+      demons_base_name = #{demonsBaseName,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+          area_prov =  #{areaProv,jdbcType=VARCHAR},
+          area_city =   #{areaCity,jdbcType=VARCHAR},
+          area_cou =   #{areaCou,jdbcType=VARCHAR},
+      demons_base_acre = #{demonsBaseAcre,jdbcType=DOUBLE},
+      field_address = #{fieldAddress,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=DOUBLE},
+      wd = #{wd,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.explorer.po.DemonsBaseInfoPagePo" resultType="com.wisea.cultivar.explorer.vo.DemonsBaseInfoListVo">
+      select
+      dbi.id, dbi.area_code areaCode,
+      eim.entp_name entpName,dbi.demons_base_name demonsBaseName,
+      dbi.demons_base_acre demonsBaseAcre,count(dbm.id) massifNumber,
+      T2.`name` AS 'areaProv', T3.`name` AS 'areaCity',T4.`name` AS  'areaCou'
+      from demons_base_info dbi
+      LEFT JOIN sys_area T2 ON dbi.area_prov = T2.`code`
+      LEFT JOIN sys_area T3 ON dbi.area_city = T3.`code`
+      LEFT JOIN sys_area T4 ON dbi.area_cou = T4.`code`
+      LEFT JOIN entp_info_mage eim ON dbi.entp_info_mage_id = eim.id
+      LEFT JOIN demons_base_massif dbm ON dbi.id = dbm.demons_base_id AND dbm.del_flag = '0'
+      where dbi.del_flag = '0' and eim.entp_main_business_type = '0'
+    <include refid="query_where"/>
+    GROUP BY dbi.id order by dbi.create_date DESC
+  </select>
+
+  <sql id="query_where">
+    <if test="demonsBaseName != null and demonsBaseName != ''">
+      and dbi.demons_base_name LIKE concat('%',#{demonsBaseName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="coordinatesFlag != null and coordinatesFlag != ''">
+      <if test="coordinatesFlag == 1">
+        and dbi.jd is not null and dbi.wd is not null
+      </if>
+      <if test="coordinatesFlag == 2">
+        and dbi.jd is null and dbi.wd is null
+      </if>
+    </if>
+  </sql>
+
+  <select id="findList" parameterType="com.wisea.cultivar.explorer.po.DemonsBaseInfoListPo" resultType="com.wisea.cultivar.explorer.vo.DemonsBaseInfoListVo">
+   SELECT dbi.*,
+		T2.`name` AS 'areaProv', T3.`name` AS 'areaCity',T4.`name` AS  'areaCou'
+		FROM demons_base_info dbi
+		LEFT JOIN sys_area T2 ON dbi.area_prov = T2.`code`
+		LEFT JOIN sys_area T3 ON dbi.area_city = T3.`code`
+		LEFT JOIN sys_area T4 ON dbi.area_cou = T4.`code`
+    where dbi.del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.explorer.entity.DemonsBaseInfo">
+    update demons_base_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--  查询地图坐标点列表（大数据使用） -->
+  <select id="findMapPoints" parameterType="com.wisea.cultivar.explorer.po.PalntBigDataMapPointsPo" resultType="com.wisea.cultivar.explorer.vo.BigDataMapPointListVo">
+    SELECT
+      eim.id id, 0 dataType, eim.entp_name name, eim.plant_measure plantArea, eim.area_code location, eim.area_prov areaProv, eim.area_city areaCity, eim.area_cou areaCou, eim.jd jd, eim.wd wd
+    FROM
+      entp_info_mage eim
+    WHERE
+      eim.del_flag = '0'
+      and eim.entp_main_business_type = '0'
+      and eim.jd IS NOT NULL
+      and eim.wd IS NOT NULL
+      <if test="areaProv != null and areaProv != ''">
+        and eim.area_prov = #{areaProv}
+      </if>
+      <if test="areaCity != null and areaCity != ''">
+        and eim.area_prov = #{areaCity}
+      </if>
+      <if test="areaCou != null and areaCou != ''">
+        and eim.area_prov = #{areaCou}
+      </if>
+    UNION
+    select
+      dbi.id id, 1 dataType, dbi.demons_base_name name, dbi.demons_base_acre plantArea, dbi.area_code location, dbi.area_prov areaProv, dbi.area_city areaCity, dbi.area_cou areaCou, dbi.jd jd, dbi.wd wd
+    from
+      demons_base_info dbi
+    where
+      dbi.del_flag = '0'
+      and dbi.jd IS NOT NULL
+      and dbi.wd IS NOT NULL
+      <if test="areaProv != null and areaProv != ''">
+        and dbi.area_prov = #{areaProv}
+      </if>
+      <if test="areaCity != null and areaCity != ''">
+        and dbi.area_prov = #{areaCity}
+      </if>
+      <if test="areaCou != null and areaCou != ''">
+        and dbi.area_prov = #{areaCou}
+      </if>
+  </select>
+</mapper>

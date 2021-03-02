@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.SubEntpMbInfoMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sub_entp_id" property="subEntpId" jdbcType="BIGINT" />
+    <result column="year_type" property="yearType" jdbcType="VARCHAR" />
+    <result column="n_mbsj" property="nMbsj" jdbcType="DOUBLE" />
+    <result column="one_mbsj" property="oneMbsj" jdbcType="DOUBLE" />
+    <result column="two_mbsj" property="twoMbsj" jdbcType="DOUBLE" />
+    <result column="three_mbsj" property="threeMbsj" jdbcType="DOUBLE" />
+    <result column="four_mbsj" property="fourMbsj" jdbcType="DOUBLE" />
+    <result column="five_mbsj" property="fiveMbsj" jdbcType="DOUBLE" />
+    <result column="six_mbsj" property="sixMbsj" jdbcType="DOUBLE" />
+    <result column="seven_mbsj" property="sevenMbsj" jdbcType="DOUBLE" />
+    <result column="eight_mbsj" property="eightMbsj" jdbcType="DOUBLE" />
+    <result column="nine_mbsj" property="nineMbsj" jdbcType="DOUBLE" />
+    <result column="ten_mbsj" property="tenMbsj" jdbcType="DOUBLE" />
+    <result column="eleven_mbsj" property="elevenMbsj" jdbcType="DOUBLE" />
+    <result column="twelve_mbsj" property="twelveMbsj" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sub_entp_id, year_type, n_mbsj, one_mbsj, two_mbsj, three_mbsj, four_mbsj, five_mbsj,
+    six_mbsj, seven_mbsj, eight_mbsj, nine_mbsj, ten_mbsj, eleven_mbsj, twelve_mbsj,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mb_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectByPrimaryKeyById" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.po.bigdata.SubEntpMbInfoMageGetPo" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mb_info_mage
+    where sub_entp_id = #{id,jdbcType=BIGINT}
+    <if test="yearType !=null and yearType !=''">
+     and year_type = #{yearType}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sub_entp_mb_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    insert into sub_entp_mb_info_mage (id, sub_entp_id, year_type,
+      n_mbsj, one_mbsj, two_mbsj,
+      three_mbsj, four_mbsj, five_mbsj,
+      six_mbsj, seven_mbsj, eight_mbsj,
+      nine_mbsj, ten_mbsj, eleven_mbsj,
+      twelve_mbsj, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{subEntpId,jdbcType=BIGINT}, #{yearType,jdbcType=VARCHAR},
+      #{nMbsj,jdbcType=DOUBLE}, #{oneMbsj,jdbcType=DOUBLE}, #{twoMbsj,jdbcType=DOUBLE},
+      #{threeMbsj,jdbcType=DOUBLE}, #{fourMbsj,jdbcType=DOUBLE}, #{fiveMbsj,jdbcType=DOUBLE},
+      #{sixMbsj,jdbcType=DOUBLE}, #{sevenMbsj,jdbcType=DOUBLE}, #{eightMbsj,jdbcType=DOUBLE},
+      #{nineMbsj,jdbcType=DOUBLE}, #{tenMbsj,jdbcType=DOUBLE}, #{elevenMbsj,jdbcType=DOUBLE},
+      #{twelveMbsj,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    insert into sub_entp_mb_info_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subEntpId != null" >
+        sub_entp_id,
+      </if>
+      <if test="yearType != null" >
+        year_type,
+      </if>
+      <if test="nMbsj != null" >
+        n_mbsj,
+      </if>
+      <if test="oneMbsj != null" >
+        one_mbsj,
+      </if>
+      <if test="twoMbsj != null" >
+        two_mbsj,
+      </if>
+      <if test="threeMbsj != null" >
+        three_mbsj,
+      </if>
+      <if test="fourMbsj != null" >
+        four_mbsj,
+      </if>
+      <if test="fiveMbsj != null" >
+        five_mbsj,
+      </if>
+      <if test="sixMbsj != null" >
+        six_mbsj,
+      </if>
+      <if test="sevenMbsj != null" >
+        seven_mbsj,
+      </if>
+      <if test="eightMbsj != null" >
+        eight_mbsj,
+      </if>
+      <if test="nineMbsj != null" >
+        nine_mbsj,
+      </if>
+      <if test="tenMbsj != null" >
+        ten_mbsj,
+      </if>
+      <if test="elevenMbsj != null" >
+        eleven_mbsj,
+      </if>
+      <if test="twelveMbsj != null" >
+        twelve_mbsj,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subEntpId != null" >
+        #{subEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="yearType != null" >
+        #{yearType,jdbcType=VARCHAR},
+      </if>
+      <if test="nMbsj != null" >
+        #{nMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="oneMbsj != null" >
+        #{oneMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="twoMbsj != null" >
+        #{twoMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="threeMbsj != null" >
+        #{threeMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="fourMbsj != null" >
+        #{fourMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="fiveMbsj != null" >
+        #{fiveMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="sixMbsj != null" >
+        #{sixMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="sevenMbsj != null" >
+        #{sevenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="eightMbsj != null" >
+        #{eightMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="nineMbsj != null" >
+        #{nineMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="tenMbsj != null" >
+        #{tenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="elevenMbsj != null" >
+        #{elevenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="twelveMbsj != null" >
+        #{twelveMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    update sub_entp_mb_info_mage
+    <set >
+      <if test="subEntpId != null" >
+        sub_entp_id = #{subEntpId,jdbcType=BIGINT},
+      </if>
+      <if test="yearType != null" >
+        year_type = #{yearType,jdbcType=VARCHAR},
+      </if>
+      <if test="nMbsj != null" >
+        n_mbsj = #{nMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="oneMbsj != null" >
+        one_mbsj = #{oneMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="twoMbsj != null" >
+        two_mbsj = #{twoMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="threeMbsj != null" >
+        three_mbsj = #{threeMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="fourMbsj != null" >
+        four_mbsj = #{fourMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="fiveMbsj != null" >
+        five_mbsj = #{fiveMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="sixMbsj != null" >
+        six_mbsj = #{sixMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="sevenMbsj != null" >
+        seven_mbsj = #{sevenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="eightMbsj != null" >
+        eight_mbsj = #{eightMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="nineMbsj != null" >
+        nine_mbsj = #{nineMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="tenMbsj != null" >
+        ten_mbsj = #{tenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="elevenMbsj != null" >
+        eleven_mbsj = #{elevenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="twelveMbsj != null" >
+        twelve_mbsj = #{twelveMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateBySubEntpIdOrYearType" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    update sub_entp_mb_info_mage
+    <set >
+      <if test="yearType != null" >
+        year_type = #{yearType,jdbcType=VARCHAR},
+      </if>
+      <if test="nMbsj != null" >
+        n_mbsj = #{nMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="oneMbsj != null" >
+        one_mbsj = #{oneMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="twoMbsj != null" >
+        two_mbsj = #{twoMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="threeMbsj != null" >
+        three_mbsj = #{threeMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="fourMbsj != null" >
+        four_mbsj = #{fourMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="fiveMbsj != null" >
+        five_mbsj = #{fiveMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="sixMbsj != null" >
+        six_mbsj = #{sixMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="sevenMbsj != null" >
+        seven_mbsj = #{sevenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="eightMbsj != null" >
+        eight_mbsj = #{eightMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="nineMbsj != null" >
+        nine_mbsj = #{nineMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="tenMbsj != null" >
+        ten_mbsj = #{tenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="elevenMbsj != null" >
+        eleven_mbsj = #{elevenMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="twelveMbsj != null" >
+        twelve_mbsj = #{twelveMbsj,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    WHERE sub_entp_id = #{subEntpId,jdbcType=BIGINT}
+     <if test="yearType != null" >
+     AND  year_type = #{yearType,jdbcType=VARCHAR}
+     </if>
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    update sub_entp_mb_info_mage
+    set sub_entp_id = #{subEntpId,jdbcType=BIGINT},
+      year_type = #{yearType,jdbcType=VARCHAR},
+      n_mbsj = #{nMbsj,jdbcType=DOUBLE},
+      one_mbsj = #{oneMbsj,jdbcType=DOUBLE},
+      two_mbsj = #{twoMbsj,jdbcType=DOUBLE},
+      three_mbsj = #{threeMbsj,jdbcType=DOUBLE},
+      four_mbsj = #{fourMbsj,jdbcType=DOUBLE},
+      five_mbsj = #{fiveMbsj,jdbcType=DOUBLE},
+      six_mbsj = #{sixMbsj,jdbcType=DOUBLE},
+      seven_mbsj = #{sevenMbsj,jdbcType=DOUBLE},
+      eight_mbsj = #{eightMbsj,jdbcType=DOUBLE},
+      nine_mbsj = #{nineMbsj,jdbcType=DOUBLE},
+      ten_mbsj = #{tenMbsj,jdbcType=DOUBLE},
+      eleven_mbsj = #{elevenMbsj,jdbcType=DOUBLE},
+      twelve_mbsj = #{twelveMbsj,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.SubEntpMbInfoMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.SubEntpMbInfoMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mb_info_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.SubEntpMbInfoMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.SubEntpMbInfoMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mb_info_mage
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMbInfoMage" >
+    update sub_entp_mb_info_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

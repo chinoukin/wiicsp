@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.OrdCommRelaTbMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.OrdCommRelaTb" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_id" property="ordId" jdbcType="BIGINT" />
+    <result column="comm_sale_catg" property="commSaleCatg" jdbcType="VARCHAR" />
+    <result column="brand" property="brand" jdbcType="VARCHAR" />
+    <result column="varieties" property="varieties" jdbcType="VARCHAR" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="dimensions_type" property="dimensionsType" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="comm_total_weight" property="commTotalWeight" jdbcType="DOUBLE" />
+    <result column="unit_weight_price" property="unitWeightPrice" jdbcType="DOUBLE" />
+    <result column="comm_total_price" property="commTotalPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_id, comm_sale_catg, brand, varieties, category, dimensions_type, count, price,
+    meas_unit_name, create_by, create_date, update_by, update_date, remarks, del_flag,
+    comm_total_weight, unit_weight_price, comm_total_price
+  </sql>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into ord_comm_rela_tb (id, ord_id, comm_sale_catg,
+      brand, varieties, category,
+      dimensions_type, count, price,
+      meas_unit_name, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, comm_total_weight, unit_weight_price,
+      comm_total_price)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.ordId,jdbcType=BIGINT}, #{item.commSaleCatg,jdbcType=VARCHAR},
+      #{item.brand,jdbcType=VARCHAR}, #{item.varieties,jdbcType=VARCHAR}, #{item.category,jdbcType=VARCHAR},
+      #{item.dimensionsType,jdbcType=VARCHAR}, #{item.count,jdbcType=INTEGER}, #{item.price,jdbcType=DOUBLE},
+      #{item.measUnitName,jdbcType=VARCHAR}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR}, #{item.commTotalWeight,jdbcType=DOUBLE}, #{item.unitWeightPrice,jdbcType=DOUBLE},
+      #{item.commTotalPrice,jdbcType=DOUBLE})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ord_comm_rela_tb
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ord_comm_rela_tb
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.OrdCommRelaTb" >
+    insert into ord_comm_rela_tb (id, ord_id, comm_sale_catg,
+                                  brand, varieties, category,
+                                  dimensions_type, count, price,
+                                  meas_unit_name, create_by, create_date,
+                                  update_by, update_date, remarks,
+                                  del_flag, comm_total_weight, unit_weight_price,
+                                  comm_total_price)
+    values (#{id,jdbcType=BIGINT}, #{ordId,jdbcType=BIGINT}, #{commSaleCatg,jdbcType=VARCHAR},
+            #{brand,jdbcType=VARCHAR}, #{varieties,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR},
+            #{dimensionsType,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE},
+            #{measUnitName,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+            #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+            #{delFlag,jdbcType=CHAR}, #{commTotalWeight,jdbcType=DOUBLE}, #{unitWeightPrice,jdbcType=DOUBLE},
+            #{commTotalPrice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.OrdCommRelaTb" >
+    insert into ord_comm_rela_tb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordId != null" >
+        ord_id,
+      </if>
+      <if test="commSaleCatg != null" >
+        comm_sale_catg,
+      </if>
+      <if test="brand != null" >
+        brand,
+      </if>
+      <if test="varieties != null" >
+        varieties,
+      </if>
+      <if test="category != null" >
+        category,
+      </if>
+      <if test="dimensionsType != null" >
+        dimensions_type,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="measUnitName != null" >
+        meas_unit_name,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="commTotalWeight != null" >
+        comm_total_weight,
+      </if>
+      <if test="unitWeightPrice != null" >
+        unit_weight_price,
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordId != null" >
+        #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="commSaleCatg != null" >
+        #{commSaleCatg,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="varieties != null" >
+        #{varieties,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionsType != null" >
+        #{dimensionsType,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnitName != null" >
+        #{measUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="commTotalWeight != null" >
+        #{commTotalWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="unitWeightPrice != null" >
+        #{unitWeightPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="commTotalPrice != null" >
+        #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.OrdCommRelaTb" >
+    update ord_comm_rela_tb
+    <set >
+      <if test="ordId != null" >
+        ord_id = #{ordId,jdbcType=BIGINT},
+      </if>
+      <if test="commSaleCatg != null" >
+        comm_sale_catg = #{commSaleCatg,jdbcType=VARCHAR},
+      </if>
+      <if test="brand != null" >
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="varieties != null" >
+        varieties = #{varieties,jdbcType=VARCHAR},
+      </if>
+      <if test="category != null" >
+        category = #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="dimensionsType != null" >
+        dimensions_type = #{dimensionsType,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnitName != null" >
+        meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="commTotalWeight != null" >
+        comm_total_weight = #{commTotalWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="unitWeightPrice != null" >
+        unit_weight_price = #{unitWeightPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price = #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.OrdCommRelaTb" >
+    update ord_comm_rela_tb
+    set ord_id = #{ordId,jdbcType=BIGINT},
+        comm_sale_catg = #{commSaleCatg,jdbcType=VARCHAR},
+        brand = #{brand,jdbcType=VARCHAR},
+        varieties = #{varieties,jdbcType=VARCHAR},
+        category = #{category,jdbcType=VARCHAR},
+        dimensions_type = #{dimensionsType,jdbcType=VARCHAR},
+        count = #{count,jdbcType=INTEGER},
+        price = #{price,jdbcType=DOUBLE},
+        meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        del_flag = #{delFlag,jdbcType=CHAR},
+        comm_total_weight = #{commTotalWeight,jdbcType=DOUBLE},
+        unit_weight_price = #{unitWeightPrice,jdbcType=DOUBLE},
+        comm_total_price = #{commTotalPrice,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!--热卖品种-->
+  <select id="findSearchName" resultType="java.lang.String">
+    select T1.category
+    from (select distinct category
+          from ord_comm_rela_tb
+          where del_flag = '0'
+          order by create_date desc) T1
+    LIMIT 30;
+
+  </select>
+</mapper>

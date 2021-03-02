@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.WholeSaleMarketMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.WholeSaleMarketMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="whole_sale_market_name" property="wholeSaleMarketName" jdbcType="VARCHAR"/>
+        <result column="whole_sale_market_picture" property="wholeSaleMarketPicture" jdbcType="VARCHAR"/>
+        <result column="area_prov" property="areaProv" jdbcType="VARCHAR"/>
+        <result column="area_city" property="areaCity" jdbcType="VARCHAR"/>
+        <result column="area_cou" property="areaCou" jdbcType="VARCHAR"/>
+        <result column="address" property="address" jdbcType="VARCHAR"/>
+        <result column="coordinate_point" property="coordinatePoint" jdbcType="VARCHAR"/>
+        <result column="trans_scope" property="transScope" jdbcType="VARCHAR"/>
+        <result column="whole_sale_market_signature" property="wholeSaleMarketSignature" jdbcType="VARCHAR"/>
+        <result column="market_label_one" property="marketLabelOne" jdbcType="VARCHAR"/>
+        <result column="market_label_two" property="marketLabelTwo" jdbcType="VARCHAR"/>
+        <result column="market_label_three" property="marketLabelTree" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, whole_sale_market_name, whole_sale_market_picture, area_prov, area_city, area_cou,
+    address, coordinate_point, trans_scope, whole_sale_market_signature,market_label_one,market_label_two,market_label_three,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from whole_sale_market_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from whole_sale_market_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.WholeSaleMarketMage">
+    insert into whole_sale_market_mage (id, whole_sale_market_name, whole_sale_market_picture,
+      area_prov, area_city, area_cou,
+      address, coordinate_point, trans_scope,
+      whole_sale_market_signature,market_label_one,market_label_two,market_label_three,
+    create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{wholeSaleMarketName,jdbcType=VARCHAR}, #{wholeSaleMarketPicture,jdbcType=VARCHAR},
+      #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{coordinatePoint,jdbcType=VARCHAR}, #{transScope,jdbcType=VARCHAR},
+      #{wholeSaleMarketSignature,jdbcType=VARCHAR},#{marketLabelOne,jdbcType=VARCHAR},#{marketLabelTwo,jdbcType=VARCHAR},#{marketLabelTree,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.WholeSaleMarketMage">
+        insert into whole_sale_market_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="wholeSaleMarketName != null">
+                whole_sale_market_name,
+            </if>
+            <if test="wholeSaleMarketPicture != null">
+                whole_sale_market_picture,
+            </if>
+            <if test="areaProv != null">
+                area_prov,
+            </if>
+            <if test="areaCity != null">
+                area_city,
+            </if>
+            <if test="areaCou != null">
+                area_cou,
+            </if>
+            <if test="address != null">
+                address,
+            </if>
+            <if test="coordinatePoint != null">
+                coordinate_point,
+            </if>
+            <if test="transScope != null">
+                trans_scope,
+            </if>
+            <if test="wholeSaleMarketSignature != null">
+                whole_sale_market_signature,
+            </if>
+            <if test="marketLabelOne != null">
+                market_label_one,
+            </if>
+            <if test="marketLabelTwo != null">
+                market_label_two,
+            </if>
+            <if test="marketLabelTree != null">
+                market_label_three,
+            </if>
+            <if test="createBy!=null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="wholeSaleMarketName != null">
+                #{wholeSaleMarketName,jdbcType=VARCHAR},
+            </if>
+            <if test="wholeSaleMarketPicture != null">
+                #{wholeSaleMarketPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null">
+                #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null">
+                #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null">
+                #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="coordinatePoint != null">
+                #{coordinatePoint,jdbcType=VARCHAR},
+            </if>
+            <if test="transScope != null">
+                #{transScope,jdbcType=VARCHAR},
+            </if>
+            <if test="wholeSaleMarketSignature != null">
+                #{wholeSaleMarketSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="marketLabelOne != null">
+                #{marketLabelOne,jdbcType=VARCHAR},
+            </if>
+            <if test="marketLabelTwo != null">
+                #{marketLabelTwo,jdbcType=VARCHAR},
+            </if>
+            <if test="marketLabelTree != null">
+                #{marketLabelTree,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.WholeSaleMarketMage">
+        update whole_sale_market_mage
+        <set>
+            <if test="wholeSaleMarketName != null">
+                whole_sale_market_name = #{wholeSaleMarketName,jdbcType=VARCHAR},
+            </if>
+            <if test="wholeSaleMarketPicture != null">
+                whole_sale_market_picture = #{wholeSaleMarketPicture,jdbcType=VARCHAR},
+            </if>
+            <if test="areaProv != null">
+                area_prov = #{areaProv,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCity != null">
+                area_city = #{areaCity,jdbcType=VARCHAR},
+            </if>
+            <if test="areaCou != null">
+                area_cou = #{areaCou,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="coordinatePoint != null">
+                coordinate_point = #{coordinatePoint,jdbcType=VARCHAR},
+            </if>
+            <if test="transScope != null">
+                trans_scope = #{transScope,jdbcType=VARCHAR},
+            </if>
+            <if test="wholeSaleMarketSignature != null">
+                whole_sale_market_signature = #{wholeSaleMarketSignature,jdbcType=VARCHAR},
+            </if>
+            <if test="marketLabelOne != null">
+                market_label_one = #{marketLabelOne,jdbcType=VARCHAR},
+            </if>
+            <if test="marketLabelTwo != null">
+                market_label_two = #{marketLabelTwo,jdbcType=VARCHAR},
+            </if>
+            <if test="marketLabelTree != null">
+                market_label_three = #{marketLabelTree,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.WholeSaleMarketMage">
+    update whole_sale_market_mage
+    set whole_sale_market_name = #{wholeSaleMarketName,jdbcType=VARCHAR},
+      whole_sale_market_picture = #{wholeSaleMarketPicture,jdbcType=VARCHAR},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      coordinate_point = #{coordinatePoint,jdbcType=VARCHAR},
+      trans_scope = #{transScope,jdbcType=VARCHAR},
+      whole_sale_market_signature = #{wholeSaleMarketSignature,jdbcType=VARCHAR},
+      market_label_one = #{marketLabelOne,jdbcType=VARCHAR},
+      market_label_two = #{marketLabelTwo,jdbcType=VARCHAR},
+      market_label_three = #{marketLabelTree,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPageList" resultType="com.wisea.transac.common.vo.WholeSaleMarketMagePageListVo"
+            parameterType="com.wisea.transac.common.po.WholeSaleMarketMagePageListPo">
+        select
+        wsmm.id                          id,
+        wsmm.whole_sale_market_name      wholeSaleMarketName,
+        wsmm.whole_sale_market_picture   wholeSaleMarketPicture,
+        wsmm.area_prov                   areaProv,
+        prov.name                        areaProvName,
+        wsmm.area_city                   areaCity,
+        city.name                        areaCityName,
+        wsmm.area_cou                    areaCou,
+        cou.name                         areaCouName,
+        wsmm.address                     address,
+        wsmm.coordinate_point            coordinatePoint,
+        wsmm.trans_scope                 transScope,
+        wsmm.whole_sale_market_signature wholeSaleMarketSignature
+        <if test="wxCoordinate!=null and wxCoordinate!=''">
+        ,getDistance(
+        substring_index(wsmm.coordinate_point, ',', 1),
+        substring_index(wsmm.coordinate_point, ',', -1),
+        substring_index(#{wxCoordinate}, ',', 1),
+        substring_index(#{wxCoordinate}, ',', -1)
+        ) as distance
+        </if>
+        from whole_sale_market_mage wsmm
+            left join sys_area prov on prov.code = wsmm.area_prov
+            left join sys_area city on city.code = wsmm.area_city
+            left join sys_area cou on cou.code = wsmm.area_cou
+        where wsmm.area_prov is not null
+        and wsmm.area_city is not null
+        and wsmm.area_cou is not null
+        and wsmm.del_flag = '0'
+        <if test="wholeSaleMarketName!=null and wholeSaleMarketName!=''">
+            and wsmm.whole_sale_market_name like CONCAT('%',#{wholeSaleMarketName},'%')
+        </if>
+        <if test="areaCou!=null and areaCou!=''">
+            and wsmm.area_cou = #{areaCou}
+        </if>
+        order by wsmm.create_date desc
+    </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.WholeSaleMarketMageInfoVo"
+            parameterType="java.lang.Long">
+           select wsmm.id                          id,
+               wsmm.whole_sale_market_name      wholeSaleMarketName,
+               wsmm.whole_sale_market_picture   wholeSaleMarketPicture,
+               wsmm.area_prov                   areaProvCode,
+               wsmm.area_city                   areaCityCode,
+               wsmm.area_cou                    areaCouCode,
+               wsmm.address                     address,
+               wsmm.coordinate_point            coordinatePoint,
+               wsmm.trans_scope                 transScope,
+               wsmm.whole_sale_market_signature wholeSaleMarketSignature,
+               wsmm.market_label_one            marketLabelOne,
+               wsmm.market_label_two            marketLabelTwo,
+               wsmm.market_label_three          marketLabelTree,
+               sa1.name                         areaProv,
+               sa2.name                         areaCity,
+               sa3.name                         areaCou
+        from whole_sale_market_mage wsmm
+                 left join sys_area sa1 on sa1.code = wsmm.area_prov
+                 left join sys_area sa2 on sa2.code = wsmm.area_city
+                 left join sys_area sa3 on sa3.code = wsmm.area_cou
+        where wsmm.del_flag = '0'
+          and wsmm.id =  #{id}
+  </select>
+
+    <select id="findInfoWithDistance" resultType="com.wisea.transac.common.vo.WholeSaleMarketMageInfoVo"
+            parameterType="com.wisea.transac.common.po.WholeSaleMarketMagePo">
+           select wsmm.id                          id,
+               wsmm.whole_sale_market_name      wholeSaleMarketName,
+               wsmm.whole_sale_market_picture   wholeSaleMarketPicture,
+               wsmm.area_prov                   areaProvCode,
+               wsmm.area_city                   areaCityCode,
+               wsmm.area_cou                    areaCouCode,
+               wsmm.address                     address,
+               wsmm.coordinate_point            coordinatePoint,
+               wsmm.trans_scope                 transScope,
+               wsmm.whole_sale_market_signature wholeSaleMarketSignature,
+               wsmm.market_label_one            marketLabelOne,
+               wsmm.market_label_two            marketLabelTwo,
+               wsmm.market_label_three          marketLabelTree,
+               sa1.name                         areaProv,
+               sa2.name                         areaCity,
+               sa3.name                         areaCou,
+               <if test="wxCoordinate!=null and wxCoordinate!=''">
+               getDistance(
+                            substring_index(wsmm.coordinate_point, ',', 1),
+                            substring_index(wsmm.coordinate_point, ',', -1),
+                            substring_index(#{wxCoordinate}, ',', 1),
+                            substring_index(#{wxCoordinate}, ',', -1)
+                            )                   distance
+               </if>
+        from whole_sale_market_mage wsmm
+                 left join sys_area sa1 on sa1.code = wsmm.area_prov
+                 left join sys_area sa2 on sa2.code = wsmm.area_city
+                 left join sys_area sa3 on sa3.code = wsmm.area_cou
+        where wsmm.del_flag = '0'
+          and wsmm.id =  #{id}
+  </select>
+    <select id="findClosestInfoWithDistance" resultType="com.wisea.transac.common.vo.WholeSaleMarketMageInfoVo"
+            parameterType="com.wisea.transac.common.po.WholeSaleMarketMagePo">
+           select wsmm.id                          id,
+               wsmm.whole_sale_market_name      wholeSaleMarketName,
+               wsmm.whole_sale_market_picture   wholeSaleMarketPicture,
+               wsmm.area_prov                   areaProvCode,
+               wsmm.area_city                   areaCityCode,
+               wsmm.area_cou                    areaCouCode,
+               wsmm.address                     address,
+               wsmm.coordinate_point            coordinatePoint,
+               wsmm.trans_scope                 transScope,
+               wsmm.whole_sale_market_signature wholeSaleMarketSignature,
+               sa1.name                         areaProv,
+               sa2.name                         areaCity,
+               sa3.name                         areaCou,
+               getDistance(
+                            substring_index(wsmm.coordinate_point, ',', 1),
+                            substring_index(wsmm.coordinate_point, ',', -1),
+                            substring_index(#{wxCoordinate}, ',', 1),
+                            substring_index(#{wxCoordinate}, ',', -1)
+                            )                   distance
+        from whole_sale_market_mage wsmm
+                 left join sys_area sa1 on sa1.code = wsmm.area_prov
+                 left join sys_area sa2 on sa2.code = wsmm.area_city
+                 left join sys_area sa3 on sa3.code = wsmm.area_cou
+        where wsmm.del_flag = '0'
+            order by distance asc
+            limit 1
+  </select>
+    <select id="findMarketRank" parameterType="com.wisea.transac.common.po.system.MarketRankPo"
+            resultType="com.wisea.transac.common.vo.system.MarketRankVo">
+        select wsmm.id as id,
+        wsmm.whole_sale_market_name as name,
+        ifnull(sum(oi.payable_amount), 0) as totalAmount,
+        count(distinct oi.id) as orderCount,
+        count(distinct sm.shop_id) as shopCount
+        from order_info oi
+        left join stalls_mage sm on sm.id = oi.stalls_id
+        left join whole_sale_market_mage wsmm on wsmm.id = sm.whole_sale_market_id
+        where oi.del_flag = '0'
+        and sm.del_flag = '0'
+        and wsmm.del_flag = '0'
+        and oi.order_state_type = '4'
+
+        <if test="startDate!=null and endDate!=null">
+            and oi.pay_ord_date between #{startDate} and #{endDate}
+        </if>
+
+        <if test="order!=null and order!=''">
+            order by ${order} desc
+        </if>
+        <if test="limit!=null">
+            limit ${limit};
+        </if>
+    </select>
+
+    <select id="findMembIdByMarketId" resultType="com.wisea.transac.common.entity.MembInfo" parameterType="java.lang.Long">
+        select mi.*
+        from memb_info mi,
+             entp_auth ea
+        where ea.del_flag = '0'
+          and mi.del_flag = '0'
+          and ea.memb_id = mi.id
+          and ea.whole_sale_market_id = #{marketId}
+    </select>
+    <!-- 查询全部市场信息  选择用 -->
+    <select id="findMarketAllList" resultType="com.wisea.transac.common.vo.memb.MaketInfoListVo" parameterType="java.lang.String">
+	    SELECT id, whole_sale_market_name AS 'marketName',whole_sale_market_picture AS 'marketPic'
+		FROM whole_sale_market_mage
+		WHERE  del_flag = '0'
+			   <if test="_parameter != null and _parameter != ''">
+				   AND NAME LIKE CONCAT('%', #{_parameter}, '%')
+			   </if>
+    </select>
+</mapper>

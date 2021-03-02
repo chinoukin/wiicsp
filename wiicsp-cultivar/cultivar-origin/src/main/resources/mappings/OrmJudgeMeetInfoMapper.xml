@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.origin.dao.OrmJudgeMeetInfoMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.origin.entity.JudgeMeetInfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="judge_meet_name" jdbcType="VARCHAR" property="judgeMeetName" />
+    <result column="host_unit" jdbcType="VARCHAR" property="hostUnit" />
+    <result column="start_date" jdbcType="TIMESTAMP" property="startDate" />
+    <result column="end_date" jdbcType="TIMESTAMP" property="endDate" />
+    <result column="start_time" jdbcType="VARCHAR" property="startTime" />
+    <result column="end_time" jdbcType="VARCHAR" property="endTime" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="operator" jdbcType="VARCHAR" property="operator" />
+    <result column="operat_date" jdbcType="TIMESTAMP" property="operatDate" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="contacts" jdbcType="VARCHAR" property="contacts" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="judge_meet_introduce" jdbcType="VARCHAR" property="judgeMeetIntroduce" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, judge_meet_name, host_unit, start_date, end_date, start_time, end_time, address,
+    operator, operat_date, create_by, create_date, update_by, update_date, remarks, del_flag,contacts,tel,judge_meet_introduce
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from judge_meet_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from judge_meet_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.origin.entity.JudgeMeetInfo">
+    insert into judge_meet_info (id, judge_meet_name, host_unit,
+      start_date, end_date, start_time,
+      end_time, address, operator,
+      operat_date, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag,contacts,tel,judge_meet_introduce)
+    values (#{id,jdbcType=BIGINT}, #{judgeMeetName,jdbcType=VARCHAR}, #{hostUnit,jdbcType=VARCHAR},
+      #{startDate,jdbcType=TIMESTAMP}, #{endDate,jdbcType=TIMESTAMP}, #{startTime,jdbcType=VARCHAR},
+      #{endTime,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR},
+      #{operatDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{contacts,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},#{judgeMeetIntroduce,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.origin.entity.JudgeMeetInfo">
+    insert into judge_meet_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="judgeMeetName != null">
+        judge_meet_name,
+      </if>
+      <if test="hostUnit != null">
+        host_unit,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="operator != null">
+        operator,
+      </if>
+      <if test="operatDate != null">
+        operat_date,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+      <if test="contacts != null">
+        contacts,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="judgeMeetIntroduce != null">
+        judge_meet_introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="judgeMeetName != null">
+        #{judgeMeetName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostUnit != null">
+        #{hostUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatDate != null">
+        #{operatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="contacts != null">
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+	    <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+	    <if test="judgeMeetIntroduce != null">
+        #{judgeMeetIntroduce,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.origin.entity.JudgeMeetInfo">
+    update judge_meet_info
+    <set>
+      <if test="judgeMeetName != null">
+        judge_meet_name = #{judgeMeetName,jdbcType=VARCHAR},
+      </if>
+      <if test="hostUnit != null">
+        host_unit = #{hostUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=VARCHAR},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="operator != null">
+        operator = #{operator,jdbcType=VARCHAR},
+      </if>
+      <if test="operatDate != null">
+        operat_date = #{operatDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+       <if test="contacts != null">
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+	    <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+	    <if test="judgeMeetIntroduce != null">
+        judge_meet_introduce = #{judgeMeetIntroduce,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.origin.entity.JudgeMeetInfo">
+    update judge_meet_info
+    set judge_meet_name = #{judgeMeetName,jdbcType=VARCHAR},
+      host_unit = #{hostUnit,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=TIMESTAMP},
+      end_date = #{endDate,jdbcType=TIMESTAMP},
+      start_time = #{startTime,jdbcType=VARCHAR},
+      end_time = #{endTime,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      operator = #{operator,jdbcType=VARCHAR},
+      operat_date = #{operatDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      judge_meet_introduce = #{judgeMeetIntroduce,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+   <!--   分页查询品鉴会列表 -->
+  <select id="findJudgeMeetList" resultType="com.wisea.cultivar.origin.vo.JudgeMeetListVo" parameterType="com.wisea.cultivar.origin.po.JudgeMeetListPo">
+	select a.id,a.judge_meet_name,a.host_unit,a.start_date,a.end_date,a.start_time,a.end_time,a.address,
+	      case when str_to_date(concat(substr(DATE_FORMAT(a.start_date,"%Y-%m-%d %T"),1,11),a.start_time),"%Y-%m-%d %T") <![CDATA[ > ]]>   SYSDATE() then 1
+	           when str_to_date(concat(substr(DATE_FORMAT(a.start_date,"%Y-%m-%d %T"),1,11),a.start_time),"%Y-%m-%d %T")<![CDATA[< ]]>SYSDATE() and str_to_date(concat(substr(DATE_FORMAT(a.end_date,"%Y-%m-%d %T"),1,11),a.end_time),"%Y-%m-%d %T")<![CDATA[ > ]]> SYSDATE() then 2
+	           when str_to_date(concat(substr(DATE_FORMAT(a.end_date,"%Y-%m-%d %T"),1,11),a.end_time),"%Y-%m-%d %T")<![CDATA[ < ]]>SYSDATE() then 3
+	      else null end as jxtype,
+	        COUNT(b.id) amount
+	from judge_meet_info a
+	LEFT JOIN  samp_info b on a.id =b.judge_meet_id AND b.del_flag='0'
+	WHERE a.del_flag='0'
+    <if test="judgeMeetName != null and judgeMeetName != ''">
+	   AND a.judge_meet_name LIKE CONCAT('%', #{judgeMeetName}, '%')
+	</if>
+	GROUP BY a.id
+	order by jxtype,str_to_date(concat(substr(DATE_FORMAT(a.start_date,"%Y-%m-%d %T"),1,11),a.start_time),"%Y-%m-%d %T") ASC
+  </select>
+   <!--   分页选择品鉴会列表 -->
+  <select id="findChoiceList" resultType="com.wisea.cultivar.origin.vo.JudgeMeetChoiceListVo" parameterType="com.wisea.cultivar.origin.po.JudgeMeetChoiceListPo">
+	select a.id,a.judge_meet_name
+	from judge_meet_info a
+	LEFT JOIN  samp_info b on a.id =b.judge_meet_id
+	where a.del_flag='0'
+	and str_to_date(concat(substr(DATE_FORMAT(a.end_date,"%Y-%m-%d %T"),1,11),a.end_time),"%Y-%m-%d %T") > SYSDATE()
+	GROUP BY a.id,a.judge_meet_name
+  </select>
+  <!--  分页查询品鉴会管理列表web -->
+  <select id="findJudgeMeetListWeb" resultType="com.wisea.cultivar.origin.vo.JudgeMeetListWebVo" parameterType="com.wisea.cultivar.origin.po.JudgeMeetListWebPo">
+	  SELECT
+			a.id,
+			a.judge_meet_name,
+			a.host_unit,
+			a.start_date,
+			a.end_date,
+			a.start_time,
+			a.end_time,
+			a.address,
+			b.user_name operator,
+			a.operat_date
+		FROM
+			judge_meet_info a
+		LEFT JOIN memb_info b ON a.operator = b.id
+		where  a.del_flag='0'
+		<if test="value != null and value != ''">
+		<if test="key == '0'.toString()">
+			AND a.judge_meet_name LIKE CONCAT('%', #{value}, '%')
+		</if>
+		<if test="key == '1'.toString()">
+			AND a.host_unit LIKE CONCAT('%', #{value}, '%')
+		</if>
+		</if>
+		<if test="jxtype != null and jxtype != ''">
+		<if test="jxtype == '1'.toString()">
+			AND str_to_date(concat(substr(DATE_FORMAT(a.start_date,"%Y-%m-%d %T"),1,11),a.start_time),"%Y-%m-%d %T") <![CDATA[ > ]]>   SYSDATE()
+		</if>
+		<if test="jxtype == '2'.toString()">
+	        AND str_to_date(concat(substr(DATE_FORMAT(a.start_date,"%Y-%m-%d %T"),1,11),a.start_time),"%Y-%m-%d %T")<![CDATA[< ]]>SYSDATE() AND str_to_date(concat(substr(DATE_FORMAT(a.end_date,"%Y-%m-%d %T"),1,11),a.end_time),"%Y-%m-%d %T")<![CDATA[ > ]]> SYSDATE()
+		</if>
+		<if test="jxtype == '3'.toString()">
+	        AND str_to_date(concat(substr(DATE_FORMAT(a.end_date,"%Y-%m-%d %T"),1,11),a.end_time),"%Y-%m-%d %T")<![CDATA[ < ]]>SYSDATE()
+		</if>
+		</if>
+	    <if test="staDate != null">
+			AND a.operat_date  <![CDATA[ >= ]]>
+			#{staDate}
+		</if>
+		<if test="endDate != null">
+			AND a.operat_date  <![CDATA[ <= ]]>
+			#{endDate}
+		</if>
+      ORDER BY a.operat_date DESC
+  </select>
+   <!--  校验品鉴会名称 -->
+   <select id="checkName" parameterType="com.wisea.cultivar.origin.po.CheckJudgeMeetNamePo" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from judge_meet_info
+    where judge_meet_name = #{judgeMeetName,jdbcType=VARCHAR}
+    <if test="id != null and id != ''">
+     and id !=#{id,jdbcType=BIGINT}
+    </if>
+    and del_flag='0'
+  </select>
+  <!--  查询检测机构详细 -->
+  <select id="getFindJudgeMeetByid" parameterType="java.lang.Long" resultType="com.wisea.cultivar.origin.vo.JudgeMeetInfoVo">
+   select
+   <include refid="Base_Column_List" />
+   from judge_meet_info
+   where id = #{id,jdbcType=BIGINT}
+   and del_flag='0'
+  </select>
+</mapper>

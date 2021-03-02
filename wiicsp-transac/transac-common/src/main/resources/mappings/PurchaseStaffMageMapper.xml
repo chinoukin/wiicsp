@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.PurchaseStaffMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.PurchaseStaffMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="purchase_staff_id" property="purchaseStaffId" jdbcType="BIGINT"/>
+        <result column="sffsdxyq_flag" property="sffsdxyqFlag" jdbcType="CHAR"/>
+        <result column="purchase_team_state" property="purchaseTeamState" jdbcType="VARCHAR"/>
+        <result column="sf_admin_flag" property="sfAdminFlag" jdbcType="CHAR"/>
+        <result column="staff_name" property="staffName" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="VARCHAR"/>
+        <result column="sex_type" property="sexType" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id
+        , memb_id, purchase_staff_id, sffsdxyq_flag, purchase_team_state, sf_admin_flag,
+    staff_name, position, sex_type, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from purchase_staff_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from purchase_staff_mage
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.transac.common.entity.PurchaseStaffMage">
+        insert into purchase_staff_mage (id, memb_id, purchase_staff_id,
+                                         sffsdxyq_flag, purchase_team_state, sf_admin_flag,
+                                         staff_name, position, sex_type,
+                                         create_by, create_date, update_by,
+                                         update_date, remarks, del_flag)
+        values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{purchaseStaffId,jdbcType=BIGINT},
+                #{sffsdxyqFlag,jdbcType=CHAR}, #{purchaseTeamState,jdbcType=VARCHAR}, #{sfAdminFlag,jdbcType=CHAR},
+                #{staffName,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR}, #{sexType,jdbcType=VARCHAR},
+                #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+                #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.PurchaseStaffMage">
+        insert into purchase_staff_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="purchaseStaffId != null">
+                purchase_staff_id,
+            </if>
+            <if test="sffsdxyqFlag != null">
+                sffsdxyq_flag,
+            </if>
+            <if test="purchaseTeamState != null">
+                purchase_team_state,
+            </if>
+            <if test="sfAdminFlag != null">
+                sf_admin_flag,
+            </if>
+            <if test="staffName != null">
+                staff_name,
+            </if>
+            <if test="position != null">
+                position,
+            </if>
+            <if test="sexType != null">
+                sex_type,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="purchaseStaffId != null">
+                #{purchaseStaffId,jdbcType=BIGINT},
+            </if>
+            <if test="sffsdxyqFlag != null">
+                #{sffsdxyqFlag,jdbcType=CHAR},
+            </if>
+            <if test="purchaseTeamState != null">
+                #{purchaseTeamState,jdbcType=VARCHAR},
+            </if>
+            <if test="sfAdminFlag != null">
+                #{sfAdminFlag,jdbcType=CHAR},
+            </if>
+            <if test="staffName != null">
+                #{staffName,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="sexType != null">
+                #{sexType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.PurchaseStaffMage">
+        update purchase_staff_mage
+        <set>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="purchaseStaffId != null">
+                purchase_staff_id = #{purchaseStaffId,jdbcType=BIGINT},
+            </if>
+            <if test="sffsdxyqFlag != null">
+                sffsdxyq_flag = #{sffsdxyqFlag,jdbcType=CHAR},
+            </if>
+            <if test="purchaseTeamState != null">
+                purchase_team_state = #{purchaseTeamState,jdbcType=VARCHAR},
+            </if>
+            <if test="sfAdminFlag != null">
+                sf_admin_flag = #{sfAdminFlag,jdbcType=CHAR},
+            </if>
+            <if test="staffName != null">
+                staff_name = #{staffName,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null">
+                position = #{position,jdbcType=VARCHAR},
+            </if>
+            <if test="sexType != null">
+                sex_type = #{sexType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.PurchaseStaffMage">
+        update purchase_staff_mage
+        set memb_id             = #{membId,jdbcType=BIGINT},
+            purchase_staff_id   = #{purchaseStaffId,jdbcType=BIGINT},
+            sffsdxyq_flag       = #{sffsdxyqFlag,jdbcType=CHAR},
+            purchase_team_state = #{purchaseTeamState,jdbcType=VARCHAR},
+            sf_admin_flag       = #{sfAdminFlag,jdbcType=CHAR},
+            staff_name          = #{staffName,jdbcType=VARCHAR},
+            position            = #{position,jdbcType=VARCHAR},
+            sex_type            = #{sexType,jdbcType=VARCHAR},
+            create_by           = #{createBy,jdbcType=VARCHAR},
+            create_date         = #{createDate,jdbcType=TIMESTAMP},
+            update_by           = #{updateBy,jdbcType=VARCHAR},
+            update_date         = #{updateDate,jdbcType=TIMESTAMP},
+            remarks             = #{remarks,jdbcType=VARCHAR},
+            del_flag            = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findPageList" resultType="com.wisea.transac.common.vo.PurchaseStaffMagePageListVo"
+            parameterType="com.wisea.transac.common.po.PurchaseStaffMagePageListPo">
+        select
+        id id,
+        memb_id membId,
+        purchase_staff_id purchaseStaffId,
+        sffsdxyq_flag sffsdxyqFlag,
+        purchase_team_state purchaseTeamState,
+        sf_admin_flag sfAdminFlag,
+        staff_name staffName,
+        position position,
+        sex_type sexType,
+        remarks
+        from
+        purchase_staff_mage
+        where
+        del_flag = '0'
+        <if test="membId!=null">
+            and memb_id = #{membId}
+        </if>
+        <if test="purchaseTeamState!=null and purchaseTeamState!=''">
+            and purchase_team_state = #{purchaseTeamState}
+        </if>
+    </select>
+    <select id="findInfo" resultType="com.wisea.transac.common.vo.PurchaseStaffMageInfoVo" parameterType="java.lang.Long">
+        select id                  id,
+               memb_id             membId,
+               purchase_staff_id   purchaseStaffId,
+               sffsdxyq_flag       sffsdxyqFlag,
+               purchase_team_state purchaseTeamState,
+               sf_admin_flag       sfAdminFlag,
+               staff_name          staffName,
+               position            position,
+               sex_type            sexType,
+               remarks
+        from purchase_staff_mage
+        where del_flag = '0'
+          and id = #{id}
+    </select>
+    <select id="findByPurchaseStaffId" resultType="com.wisea.transac.common.vo.PurchaseStaffMageInfoVo"
+            parameterType="java.lang.Long">
+        select id                  id,
+               memb_id             membId,
+               purchase_staff_id   purchaseStaffId,
+               sffsdxyq_flag       sffsdxyqFlag,
+               purchase_team_state purchaseTeamState,
+               sf_admin_flag       sfAdminFlag,
+               staff_name          staffName,
+               position            position,
+               sex_type            sexType,
+               remarks
+        from purchase_staff_mage
+        where del_flag = '0'
+          and purchase_staff_id = #{id}
+          and purchase_team_state!='1'
+    </select>
+    <select id="findByPurchaseStaffIdNormal" resultType="com.wisea.transac.common.vo.PurchaseStaffMageInfoVo"
+            parameterType="java.lang.Long">
+        select id                  id,
+               memb_id             membId,
+               purchase_staff_id   purchaseStaffId,
+               sffsdxyq_flag       sffsdxyqFlag,
+               purchase_team_state purchaseTeamState,
+               sf_admin_flag       sfAdminFlag,
+               staff_name          staffName,
+               position            position,
+               sex_type            sexType,
+               remarks
+        from purchase_staff_mage
+        where del_flag = '0'
+          and purchase_staff_id = #{id}
+          and purchase_team_state='1'
+    </select>
+    <select id="findByRemarks" resultType="com.wisea.transac.common.vo.PurchaseStaffMageInfoVo"
+            parameterType="java.lang.String">
+        select id                  id,
+               memb_id             membId,
+               purchase_staff_id   purchaseStaffId,
+               sffsdxyq_flag       sffsdxyqFlag,
+               purchase_team_state purchaseTeamState,
+               sf_admin_flag       sfAdminFlag,
+               staff_name          staffName,
+               position            position,
+               sex_type            sexType,
+               remarks
+        from purchase_staff_mage
+        where del_flag = '0'
+          and remarks = #{tel}
+    </select>
+
+    <select id="findTotalCountAndNormalCount" parameterType="java.lang.Long"
+            resultType="com.wisea.transac.common.vo.seller.PurchaseStaffCountVo">
+        select count(*)                                                              totalCount,
+               sum(if(purchase_team_state = '1' or purchase_team_state = '0', 1, 0)) normalCount
+        from purchase_staff_mage
+        where del_flag = '0'
+          and memb_id = #{membId}
+    </select>
+    <select id="findPurMageAdminList" parameterType="java.lang.Long" resultType="java.lang.String">
+        SELECT id
+        FROM purchase_staff_mage
+        WHERE del_flag = '0'
+          AND purchase_team_state IN ('0', '1')
+          AND sf_admin_flag = '0'
+          AND memb_id = #{_parameter}
+    </select>
+    <select id="findByStaffId" resultType="com.wisea.transac.common.entity.PurchaseStaffMage" parameterType="java.lang.Long">
+               select
+                 <include refid="Base_Column_List"/>
+                from purchase_staff_mage
+                where del_flag = '0'
+                  and purchase_staff_id = #{id}
+    </select>
+
+    <select id="findByMembId" resultType="com.wisea.transac.common.entity.PurchaseStaffMage" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from purchase_staff_mage
+        where del_flag = '0'
+        and memb_id = #{id}
+    </select>
+
+</mapper>

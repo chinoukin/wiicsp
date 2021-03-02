@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.seedlings.mapper.SproutCatalogMageInfoMapper">
+    <insert id="insert" parameterType="com.wisea.cultivar.seedlings.entity.SproutEntpInfoMage">
+    insert into sprout_main_thrust_info (id, sprout_catalog_mage_id, oil_tea_variet_id,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{sproutCatalogMageId,jdbcType=BIGINT}, #{oilTeaVarietId,jdbcType=BIGINT},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from sprout_main_thrust_info
+        where sprout_catalog_mage_id = #{id,jdbcType=BIGINT}
+  </delete>
+</mapper>

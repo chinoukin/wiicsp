@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.standards.mapper.IcsClassMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.standards.entity.IcsClassMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="p_name" jdbcType="VARCHAR" property="pName" />
+    <result column="ics_class_code" jdbcType="VARCHAR" property="icsClassCode" />
+    <result column="ics_class_name" jdbcType="VARCHAR" property="icsClassName" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <resultMap id="BaseResultTreeMap" type="com.wisea.cultivar.standards.vo.IcsClassMageTreeVo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="p_name" jdbcType="VARCHAR" property="pName" />
+    <result column="ics_class_code" jdbcType="VARCHAR" property="icsClassCode" />
+    <result column="ics_class_name" jdbcType="VARCHAR" property="icsClassName" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, pid, p_name, ics_class_code, ics_class_name, sort, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <sql id="Base_Column_Tree">
+    id, pid, p_name, ics_class_code, ics_class_name, sort, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from ics_class_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from ics_class_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.standards.entity.IcsClassMage">
+    insert into ics_class_mage (id, pid, p_name,
+      ics_class_code, ics_class_name, sort,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{pid,jdbcType=BIGINT}, #{pName,jdbcType=VARCHAR},
+      #{icsClassCode,jdbcType=VARCHAR}, #{icsClassName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.standards.entity.IcsClassMage">
+    insert into ics_class_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="pName != null">
+        p_name,
+      </if>
+      <if test="icsClassCode != null">
+        ics_class_code,
+      </if>
+      <if test="icsClassName != null">
+        ics_class_name,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pName != null">
+        #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="icsClassCode != null">
+        #{icsClassCode,jdbcType=VARCHAR},
+      </if>
+      <if test="icsClassName != null">
+        #{icsClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.standards.entity.IcsClassMage">
+    update ics_class_mage
+    <set>
+      <if test="pid != null">
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pName != null">
+        p_name = #{pName,jdbcType=VARCHAR},
+      </if>
+      <if test="icsClassCode != null">
+        ics_class_code = #{icsClassCode,jdbcType=VARCHAR},
+      </if>
+      <if test="icsClassName != null">
+        ics_class_name = #{icsClassName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.standards.entity.IcsClassMage">
+    update ics_class_mage
+    set pid = #{pid,jdbcType=BIGINT},
+      p_name = #{pName,jdbcType=VARCHAR},
+      ics_class_code = #{icsClassCode,jdbcType=VARCHAR},
+      ics_class_name = #{icsClassName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.standards.po.IcsClassMagePagePo" resultType="com.wisea.cultivar.standards.vo.IcsClassMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from ics_class_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.standards.po.IcsClassMageListPo" resultType="com.wisea.cultivar.standards.vo.IcsClassMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from ics_class_mage
+    where del_flag = '0'
+  </select>
+  <select id="icsClassMageGetTree" resultMap="BaseResultTreeMap">
+    select <include refid="Base_Column_Tree" />
+    from ics_class_mage where del_flag='0'
+    <if test="classMageQuery!=null and classMageQuery!=''"> and ics_class_code like '%${classMageQuery}%' or ics_class_name like '%${classMageQuery}%'</if>
+  </select>
+  <select id="getOne" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from ics_class_mage where id=#{delId}
+  </select>
+  <select id="findicsClassMagePidByid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from ics_class_mage where pid=#{delId}
+  </select>
+  <update id="deleteLogicByPrimaryKey">
+    update ics_class_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteByPid">
+    update ics_class_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where pid = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

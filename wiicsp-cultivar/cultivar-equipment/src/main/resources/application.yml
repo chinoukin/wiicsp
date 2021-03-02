@@ -1,0 +1,149 @@
+server:
+  port: 8947
+spring:
+  application:
+    name: cultivar-equipment
+  profiles:
+    active: dev #标明默认激活的配置文件
+  autoconfigure:
+    exclude:
+      org.springframework.boot.autoconfigure.context.MessageSourceAutoConfiguration,
+      org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration,
+      org.springframework.boot.autoconfigure.jersey.JerseyAutoConfiguration,
+      org.springframework.boot.autoconfigure.websocket.WebSocketAutoConfiguration,
+      org.springframework.cloud.netflix.archaius.ArchaiusAutoConfiguration,
+      org.springframework.boot.autoconfigure.validation.ValidationAutoConfiguration,
+      org.springframework.boot.autoconfigure.web.ErrorMvcAutoConfiguration,
+      org.springframework.boot.autoconfigure.jdbc.JndiDataSourceAutoConfiguration,
+      org.springframework.boot.autoconfigure.transaction.jta.JtaAutoConfiguration,
+      org.springframework.boot.autoconfigure.couchbase.CouchbaseAutoConfiguration
+      org.springframework.boot.autoconfigure.hazelcast.HazelcastAutoConfiguration,
+      org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration,
+      org.springframework.boot.autoconfigure.jmx.JmxAutoConfiguration,
+      org.springframework.boot.autoconfigure.admin.SpringApplicationAdminJmxAutoConfiguration,
+      org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,
+      org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration,
+      org.springframework.boot.autoconfigure.cassandra.CassandraAutoConfiguration,
+      org.springframework.boot.autoconfigure.dao.PersistenceExceptionTranslationAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.cassandra.CassandraDataAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.cassandra.CassandraRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.couchbase.CouchbaseDataAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.couchbase.CouchbaseRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.ldap.embedded.EmbeddedLdapAutoConfiguration,
+      org.springframework.boot.autoconfigure.ldap.LdapAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.ldap.LdapDataAutoConfiguration
+      org.springframework.boot.autoconfigure.data.ldap.LdapRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration,
+      org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.mongo.MongoDataAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.mongo.MongoRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.neo4j.Neo4jDataAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.neo4j.Neo4jRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.redis.RedisRepositoriesAutoConfiguration,
+      org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.rest.RepositoryRestMvcAutoConfiguration,
+      org.springframework.boot.autoconfigure.data.solr.SolrRepositoriesAutoConfiguration
+      org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration,
+      org.springframework.boot.autoconfigure.elasticsearch.jest.JestAutoConfiguration,
+      org.springframework.boot.autoconfigure.flyway.FlywayAutoConfiguration,
+      org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration,
+      org.springframework.boot.autoconfigure.groovy.template.GroovyTemplateAutoConfiguration,
+      org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration,
+      org.springframework.boot.autoconfigure.hateoas.HypermediaAutoConfiguration,
+      org.springframework.boot.autoconfigure.hazelcast.HazelcastJpaDependencyAutoConfiguration,
+      org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration,
+      org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration,
+      org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration,
+      org.springframework.boot.autoconfigure.jms.JndiConnectionFactoryAutoConfiguration,
+      org.springframework.boot.autoconfigure.jms.artemis.ArtemisAutoConfiguration,
+      org.springframework.boot.autoconfigure.jms.activemq.ActiveMQAutoConfiguration,
+      org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration,
+      org.springframework.boot.autoconfigure.jooq.JooqAutoConfiguration,
+      org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration,
+      org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration,
+      org.springframework.boot.autoconfigure.mail.MailSenderAutoConfiguration,
+      org.springframework.boot.autoconfigure.mail.MailSenderValidatorAutoConfiguration,
+      org.springframework.boot.autoconfigure.mustache.MustacheAutoConfiguration,
+      org.springframework.boot.autoconfigure.social.FacebookAutoConfiguration,
+      org.springframework.boot.autoconfigure.social.TwitterAutoConfiguration,
+      org.springframework.boot.autoconfigure.social.LinkedInAutoConfiguration,
+      org.springframework.boot.autoconfigure.social.SocialWebAutoConfiguration,
+      org.springframework.boot.autoconfigure.thymeleaf.ThymeleafAutoConfiguration,
+      org.springframework.boot.autoconfigure.mobile.DeviceDelegatingViewResolverAutoConfiguration,
+      org.springframework.boot.autoconfigure.mobile.DeviceResolverAutoConfiguration,
+      org.springframework.boot.autoconfigure.mobile.SitePreferenceAutoConfiguration,
+      org.springframework.boot.autoconfigure.reactor.ReactorAutoConfiguration,
+      org.springframework.boot.autoconfigure.sendgrid.SendGridAutoConfiguration,
+      org.springframework.boot.autoconfigure.solr.SolrAutoConfiguration,
+      org.springframework.boot.devtools.autoconfigure.DevToolsDataSourceAutoConfiguration,
+      org.springframework.boot.devtools.autoconfigure.LocalDevToolsAutoConfiguration,
+      org.springframework.boot.devtools.autoconfigure.RemoteDevToolsAutoConfiguration,
+      org.springframework.cloud.client.hypermedia.CloudHypermediaAutoConfiguration,
+      org.springframework.cloud.netflix.rx.RxJavaAutoConfiguration,
+      org.springframework.cloud.client.discovery.simple.SimpleDiscoveryClientAutoConfiguration,
+      org.springframework.cloud.autoconfigure.LifecycleMvcEndpointAutoConfiguration
+
+wbfc:
+  swaggerui:
+    enable: true
+    title: 设备服务，设备厂商、设备型号、设备管理。定时获取设备信息，提供信息展示。 #标题
+  mss:
+    security: CULTIVAR-OPERATION # mss远程 安全服务(用户、菜单、角色)
+    system: CULTIVAR-OPERATION # mss 系统服务(行政区划、数据字典)
+    files: CULTIVAR-OPERATION # mss文件服务
+  quartz:
+    auto-resume:
+      enabled: true
+    timer:
+      job: cultivar.equipment.timer.job # 任务分组
+      trigger: cultivar.equipment.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": cultivar_equipment_scheduler
+
+mybatis:
+  type-aliases-package: com.wisea.cloud.common
+  type-aliases-super-type: com.wisea.cloud.common.entity.BaseEntity
+  mapper-locations: classpath*:/mappings/**/*.xml
+  config-locations: classpath*:mybatis-config.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        timeout:
+          enabled: true
+        isolation:
+          thread:
+            timeoutInMilliseconds: 50000
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  eureka:
+    enabled: true
+feign:
+  httpclient:
+    connection-timeout: 30000
+  client:
+    config:
+      default:           #服务名，填写default为所有服务
+        connectTimeout: 30000
+        readTimeout: 30000
+
+management:
+  endpoint:
+    logviewer:
+      enabled: true # 开启实时日志节点
+  health:
+    elasticsearch:
+      enabled: false # 排除elastic健康监控 虽然backup工程引用了es的包，但配置是在页面进行的 这里启动不需要连接

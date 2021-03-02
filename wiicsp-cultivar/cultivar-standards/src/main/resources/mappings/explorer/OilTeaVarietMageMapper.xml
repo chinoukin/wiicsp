@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.explorer.mapper.OilTeaVarietMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="oil_tea_variet_name" jdbcType="VARCHAR" property="oilTeaVarietName" />
+    <result column="oil_tea_variet_no" jdbcType="VARCHAR" property="oilTeaVarietNo" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="acre_plant_num" jdbcType="DOUBLE" property="acrePlantNum" />
+    <result column="acre_plant_cg" jdbcType="DOUBLE" property="acrePlantCg" />
+    <result column="breed_entp" jdbcType="VARCHAR" property="breedEntp" />
+    <result column="acre_plant_cz" jdbcType="DOUBLE" property="acrePlantCz" />
+    <result column="acre_plant_cy" jdbcType="DOUBLE" property="acrePlantCy" />
+    <result column="fit_are" jdbcType="VARCHAR" property="fitAre" />
+    <result column="features" jdbcType="VARCHAR" property="features" />
+    <result column="plant_mode" jdbcType="VARCHAR" property="plantMode" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="initials" jdbcType="VARCHAR" property="initials" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, oil_tea_variet_name, initials,breed_entp,oil_tea_variet_no, url, acre_plant_num, acre_plant_cg, acre_plant_cz,
+    acre_plant_cy, fit_are, features, plant_mode, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from oil_tea_variet_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from oil_tea_variet_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    insert into oil_tea_variet_mage (id,breed_entp,initials, oil_tea_variet_name, oil_tea_variet_no,
+      url, acre_plant_num, acre_plant_cg,
+      acre_plant_cz, acre_plant_cy, fit_are,
+      features, plant_mode, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT},#{breedEntp,jdbcType=VARCHAR},getszm(#{oilTeaVarietName,jdbcType=VARCHAR}), #{oilTeaVarietName,jdbcType=VARCHAR}, #{oilTeaVarietNo,jdbcType=VARCHAR},
+      #{url,jdbcType=VARCHAR}, #{acrePlantNum,jdbcType=DOUBLE}, #{acrePlantCg,jdbcType=DOUBLE},
+      #{acrePlantCz,jdbcType=DOUBLE}, #{acrePlantCy,jdbcType=DOUBLE}, #{fitAre,jdbcType=VARCHAR},
+      #{features,jdbcType=VARCHAR}, #{plantMode,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    insert into oil_tea_variet_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="oilTeaVarietName != null">
+        oil_tea_variet_name,
+      </if>
+        <if test="breedEntp != null">
+            breed_entp,
+      </if>
+       <if test="initials != null">
+           getszm(#{oilTeaVarietName,jdbcType=VARCHAR}),
+      </if>
+      <if test="oilTeaVarietNo != null">
+        oil_tea_variet_no,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="acrePlantNum != null">
+        acre_plant_num,
+      </if>
+      <if test="acrePlantCg != null">
+        acre_plant_cg,
+      </if>
+      <if test="acrePlantCz != null">
+        acre_plant_cz,
+      </if>
+      <if test="acrePlantCy != null">
+        acre_plant_cy,
+      </if>
+      <if test="fitAre != null">
+        fit_are,
+      </if>
+      <if test="features != null">
+        features,
+      </if>
+      <if test="plantMode != null">
+        plant_mode,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="oilTeaVarietName != null">
+        #{oilTeaVarietName,jdbcType=VARCHAR},
+      </if>
+        <if test="breedEntp != null">
+        #{breedEntp,jdbcType=VARCHAR},
+      </if>
+        <if test="initials != null">
+            getszm(#{oilTeaVarietName,jdbcType=VARCHAR}),
+      </if>
+
+      <if test="oilTeaVarietNo != null">
+        #{oilTeaVarietNo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="acrePlantNum != null">
+        #{acrePlantNum,jdbcType=DOUBLE},
+      </if>
+      <if test="acrePlantCg != null">
+        #{acrePlantCg,jdbcType=DOUBLE},
+      </if>
+      <if test="acrePlantCz != null">
+        #{acrePlantCz,jdbcType=DOUBLE},
+      </if>
+      <if test="acrePlantCy != null">
+        #{acrePlantCy,jdbcType=DOUBLE},
+      </if>
+      <if test="fitAre != null">
+        #{fitAre,jdbcType=VARCHAR},
+      </if>
+      <if test="features != null">
+        #{features,jdbcType=VARCHAR},
+      </if>
+      <if test="plantMode != null">
+        #{plantMode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    update oil_tea_variet_mage
+    <set>
+      <if test="oilTeaVarietName != null">
+        oil_tea_variet_name = #{oilTeaVarietName,jdbcType=VARCHAR},
+      </if>
+        <if test="breedEntp != null">
+            breed_entp = #{breedEntp,jdbcType=VARCHAR},
+      </if>
+       <if test="initials != null">
+           initials = getszm(#{oilTeaVarietName,jdbcType=VARCHAR})
+      </if>
+      <if test="oilTeaVarietNo != null">
+        oil_tea_variet_no = #{oilTeaVarietNo,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="acrePlantNum != null">
+        acre_plant_num = #{acrePlantNum,jdbcType=DOUBLE},
+      </if>
+      <if test="acrePlantCg != null">
+        acre_plant_cg = #{acrePlantCg,jdbcType=DOUBLE},
+      </if>
+      <if test="acrePlantCz != null">
+        acre_plant_cz = #{acrePlantCz,jdbcType=DOUBLE},
+      </if>
+      <if test="acrePlantCy != null">
+        acre_plant_cy = #{acrePlantCy,jdbcType=DOUBLE},
+      </if>
+      <if test="fitAre != null">
+        fit_are = #{fitAre,jdbcType=VARCHAR},
+      </if>
+      <if test="features != null">
+        features = #{features,jdbcType=VARCHAR},
+      </if>
+      <if test="plantMode != null">
+        plant_mode = #{plantMode,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    update oil_tea_variet_mage
+    set oil_tea_variet_name = #{oilTeaVarietName,jdbcType=VARCHAR},
+      oil_tea_variet_no = #{oilTeaVarietNo,jdbcType=VARCHAR},
+      breed_entp = #{breedEntp,jdbcType=VARCHAR},initials = getszm(#{oilTeaVarietName,jdbcType=VARCHAR}),
+      url = #{url,jdbcType=VARCHAR},
+      acre_plant_num = #{acrePlantNum,jdbcType=DOUBLE},
+      acre_plant_cg = #{acrePlantCg,jdbcType=DOUBLE},
+      acre_plant_cz = #{acrePlantCz,jdbcType=DOUBLE},
+      acre_plant_cy = #{acrePlantCy,jdbcType=DOUBLE},
+      fit_are = #{fitAre,jdbcType=VARCHAR},
+      features = #{features,jdbcType=VARCHAR},
+      plant_mode = #{plantMode,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = 0
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="updateByNo" parameterType="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    update oil_tea_variet_mage
+    set oil_tea_variet_name = #{oilTeaVarietName,jdbcType=VARCHAR},
+      oil_tea_variet_no = #{oilTeaVarietNo,jdbcType=VARCHAR},
+      breed_entp = #{breedEntp,jdbcType=VARCHAR},initials = getszm(#{oilTeaVarietName,jdbcType=VARCHAR}),
+      url = #{url,jdbcType=VARCHAR},
+      acre_plant_num = #{acrePlantNum,jdbcType=DOUBLE},
+      acre_plant_cg = #{acrePlantCg,jdbcType=DOUBLE},
+      acre_plant_cz = #{acrePlantCz,jdbcType=DOUBLE},
+      acre_plant_cy = #{acrePlantCy,jdbcType=DOUBLE},
+      fit_are = #{fitAre,jdbcType=VARCHAR},
+      features = #{features,jdbcType=VARCHAR},
+      plant_mode = #{plantMode,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = 0
+    where oil_tea_variet_no = #{oilTeaVarietNo,jdbcType=VARCHAR}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.explorer.po.OilTeaVarietMagePagePo" resultType="com.wisea.cultivar.explorer.vo.OilTeaVarietMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from oil_tea_variet_mage
+    where del_flag = '0'
+    <include refid="query_where"/>
+      ORDER BY update_date DESC
+  </select>
+
+  <!--列表的筛选-->
+  <sql id="query_where">
+    <if test="oilTeaVarietName != null and oilTeaVarietName != ''">
+      and  oil_tea_variet_name LIKE concat('%',#{oilTeaVarietName},'%')
+    </if>
+    <if test="oilTeaVarietNo != null and oilTeaVarietNo != ''">
+      and  oil_tea_variet_no LIKE concat('%', #{oilTeaVarietNo},'%')
+    </if>
+      <if test="query != null and query != ''">
+          and  (oil_tea_variet_name LIKE concat('%',#{query},'%')
+                or initials LIKE concat('%',#{query},'%')
+                )
+      </if>
+      <if test=" ids != null and ids.size > 0">
+          and id in
+          <foreach item="item" collection="ids" separator="," open="(" close=")" index="index">
+              #{item}
+          </foreach>
+      </if>
+  </sql>
+
+  <select id="findList" parameterType="com.wisea.cultivar.explorer.po.OilTeaVarietMageListPo" resultType="com.wisea.cultivar.explorer.vo.OilTeaVarietMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from oil_tea_variet_mage
+    where del_flag = '0'
+    <include refid="query_where"/>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.explorer.entity.OilTeaVarietMage">
+    update oil_tea_variet_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

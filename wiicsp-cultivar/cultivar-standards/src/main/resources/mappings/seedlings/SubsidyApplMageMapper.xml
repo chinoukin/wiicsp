@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.seedlings.mapper.SubsidyApplMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="memb_id" jdbcType="BIGINT" property="membId" />
+    <result column="item_mage_id" jdbcType="BIGINT" property="itemMageId" />
+    <result column="auth_type" jdbcType="VARCHAR" property="authType" />
+    <result column="appl_capital" jdbcType="DOUBLE" property="applCapital" />
+    <result column="appl_measure_area" jdbcType="DOUBLE" property="applMeasureArea" />
+    <result column="appl_date" jdbcType="TIMESTAMP" property="applDate" />
+    <result column="subsidy_appl_state_type" jdbcType="VARCHAR" property="subsidyApplStateType" />
+    <result column="exam_fail_reason" jdbcType="VARCHAR" property="examFailReason" />
+    <result column="entp_personal_name" jdbcType="VARCHAR" property="entpPersonalName" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="colle_account" jdbcType="VARCHAR" property="colleAccount" />
+    <result column="base_area" jdbcType="VARCHAR" property="baseArea" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="ctscc" jdbcType="VARCHAR" property="ctscc" />
+    <result column="legal_person_name" jdbcType="VARCHAR" property="legalPersonName" />
+    <result column="legal_person_num" jdbcType="VARCHAR" property="legalPersonNum" />
+    <result column="conter" jdbcType="VARCHAR" property="conter" />
+    <result column="cont_tel" jdbcType="VARCHAR" property="contTel" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+    <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sam.id, sam.memb_id, sam.item_mage_id, sam.auth_type, sam.appl_capital, sam.appl_measure_area,
+     sam.appl_date,
+    sam.subsidy_appl_state_type, sam.exam_fail_reason, sam.entp_personal_name, sam.id_card_no,
+     sam.colle_account,
+    sam.base_area, sam.address, sam.ctscc, sam.legal_person_name, sam.legal_person_num, sam.conter,
+    sam.cont_tel,
+    sam.create_by, sam.create_date, sam.update_by, sam.update_date, sam.remarks, sam.del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    ,mi.login_name
+    from subsidy_appl_mage sam
+    LEFT JOIN zhfw_memb_info mi ON mi.id = memb_id
+    where sam.id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from subsidy_appl_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+    insert into subsidy_appl_mage (id, memb_id, item_mage_id,
+      auth_type, appl_capital, appl_measure_area,
+      appl_date, subsidy_appl_state_type, exam_fail_reason,
+      entp_personal_name, id_card_no, colle_account,
+      base_area, address, ctscc,
+      legal_person_name, legal_person_num, conter,
+      cont_tel, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{itemMageId,jdbcType=BIGINT},
+      #{authType,jdbcType=VARCHAR}, #{applCapital,jdbcType=DOUBLE}, #{applMeasureArea,jdbcType=DOUBLE},
+      #{applDate,jdbcType=TIMESTAMP}, #{subsidyApplStateType,jdbcType=VARCHAR}, #{examFailReason,jdbcType=VARCHAR},
+      #{entpPersonalName,jdbcType=VARCHAR}, #{idCardNo,jdbcType=VARCHAR}, #{colleAccount,jdbcType=VARCHAR},
+      #{baseArea,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{ctscc,jdbcType=VARCHAR},
+      #{legalPersonName,jdbcType=VARCHAR}, #{legalPersonNum,jdbcType=VARCHAR}, #{conter,jdbcType=VARCHAR},
+      #{contTel,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+    insert into subsidy_appl_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="membId != null">
+        memb_id,
+      </if>
+      <if test="itemMageId != null">
+        item_mage_id,
+      </if>
+      <if test="authType != null">
+        auth_type,
+      </if>
+      <if test="applCapital != null">
+        appl_capital,
+      </if>
+      <if test="applMeasureArea != null">
+        appl_measure_area,
+      </if>
+      <if test="applDate != null">
+        appl_date,
+      </if>
+      <if test="subsidyApplStateType != null">
+        subsidy_appl_state_type,
+      </if>
+      <if test="examFailReason != null">
+        exam_fail_reason,
+      </if>
+      <if test="entpPersonalName != null">
+        entp_personal_name,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="colleAccount != null">
+        colle_account,
+      </if>
+      <if test="baseArea != null">
+        base_area,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="ctscc != null">
+        ctscc,
+      </if>
+      <if test="legalPersonName != null">
+        legal_person_name,
+      </if>
+      <if test="legalPersonNum != null">
+        legal_person_num,
+      </if>
+      <if test="conter != null">
+        conter,
+      </if>
+      <if test="contTel != null">
+        cont_tel,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null">
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="itemMageId != null">
+        #{itemMageId,jdbcType=BIGINT},
+      </if>
+      <if test="authType != null">
+        #{authType,jdbcType=VARCHAR},
+      </if>
+      <if test="applCapital != null">
+        #{applCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="applMeasureArea != null">
+        #{applMeasureArea,jdbcType=DOUBLE},
+      </if>
+      <if test="applDate != null">
+        #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subsidyApplStateType != null">
+        #{subsidyApplStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null">
+        #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="entpPersonalName != null">
+        #{entpPersonalName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="colleAccount != null">
+        #{colleAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="baseArea != null">
+        #{baseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ctscc != null">
+        #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null">
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonNum != null">
+        #{legalPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null">
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+    update subsidy_appl_mage
+    <set>
+      <if test="membId != null">
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="itemMageId != null">
+        item_mage_id = #{itemMageId,jdbcType=BIGINT},
+      </if>
+      <if test="authType != null">
+        auth_type = #{authType,jdbcType=VARCHAR},
+      </if>
+      <if test="applCapital != null">
+        appl_capital = #{applCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="applMeasureArea != null">
+        appl_measure_area = #{applMeasureArea,jdbcType=DOUBLE},
+      </if>
+      <if test="applDate != null">
+        appl_date = #{applDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="subsidyApplStateType != null">
+        subsidy_appl_state_type = #{subsidyApplStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null">
+        exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="entpPersonalName != null">
+        entp_personal_name = #{entpPersonalName,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="colleAccount != null">
+        colle_account = #{colleAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="baseArea != null">
+        base_area = #{baseArea,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ctscc != null">
+        ctscc = #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null">
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonNum != null">
+        legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null">
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+    update subsidy_appl_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      item_mage_id = #{itemMageId,jdbcType=BIGINT},
+      auth_type = #{authType,jdbcType=VARCHAR},
+      appl_capital = #{applCapital,jdbcType=DOUBLE},
+      appl_measure_area = #{applMeasureArea,jdbcType=DOUBLE},
+      appl_date = #{applDate,jdbcType=TIMESTAMP},
+      subsidy_appl_state_type = #{subsidyApplStateType,jdbcType=VARCHAR},
+      exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      entp_personal_name = #{entpPersonalName,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      colle_account = #{colleAccount,jdbcType=VARCHAR},
+      base_area = #{baseArea,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      ctscc = #{ctscc,jdbcType=VARCHAR},
+      legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.seedlings.po.SubsidyApplMagePagePo" resultType="com.wisea.cultivar.seedlings.vo.SubsidyApplMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    ,sd.label AS 'subsidyApplStateTypeName'
+    from subsidy_appl_mage sam
+    LEFT JOIN sys_dict sd ON sd.`value` = subsidy_appl_state_type AND sd.type = 'subsidy_appl_state_type'
+    <include refid="query_where"/>
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.seedlings.po.SubsidyApplMageListPo" resultType="com.wisea.cultivar.seedlings.vo.SubsidyApplMageListVo">
+    select
+    <include refid="Base_Column_List" />
+      ,sd.label AS 'subsidyApplStateTypeName'
+      from subsidy_appl_mage sam
+      LEFT JOIN sys_dict sd ON sd.`value` = subsidy_appl_state_type AND sd.type = 'subsidy_appl_state_type'
+      <include refid="query_where"/>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+    update subsidy_appl_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findByIds" parameterType="java.util.List" resultType="com.wisea.cultivar.seedlings.vo.SubsidyApplMageListVo">
+        select <include refid="Base_Column_List"/>
+        from subsidy_appl_mage sam where sam.id in
+        <foreach collection="delList" item="delList" open="(" close=")" separator=",">
+            #{delList}
+        </foreach>
+    </select>
+    <sql id="query_where">
+        where sam.del_flag = '0'
+        <if test="itemMageId != 0 and itemMageId != null">
+            and  sam.item_mage_id = #{itemMageId}
+        </if>
+        <if test="entpPersonalName != null and entpPersonalName != ''">
+            and  sam.entp_personal_name LIKE CONCAT('%',#{entpPersonalName},'%')
+        </if>
+        <if test="subsidyApplStateType != null and subsidyApplStateType != ''">
+            and  sam.subsidy_appl_state_type = #{subsidyApplStateType}
+        </if>
+        ORDER BY sam.appl_date DESC
+    </sql>
+
+    <select id="findListByStateType" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        subsidy_appl_mage sam
+        WHERE 1=1
+        <if test="stateType != null and stateType != ''">
+            and sam.subsidy_appl_state_type = #{stateType}
+        </if>
+        AND sam.id IN (
+        <foreach collection ="ids" item="item" index= "index" separator =",">
+            #{item,jdbcType=BIGINT}
+        </foreach >
+        )
+    </select>
+
+    <update id="updateState" parameterType="com.wisea.cultivar.seedlings.entity.SubsidyApplMage">
+        UPDATE
+        subsidy_appl_mage sam
+        SET
+        sam.subsidy_appl_state_type = #{subsidyApplMage.subsidyApplStateType},
+        sam.exam_fail_reason = #{subsidyApplMage.examFailReason},
+        update_by = #{subsidyApplMage.updateBy},
+        update_date = #{subsidyApplMage.updateDate},
+        del_flag = #{subsidyApplMage.delFlag}
+        WHERE sam.id IN (
+        <foreach collection ="ids" item="item" index= "index" separator =",">
+            #{item,jdbcType=BIGINT}
+        </foreach >
+        )
+    </update>
+
+    <select id="getapplCount" resultType="com.wisea.cultivar.seedlings.vo.SubsidyApplCountVo">
+        SELECT
+		COUNT(sam.id) AS 'peopleNum',
+		IFNULL(ROUND(SUM(sam.appl_capital),2),0) AS 'applCapitalNum',
+        IFNULL(SUM(sam.appl_measure_area),0) AS 'applmeasureAreaNum',
+        (SELECT COUNT(im.id) AS 'itemNum' FROM item_mage im WHERE im.del_flag = '0') AS 'itemNum'
+        FROM subsidy_appl_mage sam LEFT JOIN item_mage itm ON itm.id = sam.item_mage_id  WHERE sam.del_flag = '0' and itm.del_flag = '0'
+    </select>
+</mapper>

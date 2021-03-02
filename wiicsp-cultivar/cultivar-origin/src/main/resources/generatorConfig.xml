@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- 引入配置文件 -->
+	<!-- <properties resource="init.properties"/> -->
+
+	<!-- 指定数据连接驱动jar地址 这里由于使用了maven仓库，不需要指定jar包了 -->
+	<!-- <classPathEntry location="lib/mysql-connector-5.1.8.jar" /> -->
+
+	<!-- 一个数据库一个context -->
+	<context id="ScTables" targetRuntime="MyBatis3">
+		<!-- 指定生成的java文件的编码,没有直接生成到项目时中文可能会乱码 -->
+		<property name="javaFileEncoding" value="UTF-8"/>
+		<!-- 注释 -->
+		<commentGenerator>
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+
+		<!--配置数据库链接 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.20.244:3306/ycm" userId="root" password="123456" />
+
+		<!-- 类型转换 -->
+		<javaTypeResolver>
+			<!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- 生成实体类地址 -->
+		<javaModelGenerator targetPackage="com.wisea.ycm.origin.main.entity" targetProject="D:/projectAdr/ostesting/ycm/ycm-origin/ycm-origin-main/src/main/java/">
+			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+			<property name="enableSubPackages" value="false" />
+			<!-- 是否针对string类型的字段在set的时候进行trim调用 -->
+			<property name="trimStrings" value="false" />
+		</javaModelGenerator>
+
+		<!-- 生成mapxml文件 -->
+		<sqlMapGenerator targetPackage="mappings" targetProject="D:/projectAdr/ostesting/ycm/ycm-origin/ycm-origin-main/src/main/resources">
+			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+			<property name="enableSubPackages" value    ="true" />
+		</sqlMapGenerator>
+
+		<!-- 生成mapxml对应client，也就是接口dao -->
+		<javaClientGenerator type="XMLMAPPER" targetPackage="com.wisea.ycm.origin.main.dao" targetProject="D:/projectAdr/ostesting/ycm/ycm-origin/ycm-origin-main/src/main/java/">
+			<!-- 是否在当前路径下新加一层schema,eg：fase路径com.oop.eksp.user.model， true:com.oop.eksp.user.model.[schemaName] -->
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<!-- 配置表信息 -->
+		<!-- schema即为数据库名 tableName为对应的数据库表 domainObjectName是要生成的实体类 enable*ByExample是否生成example类 -->
+		<table tableName="samp_picture" domainObjectName="SampPicture" enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"></table>
+		<table tableName="samp_info" domainObjectName="SampInfo" enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"></table>
+		<table tableName="memb_info" domainObjectName="MembInfo" enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"></table>
+		<table tableName="judge_meet_info" domainObjectName="JudgeMeetInfo" enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"></table>
+		<table tableName="detection_mech_mage" domainObjectName="DetectionMechMage" enableCountByExample="false" enableSelectByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"></table>
+	</context>
+</generatorConfiguration>

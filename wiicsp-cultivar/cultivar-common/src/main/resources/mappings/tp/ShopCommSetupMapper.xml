@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ShopCommSetupMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ShopCommSetup" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_id, comm_pub_id, sort, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from shop_comm_setup
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_comm_setup
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommSetup" >
+    insert into shop_comm_setup (id, comm_id, comm_pub_id,
+      sort, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT},
+      #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommSetup" >
+    insert into shop_comm_setup
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommSetup" >
+    update shop_comm_setup
+    <set >
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommSetup" >
+    update shop_comm_setup
+    set comm_id = #{commId,jdbcType=BIGINT},
+      comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ShopCommSetup" >
+    update shop_comm_setup
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.memb.ShopCommSetupListVo"
+  								parameterType="com.wisea.cultivar.common.po.tp.memb.ShopCommSetupPagePo" >
+    SELECT T1.id,T1.comm_id,T1.comm_pub_id,T1.sort,T2.comm_catg_name AS 'shopCommMageName',
+    	   T3.comm_name AS 'commName',T3.comm_id AS 'commPubCommId'
+	FROM shop_comm_setup T1
+	LEFT JOIN shop_comm_mage T2 ON T1.comm_id = T2.id
+	LEFT JOIN comm_pub_info T3 ON T1.comm_pub_id = T3.id
+	WHERE T1.del_flag = '0'
+		  <if test="commId != null and commId != ''">
+		  AND T1.comm_id = #{commId}
+		  </if>
+		   <if test="commName != null and commName != ''">
+		  AND T3.comm_name like CONCAT('%', #{commName}, '%')
+		  </if>
+	ORDER BY T1.sort ASC
+  </select>
+  <select id="getDetailById" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.memb.ShopCommSetupGetVo">
+  	SELECT T1.id,T1.comm_id,T1.comm_pub_id,T1.sort,T2.comm_catg_name AS 'shopCommMageName',T3.comm_name AS 'commName'
+	FROM shop_comm_setup T1
+	LEFT JOIN shop_comm_mage T2 ON T1.comm_id = T2.id
+	LEFT JOIN comm_pub_info T3 ON T1.comm_pub_id = T3.id
+	WHERE T1.id=#{id}
+  </select>
+  <select id="findPageForIndex" parameterType="com.wisea.cultivar.common.po.tp.memb.ShopCommPageForIndexPo" resultType="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo">
+	SELECT DISTINCT T3.id, T3.memb_id, T3.comm_name, T3.whole_price_section, T4.url AS 'video_url',
+           T3.sales_count
+	FROM shop_comm_setup T1
+	INNER JOIN shop_comm_mage T2 ON T2.id = T1.comm_id
+	LEFT JOIN (SELECT *,SUBSTRING_INDEX(whole_price_section,'~',1) AS 'price' FROM comm_pub_info WHERE del_flag= '0' AND comm_state_type = '0') T3 ON T1.comm_pub_id = T3.id
+	LEFT JOIN comm_picture T4 ON T4.comm_id = T3.id AND T4.sort = '0' AND T4.del_flag= '0'
+	WHERE T1.del_flag = '0'
+		  AND T2.shop_info_mage_id = #{shopInfoMageId}
+		  <if test="commIds != null and commIds.size() &gt; 0">
+		  AND T1.comm_id IN
+          <foreach collection="commIds" item="item" separator="," open="(" close=")" index="index">
+              ${item}
+          </foreach>
+		  </if>
+		  <if test="searchKey != null and searchKey != ''">
+		  AND T3.comm_name like CONCAT('%', #{searchKey}, '%')
+		  </if>
+		  <if test="priceStar != null">
+		  AND T3.price <![CDATA[>=]]>	#{priceStar}
+		  </if>
+		  <if test="priceEnd != null">
+		  AND T3.price <![CDATA[<=]]>	#{priceEnd}
+		  </if>
+   <if test="orderBy != null and orderBy == '0'.toString()">
+   		ORDER BY T3.sales_count ${sortOrder}
+   </if>
+   <if test="orderBy != null and orderBy == '1'.toString()">
+   		ORDER BY T3.update_date ${sortOrder}
+   </if>
+   <if test="orderBy != null and orderBy == '2'.toString()">
+   		ORDER BY T3.price ${sortOrder}
+   </if>
+  </select>
+  <select id="findAllPageForIndex" parameterType="com.wisea.cultivar.common.po.tp.memb.ShopCommPageForIndexPo" resultType="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo">
+  	SELECT T3.id, T3.memb_id, T3.comm_name, T3.whole_price_section, T4.url AS 'video_url',
+       	   T3.sales_count
+	FROM shop_info_mage T1
+	INNER JOIN (SELECT *,SUBSTRING_INDEX(whole_price_section,'~',1) AS 'price' FROM comm_pub_info WHERE del_flag= '0' AND comm_state_type = '0') T3 ON T1.memb_id = T3.memb_id
+	LEFT JOIN comm_picture T4 ON T4.comm_id = T3.id AND T4.sort = '0' AND T4.del_flag= '0'
+	WHERE T1.del_flag = '0'
+  	      AND T1.id = #{shopInfoMageId}
+		  <if test="searchKey != null and searchKey != ''">
+		  AND T3.comm_name like CONCAT('%', #{searchKey}, '%')
+		  </if>
+		  <if test="priceStar != null">
+		  AND T3.price <![CDATA[>=]]>	#{priceStar}
+		  </if>
+		  <if test="priceEnd != null">
+		  AND T3.price <![CDATA[<=]]>	#{priceEnd}
+		  </if>
+   <if test="orderBy != null and orderBy == '0'.toString()">
+   		ORDER BY T3.sales_count ${sortOrder}
+   </if>
+   <if test="orderBy != null and orderBy == '1'.toString()">
+   		ORDER BY T3.update_date ${sortOrder}
+   </if>
+   <if test="orderBy != null and orderBy == '2'.toString()">
+   		ORDER BY T3.price+0 ${sortOrder}
+   </if>
+  </select>
+</mapper>

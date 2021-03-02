@@ -1,0 +1,14 @@
+wbfc:
+  mss:
+    security: CULTIVAR-OPERATION # mss远程 安全服务(用户、菜单、角色)
+    system: CULTIVAR-OPERATION # mss 系统服务(行政区划、数据字典)
+    files: CULTIVAR-OPERATION # mss文件服务
+    equipment: CULTIVAR-EQUIPMENT # 设备服务
+  tencent-im:
+    enabled: true
+    sdkAppId: 1400459109
+    key: 5b2a460fc20eaa8ffad4e804e8f17345f59b5aa7fe820be5979f598257072cd6
+
+oritrapla:
+  qrcodeFix: http://203.86.72.244/suyh5/archivesDetail?str=
+  initPassword: 123456

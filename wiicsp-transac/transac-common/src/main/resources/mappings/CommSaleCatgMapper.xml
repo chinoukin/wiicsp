@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.CommSaleCatgMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.CommSaleCatg" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="pid" jdbcType="BIGINT" property="pid"/>
+    <result column="p_catg_name" property="pCatgName" jdbcType="VARCHAR" />
+    <result column="catg_name" property="catgName" jdbcType="VARCHAR" />
+    <result column="szmsx" property="szmsx" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="catg_url" property="catgUrl" jdbcType="VARCHAR" />
+    <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,pid, p_catg_name, catg_name, szmsx, sort, catg_url, effe_inval_state, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+    <!-- 查询销售品类下的商品数量 -->
+    <select id="selectCommPubCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(distinct cpi.id)from comm_pub_info cpi where cpi.comm_state_type != '5' and cpi.del_flag = '0' and cpi.comm_id = #{id}
+    </select>
+    <!--查询销售品类 -->
+    <select id="findList" resultType="com.wisea.transac.common.vo.product.SalesClassificationListVo" parameterType="com.wisea.transac.common.po.product.CommMageTreePo">
+        select
+        *
+        from
+        comm_sale_catg csc
+        where
+        csc.del_flag = '0'
+        <if test="query != null and query != ''">
+            and (csc.comm_num like CONCAT('%', #{query}, '%') or csc.catg_name like CONCAT('%', #{query}, '%'))
+        </if>
+        <if test="effeInvalState != null and effeInvalState != ''">
+            and csc.effe_inval_state = #{effeInvalState}
+        </if>
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from comm_sale_catg
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comm_sale_catg
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.CommSaleCatg" >
+    insert into comm_sale_catg (id,pid, p_catg_name, catg_name,
+      szmsx, sort, catg_url,
+      effe_inval_state, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT},#{pid,jdbcType=BIGINT}, #{pCatgName,jdbcType=VARCHAR}, #{catgName,jdbcType=VARCHAR},
+      #{szmsx,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{catgUrl,jdbcType=VARCHAR},
+      #{effeInvalState,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.CommSaleCatg" >
+    insert into comm_sale_catg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pid != null" >
+        pid,
+      </if>
+      <if test="pCatgName != null" >
+        p_catg_name,
+      </if>
+      <if test="catgName != null" >
+        catg_name,
+      </if>
+      <if test="szmsx != null" >
+        szmsx,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="catgUrl != null" >
+        catg_url,
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pCatgName != null" >
+        #{pCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null" >
+        #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="szmsx != null" >
+        #{szmsx,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="catgUrl != null" >
+        #{catgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="effeInvalState != null" >
+        #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.CommSaleCatg" >
+    update comm_sale_catg
+    <set >
+      <if test="pid != null" >
+        pid = #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="pCatgName != null" >
+        p_catg_name = #{pCatgName,jdbcType=VARCHAR},
+      </if>
+      <if test="catgName != null" >
+        catg_name = #{catgName,jdbcType=VARCHAR},
+      </if>
+      <if test="szmsx != null" >
+        szmsx = #{szmsx,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="catgUrl != null" >
+        catg_url = #{catgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.CommSaleCatg" >
+    update comm_sale_catg
+    set p_catg_name = #{pCatgName,jdbcType=VARCHAR},
+      pid = #{pid, jdbcType=BIGINT},
+      catg_name = #{catgName,jdbcType=VARCHAR},
+      szmsx = #{szmsx,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      catg_url = #{catgUrl,jdbcType=VARCHAR},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.CommSaleCatgPageListVo" parameterType="com.wisea.transac.common.po.CommSaleCatgPageListPo" >
+    select
+	  id id,
+	  p_catg_name pCatgName,
+	  catg_name catgName,
+	  szmsx szmsx,
+	  sort sort,
+	  catg_url catgUrl,
+	  effe_inval_state effeInvalState
+	from
+	  comm_sale_catg
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.CommSaleCatgInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  p_catg_name pCatgName,
+	  catg_name catgName,
+	  szmsx szmsx,
+	  sort sort,
+	  catg_url catgUrl,
+	  effe_inval_state effeInvalState
+	from
+	  comm_sale_catg
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+</mapper>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ZxListMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ZxListMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="zx_catg_type" property="zxCatgType" jdbcType="VARCHAR" />
+    <result column="zy" property="zy" jdbcType="VARCHAR" />
+    <result column="xxly" property="xxly" jdbcType="VARCHAR" />
+    <result column="if_requ" property="ifRequ" jdbcType="CHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, url, title, zx_catg_type, zy, xxly, if_requ, create_by, create_date, update_by,
+    update_date, remarks, del_flag, content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from zx_list_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zx_list_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ZxListMage" >
+    insert into zx_list_mage (id, url, title,
+      zx_catg_type, zy, xxly,
+      if_requ, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, content)
+    values (#{id,jdbcType=BIGINT}, #{url,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+      #{zxCatgType,jdbcType=VARCHAR}, #{zy,jdbcType=VARCHAR}, #{xxly,jdbcType=VARCHAR},
+      #{ifRequ,jdbcType=CHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ZxListMage" >
+    insert into zx_list_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="zxCatgType != null" >
+        zx_catg_type,
+      </if>
+      <if test="zy != null" >
+        zy,
+      </if>
+      <if test="xxly != null" >
+        xxly,
+      </if>
+      <if test="ifRequ != null" >
+        if_requ,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="zxCatgType != null" >
+        #{zxCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="zy != null" >
+        #{zy,jdbcType=VARCHAR},
+      </if>
+      <if test="xxly != null" >
+        #{xxly,jdbcType=VARCHAR},
+      </if>
+      <if test="ifRequ != null" >
+        #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ZxListMage" >
+    update zx_list_mage
+    <set >
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="zxCatgType != null" >
+        zx_catg_type = #{zxCatgType,jdbcType=VARCHAR},
+      </if>
+      <if test="zy != null" >
+        zy = #{zy,jdbcType=VARCHAR},
+      </if>
+      <if test="xxly != null" >
+        xxly = #{xxly,jdbcType=VARCHAR},
+      </if>
+      <if test="ifRequ != null" >
+        if_requ = #{ifRequ,jdbcType=CHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ZxListMage" >
+    update zx_list_mage
+    set url = #{url,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      zx_catg_type = #{zxCatgType,jdbcType=VARCHAR},
+      zy = #{zy,jdbcType=VARCHAR},
+      xxly = #{xxly,jdbcType=VARCHAR},
+      if_requ = #{ifRequ,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ZxListMage" >
+    update zx_list_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.portal.ZxListMageListVo"
+  		  parameterType="com.wisea.cultivar.common.po.tp.portal.ZxListMagePagePo" >
+    select T1.*
+    from zx_list_mage T1
+    <if test="notAlreadyTj != null and notAlreadyTj != ''">
+    LEFT JOIN zx_tj_mage T2 ON T2.zx_list_id = T1.id AND T2.del_flag = '0'
+    </if>
+    where T1.del_flag = '0'
+    	  <if test="notAlreadyTj != null and notAlreadyTj != ''">
+    		AND ISNULL(T2.sort) AND T1.if_requ = '0'
+    	  </if>
+    	  <if test="searchKey != null and searchKey != ''">
+    	  	AND T1.title like CONCAT('%', #{searchKey}, '%')
+    	  </if>
+    	  <if test="ifRequ != null and ifRequ != ''">
+    	  	AND T1.if_requ =#{ifRequ}
+    	  </if>
+    	  <if test="zxCatgType != null and zxCatgType != ''">
+    	  	AND T1.zx_catg_type =#{zxCatgType}
+    	  </if>
+    	  <if test="pubDateStart != null" >
+		  	 AND T1.pub_date <![CDATA[ >= ]]> #{pubDateStart}
+		  </if>
+		  <if test="pubDateEnd != null" >
+		  	 AND T1.pub_date <![CDATA[ <= ]]> #{pubDateEnd}
+		  </if>
+	ORDER BY T1.update_date DESC
+	<if test="num != null" >
+	LIMIT #{num}
+    </if>
+  </select>
+  <update id="batchDeleteLogic" parameterType="java.util.List" >
+    update zx_list_mage
+    set del_flag = '1'
+    where id in
+    <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+    </foreach>
+  </update>
+  <select id="wcbyTjList" parameterType="com.wisea.cultivar.common.po.tp.NotNeedIdsPo"
+  			resultType="com.wisea.cultivar.common.vo.tp.portal.ZxListMageListVo">
+  	SELECT T2.id,T2.url,T2.title,T2.zx_catg_type,T2.zy,T2.xxly,T2.if_requ
+	FROM zx_tj_mage T1
+	INNER JOIN zx_list_mage T2 ON T2.id = T1.zx_list_id
+	WHERE T1.del_flag = '0'
+		  AND T2.if_requ = '0'
+		  <if test="list != null and list.size > 0">
+		  AND T2.id NOT IN
+		  <foreach collection="list" item="id" separator="," open="(" close=")">
+		  	#{id}
+		  </foreach>
+		  </if>
+	ORDER BY T1.sort
+	LIMIT ${num}
+  </select>
+  <select id="findPageForTj" resultType="com.wisea.cultivar.common.vo.tp.portal.ZxListMageListVo"
+  		  parameterType="com.wisea.cultivar.common.po.tp.portal.ZxListMagePagePo">
+    SELECT T3.*
+	FROM(
+	SELECT T1.*,T2.sort
+	FROM zx_list_mage T1
+	LEFT JOIN zx_tj_mage T2 ON T2.zx_list_id = T1.id AND T2.del_flag = '0'
+	WHERE T1.del_flag = '0'
+	ORDER BY T1.update_date DESC
+	) T3
+	WHERE ISNULL(T3.sort)
+    	<if test="searchKey != null and searchKey != ''">
+    	  	AND T3.title like CONCAT('%', #{searchKey}, '%')
+    	</if>
+    	<if test="pubDateStart != null" >
+		  	 AND T3.pub_date <![CDATA[ >= ]]> #{pubDateStart}
+		</if>
+		<if test="pubDateEnd != null" >
+		  	 AND T3.pub_date <![CDATA[ <= ]]> #{pubDateEnd}
+		</if>
+	ORDER BY T3.update_date DESC
+	</select>
+	<select id="getDetail" parameterType="com.wisea.cultivar.common.po.tp.portal.ZxlListGetDetailPo"
+                         resultType="com.wisea.cultivar.common.vo.tp.portal.ZxListDetailForIndexVo">
+  	SELECT * FROM(
+  		SELECT T1.*,@arownum :=@arownum + 1 rowNum
+	FROM zx_list_mage T1, (SELECT @arownum := 0) t
+	WHERE T1.del_flag = '0' AND T1.if_requ = '0'
+     	  <if test="zxCatgType != null and zxCatgType != ''">
+     	  	AND T1.zx_catg_type = #{zxCatgType}
+     	  </if>
+     ORDER BY update_date DESC
+  	) T2 WHERE T2.ID = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="getDetailPreAndNext" parameterType="com.wisea.cultivar.common.po.tp.portal.ZxlListGetDetailPo"
+                         resultType="com.wisea.cultivar.common.vo.tp.portal.ZxListDetailForIndexVo">
+  	SELECT * FROM(
+  		SELECT T1.*,@arownum :=@arownum + 1 rowNum
+	FROM zx_list_mage T1, (SELECT @arownum := 0) t
+	WHERE T1.del_flag = '0' AND T1.if_requ = '0'
+     	  <if test="zxCatgType != null and zxCatgType != ''">
+     	  	AND T1.zx_catg_type = #{zxCatgType}
+     	  </if>
+     ORDER BY update_date DESC
+  	) T2 WHERE rowNum IN (#{rowNum}-1,#{rowNum}+1)
+  </select>
+</mapper>

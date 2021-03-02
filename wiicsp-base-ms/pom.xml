@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wisea</groupId>
+    <artifactId>wiicsp-base-ms</artifactId>
+    <packaging>pom</packaging>
+
+    <name>wiicsp-base-ms</name>
+    <description>新盟风控果品产业互联网综合服务平台-基础服务</description>
+
+    <parent>
+        <groupId>com.wisea</groupId>
+        <artifactId>wiicsp</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <profiles>
+        <profile>
+            <id>full-build</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <modules>
+                <module>wiicsp-eureka-server</module>
+                <module>wiicsp-gateway</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>ci</id>
+        </profile>
+        <profile>
+            <id>boot</id>
+            <modules>
+                <module>wiicsp-eureka-server</module>
+                <module>wiicsp-gateway</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>lib-boot-base</id>
+            <modules>
+                <module>wiicsp-eureka-server</module>
+                <module>wiicsp-gateway</module>
+            </modules>
+        </profile>
+        <profile>
+            <id>lib-boot</id>
+            <modules>
+                <module>wiicsp-eureka-server</module>
+                <module>wiicsp-gateway</module>
+            </modules>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

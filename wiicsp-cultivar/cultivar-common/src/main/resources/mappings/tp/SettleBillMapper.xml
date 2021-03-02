@@ -1,0 +1,744 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.SettleBillMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.SettleBill" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="settle_bill_numb" property="settleBillNumb" jdbcType="VARCHAR" />
+    <result column="settle_cycle_start_date" property="settleCycleStartDate" jdbcType="TIMESTAMP" />
+    <result column="settle_cycle_end_date" property="settleCycleEndDate" jdbcType="TIMESTAMP" />
+    <result column="settle_cycle_type" property="settleCycleType" jdbcType="VARCHAR" />
+    <result column="bill_date_type" property="billDateType" jdbcType="VARCHAR" />
+    <result column="ord_count" property="ordCount" jdbcType="INTEGER" />
+    <result column="settle_bill_statue_type" property="settleBillStatueType" jdbcType="VARCHAR" />
+    <result column="total_money" property="totalMoney" jdbcType="DOUBLE" />
+    <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+    <result column="last_pay_date" property="lastPayDate" jdbcType="TIMESTAMP" />
+    <result column="late_fee_bl" property="lateFeeBl" jdbcType="DOUBLE" />
+    <result column="late_fee" property="lateFee" jdbcType="DOUBLE" />
+    <result column="sf_yq_flag" property="sfYqFlag" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, seller_id, buyer_id, settle_bill_numb, settle_cycle_start_date, settle_cycle_end_date,
+    settle_cycle_type, bill_date_type, ord_count, settle_bill_statue_type, total_money, entp_name, last_pay_date,
+    late_fee_bl, late_fee, sf_yq_flag, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 分页查询结算单列表 -->
+  <select id="findPageList" parameterType="com.wisea.cultivar.common.po.tp.trade.SettleBillListPo" resultType="com.wisea.cultivar.common.vo.tp.trade.SettleBillListVo">
+    select
+      sb.id id,
+      sb.settle_bill_numb settleBillNumb,
+      sb.settle_cycle_type settleCycleType,
+      sb.settle_cycle_start_date settleCycleStartDate,
+      sb.settle_cycle_end_date settleCycleEndDate,
+      mi.user_name buyerAccount,
+      case when edi.comp_name is not null then edi.comp_name else pa.name end buyerName,
+      sb.total_money settleBillMoney,
+      sb.ord_count ordCount,
+      sb.last_pay_date lastPayDate,
+      sb.late_fee lateFee,
+      round(IFNULL(sb.total_money, 0) + IFNULL(sb.late_fee, 0), 2) totalMoney,
+      sb.settle_bill_statue_type settleBillStatueType,
+      sb.seller_id sellerId,
+      sb.buyer_id buyerId,
+      sb.sf_yq_flag sfYqFlag
+    from
+      settle_bill sb
+      left join memb_info mi on mi.id = sb.buyer_id
+      left join person_auth pa on pa.memb_id = sb.buyer_id
+      left join entp_data_info edi on edi.memb_id = sb.buyer_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+    where
+      sb.del_flag = '0'
+      <if test="sellerId != null">
+        and sb.seller_id = #{sellerId}
+      </if>
+      <if test="settleCycleType != null and settleCycleType != ''">
+        and sb.settle_cycle_type = #{settleCycleType}
+      </if>
+      <if test="settleBillStatueType != null and settleBillStatueType != ''">
+        and sb.settle_bill_statue_type = #{settleBillStatueType}
+      </if>
+      <if test="lastPayStartDate != null">
+        and sb.last_pay_date >= #{lastPayStartDate}
+      </if>
+      <if test="lastPayEndDate != null">
+        and sb.last_pay_date <![CDATA[ <= ]]> #{lastPayEndDate}
+      </if>
+      <if test="query != null and query != ''">
+        and (
+          sb.settle_bill_numb like CONCAT('%', #{query}, '%')
+          or mi.user_name like CONCAT('%', #{query}, '%')
+          or edi.comp_name like CONCAT('%', #{query}, '%')
+          or pa.name like CONCAT('%', #{query}, '%')
+        )
+      </if>
+    order by
+      sb.create_date desc
+  </select>
+
+  <!-- 根据买卖家ID查询指定状态下结算单数量 -->
+  <select id="findStatueTypeCount" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" resultType="java.lang.Integer">
+    select
+      count(sb.id)
+    from
+      settle_bill sb
+    where sb.del_flag != '1'
+    <if test="sellerId != null">
+      and sb.seller_id = #{sellerId}
+    </if>
+    <if test="buyerId != null">
+      and sb.buyer_id = #{buyerId}
+    </if>
+    <if test="settleBillStatueType != null and settleBillStatueType != ''">
+      and sb.settle_bill_statue_type = #{settleBillStatueType}
+    </if>
+  </select>
+
+  <!-- 查询未生成结算单的订单数量 -->
+  <select id="notSettleBillOrdCount" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" resultType="java.lang.Integer">
+    select
+      sum(ict.id_count)
+    from (
+      select
+        count(oi.id) id_count
+      from
+        order_info oi
+      where oi.id not in (
+        select
+          sor.ord_id
+        from
+          settle_bill sb
+          left join settle_ord_rela sor on  sor.settle_id = sb.id
+        where
+          sb.seller_id = #{sellerId}
+          and sb.buyer_id = #{buyerId}
+      )
+      and oi.seller_id = #{sellerId}
+      and oi.buyer_id = #{buyerId}
+      and oi.pay_method_type = '1'
+      and (
+        oi.order_state_type = '2'
+        or oi.order_state_type = '3'
+        or oi.order_state_type = '6'
+      )
+
+      union all
+
+      select
+        count(loi.id) id_count
+      from
+        lta_ord_info loi
+        inner join lta_cont_info lci on loi.lta_cont_id = lci.id
+      where loi.id not in (
+        select
+          sor.ord_id
+        from
+          settle_bill sb
+          left join settle_ord_rela sor on  sor.settle_id = sb.id
+        where
+          sb.seller_id = #{sellerId}
+          and sb.buyer_id = #{buyerId}
+      )
+      and lci.seller_id = #{sellerId}
+      and lci.buyer_id = #{buyerId}
+      and loi.pay_method_type = '1'
+      and (
+        loi.order_state_type = '2'
+        or loi.order_state_type = '3'
+        or loi.order_state_type = '6'
+      )
+    ) ict
+  </select>
+
+  <!-- 查询上次生成的结算周期的结束时间列表 -->
+  <select id="findMaxSettleCycleEndDate" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" resultMap="BaseResultMap">
+    select
+      sb.seller_id,
+      sb.buyer_id,
+      max(sb.settle_cycle_end_date) settle_cycle_end_date
+    from
+      settle_bill sb
+    group by
+      sb.seller_id, sb.buyer_id
+  </select>
+
+  <!-- 查询结算单最大编号 -->
+  <select id="findSettleBillNum" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT
+      settle_bill_numb
+    FROM
+      settle_bill
+    WHERE
+      settle_bill_numb LIKE CONCAT(#{settleBillNum}, '%')
+  </select>
+
+  <!-- 查询结算单详细信息 -->
+  <select id="findInfo" parameterType="com.wisea.cultivar.common.po.tp.LongIdPo" resultType="com.wisea.cultivar.common.vo.tp.trade.SettleBillInfoVo" resultMap="infoResultMap">
+    select
+      sb.id id,
+      sb.settle_bill_statue_type settleBillStatueType,
+      sb.settle_bill_numb settleBillNumb,
+      sb.buyer_id buyerId,
+      sb.seller_id  sellerId,
+      mi1.user_name buyerAccount,
+      case when edi.comp_name is not null then edi.comp_name else pa.name end buyerCompName,
+      sb.settle_cycle_type settleCycleType,
+      sb.bill_date_type billDateType,
+      sb.settle_cycle_start_date settleCycleStartDate,
+      sb.settle_cycle_end_date settleCycleEndDate,
+      sb.last_pay_date lastPayDate,
+      sb.create_date,
+      sb.late_fee lateFee,
+      round(IFNULL(sb.total_money, 0) + IFNULL(sb.late_fee, 0), 2) totalMoney,
+      sb.sf_yq_flag sfYqFlag
+    from
+      settle_bill sb
+      inner join memb_info mi1 ON mi1.id = sb.buyer_id
+      left join entp_data_info edi ON edi.memb_id = mi1.id and edi.auth_exam_state = '1' and edi.del_flag = '0'
+      left join person_auth pa on pa.memb_id = mi1.id
+    where
+      sb.id = #{id}
+  </select>
+
+  <resultMap id="infoResultMap" type="com.wisea.cultivar.common.vo.tp.trade.SettleBillInfoVo">
+    <id column="id" property="id" jdbcType="BIGINT"/>
+    <collection property="settleBillOrdLists" column="id" select="selectSettleBillOrdLists"/>
+    <collection property="settleBillRefundCommAppls" column="id" select="selectSettleBillRefundCommAppls"/>
+  </resultMap>
+
+  <!-- 查询结算单内订单列表 -->
+  <select id="selectSettleBillOrdLists" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.SettleBillOrdVo">
+     SELECT
+      oi.id id,
+      oi.ord_num ordNum,
+      oi.refer_ord_date referOrdDate,
+      oi.amount_payable amountPayable,
+      oi.comm_total_count,
+      CASE WHEN edi.comp_name IS NULL THEN mb.user_name ELSE edi.comp_name END sellerName,
+      '1' ordSourceType
+    FROM
+      order_info oi
+      LEFT JOIN memb_info mb
+    ON oi.seller_id = mb.id
+  LEFT JOIN entp_data_info edi
+    ON edi.memb_id = mb.id
+  AND edi.auth_exam_state = '1' AND edi.del_flag != '1'
+    WHERE
+      oi.id IN (
+        SELECT
+          sor.ord_id
+        FROM
+          settle_ord_rela sor
+        WHERE
+          sor.settle_id = #{id}
+          AND (
+            sor.ord_source_type = '0'
+            OR sor.ord_source_type = '1'
+          )
+      )
+    UNION ALL
+    SELECT
+      loi.id id,
+      loi.lta_ord_numb ordNum,
+      loi.buyer_ord_date referOrdDate,
+      loi.yf_amount amount_payable,
+      loi.comm_total_count,
+      CASE WHEN edi.comp_name IS NULL THEN mb.user_name ELSE edi.comp_name END sellerName,
+      '2' ordSourceType
+    FROM
+      lta_ord_info loi
+      LEFT JOIN lta_cont_info cont
+	    ON loi.lta_cont_id = cont.id
+      LEFT JOIN memb_info mb
+	    ON cont.seller_id = mb.id
+	  LEFT JOIN entp_data_info edi
+	    ON edi.memb_id = mb.id
+	  AND edi.auth_exam_state = '1' AND edi.del_flag != '1'
+    WHERE
+      loi.id IN (
+        SELECT
+          sor.ord_id
+        FROM
+          settle_ord_rela sor
+        WHERE
+          sor.settle_id = #{id}
+          AND sor.ord_source_type = '2'
+      )
+  </select>
+
+  <!-- 查询结算单内已完成的退货申请列表 -->
+  <select id="selectSettleBillRefundCommAppls" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.SettleBillRefundCommApplVo">
+    SELECT
+      rca.id id,
+      rca.ser_num serNum,
+      rca.appl_date applDate,
+      rca.ord_num ordNum,
+      rca.should_refund_amount shouldRefundAmount,
+      rca.exam_ser_bill_date examSerBillDate,
+      CASE WHEN se.comp_name IS NULL THEN t22.user_name ELSE se.comp_name END sellerName,
+      t2.comm_name,
+      rca.refund_counts,
+      '1' ordSourceType
+    FROM
+      refund_comm_appl rca
+      LEFT JOIN ord_comm_rela t2
+	    ON t2.id = rca.ord_comm_id
+	  LEFT JOIN comm_pub_info t3
+	    ON t3.id = t2.comm_pub_id
+	  LEFT JOIN order_info t4
+	    ON t4.id = t2.ord_id
+	  LEFT JOIN memb_info t22
+	    ON t4.seller_id = t22.id
+	  LEFT JOIN entp_data_info se
+	    ON se.memb_id = t22.id
+	  AND se.auth_exam_state = '1' AND se.del_flag = '0'
+    WHERE
+      rca.refund_comm_state = '3'
+      and rca.exam_diss_type != '0'
+      AND rca.ord_comm_id IN (
+        SELECT
+          ocr.id
+        FROM
+          ord_comm_rela ocr
+        WHERE
+          ocr.ord_id IN (
+            SELECT
+              sor.ord_id
+            FROM
+              settle_ord_rela sor
+            WHERE
+              sor.settle_id = #{id}
+              AND (
+                sor.ord_source_type = '0'
+                OR sor.ord_source_type = '1'
+              )
+          )
+      )
+    UNION ALL
+    SELECT
+      lrca.id id,
+      lrca.ser_num serNum,
+      lrca.appl_date applDate,
+      lrca.ord_num ordNum,
+      lrca.should_refund_amount shouldRefundAmount,
+      lrca.exam_ser_bill_date examSerBillDate,
+      CASE WHEN se.comp_name IS NULL THEN t22.user_name ELSE se.comp_name END sellerName,
+      t3.comm_name,
+      lrca.refund_counts,
+      '2' ordSourceType
+    FROM
+      lta_refund_comm_appl lrca
+      LEFT JOIN lta_ord_comm_rela t2
+	    ON t2.id = lrca.lta_ord_comm_id
+	  LEFT JOIN lta_comm_rela t3
+	    ON t3.id = t2.lta_comm_rela_id
+	  LEFT JOIN lta_ord_info t4
+	    ON t4.id = t2.lta_ord_id
+	  LEFT JOIN lta_cont_info t6
+	    ON t6.id = t4.lta_cont_id
+	  LEFT JOIN memb_info t22
+	    ON t6.seller_id = t22.id
+	  LEFT JOIN entp_data_info se
+	    ON se.memb_id = t22.id
+	  AND se.auth_exam_state = '1' AND se.del_flag != '1'
+    WHERE
+      lrca.refund_comm_state = '3'
+      AND lrca.lta_ord_comm_id IN (
+        SELECT
+          locr.id
+        FROM
+          lta_ord_comm_rela locr
+        WHERE
+          locr.lta_ord_id IN (
+            SELECT
+              sor.ord_id
+            FROM
+              settle_ord_rela sor
+            WHERE
+              sor.settle_id = #{id}
+              AND sor.ord_source_type = '2'
+          )
+      )
+  </select>
+
+  <!-- 查询逾期的结算单列表 -->
+  <select id="findOverdueSettleBill" parameterType="java.time.OffsetDateTime" resultMap="BaseResultMap">
+    select
+      *
+    from
+      settle_bill sb
+    where
+      sb.del_flag = '0'
+      and sb.settle_bill_statue_type = '0'
+      and sb.last_pay_date <![CDATA[ < ]]> #{deadline}
+  </select>
+
+  <!-- 批量更新结算单信息 -->
+  <update id="batchUpdate" parameterType="java.util.List">
+    UPDATE
+      settle_bill
+    SET
+      late_fee = CASE id
+      <foreach collection="list" index="index" item="item" separator=" ">
+        WHEN #{item.id} THEN #{item.lateFee}
+      </foreach>
+      END,
+      sf_yq_flag = CASE id
+      <foreach collection="list" index="index" item="item" separator=" ">
+        WHEN #{item.id} THEN #{item.sfYqFlag}
+      </foreach>
+      END
+    WHERE
+      id IN
+      <foreach collection="list" item="item" separator="," open="(" close=")">
+        #{item.id}
+      </foreach>
+  </update>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from settle_bill
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from settle_bill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" >
+    insert into settle_bill (id, seller_id, buyer_id,
+      settle_bill_numb, settle_cycle_start_date,
+      settle_cycle_end_date, settle_cycle_type, bill_date_type,
+      ord_count, settle_bill_statue_type, total_money,
+      entp_name, last_pay_date, late_fee_bl, late_fee, sf_yq_flag,
+      create_by, create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT},
+      #{settleBillNumb,jdbcType=VARCHAR}, #{settleCycleStartDate,jdbcType=TIMESTAMP},
+      #{settleCycleEndDate,jdbcType=TIMESTAMP}, #{settleCycleType,jdbcType=VARCHAR}, #{billDateType,jdbcType=VARCHAR},
+      #{ordCount,jdbcType=INTEGER}, #{settleBillStatueType,jdbcType=VARCHAR}, #{totalMoney,jdbcType=DOUBLE}, #{entpName,jdbcType=VARCHAR},
+      #{lastPayDate,jdbcType=TIMESTAMP}, #{lateFeeBl,jdbcType=DOUBLE}, #{lateFee,jdbcType=DOUBLE}, #{sfYqFlag,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR},  #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" >
+    insert into settle_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="settleBillNumb != null" >
+        settle_bill_numb,
+      </if>
+      <if test="settleCycleStartDate != null" >
+        settle_cycle_start_date,
+      </if>
+      <if test="settleCycleEndDate != null" >
+        settle_cycle_end_date,
+      </if>
+      <if test="settleCycleType != null" >
+        settle_cycle_type,
+      </if>
+      <if test="billDateType != null" >
+        bill_date_type,
+      </if>
+      <if test="ordCount != null" >
+        ord_count,
+      </if>
+      <if test="settleBillStatueType != null" >
+        settle_bill_statue_type,
+      </if>
+      <if test="totalMoney != null" >
+        total_money,
+      </if>
+      <if test="entpName != null" >
+        entp_name,
+      </if>
+      <if test="lastPayDate != null" >
+        last_pay_date,
+      </if>
+      <if test="late_fee_bl != null" >
+        late_fee_bl,
+      </if>
+      <if test="late_fee != null" >
+        late_fee,
+      </if>
+      <if test="sf_yq_flag != null" >
+        sf_yq_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="settleBillNumb != null" >
+        #{settleBillNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="settleCycleStartDate != null" >
+        #{settleCycleStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settleCycleEndDate != null" >
+        #{settleCycleEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settleCycleType != null" >
+        #{settleCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordCount != null" >
+        #{ordCount,jdbcType=INTEGER},
+      </if>
+      <if test="settleBillStatueType != null" >
+        #{settleBillStatueType,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null" >
+        #{totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="entpName != null" >
+        #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPayDate != null" >
+        #{lastPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lateFeeBl != null" >
+        #{lateFeeBl,jdbcType=DOUBLE},
+      </if>
+      <if test="lateFee != null" >
+        #{lateFee,jdbcType=DOUBLE},
+      </if>
+      <if test="sfYqFlag != null" >
+        #{sfYqFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" >
+    update settle_bill
+    <set >
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="settleBillNumb != null" >
+        settle_bill_numb = #{settleBillNumb,jdbcType=VARCHAR},
+      </if>
+      <if test="settleCycleStartDate != null" >
+        settle_cycle_start_date = #{settleCycleStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settleCycleEndDate != null" >
+        settle_cycle_end_date = #{settleCycleEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="settleCycleType != null" >
+        settle_cycle_type = #{settleCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="billDateType != null" >
+        bill_date_type = #{billDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordCount != null" >
+        ord_count = #{ordCount,jdbcType=INTEGER},
+      </if>
+      <if test="settleBillStatueType != null" >
+        settle_bill_statue_type = #{settleBillStatueType,jdbcType=VARCHAR},
+      </if>
+      <if test="totalMoney != null" >
+        total_money = #{totalMoney,jdbcType=DOUBLE},
+      </if>
+      <if test="entpName != null" >
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="lastPayDate != null" >
+        last_pay_date = #{lastPayDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lateFeeBl != null" >
+        late_fee_bl = #{lateFeeBl,jdbcType=DOUBLE},
+      </if>
+      <if test="lateFee != null" >
+        late_fee = #{lateFee,jdbcType=DOUBLE},
+      </if>
+      <if test="sfYqFlag != null" >
+        sf_yq_flag = #{sfYqFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.SettleBill" >
+    update settle_bill
+    set seller_id = #{sellerId,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      settle_bill_numb = #{settleBillNumb,jdbcType=VARCHAR},
+      settle_cycle_start_date = #{settleCycleStartDate,jdbcType=TIMESTAMP},
+      settle_cycle_end_date = #{settleCycleEndDate,jdbcType=TIMESTAMP},
+      settle_cycle_type = #{settleCycleType,jdbcType=VARCHAR},
+      bill_date_type = #{billDateType,jdbcType=VARCHAR},
+      ord_count = #{ordCount,jdbcType=INTEGER},
+      settle_bill_statue_type = #{settleBillStatueType,jdbcType=VARCHAR},
+      total_money = #{totalMoney,jdbcType=DOUBLE},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      last_pay_date = #{lastPayDate,jdbcType=TIMESTAMP},
+      late_fee_bl = #{lateFeeBl,jdbcType=DOUBLE},
+      late_fee = #{lateFee,jdbcType=DOUBLE},
+      sf_yq_flag = #{sfYqFlag,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 查询结算单列表带分页 -->
+  <select id="buyerSettleList" parameterType="com.wisea.cultivar.common.po.tp.trade.BuyerSettleBillListPo"
+  		resultType="com.wisea.cultivar.common.vo.tp.trade.BuyerSettleBillListVo">
+  	SELECT
+	  DISTINCT (t1.id),
+	  t1.seller_id,
+	  t1.buyer_id,
+	  t1.settle_bill_numb,
+	  t1.settle_cycle_start_date,
+	  t1.settle_cycle_end_date,
+	  t1.settle_cycle_type,
+	  t1.ord_count,
+	  t1.settle_bill_statue_type,
+	  t1.total_money,
+	  t1.entp_name,
+	  t1.late_fee,
+	  t1.late_fee_bl,
+	  t1.sf_yq_flag,
+	  t1.last_pay_date,
+	  case when edi.comp_name is not null then edi.comp_name else pa.name end entpName,
+	  NOW()                      AS nowTime
+	FROM settle_bill t1
+	  LEFT JOIN settle_ord_rela t2
+	    ON t1.id = t2.settle_id
+	  LEFT JOIN order_info t3
+	    ON t2.ord_id = t3.id
+	  left join person_auth pa on pa.memb_id = t1.seller_id
+      left join entp_data_info edi on edi.memb_id = t1.seller_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+	WHERE 1 = 1
+	and t1.del_flag = 0
+    and t1.buyer_id = #{buyerId,jdbcType=BIGINT}
+    <if test="searchKey != null and searchKey != ''">
+    	and (
+    		t1.settle_bill_numb like concat('%',#{searchKey},'%')
+    		or t1.entp_name like concat('%',#{searchKey},'%')
+    		or t3.ord_num like concat('%',#{searchKey},'%')
+    	)
+    </if>
+    <if test="settleBillStatueType != null and settleBillStatueType != ''">
+    	and t1.settle_bill_statue_type = #{settleBillStatueType,jdbcType=VARCHAR}
+    </if>
+    <if test="startTime != null">
+    	and t1.create_date >= #{startTime}
+    </if>
+    <if test="endTime != null">
+    	and t1.create_date &lt;= #{endTime}
+    </if>
+    order by t1.last_pay_date
+  </select>
+
+  <!-- 查询账期结算详情 -->
+  <select id="buyerSettleInfo" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.trade.BuyerSettleBillInfoVo">
+  	SELECT
+	  t1.id,
+	  t1.seller_id,
+	  t1.buyer_id,
+	  t1.settle_bill_numb,
+	  t1.settle_cycle_start_date,
+	  t1.settle_cycle_end_date,
+	  t1.settle_cycle_type,
+	  t1.ord_count,
+	  t1.settle_bill_statue_type,
+	  t1.total_money,
+	  case when edi.comp_name is not null then edi.comp_name else pa.name end buyerName,
+	  t1.last_pay_date,
+	  t1.create_date,
+	  NOW()                      AS nowTime,
+	  SUM(t3.amount_payable)     AS settleOrdCount,
+	  COUNT(t5.id)               AS serverCount,
+	  SUM(t5.should_refund_amount) AS serVerOrdCount
+	FROM settle_bill t1
+	  LEFT JOIN settle_ord_rela t2 ON t1.id = t2.settle_id
+	  LEFT JOIN order_info t3 ON t3.id = t2.ord_id AND t3.pay_method_type = '1'
+	  LEFT JOIN ord_comm_rela t4 ON t4.ord_id = t3.id
+	  LEFT JOIN refund_comm_appl t5 ON t5.ord_comm_id = t4.id and  t5.refund_comm_state = '3'
+	  left join person_auth pa on pa.memb_id = t1.buyer_id
+      left join entp_data_info edi on edi.memb_id = t1.buyer_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+	WHERE
+	  t1.del_flag = 0
+      and t1.id = #{id,jdbcType=BIGINT}
+  </select>
+</mapper>

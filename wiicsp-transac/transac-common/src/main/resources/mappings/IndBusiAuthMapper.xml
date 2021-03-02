@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.IndBusiAuthMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.IndBusiAuth" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="entp_name" property="entpName" jdbcType="VARCHAR" />
+    <result column="entp_short_name" property="entpShortName" jdbcType="VARCHAR" />
+    <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT" />
+    <result column="cust_type" property="custType" jdbcType="VARCHAR" />
+    <result column="area_prov" property="areaProv" jdbcType="VARCHAR" />
+    <result column="area_city" property="areaCity" jdbcType="VARCHAR" />
+    <result column="area_cou" property="areaCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="ctscc" property="ctscc" jdbcType="VARCHAR" />
+    <result column="yyzz_validity" property="yyzzValidity" jdbcType="VARCHAR" />
+    <result column="yyzz_url" property="yyzzUrl" jdbcType="VARCHAR" />
+    <result column="mtz_url" property="mtzUrl" jdbcType="VARCHAR" />
+    <result column="conter" property="conter" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="legal_person_name" property="legalPersonName" jdbcType="VARCHAR" />
+    <result column="legal_person_tel" property="legalPersonTel" jdbcType="VARCHAR" />
+    <result column="legal_person_num" property="legalPersonNum" jdbcType="VARCHAR" />
+    <result column="legal_person_validity" property="legalPersonValidity" jdbcType="VARCHAR" />
+    <result column="sfz_zm_url" property="sfzZmUrl" jdbcType="VARCHAR" />
+    <result column="sfz_fm_url" property="sfzFmUrl" jdbcType="VARCHAR" />
+    <result column="hold_sfz_zm_url" property="holdSfzZmUrl" jdbcType="VARCHAR" />
+    <result column="auth_date" property="authDate" jdbcType="TIMESTAMP" />
+    <result column="auth_state_type" property="authStateType" jdbcType="VARCHAR" />
+    <result column="exam_fail_reason" property="examFailReason" jdbcType="VARCHAR" />
+    <result column="entp_auth_state_type" property="entpAuthStateType" jdbcType="VARCHAR" />
+    <result column="ind_busi_name" property="indBusiName" jdbcType="VARCHAR" />
+    <result column="operator_name" property="operatorName" jdbcType="VARCHAR" />
+    <result column="entp_type" property="entpType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, entp_name, entp_short_name, whole_sale_market_id, cust_type, area_prov,
+    area_city, area_cou, address, ctscc, yyzz_validity, yyzz_url, mtz_url, conter, cont_tel,
+    email, legal_person_name, legal_person_tel, legal_person_num, legal_person_validity,
+    sfz_zm_url, sfz_fm_url, hold_sfz_zm_url, auth_date, auth_state_type, exam_fail_reason,
+    entp_auth_state_type, ind_busi_name, operator_name, entp_type, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ind_busi_auth
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ind_busi_auth
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.IndBusiAuth" >
+    insert into ind_busi_auth (id, memb_id, entp_name,
+      entp_short_name, whole_sale_market_id, cust_type,
+      area_prov, area_city, area_cou,
+      address, ctscc, yyzz_validity,
+      yyzz_url, mtz_url, conter,
+      cont_tel, email, legal_person_name,
+      legal_person_tel, legal_person_num, legal_person_validity,
+      sfz_zm_url, sfz_fm_url, hold_sfz_zm_url,
+      auth_date, auth_state_type, exam_fail_reason,
+      entp_auth_state_type, ind_busi_name, operator_name,
+      entp_type, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{entpName,jdbcType=VARCHAR},
+      #{entpShortName,jdbcType=VARCHAR}, #{wholeSaleMarketId,jdbcType=BIGINT}, #{custType,jdbcType=VARCHAR},
+      #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{ctscc,jdbcType=VARCHAR}, #{yyzzValidity,jdbcType=VARCHAR},
+      #{yyzzUrl,jdbcType=VARCHAR}, #{mtzUrl,jdbcType=VARCHAR}, #{conter,jdbcType=VARCHAR},
+      #{contTel,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{legalPersonName,jdbcType=VARCHAR},
+      #{legalPersonTel,jdbcType=VARCHAR}, #{legalPersonNum,jdbcType=VARCHAR}, #{legalPersonValidity,jdbcType=VARCHAR},
+      #{sfzZmUrl,jdbcType=VARCHAR}, #{sfzFmUrl,jdbcType=VARCHAR}, #{holdSfzZmUrl,jdbcType=VARCHAR},
+      #{authDate,jdbcType=TIMESTAMP}, #{authStateType,jdbcType=VARCHAR}, #{examFailReason,jdbcType=VARCHAR},
+      #{entpAuthStateType,jdbcType=VARCHAR}, #{indBusiName,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR},
+      #{entpType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.IndBusiAuth" >
+    insert into ind_busi_auth
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="entpName != null" >
+        entp_name,
+      </if>
+      <if test="entpShortName != null" >
+        entp_short_name,
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        whole_sale_market_id,
+      </if>
+      <if test="custType != null" >
+        cust_type,
+      </if>
+      <if test="areaProv != null" >
+        area_prov,
+      </if>
+      <if test="areaCity != null" >
+        area_city,
+      </if>
+      <if test="areaCou != null" >
+        area_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="ctscc != null" >
+        ctscc,
+      </if>
+      <if test="yyzzValidity != null" >
+        yyzz_validity,
+      </if>
+      <if test="yyzzUrl != null" >
+        yyzz_url,
+      </if>
+      <if test="mtzUrl != null" >
+        mtz_url,
+      </if>
+      <if test="conter != null" >
+        conter,
+      </if>
+      <if test="contTel != null" >
+        cont_tel,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name,
+      </if>
+      <if test="legalPersonTel != null" >
+        legal_person_tel,
+      </if>
+      <if test="legalPersonNum != null" >
+        legal_person_num,
+      </if>
+      <if test="legalPersonValidity != null" >
+        legal_person_validity,
+      </if>
+      <if test="sfzZmUrl != null" >
+        sfz_zm_url,
+      </if>
+      <if test="sfzFmUrl != null" >
+        sfz_fm_url,
+      </if>
+      <if test="holdSfzZmUrl != null" >
+        hold_sfz_zm_url,
+      </if>
+      <if test="authDate != null" >
+        auth_date,
+      </if>
+      <if test="authStateType != null" >
+        auth_state_type,
+      </if>
+      <if test="examFailReason != null" >
+        exam_fail_reason,
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type,
+      </if>
+      <if test="indBusiName != null" >
+        ind_busi_name,
+      </if>
+      <if test="operatorName != null" >
+        operator_name,
+      </if>
+      <if test="entpType != null" >
+        entp_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="entpName != null" >
+        #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="entpShortName != null" >
+        #{entpShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        #{wholeSaleMarketId,jdbcType=BIGINT},
+      </if>
+      <if test="custType != null" >
+        #{custType,jdbcType=VARCHAR},
+      </if>
+      <if test="areaProv != null" >
+        #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ctscc != null" >
+        #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzzValidity != null" >
+        #{yyzzValidity,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzzUrl != null" >
+        #{yyzzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mtzUrl != null" >
+        #{mtzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null" >
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonTel != null" >
+        #{legalPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonNum != null" >
+        #{legalPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonValidity != null" >
+        #{legalPersonValidity,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzZmUrl != null" >
+        #{sfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzFmUrl != null" >
+        #{sfzFmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="holdSfzZmUrl != null" >
+        #{holdSfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="authDate != null" >
+        #{authDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authStateType != null" >
+        #{authStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null" >
+        #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="entpAuthStateType != null" >
+        #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="indBusiName != null" >
+        #{indBusiName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="entpType != null" >
+        #{entpType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.IndBusiAuth" >
+    update ind_busi_auth
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="entpName != null" >
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="entpShortName != null" >
+        entp_short_name = #{entpShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="wholeSaleMarketId != null" >
+        whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      </if>
+      <if test="custType != null" >
+        cust_type = #{custType,jdbcType=VARCHAR},
+      </if>
+      <if test="areaProv != null" >
+        area_prov = #{areaProv,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCity != null" >
+        area_city = #{areaCity,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCou != null" >
+        area_cou = #{areaCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ctscc != null" >
+        ctscc = #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzzValidity != null" >
+        yyzz_validity = #{yyzzValidity,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzzUrl != null" >
+        yyzz_url = #{yyzzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="mtzUrl != null" >
+        mtz_url = #{mtzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="conter != null" >
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null" >
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonName != null" >
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonTel != null" >
+        legal_person_tel = #{legalPersonTel,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonNum != null" >
+        legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonValidity != null" >
+        legal_person_validity = #{legalPersonValidity,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzZmUrl != null" >
+        sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzFmUrl != null" >
+        sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="holdSfzZmUrl != null" >
+        hold_sfz_zm_url = #{holdSfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="authDate != null" >
+        auth_date = #{authDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="authStateType != null" >
+        auth_state_type = #{authStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null" >
+        exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="entpAuthStateType != null" >
+        entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="indBusiName != null" >
+        ind_busi_name = #{indBusiName,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        operator_name = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="entpType != null" >
+        entp_type = #{entpType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.IndBusiAuth" >
+    update ind_busi_auth
+    set memb_id = #{membId,jdbcType=BIGINT},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      entp_short_name = #{entpShortName,jdbcType=VARCHAR},
+      whole_sale_market_id = #{wholeSaleMarketId,jdbcType=BIGINT},
+      cust_type = #{custType,jdbcType=VARCHAR},
+      area_prov = #{areaProv,jdbcType=VARCHAR},
+      area_city = #{areaCity,jdbcType=VARCHAR},
+      area_cou = #{areaCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      ctscc = #{ctscc,jdbcType=VARCHAR},
+      yyzz_validity = #{yyzzValidity,jdbcType=VARCHAR},
+      yyzz_url = #{yyzzUrl,jdbcType=VARCHAR},
+      mtz_url = #{mtzUrl,jdbcType=VARCHAR},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      legal_person_tel = #{legalPersonTel,jdbcType=VARCHAR},
+      legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+      legal_person_validity = #{legalPersonValidity,jdbcType=VARCHAR},
+      sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+      sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+      hold_sfz_zm_url = #{holdSfzZmUrl,jdbcType=VARCHAR},
+      auth_date = #{authDate,jdbcType=TIMESTAMP},
+      auth_state_type = #{authStateType,jdbcType=VARCHAR},
+      exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      entp_auth_state_type = #{entpAuthStateType,jdbcType=VARCHAR},
+      ind_busi_name = #{indBusiName,jdbcType=VARCHAR},
+      operator_name = #{operatorName,jdbcType=VARCHAR},
+      entp_type = #{entpType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.IndBusiAuthPageListVo" parameterType="com.wisea.transac.common.po.IndBusiAuthPageListPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  entp_name entpName,
+	  entp_short_name entpShortName,
+	  whole_sale_market_id wholeSaleMarketId,
+	  cust_type custType,
+	  area_prov areaProv,
+	  area_city areaCity,
+	  area_cou areaCou,
+	  address address,
+	  ctscc ctscc,
+	  yyzz_validity yyzzValidity,
+	  yyzz_url yyzzUrl,
+	  mtz_url mtzUrl,
+	  conter conter,
+	  cont_tel contTel,
+	  email email,
+	  legal_person_name legalPersonName,
+	  legal_person_tel legalPersonTel,
+	  legal_person_num legalPersonNum,
+	  legal_person_validity legalPersonValidity,
+	  sfz_zm_url sfzZmUrl,
+	  sfz_fm_url sfzFmUrl,
+	  hold_sfz_zm_url holdSfzZmUrl,
+	  auth_date authDate,
+	  auth_state_type authStateType,
+	  exam_fail_reason examFailReason,
+	  entp_auth_state_type entpAuthStateType,
+	  ind_busi_name indBusiName,
+	  operator_name operatorName,
+	  entp_type entpType
+	from
+	  ind_busi_auth
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.IndBusiAuthInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  entp_name entpName,
+	  entp_short_name entpShortName,
+	  whole_sale_market_id wholeSaleMarketId,
+	  cust_type custType,
+	  area_prov areaProv,
+	  area_city areaCity,
+	  area_cou areaCou,
+	  address address,
+	  ctscc ctscc,
+	  yyzz_validity yyzzValidity,
+	  yyzz_url yyzzUrl,
+	  mtz_url mtzUrl,
+	  conter conter,
+	  cont_tel contTel,
+	  email email,
+	  legal_person_name legalPersonName,
+	  legal_person_tel legalPersonTel,
+	  legal_person_num legalPersonNum,
+	  legal_person_validity legalPersonValidity,
+	  sfz_zm_url sfzZmUrl,
+	  sfz_fm_url sfzFmUrl,
+	  hold_sfz_zm_url holdSfzZmUrl,
+	  auth_date authDate,
+	  auth_state_type authStateType,
+	  exam_fail_reason examFailReason,
+	  entp_auth_state_type entpAuthStateType,
+	  ind_busi_name indBusiName,
+	  operator_name operatorName,
+	  entp_type entpType
+	from
+	  ind_busi_auth
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+  <select id="findInfoByUserId" resultType="com.wisea.transac.common.vo.IndBusiAuthInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  entp_name entpName,
+	  entp_short_name entpShortName,
+	  whole_sale_market_id wholeSaleMarketId,
+	  cust_type custType,
+	  area_prov areaProv,
+	  area_city areaCity,
+	  area_cou areaCou,
+	  address address,
+	  ctscc ctscc,
+	  yyzz_validity yyzzValidity,
+	  yyzz_url yyzzUrl,
+	  mtz_url mtzUrl,
+	  conter conter,
+	  cont_tel contTel,
+	  email email,
+	  legal_person_name legalPersonName,
+	  legal_person_tel legalPersonTel,
+	  legal_person_num legalPersonNum,
+	  legal_person_validity legalPersonValidity,
+	  sfz_zm_url sfzZmUrl,
+	  sfz_fm_url sfzFmUrl,
+	  hold_sfz_zm_url holdSfzZmUrl,
+	  auth_date authDate,
+	  auth_state_type authStateType,
+	  exam_fail_reason examFailReason,
+	  entp_auth_state_type entpAuthStateType,
+	  ind_busi_name indBusiName,
+	  operator_name operatorName,
+	  entp_type entpType
+	from
+	  ind_busi_auth
+	where
+	  del_flag = '0'
+	   and entp_auth_state_type = '0'
+	  and memb_id = #{id}
+  </select>
+
+
+</mapper>

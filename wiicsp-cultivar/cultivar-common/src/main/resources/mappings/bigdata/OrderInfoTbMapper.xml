@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.OrderInfoTbMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.OrderInfoTb" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_num" property="ordNum" jdbcType="VARCHAR" />
+    <result column="buyer_user_name" property="buyerUserName" jdbcType="VARCHAR" />
+    <result column="seller_user_name" property="sellerUserName" jdbcType="VARCHAR" />
+    <result column="comm_total_count" property="commTotalCount" jdbcType="INTEGER" />
+    <result column="send_zt_type" property="sendZtType" jdbcType="VARCHAR" />
+    <result column="ord_source" property="ordSource" jdbcType="VARCHAR" />
+    <result column="buyer_tx_url" property="buyerTxUrl" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="zt_address_prov" property="ztAddressProv" jdbcType="VARCHAR" />
+    <result column="comm_total_price" property="commTotalPrice" jdbcType="DOUBLE" />
+    <result column="order_state_type" property="orderStateType" jdbcType="VARCHAR" />
+    <result column="pay_ord_date" property="payOrdDate" jdbcType="TIMESTAMP" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="zt_address_city" property="ztAddressCity" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_num, buyer_user_name, seller_user_name, comm_total_count, send_zt_type, ord_source,
+    buyer_tx_url, address, zt_address_prov, comm_total_price, order_state_type, pay_ord_date,
+    create_by, create_date, update_by, update_date, remarks, del_flag,zt_address_city
+  </sql>
+  <!-- 查询订单编号列表 -->
+  <select id="findOrderNums" resultType="java.lang.String">
+    select ord_num from order_info_tb group by ord_num
+  </select>
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into order_info_tb (id, ord_num, buyer_user_name,
+      seller_user_name, comm_total_count, send_zt_type,
+      ord_source, buyer_tx_url, address,
+      zt_address_prov, zt_address_city, comm_total_price, order_state_type,
+      pay_ord_date, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.ordNum,jdbcType=VARCHAR}, #{item.buyerUserName,jdbcType=VARCHAR},
+      #{item.sellerUserName,jdbcType=VARCHAR}, #{item.commTotalCount,jdbcType=INTEGER}, #{item.sendZtType,jdbcType=VARCHAR},
+      #{item.ordSource,jdbcType=VARCHAR}, #{item.buyerTxUrl,jdbcType=VARCHAR}, #{item.address,jdbcType=VARCHAR},
+      #{item.ztAddressProv,jdbcType=VARCHAR}, #{item.ztAddressCity,jdbcType=VARCHAR}, #{item.commTotalPrice,jdbcType=DOUBLE}, #{item.orderStateType,jdbcType=VARCHAR},
+      #{item.payOrdDate,jdbcType=TIMESTAMP}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from order_info_tb
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from order_info_tb
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.OrderInfoTb" >
+    insert into order_info_tb (id, ord_num, buyer_user_name,
+                               seller_user_name, comm_total_count, send_zt_type,
+                               ord_source, buyer_tx_url, address,
+                               zt_address_prov, comm_total_price, order_state_type,
+                               pay_ord_date, create_by, create_date,
+                               update_by, update_date, remarks,
+                               del_flag,zt_address_city)
+    values (#{id,jdbcType=BIGINT}, #{ordNum,jdbcType=VARCHAR}, #{buyerUserName,jdbcType=VARCHAR},
+            #{sellerUserName,jdbcType=VARCHAR}, #{commTotalCount,jdbcType=INTEGER}, #{sendZtType,jdbcType=VARCHAR},
+            #{ordSource,jdbcType=VARCHAR}, #{buyerTxUrl,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+            #{ztAddressProv,jdbcType=VARCHAR}, #{commTotalPrice,jdbcType=DOUBLE}, #{orderStateType,jdbcType=VARCHAR},
+            #{payOrdDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+            #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+            #{delFlag,jdbcType=CHAR},#{ztAddressCity,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.OrderInfoTb" >
+    insert into order_info_tb
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordNum != null" >
+        ord_num,
+      </if>
+      <if test="buyerUserName != null" >
+        buyer_user_name,
+      </if>
+      <if test="sellerUserName != null" >
+        seller_user_name,
+      </if>
+      <if test="commTotalCount != null" >
+        comm_total_count,
+      </if>
+      <if test="sendZtType != null" >
+        send_zt_type,
+      </if>
+      <if test="ordSource != null" >
+        ord_source,
+      </if>
+      <if test="buyerTxUrl != null" >
+        buyer_tx_url,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="ztAddressProv != null" >
+        zt_address_prov,
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price,
+      </if>
+      <if test="orderStateType != null" >
+        order_state_type,
+      </if>
+      <if test="payOrdDate != null" >
+        pay_ord_date,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="ztAddressCity != null" >
+        zt_address_city,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordNum != null" >
+        #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerUserName != null" >
+        #{buyerUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerUserName != null" >
+        #{sellerUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalCount != null" >
+        #{commTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="sendZtType != null" >
+        #{sendZtType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordSource != null" >
+        #{ordSource,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerTxUrl != null" >
+        #{buyerTxUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddressProv != null" >
+        #{ztAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalPrice != null" >
+        #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderStateType != null" >
+        #{orderStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrdDate != null" >
+        #{payOrdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="ztAddressCity != null" >
+        #{zt_address_city,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.OrderInfoTb" >
+    update order_info_tb
+    <set >
+      <if test="ordNum != null" >
+        ord_num = #{ordNum,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerUserName != null" >
+        buyer_user_name = #{buyerUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="sellerUserName != null" >
+        seller_user_name = #{sellerUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalCount != null" >
+        comm_total_count = #{commTotalCount,jdbcType=INTEGER},
+      </if>
+      <if test="sendZtType != null" >
+        send_zt_type = #{sendZtType,jdbcType=VARCHAR},
+      </if>
+      <if test="ordSource != null" >
+        ord_source = #{ordSource,jdbcType=VARCHAR},
+      </if>
+      <if test="buyerTxUrl != null" >
+        buyer_tx_url = #{buyerTxUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="ztAddressProv != null" >
+        zt_address_prov = #{ztAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="commTotalPrice != null" >
+        comm_total_price = #{commTotalPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="orderStateType != null" >
+        order_state_type = #{orderStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="payOrdDate != null" >
+        pay_ord_date = #{payOrdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="ztAddressCity != null" >
+        zt_address_city = #{ztAddressCity,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.OrderInfoTb" >
+    update order_info_tb
+    set ord_num = #{ordNum,jdbcType=VARCHAR},
+        buyer_user_name = #{buyerUserName,jdbcType=VARCHAR},
+        seller_user_name = #{sellerUserName,jdbcType=VARCHAR},
+        comm_total_count = #{commTotalCount,jdbcType=INTEGER},
+        send_zt_type = #{sendZtType,jdbcType=VARCHAR},
+        ord_source = #{ordSource,jdbcType=VARCHAR},
+        buyer_tx_url = #{buyerTxUrl,jdbcType=VARCHAR},
+        address = #{address,jdbcType=VARCHAR},
+        zt_address_prov = #{ztAddressProv,jdbcType=VARCHAR},
+        comm_total_price = #{commTotalPrice,jdbcType=DOUBLE},
+        order_state_type = #{orderStateType,jdbcType=VARCHAR},
+        pay_ord_date = #{payOrdDate,jdbcType=TIMESTAMP},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        del_flag = #{delFlag,jdbcType=CHAR},
+        zt_address_city = #{ztAddressCity,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+<!--  获取全部订单的数量和金额-->
+  <select id="orderCountSum" resultType="com.wisea.cultivar.common.vo.bigdata.OrderNumVo">
+    select ord_source source, IFNULL(ROUND(sum(comm_total_count), 2),0) orderCount, IFNULL(ROUND(sum(comm_total_price),0), 2) orderAmoun
+    from order_info_tb
+    where pay_ord_date is not null
+    group by ord_source;
+  </select>
+
+
+  <!-- 查询月销走势分析图表数据  -->
+  <select id="transMouthChartVo" parameterType="com.wisea.cultivar.common.po.tp.StaticOrderPo"
+          resultType="com.wisea.cultivar.common.vo.tp.statistics.TransactionDataChartVo">
+      SELECT
+      t_.xPoint,
+      IFNULL(SUM(t_.totalPayAmount), 0) totalPayAmount
+      FROM
+      (
+      SELECT
+      DATE_FORMAT(oi.pay_ord_date, #{plat}) xPoint,
+      ROUND(SUM(oi.comm_total_price), 2) totalPayAmount
+      FROM
+      order_info_tb oi
+      WHERE
+      1 = 1
+      <if test="startDate != null">
+          AND oi.pay_ord_date >= #{startDate}
+      </if>
+      <if test="endDate != null">
+          AND oi.pay_ord_date <![CDATA[<=]]> #{endDate}
+      </if>
+      GROUP BY
+      xPoint
+      ) t_
+      GROUP BY
+      t_.xPoint
+  </select>
+
+  <!-- 采购类别占比 -->
+  <select id="transSaleCatgData" parameterType="com.wisea.cultivar.common.po.tp.StaticOrderPo"
+          resultType="com.wisea.cultivar.common.vo.tp.statistics.TransactionDataChartVo">
+      SELECT
+              t_.xPoint,
+              t_.comm_sale_catg as  saleCatg,
+              IFNULL(SUM(t_.totalPayAmount), 0) totalPayAmount
+      FROM
+              (
+                      SELECT
+                              DATE_FORMAT(t1.pay_ord_date, #{plat}) xPoint,
+                              t2.comm_sale_catg,
+                              ROUND(SUM(t1.comm_total_price), 2) totalPayAmount
+                      FROM
+                              order_info_tb t1
+                                      LEFT JOIN ord_comm_rela_tb t2 ON t1.id = t2.ord_id
+                      WHERE
+                              1 = 1
+                          <if test="startDate != null">
+                              AND t1.pay_ord_date >= #{startDate}
+                          </if>
+                          <if test="endDate != null">
+                              AND t1.pay_ord_date <![CDATA[<=]]> #{endDate}
+                          </if>
+                      GROUP BY
+                              xPoint,t2.comm_sale_catg
+                      ) t_
+      GROUP BY
+              t_.xPoint,
+              t_.comm_sale_catg
+  </select>
+
+  <!-- 热销品类榜单 -->
+  <select id="transCategoryData" resultType="com.wisea.cultivar.common.vo.tp.statistics.ChartVo">
+    SELECT
+            ROUND(sum(t1.comm_total_price), 2) AS yValue,
+            t2.category AS xPoint
+    FROM
+            order_info_tb t1
+        LEFT JOIN ord_comm_rela_tb t2 ON t1.id = t2.ord_id
+    WHERE
+            1 = 1
+      AND t2.category != ""
+    GROUP BY
+            t2.category
+  </select>
+
+  <!-- 采购品牌占比 -->
+  <select id="transBrandData" resultType="com.wisea.cultivar.common.vo.tp.statistics.ChartVo">
+    SELECT
+            ROUND(sum(t1.comm_total_price), 2) as yValue,
+            t2.brand as xPoint
+    FROM
+            order_info_tb t1
+         LEFT JOIN ord_comm_rela_tb t2 ON t1.id = t2.ord_id
+    WHERE
+            1 = 1
+      AND t2.brand != ""
+    GROUP BY
+        t2.brand
+    ORDER BY
+        yValue DESC
+    LIMIT 7
+  </select>
+
+  <!-- 订单金额分布 -->
+  <select id="transOrdAmount" resultType="com.wisea.cultivar.common.vo.tp.statistics.ChartVo">
+    SELECT t1.wd as xPoint,t2.val as yValue FROM
+      (SELECT ('0-300元') AS wd
+       UNION ALL
+       SELECT ('301-500元')
+       UNION ALL
+       SELECT ('501-1000元')
+       UNION ALL
+       SELECT ('1001-5000元')
+       UNION ALL
+       SELECT ('5001元以上')) t1
+              LEFT JOIN
+              (SELECT
+                       CASE WHEN amount_payable > 0 AND amount_payable &lt;= 300 THEN ('0-300元')
+                            WHEN amount_payable > 301 AND amount_payable &lt;= 500 THEN
+                                    ('301-500元')
+                            WHEN amount_payable > 501 AND amount_payable &lt;= 1000 THEN
+                                    ('501-1000元')
+                            WHEN amount_payable > 1001 AND amount_payable &lt;= 5000 THEN
+                                    ('1001-5000元')
+                            WHEN amount_payable > 5001 THEN ('5001元以上')
+                            ELSE NULL END
+                                 AS wd
+                       ,
+                       COUNT(CASE WHEN amount_payable > 0 AND amount_payable &lt;= 300 THEN id
+                                  WHEN amount_payable > 301 AND amount_payable &lt;= 500 THEN id
+                                  WHEN amount_payable > 501 AND amount_payable &lt;= 1000 THEN id
+                                  WHEN amount_payable > 1001 AND amount_payable &lt;= 5000 THEN id
+                                  WHEN amount_payable > 5001 THEN id
+                                  ELSE NULL END
+                               ) AS VAL
+               FROM
+                       (SELECT amount_payable ,id
+                        FROM order_info
+                        where 1=1
+                               )a
+               GROUP BY wd)t2
+                      ON t1.wd=t2.wd
+  </select>
+    <!-- 供应商热销排名 -->
+  <select id="transSerllerPm" resultType="com.wisea.cultivar.common.vo.tp.statistics.ChartVo">
+    SELECT
+    seller_user_name AS xPoint,
+    ROUND(SUM(comm_total_price), 2) yValue
+    FROM
+    order_info_tb
+    WHERE
+    1 = 1
+    GROUP BY
+    seller_user_name
+    ORDER BY
+    yValue DESC
+    LIMIT 10
+ </select>
+
+    <!-- 热销城市占比 -->
+<select id="transRxCityData" resultType="com.wisea.cultivar.common.vo.tp.statistics.ChartVo">
+    SELECT
+            ROUND(SUM(comm_total_price), 2) yValue,
+            zt_address_city AS xPoint
+    FROM
+            order_info_tb
+    WHERE
+            1 = 1
+    GROUP BY
+            zt_address_city
+</select>
+<!--  交收方式分析-->
+  <select id="modeSettlement" resultType="com.wisea.cultivar.common.vo.bigdata.OrderSettlement">
+      select send_zt_type                               type,
+             ROUND(sum(IFNULL(comm_total_count, 0)), 2) orderCount,
+             ROUND(sum(IFNULL(comm_total_price, 0)), 2) orderAmoun
+      from order_info_tb
+      where del_flag = '0'
+      group by send_zt_type;
+  </select>
+</mapper>

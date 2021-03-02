@@ -1,0 +1,454 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.CommGyPubInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="comm_qg_type" property="commQgType" jdbcType="VARCHAR" />
+    <result column="pub_gy_title" property="pubGyTitle" jdbcType="VARCHAR" />
+    <result column="list_count" property="listCount" jdbcType="DOUBLE" />
+    <result column="wish_price" property="wishPrice" jdbcType="DOUBLE" />
+    <result column="cpbz_type" property="cpbzType" jdbcType="VARCHAR" />
+    <result column="delivery_mode" property="deliveryMode" jdbcType="VARCHAR" />
+    <result column="contacts_name" property="contactsName" jdbcType="VARCHAR" />
+    <result column="contacts_tel" property="contactsTel" jdbcType="VARCHAR" />
+    <result column="pub_date" property="pubDate" jdbcType="TIMESTAMP" />
+    <result column="qg_state_type" property="qgStateType" jdbcType="VARCHAR" />
+    <result column="contacts_num" property="contactsNum" jdbcType="INTEGER" />
+    <result column="views" property="views" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="place_origin" property="placeOrigin" jdbcType="VARCHAR" />
+    <result column="cgl_meas_unit_id" property="cglMeasUnitId" jdbcType="BIGINT"/>
+    <result column="wish_price_meas_unit_id" property="wishPriceMeasUnitId" jdbcType="BIGINT"/>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.plant.entity.CommGyPubInfo" extends="BaseResultMap" >
+    <result column="qtcgyq" property="qtcgyq" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, comm_qg_type, pub_gy_title, list_count, wish_price, cpbz_type, delivery_mode,
+    contacts_name, contacts_tel, pub_date, qg_state_type, contacts_num, views, create_by,
+    create_date, update_by, update_date, remarks, del_flag,place_origin,cgl_meas_unit_id,wish_price_meas_unit_id
+  </sql>
+  <sql id="Blob_Column_List" >
+    qtcgyq
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from comm_gy_pub_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comm_gy_pub_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+    insert into comm_gy_pub_info (id, memb_id, comm_qg_type,
+      pub_gy_title, list_count, wish_price,
+      cpbz_type, delivery_mode, contacts_name,
+      contacts_tel, pub_date, qg_state_type,
+      contacts_num, views, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag, qtcgyq, place_origin,cgl_meas_unit_id,wish_price_meas_unit_id
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{commQgType,jdbcType=VARCHAR},
+      #{pubGyTitle,jdbcType=VARCHAR}, #{listCount,jdbcType=DOUBLE}, #{wishPrice,jdbcType=DOUBLE},
+      #{cpbzType,jdbcType=VARCHAR}, #{deliveryMode,jdbcType=VARCHAR}, #{contactsName,jdbcType=VARCHAR},
+      #{contactsTel,jdbcType=VARCHAR}, #{pubDate,jdbcType=TIMESTAMP}, #{qgStateType,jdbcType=VARCHAR},
+      #{contactsNum,jdbcType=INTEGER}, #{views,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}, #{qtcgyq,jdbcType=LONGVARCHAR},#{placeOrigin,jdbcType=VARCHAR}
+      ,#{cglMeasUnitId,jdbcType=BIGINT},#{wishPriceMeasUnitId,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+    insert into comm_gy_pub_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="commQgType != null" >
+        comm_qg_type,
+      </if>
+      <if test="pubGyTitle != null" >
+        pub_gy_title,
+      </if>
+      <if test="listCount != null" >
+        list_count,
+      </if>
+      <if test="wishPrice != null" >
+        wish_price,
+      </if>
+      <if test="cpbzType != null" >
+        cpbz_type,
+      </if>
+      <if test="deliveryMode != null" >
+        delivery_mode,
+      </if>
+      <if test="contactsName != null" >
+        contacts_name,
+      </if>
+      <if test="contactsTel != null" >
+        contacts_tel,
+      </if>
+      <if test="pubDate != null" >
+        pub_date,
+      </if>
+      <if test="qgStateType != null" >
+        qg_state_type,
+      </if>
+      <if test="contactsNum != null" >
+        contacts_num,
+      </if>
+      <if test="views != null" >
+        views,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="qtcgyq != null" >
+        qtcgyq,
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin,
+      </if>
+      <if test="cglMeasUnitId != null">
+        cgl_meas_unit_id,
+      </if>
+      <if test="wishPriceMeasUnitId != null">
+        wish_price_meas_unitId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commQgType != null" >
+        #{commQgType,jdbcType=VARCHAR},
+      </if>
+      <if test="pubGyTitle != null" >
+        #{pubGyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="listCount != null" >
+        #{listCount,jdbcType=DOUBLE},
+      </if>
+      <if test="wishPrice != null" >
+        #{wishPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="cpbzType != null" >
+        #{cpbzType,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryMode != null" >
+        #{deliveryMode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null" >
+        #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsTel != null" >
+        #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null" >
+        #{pubDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qgStateType != null" >
+        #{qgStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsNum != null" >
+        #{contactsNum,jdbcType=INTEGER},
+      </if>
+      <if test="views != null" >
+        #{views,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="qtcgyq != null" >
+        #{qtcgyq,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="cglMeasUnitId != null">
+        #{cglMeasUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="wishPriceMeasUnitId != null">
+        #{wishPriceMeasUnitId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="addCommGyPubInfoContactsNum" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+     update comm_gy_pub_info
+     set contacts_num=contacts_num+1
+     where id=#{id}
+  </update>
+  <update id="addCommGyPubInfoViews" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo"  >
+     update comm_gy_pub_info
+     set  views=views+1
+     where id=#{id}
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+    update comm_gy_pub_info
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commQgType != null" >
+        comm_qg_type = #{commQgType,jdbcType=VARCHAR},
+      </if>
+      <if test="pubGyTitle != null" >
+        pub_gy_title = #{pubGyTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="listCount != null" >
+        list_count = #{listCount,jdbcType=DOUBLE},
+      </if>
+      <if test="wishPrice != null" >
+        wish_price = #{wishPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="cpbzType != null" >
+        cpbz_type = #{cpbzType,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryMode != null" >
+        delivery_mode = #{deliveryMode,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsName != null" >
+        contacts_name = #{contactsName,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsTel != null" >
+        contacts_tel = #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="pubDate != null" >
+        pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qgStateType != null" >
+        qg_state_type = #{qgStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="contactsNum != null" >
+        contacts_num = #{contactsNum,jdbcType=INTEGER},
+      </if>
+      <if test="views != null" >
+        views = #{views,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="qtcgyq != null" >
+        qtcgyq = #{qtcgyq,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="placeOrigin != null" >
+        place_origin= #{placeOrigin,jdbcType=VARCHAR},
+      </if>
+      <if test="cglMeasUnitId != null">
+        cgl_meas_unit_id = #{cglMeasUnitId,jdbcType=BIGINT},
+      </if>
+      <if test="wishPriceMeasUnitId != null">
+        wish_price_meas_unit_id = #{wishPriceMeasUnitId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+    update comm_gy_pub_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_qg_type = #{commQgType,jdbcType=VARCHAR},
+      pub_gy_title = #{pubGyTitle,jdbcType=VARCHAR},
+      list_count = #{listCount,jdbcType=DOUBLE},
+      wish_price = #{wishPrice,jdbcType=DOUBLE},
+      cpbz_type = #{cpbzType,jdbcType=VARCHAR},
+      delivery_mode = #{deliveryMode,jdbcType=VARCHAR},
+      contacts_name = #{contactsName,jdbcType=VARCHAR},
+      contacts_tel = #{contactsTel,jdbcType=VARCHAR},
+      pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      qg_state_type = #{qgStateType,jdbcType=VARCHAR},
+      contacts_num = #{contactsNum,jdbcType=INTEGER},
+      views = #{views,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      qtcgyq = #{qtcgyq,jdbcType=LONGVARCHAR},
+       place_origin= #{placeOrigin,jdbcType=VARCHAR},
+        cgl_meas_unit_id =  #{cglMeasUnitId,jdbcType=BIGINT},
+      wish_price_meas_unit_id =  #{wishPriceMeasUnitId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.CommGyPubInfo" >
+    update comm_gy_pub_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_qg_type = #{commQgType,jdbcType=VARCHAR},
+      pub_gy_title = #{pubGyTitle,jdbcType=VARCHAR},
+      list_count = #{listCount,jdbcType=DOUBLE},
+      wish_price = #{wishPrice,jdbcType=DOUBLE},
+      cpbz_type = #{cpbzType,jdbcType=VARCHAR},
+      delivery_mode = #{deliveryMode,jdbcType=VARCHAR},
+      contacts_name = #{contactsName,jdbcType=VARCHAR},
+      contacts_tel = #{contactsTel,jdbcType=VARCHAR},
+      pub_date = #{pubDate,jdbcType=TIMESTAMP},
+      qg_state_type = #{qgStateType,jdbcType=VARCHAR},
+      contacts_num = #{contactsNum,jdbcType=INTEGER},
+      views = #{views,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+       place_origin= #{placeOrigin,jdbcType=VARCHAR},
+       cgl_meas_unit_id =  #{cglMeasUnitId,jdbcType=BIGINT},
+      wish_price_meas_unit_id =  #{wishPriceMeasUnitId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.CommGyPubInfoPageListVo" parameterType="com.wisea.cultivar.plant.po.CommGyPubInfoPageListPo" >
+    select
+    cgpi.id id,
+    cgpi.memb_id membId,
+    cgpi.comm_qg_type commQgType,
+    cgpi.pub_gy_title pubGyTitle,
+    cgpi.list_count listCount,
+    cgpi.wish_price wishPrice,
+    cgpi.cpbz_type cpbzType,
+    cgpi.delivery_mode deliveryMode,
+    cgpi.contacts_name contactsName,
+    cgpi.contacts_tel contactsTel,
+    cgpi.pub_date pubDate,
+    cgpi.qg_state_type qgStateType,
+    cgpi.contacts_num contactsNum,
+    cgpi.views views,
+    cgpi.qtcgyq qtcgyq,
+    cgpi.place_origin placeOrigin,
+    zmum1.meas_unit_name cglMeasUnitName,
+    zmum2.meas_unit_name wishPriceMeasUnitName
+	from
+	  comm_gy_pub_info cgpi left join (select id, meas_unit_name from zhfw_meas_unit_mage) zmum1 on
+    cgpi.cgl_meas_unit_id = zmum1.id
+    left join (select id, meas_unit_name from zhfw_meas_unit_mage) zmum2 on cgpi.wish_price_meas_unit_id = zmum2.id
+	where
+    cgpi.del_flag = '0'
+    <if test="membId!=null and membId !=''">
+      and cgpi.memb_id=#{membId}
+    </if>
+    <if test="commQgType!=null and commQgType !=''">
+      and cgpi.comm_qg_type=#{commQgType}
+    </if>
+    <if test="pubGyTitle!=null and pubGyTitle !=''">
+      and cgpi.pub_gy_title like CONCAT('%', #{pubGyTitle}, '%')
+    </if>
+    <if test="qgStateType!=null and qgStateType !=''">
+      and cgpi.qg_state_type=#{qgStateType}
+    </if>
+    <if test="sort !=null and sort !=''">
+      <choose>
+        <when test="sort==0">
+          order by cgpi.pub_date desc
+        </when>
+        <when test="sort==1">
+          order by cgpi.contacts_num asc
+        </when>
+        <when test="sort==2">
+          order by cgpi.contacts_num desc
+        </when>
+        <when test="sort==3">
+          order by cgpi.views asc
+        </when>
+        <when test="sort==4">
+          order by cgpi.views desc
+        </when>
+        <when test="sort==5">
+          order by cgpi.update_date desc
+        </when>
+
+      </choose>
+    </if>
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.CommGyPubInfoInfoVo" parameterType="com.wisea.cultivar.plant.vo.CommVo" >
+    select
+      cgpi.id id,
+	  cgpi.memb_id membId,
+	  cgpi.comm_qg_type commQgType,
+	  cgpi.pub_gy_title pubGyTitle,
+	  cgpi.list_count listCount,
+	  cgpi.wish_price wishPrice,
+	  cgpi.cpbz_type cpbzType,
+	  cgpi.delivery_mode deliveryMode,
+	  cgpi.contacts_name contactsName,
+	  cgpi.contacts_tel contactsTel,
+	  cgpi.pub_date pubDate,
+	  cgpi.qg_state_type qgStateType,
+	  cgpi.contacts_num contactsNum,
+	  cgpi.qtcgyq qtcgyq,
+	  cgpi.views views,
+	  mc.id membCollectionId,
+	  cgpi.place_origin placeOrigin,
+	  zmum1.meas_unit_name cglMeasUnitName,
+	  zmum1.id cglMeasUnitId,
+      zmum2.meas_unit_name wishPriceMeasUnitName,
+      zmum2.id wishPriceMeasUnitId
+	from
+	  comm_gy_pub_info cgpi
+	  left join (select * from memb_collection where collection_type='5' and memb_id=#{membId} and del_flag='0') mc on cgpi.id=mc.collection_id
+	  left join (select id, meas_unit_name from zhfw_meas_unit_mage) zmum1 on cgpi.cgl_meas_unit_id = zmum1.id
+      left join (select id, meas_unit_name from zhfw_meas_unit_mage) zmum2 on cgpi.wish_price_meas_unit_id = zmum2.id
+	where
+	  cgpi.del_flag = '0'
+	  and cgpi.id = #{id}
+  </select>
+</mapper>

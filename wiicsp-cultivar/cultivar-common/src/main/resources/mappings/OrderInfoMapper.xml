@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.OrderInfoMapper" >
+
+    <!-- 商家（后台）查询订单列表 -->
+    <select id="findMerchantOrderList" parameterType="com.wisea.cultivar.common.po.trade.SerListMageListPo" resultType="com.wisea.cultivar.common.vo.trade.SerListMageListVo">
+        select sl.id,sl.ser_list_no,sl.subscribe_date,
+        IF(m1.memb_type='0',m1.login_name,NULL) sellerAccount,m.cont_name,
+        IF(m.memb_type='1',m.login_name,NULL) buyerAccount,m1.entp_name,
+        sl.total_price,sy.label AS 'serListStateTypeValue',
+        sl.ser_list_state_type AS 'serListStateType'
+        from ser_list_mage sl
+        LEFT JOIN sys_dict sy ON sy.`value` = sl.ser_list_state_type
+        AND sy.type = 'ser_list_state_type'
+        INNER JOIN zhfw_memb_info m ON m.id = sl.memb_id
+        INNER JOIN zhfw_comm_pub_info cpi ON cpi.id = sl.comm_pub_id
+        LEFT JOIN zhfw_memb_info m1 ON m1.id = cpi.memb_id
+        WHERE 1=1 and sl.del_flag = '0'
+        <if test="serListStateType != null and serListStateType != ''">
+            and sl.ser_list_state_type = #{serListStateType}
+        </if>
+        <if test="query != null and query != ''">
+           AND (sl.ser_list_no LIKE CONCAT('%', #{query}, '%')
+            OR m.login_name LIKE CONCAT('%', #{query}, '%')
+            OR m1.login_name LIKE CONCAT('%', #{query}, '%'))
+        </if>
+        <if test="startDate != null">
+            AND sl.subscribe_date >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND sl.subscribe_date <![CDATA[<=]]> #{endDate}
+        </if>
+        GROUP BY sl.id
+        ORDER BY sl.subscribe_date DESC
+    </select>
+
+    <resultMap id="detaliMap" type="com.wisea.cultivar.common.vo.trade.SerListMageInfoVo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="ser_list_no" property="serListNo" jdbcType="VARCHAR" />
+        <result column="buyerAccount" property="buyerAccount" jdbcType="VARCHAR"></result>
+        <result column="sellerAccount" property="sellerAccount" jdbcType="VARCHAR"></result>
+        <result column="total_price" property="totalPrice" jdbcType="DOUBLE"></result>
+        <result column="entp_name" property="sellerName" jdbcType="VARCHAR"></result>
+        <result column="serListStateType" property="serListStateType"></result>
+        <result column="subscribe_date" property="subscribeDate" jdbcType="TIMESTAMP"/>
+        <result column="label" property="serListStateTypeValue"></result>
+        <!-- 预约信息 -->
+        <association property="orderInfoVo" column="{id=id,serListStateType=serListStateType}" javaType="com.wisea.cultivar.common.vo.trade.OrderInfoVo" select="serMessage">
+            <result column="conter" property="conter" jdbcType="VARCHAR"/>
+            <result column="cont_tel" property="contTel" jdbcType="VARCHAR"/>
+            <result column="ser_date" property="serDate" jdbcType="TIMESTAMP"/>
+            <result column="ser_area_prov" property="serAreaProv" jdbcType="VARCHAR"/>
+            <result column="ser_area_city" property="serAreaCity" jdbcType="VARCHAR"/>
+            <result column="ser_area_cou" property="serAreaCou" jdbcType="VARCHAR"/>
+            <result column="ser_area_address" property="selAddress" jdbcType="VARCHAR"/>
+        </association>
+        <!-- 查询商品信息-->
+        <association property="commPubMessageVo" column="{id=id,serListStateType=serListStateType}" javaType="com.wisea.cultivar.common.vo.product.CommPubMessageVo" select="findCommPubInfoList" >
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="comm_title" property="commTitle" jdbcType="VARCHAR"/>
+            <result column="num" property="num" jdbcType="DOUBLE"/>
+            <result column="total_price" property="totalPrice" jdbcType="DOUBLE"/>
+        </association>
+        <!-- 查询处理信息-->
+        <collection property="serListOpreateInfoVos" column="{id=id}" ofType="com.wisea.cultivar.common.vo.trade.SerListOpreateInfoVo" select="findSerListOpreateInfoList" >
+            <result column="operator" property="operator" jdbcType="VARCHAR"/>
+            <result column="opreat_content" property="opreatContent" jdbcType="VARCHAR"/>
+            <result column="opreat_date" property="opreatDate" jdbcType="TIMESTAMP"/>
+            <result column="ser_list_state_type" property="serListStateType" jdbcType="VARCHAR"/>
+            <result column="serListStateTypeValue" property="serListStateTypeValue" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+    <select id="findOrderInfo" parameterType="com.wisea.cultivar.common.po.trade.SerListMageInfoPo" resultMap="detaliMap">
+        select sl.id,sl.ser_list_no,sl.subscribe_date,
+        IF(m1.memb_type='0',m1.login_name,NULL) as 'sellerAccount',m.cont_name as 'buyerName',
+        IF(m.memb_type='1',m.login_name,NULL) as 'buyerAccount',m1.entp_name,
+        sl.total_price,sy.label AS 'serListStateTypeValue',
+        sl.ser_list_state_type AS 'serListStateType'
+        from ser_list_mage sl
+        LEFT JOIN sys_dict sy ON sy.`value` = sl.ser_list_state_type
+        AND sy.type = 'ser_list_state_type'
+        INNER JOIN zhfw_memb_info m ON m.id = sl.memb_id
+        INNER JOIN zhfw_comm_pub_info cpi ON cpi.id = sl.comm_pub_id
+        LEFT JOIN zhfw_memb_info m1 ON m1.id = cpi.memb_id
+        WHERE 1=1 and sl.del_flag = '0'
+        and sl.id = #{id}
+        <if test="serListStateType != null and serListStateType!= ''">
+            and sl.ser_list_state_type= #{serListStateType}
+        </if>
+        and sl.del_flag = '0'
+    </select>
+    <select id="serMessage" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.trade.OrderInfoVo">
+        SELECT sl.id,sl.conter,sl.cont_tel,sl.ser_date as 'serDate',sl.ser_area_prov,sl.ser_area_city,sl.ser_area_cou,sl.ser_area_address FROM ser_list_mage sl
+         where sl.id = #{id} and sl.ser_list_state_type= #{serListStateType}
+    </select>
+    <select id="findCommPubInfoList" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.product.CommPubMessageVo">
+         SELECT sl.id,cpi.comm_title,cp.url,sl.num,sl.total_price
+				FROM ser_list_mage sl
+            LEFT JOIN zhfw_comm_pub_info cpi ON sl.comm_pub_id = cpi.id
+            LEFT JOIN zhfw_comm_picture cp ON cp.comm_pub_id = cpi.id
+         where sl.id = #{id} and  sl.ser_list_state_type= #{serListStateType}
+         GROUP BY sl.id
+    </select>
+
+    <select id="findSerListOpreateInfoList" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.trade.SerListOpreateInfoVo">
+       SELECT sl.id,slo.*,sd.label AS 'serListStateTypeValue' FROM ser_list_mage sl
+            LEFT JOIN ser_list_opreate_info slo ON sl.id = slo.ser_list_id
+			LEFT JOIN sys_dict sd ON sd.`value` = slo.`ser_list_state_type` AND sd.type = 'ser_list_state_type'
+            where sl.id = #{id}
+    </select>
+
+</mapper>

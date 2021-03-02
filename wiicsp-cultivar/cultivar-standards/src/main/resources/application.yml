@@ -1,0 +1,68 @@
+server:
+  port: 8951
+#  servlet:
+#    context-path: /tp/system
+spring:
+  application:
+    name: cultivar-standards
+
+wbfc:
+  mss:
+    plant: CULTIVAR-PLANT # mss远程 种植服务
+    equipment: CULTIVAR-EQUIPMENT # 设备服务
+  quartz:
+    auto-resume:
+      enabled: false
+    timer:
+      job: cultivar.standards.timer.job # 任务分组
+      trigger: cultivar.standards.timer.trigger # 触发器分组
+    factory:
+      properties:
+        "[org.quartz.scheduler.instanceName]": cultivar_standards_scheduler
+  sms:
+    test: true # 短信测试 如果是测试 验证码都是999999 默认false false:非测试 true:测试
+    productName: 华信 # 第三方短信平台名称
+    dictType: sms_template_type # 短信模板数据字典类型 默认:sms_template_type
+    smsCodeLabel: smsCode # 手机验证码模板数据字典label 默认:smsCode
+    code:
+      type: 0 # 手机验证码类型类型(0:数字 1:英文 2：英数混合) 默认:0
+      length: 6 # 手机验证码长度 默认:6位
+      timeout: 600 # 手机验证码过期时间(默认:600秒)
+      reSend: 6 # 手机验证码重发间隔(默认:60秒)
+      maxCount: 20 # 同一手机号最大次数
+      maxRepeat: 86400 # 同一手机号最大次数校验间隔(默认:24*60*60秒=86400秒)(24小时)
+    recive:
+      timeout: 86400 # 短信接收过期时间(服务器收到短信缓存到redis的时间)(默认:24*60*60秒=86400秒)(24小时)
+    overage:
+      warning: true # 短信余额报警 false:不报警 true:报警
+      warningMin: 100 # 短信余额最小值边界 默认:100
+      emailUser: admin # 报警发送邮件用户(登录名，发送到邮箱,默认admin)
+      #email: xudl@wisea.com.cn # 报警发送邮件地址(此项与emailUser互斥)
+      emailTemplete: /emailFile/emailOverage.ftl # 短信余额报警邮件 默认：/src/main/resources/templates/emailFile/emailOverage.ftl /src/main/resources/templates为ftl模板文件默认目录
+    huaxin:
+      username: OM00023 # 华信用户名
+      password: 3ud3ch # 华信密码
+      sendUrl: https://dx.ipyy.net/smsJson.aspx # 华信发送URL
+      overageUrl: https://dx.ipyy.net/smsJson.aspx # 华信获取余额URL
+
+management:
+  endpoint:
+    logviewer:
+      enabled: true # 开启实时日志节点
+#yspay:
+#  entpreg:
+#    legalCertType: 00 #企业法人证件类型
+#    notifyType: 2 #通知方式，此通知为商户号审核通知，通知内容包含帐号信息，为空的情况下将不发送通知，支持通知方式1、邮箱，2手机短信，3、邮箱+手机短信
+#    certType: 00 #开户人证件类型，目前只支持00,00为身份证
+#    merFlag: 11 #商户属性。11为普通商户，12为代理商户，不填的情况下默认为普通商户
+#    industry: 58 #行业类 别
+#    settleType: 1 #结算方式，0:平台内账户1:银行卡账户.结算方式为0时银行卡信息只涉及提现，为1时涉及到提现以及清算
+#    orgNo: 6690000044 #机构号
+
+
+
+logging: # 日志输出配置
+  level:
+    com.wisea: DEBUG
+    org.quartz: debug
+    com.codingapi: debug

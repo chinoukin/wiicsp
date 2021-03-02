@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.VersionInfoMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.VersionInfoMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="version_name" property="versionName" jdbcType="VARCHAR" />
+    <result column="version_num" property="versionNum" jdbcType="VARCHAR" />
+    <result column="force_update_type" property="forceUpdateType" jdbcType="VARCHAR" />
+    <result column="version_type" property="versionType" jdbcType="CHAR" />
+      <result column="update_cont" property="updateCont" jdbcType="VARCHAR" />
+      <result column="update_url" property="updateUrl" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updatBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, version_name,version_num, version_type, force_update_type, update_cont,update_url, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+
+    <!-- 查询系统版本列表 -->
+    <select id="findListPage" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.plant.po.oritrapla.VersionInfoMagePo">
+      select
+        vim.id, vim.version_name,vim.version_num, vim.version_type, vim.force_update_type, vim.update_cont,vim.update_url, vim.create_by, vim.create_date, su.login_name AS update_by,
+        vim.update_date, vim.remarks, vim.del_flag
+        FROM version_info_mage vim
+        LEFT JOIN sys_user su ON su.id = vim.update_by
+        WHERE vim.del_flag = "0"
+        <if test="versionName != null and versionName != ''">
+            AND vim.version_name LIKE CONCAT('%', #{versionName}, '%')
+        </if>
+        <if test="updStaDate != null">
+            AND vim.update_date <![CDATA[ >= ]]> #{updStaDate, jdbcType=TIMESTAMP}
+        </if>
+        <if test="updEndDate != null">
+            AND vim.update_date <![CDATA[ <= ]]> #{updEndDate, jdbcType=TIMESTAMP}
+        </if>
+        <if test="versionType != null  and versionType != ''">
+            AND vim.version_type = #{versionType}
+        </if>
+        order by vim.create_date desc
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from version_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <!-- 获取最新的版本信息 -->
+  <select id="getDetailForNewly" resultType="com.wisea.cultivar.plant.vo.oritrapla.VersionInfoMageVo" parameterType="java.lang.String" >
+  	select *
+    from version_info_mage
+    where version_type = #{versionTyp} AND del_flag = '0'
+	ORDER BY update_date DESC
+	LIMIT 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from version_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.VersionInfoMage" >
+    insert into version_info_mage (id, version_name,version_num,
+    version_type, force_update_type, update_cont,update_url, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+    )
+    values (#{id,jdbcType=BIGINT}, #{versionName,jdbcType=VARCHAR}, #{versionNum,jdbcType=VARCHAR},
+      #{versionType,jdbcType=VARCHAR}, #{forceUpdateType,jdbcType=VARCHAR}, #{updateCont,jdbcType=VARCHAR}, #{updateUrl,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.VersionInfoMage" >
+    insert into version_info_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="versionName != null" >
+        version_name,
+      </if>
+      <if test="versionNum != null" >
+        version_num,
+      </if>
+      <if test="versionType != null" >
+        version_type,
+      </if>
+      <if test="forceUpdateType != null" >
+        force_update_type,
+      </if>
+      <if test="updateCont != null" >
+        update_cont,
+      </if>
+      <if test="updateUrl != null" >
+        update_url,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="versionName != null" >
+        #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNum != null" >
+        #{versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="versionType != null" >
+        #{versionType,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUpdateType != null" >
+        #{forceUpdateType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateCont != null" >
+        #{updateCont,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUrl != null" >
+        #{updateUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.VersionInfoMage" >
+    update version_info_mage
+    <set >
+      <if test="versionName != null" >
+          version_name = #{versionName,jdbcType=VARCHAR},
+      </if>
+      <if test="versionNum != null" >
+          version_num = #{versionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="versionType != null" >
+          version_type = #{versionType,jdbcType=VARCHAR},
+      </if>
+      <if test="forceUpdateType != null" >
+          force_update_type = #{forceUpdateType,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUrl != null" >
+          update_url = #{updateUrl,jdbcType=VARCHAR},
+      </if>
+        <if test="updateCont != null" >
+            update_cont = #{updateCont,jdbcType=VARCHAR},
+        </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.VersionInfoMage" >
+    update version_info_mage
+    set version_name= #{versionName,jdbcType=VARCHAR},
+      version_num = #{versionNum,jdbcType=VARCHAR},
+      version_type = #{versionType,jdbcType=VARCHAR},
+      force_update_type = #{forceUpdateType,jdbcType=VARCHAR},
+      update_cont = #{updateCont,jdbcType=VARCHAR},
+      update_url = #{updateUrl,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

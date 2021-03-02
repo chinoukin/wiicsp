@@ -1,0 +1,2518 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.CommPubInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR"/>
+        <result column="comm_name" property="commName" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+        <result column="comm_spec" property="commSpec" jdbcType="DOUBLE"/>
+        <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT"/>
+        <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR"/>
+        <result column="pack_desc" property="packDesc" jdbcType="VARCHAR"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="time_of_warr" property="timeOfWarr" jdbcType="VARCHAR"/>
+        <result column="start_ord_count" property="startOrdCount" jdbcType="INTEGER"/>
+        <result column="original_price" property="originalPrice" jdbcType="VARCHAR"/>
+        <result column="original_agent_price" property="originalAgentPrice" jdbcType="VARCHAR"/>
+        <result column="whole_price" property="wholePrice" jdbcType="VARCHAR"/>
+        <result column="whole_price_section" property="wholePriceSection" jdbcType="VARCHAR"/>
+        <result column="agent_state_type" property="agentStateType" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price" property="agentWholePrice" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price_section" property="agentWholePriceSection" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price_mode" property="agentWholePriceMode" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price_pf_mode" property="agentWholePricePfMode" jdbcType="VARCHAR"/>
+        <result column="comm_art_num" property="commArtNum" jdbcType="VARCHAR"/>
+        <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR"/>
+        <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR"/>
+        <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR"/>
+        <result column="manufacturer_id" property="manufacturerId" jdbcType="BIGINT"/>
+        <result column="prdct_date" property="prdctDate" jdbcType="TIMESTAMP"/>
+        <result column="prdct_batch" property="prdctBatch" jdbcType="VARCHAR"/>
+        <result column="prdct_license" property="prdctLicense" jdbcType="VARCHAR"/>
+        <result column="quot_method_type" property="quotMethodType" jdbcType="VARCHAR"/>
+        <result column="quot_level_type" property="quotLevelType" jdbcType="VARCHAR"/>
+        <result column="deposit_bl" property="depositBl" jdbcType="DOUBLE"/>
+        <result column="ysbz_bds" property="ysbzBds" jdbcType="VARCHAR"/>
+        <result column="dxhy_bds" property="dxhyBds" jdbcType="VARCHAR"/>
+        <result column="hp_type" property="hpType" jdbcType="VARCHAR"/>
+        <result column="hpzjsdy_count" property="hpzjsdyCount" jdbcType="DOUBLE"/>
+        <result column="video_url" property="videoUrl" jdbcType="VARCHAR"/>
+        <result column="comm_key_word" property="commKeyWord" jdbcType="VARCHAR"/>
+        <result column="delive_time_desc" property="deliveTimeDesc" jdbcType="VARCHAR"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="sales_count" property="salesCount" jdbcType="INTEGER"/>
+        <result column="freight_formwork_id" property="freightFormworkId" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <result column="comm_pub_type" property="commPubType" jdbcType="VARCHAR" />
+        <result column="origin_place_type" property="originPlaceType" jdbcType="VARCHAR" />
+        <result column="abroad_id" property="abroadId" jdbcType="BIGINT" />
+        <result column="supply_mode_type" property="supplyModeType" jdbcType="VARCHAR" />
+        <result column="delivery_time_type" property="deliveryTimeType" jdbcType="VARCHAR" />
+        <result column="advance_sale_start_date" property="advanceSaleStartDate" jdbcType="TIMESTAMP" />
+        <result column="advance_sale_end_date" property="advanceSaleEndDate" jdbcType="TIMESTAMP" />
+        <result column="advance_sale_text" property="advanceSaleText" jdbcType="VARCHAR" />
+        <result column="advance_sale_time_type" property="advanceSaleTimeType" jdbcType="VARCHAR" />
+        <result column="list_validity_type" property="listValidityType" jdbcType="VARCHAR" />
+        <result column="list_validity" property="listValidity" jdbcType="TIMESTAMP" />
+        <result column="list_count" property="listCount" jdbcType="DOUBLE" />
+        <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+        <result column="recommend_name_expre" property="recommendNameExpre" jdbcType="VARCHAR" />
+        <result column="recommend_count_expre" property="recommendCountExpre" jdbcType="VARCHAR" />
+        <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR" />
+        <result column="logistics_ser_type" property="logisticsSerType" jdbcType="VARCHAR" />
+        <result column="stock_place_prov" property="stockPlaceProv" jdbcType="VARCHAR" />
+        <result column="stock_place_city" property="stockPlaceCity" jdbcType="VARCHAR" />
+        <result column="stock_place_cou" property="stockPlaceCou" jdbcType="VARCHAR" />
+        <result column="stock_place_address" property="stockPlaceAddress" jdbcType="VARCHAR" />
+        <result column="sfzcmjzt_type" property="sfzcmjztType" jdbcType="VARCHAR" />
+        <result column="freight_formwork_type" property="freightFormworkType" jdbcType="VARCHAR" />
+        <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    </resultMap>
+    <resultMap id="ResultMapWithBLOBs" type="com.wisea.cultivar.common.entity.tp.CommPubInfo" extends="BaseResultMap">
+        <result column="comm_desc" property="commDesc" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <resultMap id="ListResultMap" type="com.wisea.cultivar.common.vo.tp.CommPubInfoListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR"/>
+        <result column="comm_name" property="commName" jdbcType="VARCHAR"/>
+        <result column="comm_art_num" property="commArtNum" jdbcType="VARCHAR"/>
+        <result column="agent_state_type" property="agentStateType" jdbcType="VARCHAR"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+        <result column="meas_unit_name" property="measUnitName" jdbcType="BIGINT"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="comm_pub_type" property="commPubType" jdbcType="VARCHAR" />
+        <result column="sales_count" property="salesCount" jdbcType="INTEGER"/>
+        <result column="whole_price_section" property="wholePriceSection" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price_section" property="agentWholePriceSection" jdbcType="VARCHAR"/>
+        <result column="list_validity_type" property="listValidityType" jdbcType="VARCHAR" />
+        <result column="list_validity" property="listValidity" jdbcType="TIMESTAMP" />
+        <result column="list_count" property="listCount" jdbcType="DOUBLE" />
+        <result column="supply_mode_type" property="supplyModeType" jdbcType="VARCHAR" />
+        <collection property="commPicture" ofType="com.wisea.cultivar.common.vo.tp.CommPictureListVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="CommPubInfoGetResult" type="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_num" property="commNum" jdbcType="VARCHAR"/>
+        <result column="comm_name" property="commName" jdbcType="VARCHAR"/>
+        <result column="brand_id" property="brandId" jdbcType="BIGINT"/>
+        <result column="brandName" property="brandName" jdbcType="VARCHAR"/>
+        <result column="agent_state_type" property="agentStateType" jdbcType="VARCHAR"/>
+        <result column="comm_spec" property="commSpec" jdbcType="DOUBLE"/>
+        <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT"/>
+        <result column="measUnitName" property="measUnitName" jdbcType="VARCHAR"/>
+        <result column="pack_desc" property="packDesc" jdbcType="VARCHAR"/>
+        <result column="stock" property="stock" jdbcType="INTEGER"/>
+        <result column="time_of_warr" property="timeOfWarr" jdbcType="VARCHAR"/>
+        <result column="start_ord_count" property="startOrdCount" jdbcType="INTEGER"/>
+        <result column="whole_price" property="wholePrice" jdbcType="VARCHAR"/>
+        <result column="whole_price_section" property="wholePriceSection" jdbcType="VARCHAR"/>
+        <result column="original_price" property="originalPrice" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price" property="agentWholePrice" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price_section" property="agentWholePriceSection" jdbcType="VARCHAR"/>
+        <result column="agentWholeSection" property="agentWholeSection" jdbcType="VARCHAR"/>
+        <result column="agentWholePriceMode" property="agentWholePriceMode" jdbcType="VARCHAR"/>
+        <result column="agentWholePricePfMode" property="agentWholePricePfMode" jdbcType="VARCHAR"/>
+        <result column="comm_art_num" property="commArtNum" jdbcType="VARCHAR"/>
+        <result column="comm_local_prov" property="commLocalProv" jdbcType="VARCHAR"/>
+        <result column="comm_local_city" property="commLocalCity" jdbcType="VARCHAR"/>
+        <result column="comm_local_cou" property="commLocalCou" jdbcType="VARCHAR"/>
+        <result column="manufacturer_id" property="manufacturerId" jdbcType="BIGINT"/>
+        <result column="manuFacturerName" property="manuFacturerName" jdbcType="VARCHAR"/>
+        <result column="prdct_date" property="prdctDate" jdbcType="TIMESTAMP"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="prdct_batch" property="prdctBatch" jdbcType="VARCHAR"/>
+        <result column="prdct_license" property="prdctLicense" jdbcType="VARCHAR"/>
+        <result column="video_url" property="videoUrl" jdbcType="VARCHAR"/>
+        <result column="comm_key_word" property="commKeyWord" jdbcType="VARCHAR"/>
+        <result column="delive_time_desc" property="deliveTimeDesc" jdbcType="VARCHAR"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="sales_count" property="salesCount" jdbcType="INTEGER"/>
+        <result column="freight_formwork_id" property="freightFormworkId" jdbcType="BIGINT"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+        <result column="createDate" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="comm_pub_type" property="commPubType" jdbcType="VARCHAR" />
+        <result column="origin_place_type" property="originPlaceType" jdbcType="VARCHAR" />
+        <result column="abroad_id" property="abroadId" jdbcType="BIGINT" />
+        <result column="logistics_ser_type" property="logisticsSerType" jdbcType="VARCHAR" />
+        <result column="list_validity_type" property="listValidityType" jdbcType="VARCHAR" />
+        <result column="list_validity" property="listValidity" jdbcType="TIMESTAMP" />
+        <result column="list_count" property="listCount" jdbcType="DOUBLE" />
+        <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+        <result column="quot_method_type" property="quotMethodType" jdbcType="VARCHAR"/>
+        <result column="quot_level_type" property="quotLevelType" jdbcType="VARCHAR"/>
+        <result column="deposit_bl" property="depositBl" jdbcType="DOUBLE"/>
+        <result column="ysbz_bds" property="ysbzBds" jdbcType="VARCHAR"/>
+        <result column="dxhy_bds" property="dxhyBds" jdbcType="VARCHAR"/>
+        <result column="hp_type" property="hpType" jdbcType="VARCHAR"/>
+        <result column="hpzjsdy_count" property="hpzjsdyCount" jdbcType="DOUBLE"/>
+        <result column="supply_mode_type" property="supplyModeType" jdbcType="VARCHAR" />
+        <result column="delivery_time_type" property="deliveryTimeType" jdbcType="VARCHAR" />
+        <result column="advance_sale_start_date" property="advanceSaleStartDate" jdbcType="TIMESTAMP" />
+        <result column="advance_sale_end_date" property="advanceSaleEndDate" jdbcType="TIMESTAMP" />
+        <result column="advance_sale_text" property="advanceSaleText" jdbcType="VARCHAR" />
+        <result column="advance_sale_time_type" property="advanceSaleTimeType" jdbcType="VARCHAR" />
+        <result column="recommend_name_expre" property="recommendNameExpre" jdbcType="VARCHAR" />
+        <result column="recommend_count_expre" property="recommendCountExpre" jdbcType="VARCHAR" />
+        <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR" />
+        <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+        <result column="sfzcmjzt_type" property="sfzcmjztType" jdbcType="VARCHAR" />
+        <result column="freight_formwork_type" property="freightFormworkType" jdbcType="VARCHAR" />
+        <result column="stock_place_prov" property="stockPlaceProv" jdbcType="VARCHAR" />
+        <result column="stock_place_city" property="stockPlaceCity" jdbcType="VARCHAR" />
+        <result column="stock_place_cou" property="stockPlaceCou" jdbcType="VARCHAR" />
+        <result column="shop_info_mage_id" property="shopInfoMageId" jdbcType="BIGINT" />
+        <association property="membInfo" javaType="com.wisea.cultivar.common.vo.tp.MembInfoGetVo">
+            <result column="memb_name" property="userName" jdbcType="VARCHAR"/>
+            <result column="shop_name" property="petName" jdbcType="VARCHAR"/>
+            <result column="bd_tel" property="registTel" jdbcType="VARCHAR"/>
+            <result column="contacts" property="contactsName" jdbcType="VARCHAR"/>
+            <result column="contacts_email" property="contactsEmail" jdbcType="VARCHAR"/>
+            <result column="regist_address_prov" property="registAddressProv" jdbcType="VARCHAR"/>
+            <result column="regist_address_city" property="registAddressCity" jdbcType="VARCHAR"/>
+            <result column="regist_address_cou" property="registAddressCou" jdbcType="VARCHAR"/>
+        </association>
+        <association property="collFolderListVo" javaType="com.wisea.cultivar.common.vo.tp.CollFolderListVo">
+            <result column="collfolderId" property="id" jdbcType="BIGINT"/>
+        </association>
+        <collection property="commLevelPrice" ofType="com.wisea.cultivar.common.vo.tp.product.CommLevelPriceVo">
+            <result column="level" property="level" jdbcType="VARCHAR" />
+            <result column="spec" property="spec" jdbcType="DOUBLE" />
+            <result column="price" property="price" jdbcType="DOUBLE" />
+            <result column="content" property="content" jdbcType="VARCHAR" />
+            <result column="lsqStartCount" property="startOrdCount" jdbcType="INTEGER" />
+            <result column="lsqAvaiCount" property="avaiSupplyCount" jdbcType="DOUBLE" />
+        </collection>
+        <collection property="commPicture" ofType="com.wisea.cultivar.common.vo.tp.CommPictureListVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+        </collection>
+        <collection property="commAttri" ofType="com.wisea.cultivar.common.vo.tp.CommAttriGetVo">
+            <result column="commAttriId" property="commAttriId" jdbcType="BIGINT"/>
+            <result column="commAttriColumn" property="commAttriColumn" jdbcType="VARCHAR"/>
+            <result column="commAttriName" property="commAttriName" jdbcType="VARCHAR"/>
+            <result column="commAttriType" property="commAttriType" jdbcType="VARCHAR"/>
+            <result column="commAttriVal" property="commAttriVal" jdbcType="VARCHAR"/>
+            <result column="ifRequ" property="ifRequ" jdbcType="CHAR"/>
+            <result column="commAttriSort" property="sort" jdbcType="CHAR"/>
+            <result column="length" property="length" jdbcType="INTEGER"/>
+            <result column="dictVal" property="dictVal" jdbcType="VARCHAR"/>
+        </collection>
+        <collection property="commSampRela" ofType="com.wisea.cultivar.common.vo.tp.CommSampRelaGetVo">
+            <result column="label_rela_type" property="relaType" jdbcType="VARCHAR"/>
+            <result column="samp_id" property="sampId" jdbcType="BIGINT"/>
+        </collection>
+        <collection property="labelLitInfoGetVoList" ofType="com.wisea.cultivar.common.vo.tp.LabelLitInfoGetVo">
+            <result column="memb_label_id" property="membLabelId" jdbcType="BIGINT"/>
+            <result column="label_rela_type" property="labelRelaType" jdbcType="BIGINT"/>
+        </collection>
+    </resultMap>
+    <resultMap id="CommPubInfoGetResultBLOBs" type="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo"
+               extends="CommPubInfoGetResult">
+        <result column="comm_desc" property="commDesc" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CommInfoListFromImportBill" type="com.wisea.cultivar.common.vo.tp.trade.BuyerImportBillCommInfoListVo">
+        <id column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <collection property="importBillCommMsgList"
+                    ofType="com.wisea.cultivar.common.vo.tp.trade.BuyerImportBillCommMsgListVo">
+            <id column="importBillCommMsgList.importBillId" property="importBillId" jdbcType="VARCHAR"/>
+            <result column="inportCommSpec" property="inportCommSpec" jdbcType="INTEGER"/>
+            <result column="comm_level_type" property="commLevelType" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.id" property="id" jdbcType="BIGINT"/>
+            <result column="importBillCommMsgList.comm_name" property="commName" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.comm_spec" property="commSpec" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.whole_price" property="wholePrice" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.agent_whole_price" property="agentWholePrice" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.count" property="count" jdbcType="INTEGER"/>
+            <result column="importBillCommMsgList.stock" property="stock" jdbcType="INTEGER"/>
+            <result column="importBillCommMsgList.comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.meas_unit_name" property="measUnitName" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.start_ord_count" property="startOrdCount" jdbcType="INTEGER"/>
+            <result column="importBillCommMsgList.agent_state_type" property="agentStateType" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.sfzcmjzt_type" property="sfzcmjztType" jdbcType="VARCHAR"/>
+            <result column="importBillCommMsgList.logistics_ser_type" property="logisticsSerType" jdbcType="VARCHAR"/>
+            <result column="freight_formwork_type" property="freightFormworkType" jdbcType="VARCHAR"/>
+            <result column="freight_formwork_id" property="freightFormworkId" jdbcType="BIGINT"/>
+            <result column="pay_method_type" property="payMethodType" jdbcType="VARCHAR"/>
+            <result column="quot_method_type" property="quotMethodType" jdbcType="VARCHAR"/>
+            <result column="deposit_bl" property="depositBl" jdbcType="DOUBLE"/>
+            <result column="hp_type" property="hpType" jdbcType="VARCHAR"/>
+            <result column="hpzjsdy_count" property="hpzjsdyCount" jdbcType="DOUBLE"/>
+            <result column="price" property="price" jdbcType="DOUBLE"/>
+            <result column="ysbz_bds" property="ysbzBds" jdbcType="VARCHAR"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="CommPubInfoGetResultNew" type="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_id" property="commId" jdbcType="BIGINT"/>
+        <result column="comm_name" property="commName" jdbcType="VARCHAR"/>
+        <result column="measUnitName" property="measUnitName" jdbcType="VARCHAR"/>
+        <result column="sales_count" property="salesCount" jdbcType="INTEGER"/>
+        <result column="whole_price_section" property="wholePriceSection" jdbcType="VARCHAR"/>
+        <result column="agent_whole_price_section" property="agentWholePriceSection" jdbcType="VARCHAR"/>
+        <collection property="commPicture" ofType="com.wisea.cultivar.common.vo.tp.CommPictureListVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <resultMap id="CommPubResultNew" type="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo"
+               extends="CommPubInfoGetResultNew">
+        <result column="comm_spec" property="commDesc" jdbcType="LONGVARCHAR"/>
+    </resultMap>
+
+    <resultMap id="CommPubList" type="com.wisea.cultivar.common.vo.tp.CommDataListVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="commId" property="commId" jdbcType="BIGINT"/>
+        <result column="commName" property="commName" jdbcType="VARCHAR"/>
+        <result column="wholePrice" property="wholePrice" jdbcType="VARCHAR"/>
+        <result column="originalPrice" property="originalPrice" jdbcType="VARCHAR"/>
+        <result column="measUnitName" property="measUnitName" jdbcType="VARCHAR"/>
+        <result column="whole_price_section" property="wholePriceSection" jdbcType="VARCHAR"/>
+        <collection property="commPicture" ofType="com.wisea.cultivar.common.vo.tp.CommPictureListVo">
+            <result column="url" property="url" jdbcType="VARCHAR"/>
+            <result column="sort" property="sort" jdbcType="INTEGER"/>
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, memb_id, comm_id, comm_variet_id, comm_pub_type, comm_num,
+    comm_name, comm_key_word, comm_art_num, brand_id, origin_place_type, abroad_id, comm_local_prov,
+    comm_local_city, comm_local_cou, time_of_warr, supply_mode_type, delivery_time_type,
+    advance_sale_start_date, advance_sale_end_date, advance_sale_text, advance_sale_time_type,
+    list_validity_type, list_validity, meas_unit_id, comm_spec, list_count, avai_supply_count,start_ord_count,
+    original_price, whole_price_section, recommend_name_expre, recommend_count_expre,
+    pack_desc, pay_method_type, logistics_ser_type, stock, stock_place_prov, stock_place_city,
+    stock_place_cou, stock_place_address, video_url, sales_count, comm_state_type, sfzcmjzt_type,
+    freight_formwork_type, freight_formwork_id, create_by, create_date, update_by, update_date,
+    remarks, del_flag, original_agent_price, agent_state_type, agent_whole_price, agent_whole_price_section,
+    agent_whole_price_mode, agent_whole_price_pf_mode, manufacturer_id, prdct_date, prdct_batch,
+    prdct_license,quot_method_type,deposit_bl,ysbz_bds,dxhy_bds,hp_type,hpzjsdy_count, whole_price, delive_time_desc
+  </sql>
+    <sql id="Blob_Column_List">
+    comm_desc
+  </sql>
+  <!-- 查询推荐企业列表   -->
+    <select id="recommendSeller" parameterType="com.wisea.cultivar.common.po.product.RecommendSellerPo" resultType="com.wisea.cultivar.common.vo.product.CommPubInfoVo">
+        select *
+        FROM
+        (
+        SELECT
+        edi.comp_name AS 'membName',
+        count(cpi.id) AS 'commPubCount',
+        sum(cpi.sales_count) AS 'salesCount',
+        cpi.comm_name AS 'commName',
+        cpi.id AS 'commPubInfoId'
+        FROM  comm_pub_info cpi
+        LEFT JOIN memb_info mi ON mi.id = cpi.memb_id
+        LEFT JOIN entp_data_info edi ON edi.memb_id = cpi.memb_id
+        AND edi.del_flag = '0'
+        AND edi.auth_exam_state = '1'
+        WHERE
+        cpi.del_flag = '0' AND cpi.comm_state_type = '0'
+        <if test="commFloorId != null and commFloorId.size != 0">
+            AND cpi.comm_id in
+            <foreach collection="commFloorId" item="id" open="(" close=")" separator=",">
+                ${id}
+            </foreach>
+        </if>
+        <if test="commVaritFloorId != null and commVaritFloorId.size != 0">
+            or cpi.comm_variet_id in
+            <foreach collection="commVaritFloorId" item="id" open="(" close=")" separator=",">
+                ${id}
+            </foreach>
+        </if>
+        GROUP BY cpi.memb_id)a
+        ORDER BY a.salesCount DESC,a.commPubCount DESC
+    </select>
+  <!-- 查询发布商品表中的所有上架状态的商品   -->
+    <select id="findCommPubIdEditEsSearch" parameterType="com.wisea.cultivar.common.po.tp.CommPubIdEditEsSearchPo" resultMap="BaseResultMap">
+        SELECT
+          id
+        FROM
+        comm_pub_info cpi
+        WHERE cpi.del_flag = '0' and cpi.comm_state_type = #{commState}
+    </select>
+  <!-- 查询 大宗商品 根据品类id 如果不存在,默认显示前5条根据发布时间   -->
+    <select id="commPubList" parameterType="com.wisea.cultivar.common.po.tp.CommDataListPo"
+            resultMap="CommPubList">
+        SELECT
+        t1.id AS id,#商品ID
+        t1.comm_num AS commNum,#商品编号
+        t1.comm_art_num AS commArtNum,#商品货号
+        t1.comm_name AS commName,#商品名称
+        t2.brand_name AS brandName,#品牌名称
+        t5.comp_name AS sellerName,#商家企业名称
+        t3.meas_unit_name AS measUnitName,#计量单位
+        t1.whole_price AS wholePrice, #结算价表达式
+        t1.original_price AS originalPrice, #原始商品结算价表达式
+        t1.whole_price_section AS platformWholePriceSection,#平台结算价区间
+        t1.agent_whole_price_section AS platformAgentWholePriceSection,#平台代理结算价区间
+        t1.comm_state_type AS commStateType, #商品状态
+        t1.agent_state_type AS agentStateType, #代理状态
+        t1.original_price AS originalPrice, #商品原始结算价
+        t1.original_agent_price AS originalAgentPrice, #商品原始代理结算价
+        t1.comm_pub_type AS commPubType, # 挂牌方式
+        t1.supply_mode_type AS supplyModeType, # 供货方式
+        t1.comm_id AS commId, # 商品分类
+        cp.sort AS sort,
+        cp.url as url,
+        IFNULL(t1.update_date,t1.create_date) AS updateDate # 更新时间
+        FROM
+        comm_pub_info AS t1
+        LEFT JOIN comm_picture cp ON cp.comm_id = t1.id AND cp.del_flag= '0'
+        LEFT JOIN brand_mage AS t2 ON t2.id = t1.brand_id
+        LEFT JOIN meas_unit_mage AS t3 ON t3.id = t1.meas_unit_id
+        LEFT JOIN memb_info AS t4 ON t1.memb_id = t4.id
+        LEFT JOIN entp_data_info AS t5 ON t5.memb_id = t4.id
+        WHERE t1.del_flag != '1' and t1.comm_state_type = '0' AND t4.del_flag != '1' AND t5.del_flag != '1'
+        <if test="commId != null and commId != '' ">
+            AND t1.comm_id = #{commId}
+        </if>
+        <if test="commPubType != null and commPubType != '' ">
+            AND t1.comm_pub_type = #{commPubType}
+        </if>
+        ORDER BY t1.create_date DESC
+    </select>
+  <!--  查询地图显示数据  -->
+    <select id="availableSupplyListMap" resultType="com.wisea.cultivar.common.vo.tp.product.SupplyListMapVo" parameterType="com.wisea.cultivar.common.po.tp.product.AvailableQuantityPo">
+        SELECT cpi.memb_id as 'membId',ROUND(sum(cpi.avai_supply_count),0) AS 'value',edi.regist_address_prov AS 'cityCode'
+        FROM
+        comm_pub_info cpi
+        INNER JOIN entp_data_info edi ON cpi.memb_id = edi.memb_id
+        WHERE
+        cpi.del_Flag = '0'
+        AND cpi.comm_state_type = '0'
+        <if test="commId != null and commId != ''">
+            AND cpi.comm_id = #{commId}
+        </if>
+        <if test="commVarietId != null and commVarietId != ''">
+            AND cpi.comm_variet_id = #{commVarietId}
+        </if>
+        <if test="endTime != null">
+            AND cpi.advance_sale_start_date &lt;= #{startTime}
+        </if>
+        GROUP BY cpi.memb_id
+    </select>
+  <!-- 查询商家可供货数和有几个商家供货-->
+    <select id="availableSupplySum" parameterType="com.wisea.cultivar.common.po.tp.product.AvailableSupplyPo" resultType="com.wisea.cultivar.common.vo.tp.product.AvailableSupplyVo">
+        SELECT COUNT(memb_id) as 'avaiSupplyCountMemb',ROUND(SUM(supply),0) 'avaiSupplyCount',sum(commCount) 'releCommCount'
+        FROM
+        (SELECT cpi.memb_id,COUNT(cpi.memb_id) AS 'commCount',sum(COALESCE(cpi.avai_supply_count,0) + COALESCE(t2.decs,0)) AS 'supply'
+        FROM
+        <choose>
+            <when test="commAttriIdList != null and commAttriIdList.size > 0">
+                (
+                SELECT ca.comm_pub_id FROM comm_attri ca WHERE ca.comm_attri_id in
+                <foreach collection="commAttriIdList" item ="idl" open="(" close=")" separator=",">
+                    #{idl}
+                </foreach>
+                AND ca.comm_attri_val in
+                <foreach collection="commAttriValList" item ="val" open="(" close=")" separator=",">
+                    #{val}
+                </foreach>
+                GROUP BY ca.comm_pub_id
+                HAVING count(ca.comm_attri_id) = #{countNum}
+                AND count(ca.comm_attri_val) = #{countNum}
+                )tab1 INNER JOIN comm_pub_info cpi ON cpi.id = tab1.comm_pub_id
+            </when>
+            <otherwise>
+                comm_pub_info cpi
+            </otherwise>
+        </choose>
+        LEFT JOIN (
+        	SELECT
+			  SUM(t1.avai_supply_count*t1.spec / 1000) decs,
+			  t1.comm_pub_id
+			FROM level_spec_quote t1
+			  LEFT JOIN comm_pub_info t2 ON t2.id = t1.comm_pub_id
+			WHERE 1=1
+			GROUP BY t1.comm_pub_id) t2 ON t2.comm_pub_id = cpi.id
+        WHERE
+        cpi.del_Flag = '0'
+        AND cpi.comm_state_type = '0'
+        <if test="registAddressCity != null and registAddressCity != ''">
+            AND cpi.stock_place_city= #{registAddressCity}
+        </if>
+        <if test="registAddressProv != null and registAddressProv != ''">
+            AND cpi.stock_place_prov = #{registAddressProv}
+        </if>
+        <if test="commId != null and commId != ''">
+            AND cpi.comm_id = #{commId}
+        </if>
+        <if test="commPubName != null and commPubName != ''">
+            AND (
+            cpi.comm_name like CONCAT('%',#{commPubName},'%')
+            or FIND_IN_SET(#{commPubName},cpi.comm_key_word)
+            )
+        </if>
+        <if test="commVarietId != null and commVarietId != ''">
+            AND cpi.comm_variet_id = #{commVarietId}
+        </if>
+        <if test="brandId != null and brandId != ''">
+            AND cpi.brand_id = #{brandId}
+        </if>
+        <if test="commPubType != null and commPubType != ''">
+            AND cpi.comm_pub_type = #{commPubType}
+        </if>
+        <if test="supplyModeType != null and supplyModeType != ''">
+            AND cpi.supply_mode_type = #{supplyModeType}
+        </if>
+        <if test="remarks != null and remarks != ''">
+            AND cpi.remarks = #{remarks}
+        </if>
+        <if test="endTime != null">
+            AND cpi.advance_sale_start_date &lt;= #{startTime}
+        </if>
+        <if test="membId != null and membId != ''">
+            AND (cpi.dxhy_bds = ''
+            or FIND_IN_SET(#{membId},cpi.dxhy_bds) and cpi.del_Flag = '0' AND cpi.comm_state_type = '0')
+        </if>
+        <if test="viewMembId != null and viewMembId != ''">
+            AND FIND_IN_SET(#{viewMembId},cpi.dxhy_bds)
+        </if>
+        <if test="notDxhyBds != null and notDxhyBds != ''">
+            AND cpi.dxhy_bds = ''
+        </if>
+        GROUP BY cpi.memb_id)a
+    </select>
+  <!-- 查询品类数 -->
+    <select id="availableQuantity" parameterType="com.wisea.cultivar.common.po.tp.product.AvailableQuantityPo" resultType="com.wisea.cultivar.common.vo.tp.product.AvailableQuantityVo">
+        SELECT COUNT(comm_variet_id) as quantityCount
+        FROM
+            (SELECT comm_variet_id,COUNT(*) AS 'num'
+             FROM comm_pub_info
+             WHERE
+             del_Flag = '0'
+             AND comm_state_type = '0'
+            <if test="commId != null and commId != ''">
+                AND comm_id = #{commId}
+            </if>
+            <if test="commVarietId != null and commVarietId != ''">
+                AND comm_variet_id = #{commVarietId}
+            </if>
+            <if test="endTime != null">
+                AND cpi.advance_sale_start_date &lt;= #{startTime}
+            </if>
+             GROUP BY comm_variet_id)a
+    </select>
+  <!-- 根据发布商品ID查询对应品类ID -->
+  <select id="getCommIdMap" parameterType="java.util.List" resultType="java.util.Map">
+    select
+      cpi.id,
+      cpi.comm_id
+    from
+      comm_pub_info cpi
+    where
+      cpi.id in
+      <foreach collection="list" item="id" separator="," open="(" close=")">
+        #{id}
+      </foreach>
+  </select>
+
+    <!-- 查询超过有效期的发布商品 -->
+    <select id="findListOverTime" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" resultMap="BaseResultMap">
+      SELECT
+        <include refid="Base_Column_List"/>
+      from
+        comm_pub_info cpi
+        WHERE
+        cpi.list_validity <![CDATA[ < ]]> NOW()
+        AND cpi.list_validity_type = '1'
+        AND cpi.comm_state_type = '0'
+        AND cpi.del_flag = '0'
+    </select>
+    <!-- 查询成交量信息 -->
+    <select id="getVolume" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" resultType="java.lang.Integer">
+    SELECT
+        sum(ocr.count)
+    FROM comm_pub_info cpi
+    LEFT JOIN ord_comm_rela ocr ON ocr.comm_pub_id = cpi.id
+    LEFT JOIN order_info oi ON oi.id = ocr.ord_id
+    WHERE
+    cpi.del_flag = '0'
+    AND cpi.id = #{id,jdbcType=BIGINT}
+    AND ocr.create_date <![CDATA[ >= ]]> #{createDate}
+    AND oi.pay_channel is not null
+    </select>
+
+    <!-- 查询累计成交量信息 -->
+    <select id="getVolumeCount" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" resultType="java.lang.Integer">
+    SELECT
+        sum(ocr.count)
+    FROM comm_pub_info cpi
+    LEFT JOIN ord_comm_rela ocr ON ocr.comm_pub_id = cpi.id
+    LEFT JOIN order_info oi ON oi.id = ocr.ord_id
+    WHERE
+    cpi.del_flag = '0'
+    AND cpi.id = #{id,jdbcType=BIGINT}
+    AND oi.pay_channel is not null
+    </select>
+
+    <!-- 查询商品列表,根据行政code -->
+    <select id="selectCommPubByArea" resultMap="CommPubResultNew"
+            parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        SELECT
+        cpi.id,
+        cpi.comm_name,
+        cpi.sales_count,
+        cpi.whole_price_section,
+        cp.url,
+        cpi.id,
+        cpi.stock,
+        cp.url,
+        mum.meas_unit_name AS 'measUnitName'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.sort = '0'
+        LEFT JOIN meas_unit_mage mum ON mum.id = cpi.meas_unit_id
+        WHERE cpi.del_flag = '0' AND cpi.comm_state_type = '0'
+        <if test="commLocalProv != null and commLocalProv != ''">
+            AND cpi.comm_local_prov = #{commLocalProv}
+        </if>
+        <if test="commLocalCity != null and commLocalCity != ''">
+            AND cpi.comm_local_city = #{commLocalCity}
+        </if>
+        <if test="commLocalCou != null and commLocalCou != ''">
+            AND cpi.comm_local_cou = #{commLocalCou}
+        </if>
+        ORDER BY cpi.sales_count DESC
+    </select>
+
+    <!-- 查询山系,茶龄列表信息 -->
+    <select id="selectCommPubInfoList" resultMap="CommPubResultNew"
+            parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        SELECT
+        cpi.id,
+        cpi.comm_name,
+        cpi.sales_count,
+        cpi.whole_price_section,
+        cp.url,
+        cpi.id,
+        cpi.stock,
+        cp.url,
+        mum.meas_unit_name AS 'measUnitName'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_attri ca ON cpi.id = ca.comm_pub_id
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.sort = '0'
+        LEFT JOIN meas_unit_mage mum ON mum.id = cpi.meas_unit_id
+        WHERE ca.del_flag ='0' AND cpi.del_flag = '0' AND cpi.comm_state_type = '0'
+        <if test="commAttriName != null and commAttriName != ''">
+            AND ca.comm_attri_name = #{commAttriName}
+        </if>
+        <if test="commAttriVal != null and commAttriVal != ''">
+            AND ca.comm_attri_val = #{commAttriVal}
+        </if>
+        <if test="membId != null and membId != ''">
+            AND cpi.memb_id = #{membId}
+        </if>
+        ORDER BY cpi.sales_count DESC
+    </select>
+
+    <!-- 查询山系,茶龄列表信息 agent -->
+    <select id="selectCommPubInfoListAgent" resultMap="CommPubResultNew"
+            parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        SELECT
+        cpi.id,
+        cpi.comm_name,
+        cpi.sales_count,
+        cp.url,
+        cpi.id,
+        cpi.stock,
+        (case cpi.agent_state_type
+        WHEN '2' THEN cpi.whole_price_section
+        WHEN '1' THEN IFNULL(cpi.agent_whole_price_section,cpi.whole_price_section)
+        WHEN '0' THEN cpi.whole_price_section
+        ELSE cpi.whole_price_section
+        END) AS whole_price_section,
+        cp.url,
+        mum.meas_unit_name AS 'measUnitName'
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN comm_attri ca ON cpi.id = ca.comm_pub_id
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.sort = '0'
+        LEFT JOIN meas_unit_mage mum ON mum.id = cpi.meas_unit_id
+        WHERE ca.del_flag ='0' AND cpi.del_flag = '0' AND cpi.comm_state_type = '0'
+        <if test="commAttriName != null and commAttriName != ''">
+            AND ca.comm_attri_name = #{commAttriName}
+        </if>
+        <if test="commAttriVal != null and commAttriVal != ''">
+            AND ca.comm_attri_val = #{commAttriVal}
+        </if>
+        <if test="membId != null and membId != ''">
+            AND cpi.memb_id = #{membId}
+        </if>
+        ORDER BY cpi.sales_count DESC
+    </select>
+    <!-- 查询新品 -->
+    <select id="newProductList" resultMap="CommPubResultNew" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        select
+          cpi.id,cpi.memb_id,cpi.whole_price_section,cpi.comm_name,mum.meas_unit_name AS 'measUnitName',cp.url,cp.sort,cpi.sales_count
+        from comm_pub_info cpi
+        LEFT JOIN meas_unit_mage mum ON  mum.id = cpi.meas_unit_id
+         LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.sort = '0' AND cp.del_flag= '0'
+        where cpi.del_flag = '0'
+        AND cpi.comm_state_type = '0'
+        <if test="membId != null and membId != ''">
+            AND cpi.memb_id = #{membId}
+        </if>
+        ORDER by cpi.create_date DESC
+    </select>
+    <!-- 查询新品代理价 -->
+    <select id="newProductListAgent" resultMap="CommPubResultNew"
+            parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        select
+        cpi.id,
+        cpi.memb_id,
+        (case cpi.agent_state_type
+          WHEN '2' THEN cpi.whole_price_section
+          WHEN '1' THEN IFNULL(cpi.agent_whole_price_section,cpi.whole_price_section)
+          WHEN '0' THEN cpi.whole_price_section
+          ELSE cpi.whole_price_section
+          END) AS whole_price_section,
+        cpi.comm_name,mum.meas_unit_name AS 'measUnitName',cp.url,cp.sort,cpi.sales_count
+        from comm_pub_info cpi
+        LEFT JOIN meas_unit_mage mum ON  mum.id = cpi.meas_unit_id
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.sort = '0' AND cp.del_flag= '0'
+        where cpi.del_flag = '0'
+        AND cpi.comm_state_type = '0'
+        ORDER by cpi.create_date DESC
+    </select>
+    <!-- 查询热销商品信息 -->
+    <select id="findHotSelList" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" resultMap="BaseResultMap">
+      SELECT
+      T1.id,
+      T1.memb_id,
+      T1.comm_id,
+      T1.comm_name,
+      T1.comm_key_word,
+      T1.whole_price_section,
+      cp.url AS 'video_url',
+      mum.meas_unit_name,
+      T1.sales_count
+	FROM comm_pub_info T1
+    LEFT JOIN meas_unit_mage mum ON mum.id = T1.meas_unit_id and mum.effe_inval_state = '0'
+	LEFT JOIN comm_picture cp ON cp.comm_id = T1.id AND cp.sort = '0' AND cp.del_flag= '0'
+	WHERE T1.del_flag = '0' AND T1.comm_state_type = '0'
+    <if test="membId != null and membId != ''">
+        AND T1.memb_id = #{membId}
+    </if>
+    <if test="commId != null and commId != ''">
+        AND T1.comm_id = #{commId}
+    </if>
+    <if test="commIds != null and commIds.size != 0">
+        AND T1.comm_id in
+        <foreach collection="commIds" item="id" open="(" close=")" separator=",">
+            ${id}
+        </foreach>
+    </if>
+    ORDER BY T1.sales_count DESC ,T1.create_date DESC
+    </select>
+    <!-- 查询热销商品代理价信息 -->
+    <select id="findHotSelListAgent" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" resultMap="BaseResultMap">
+        SELECT
+        T1.id,
+        T1.memb_id,
+        T1.comm_name,
+        (case T1.agent_state_type
+          WHEN '2' THEN T1.whole_price_section
+          WHEN '1' THEN IFNULL(T1.agent_whole_price_section,T1.whole_price_section)
+          WHEN '0' THEN T1.whole_price_section
+          ELSE T1.whole_price_section
+          END) AS whole_price_section,
+        cp.url AS 'video_url',
+        T1.sales_count
+        FROM comm_pub_info T1
+        LEFT JOIN comm_picture cp ON cp.comm_id = T1.id AND cp.sort = '0' AND cp.del_flag= '0'
+        WHERE T1.del_flag = '0' AND T1.comm_state_type = '0' AND T1.create_date <![CDATA[ >= ]]> #{createDate}
+        ORDER BY T1.sales_count DESC
+    </select>
+    <!-- 批量更新商品库存量 -->
+    <update id="batchUpdateStock" parameterType="java.util.Map">
+        UPDATE comm_pub_info SET
+        stock = CASE id
+        <foreach collection="commCountMap" index="key" item="val" separator=" ">
+            WHEN #{key} THEN stock + #{val}
+        </foreach>
+        END,
+        avai_supply_count = CASE id
+        <foreach collection="avaiSupplyCountMap" index="key" item="val" separator=" ">
+            WHEN #{key} THEN avai_supply_count + #{val}
+        </foreach>
+        END
+        WHERE id IN
+        <foreach collection="commPubIds" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 根据发布商品状态和id来查询商品列表-->
+    <select id="findListByCommPubInfoStateType" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        comm_pub_info cpi
+        WHERE 1=1
+        <if test="stateType != null and stateType != ''">
+          and cpi.comm_state_type = #{stateType}
+        </if>
+        AND cpi.id IN (
+        <foreach collection ="ids" item="item" index= "index" separator =",">
+            #{item,jdbcType=BIGINT}
+        </foreach >
+        )
+    </select>
+
+    <!-- 根据已下架和未上架的状态和商品id 查询发布商品列表 -->
+    <select id="findCommPubInfoListStateType" parameterType="java.util.Map" resultMap="BaseResultMap">
+        SELECT
+        *
+        FROM
+        comm_pub_info cpi
+        WHERE cpi.comm_state_type = '1' OR cpi.comm_state_type = '2'
+        AND cpi.id IN (
+        <foreach collection ="ids" item="item" index= "index" separator =",">
+            #{item,jdbcType=BIGINT}
+        </foreach >
+        )
+    </select>
+
+    <!-- 批量修改商品发布状态 -->
+    <update id="updateCommPubInfoState" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        UPDATE
+        comm_pub_info cpi
+        SET
+        cpi.comm_state_type = #{commPubInfo.commStateType},
+        update_by = #{commPubInfo.updateBy},
+        update_date = #{commPubInfo.updateDate},
+        del_flag = #{commPubInfo.delFlag}
+        WHERE cpi.id IN (
+        <foreach collection ="ids" item="item" index= "index" separator =",">
+            #{item,jdbcType=BIGINT}
+        </foreach >
+        )
+    </update>
+
+    <!-- 查询商品详情预览信息 -->
+    <select id="findById" resultMap="CommPubInfoGetResultBLOBs" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        SELECT
+          cpi.id,cpi.memb_id,bm.id AS 'brand_id',bm.brand_name As 'brandName',cpi.comm_id,comm_name,comm_spec,cpi.meas_unit_id, mum.meas_unit_name AS 'measUnitName', pack_desc,
+          ifNull(cpi.stock,cpi.list_count) as 'stock', time_of_warr, cpi.start_ord_count, whole_price, whole_price_section, agent_whole_price,comm_num,comm_desc,original_price,
+          comm_art_num, comm_local_prov, comm_local_city, comm_local_cou,cpi.avai_supply_count,quot_method_type,deposit_bl,ysbz_bds,hp_type,hpzjsdy_count,dxhy_bds,
+          edi.comp_name AS 'memb_name',edi.regist_address_prov,edi.regist_address_city,edi.regist_address_cou,edi.bd_tel,edi.contacts,edi.contacts_email,
+          cpi.manufacturer_id,mm.manufacturer_name AS 'manuFacturerName', prdct_date, prdct_batch, prdct_license, video_url, cp.url, cp.sort, comm_key_word,
+          delive_time_desc, comm_state_type, sales_count,cpi.create_date AS 'createDate',cpi.update_date AS 'update_date',ca.comm_attri_column as 'commAttriColumn',ca.comm_attri_name as "commAttriName",
+          ca.comm_attri_type as "commAttriType", ca.comm_attri_val as "commAttriVal",ca.if_requ as 'ifRequ',ca.sort as 'commAttriSort',ca.length as 'length',ca.dict_val as 'dictVal',ca.comm_attri_id as 'commAttriId',csr.rela_type,
+          csr.samp_id as 'samp_id',csr.rela_type AS 'rela_type',lsq.level,lsq.spec,lsq.price,lsq.content,lsq.start_ord_count as 'lsqStartCount',lsq.avai_supply_count as 'lsqAvaiCount',
+          cpi.agent_whole_price_mode AS 'agentWholePriceMode',cpi.agent_whole_price_pf_mode as 'agentWholePricePfMode',cpi.comm_pub_type,cpi.origin_place_type,cpi.logistics_ser_type,cpi.list_validity_type,cpi.list_validity,cpi.supply_mode_type,cpi.delivery_time_type,cpi.advance_sale_start_date,cpi.advance_sale_end_date,
+          cpi.advance_sale_text,cpi.advance_sale_time_type,cpi.pay_method_type,cpi.recommend_name_expre,cpi.recommend_count_expre,cpi.comm_variet_id,cpi.stock_place_prov,cpi.stock_place_city,cpi.stock_place_cou,cpi.list_count,cpi.sfzcmjzt_type,cpi.freight_formwork_id,
+          (case comm_pub_type
+          WHEN '1' THEN cpi.freight_formwork_type
+          WHEN '0' THEN ''
+          END )AS freight_formwork_type,
+          cpi.abroad_id AS abroad_id,
+          sim.shop_name,
+          sim.id AS 'shop_info_mage_id',
+          lli.memb_label_id,lli.label_rela_type
+          <if test="membId != null and membId != ''">
+            ,cf.id AS 'collfolderId'
+          </if>
+        FROM  comm_pub_info cpi
+        <if test="membId != null and membId != ''">
+            LEFT JOIN coll_folder cf ON (cf.comm_pub_id = cpi.id
+            AND cf.del_flag = '0'
+            AND cf.memb_id = #{membId}
+            )
+        </if>
+        LEFT JOIN meas_unit_mage mum ON mum.id = cpi.meas_unit_id
+        LEFT JOIN memb_info mi ON mi.id = cpi.memb_id
+        LEFT JOIN entp_data_info edi ON edi.memb_id = cpi.memb_id AND edi.del_flag = '0' AND edi.auth_exam_state = '1'
+        LEFT JOIN brand_mage bm ON bm.id = cpi.brand_id
+        LEFT JOIN manufacturer_mage mm ON mm.id = cpi.manufacturer_id
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.del_flag= '0'
+        LEFT JOIN level_spec_quote lsq ON lsq.comm_pub_id = cpi.id
+        LEFT JOIN comm_attri ca ON ca.comm_pub_id = cpi.id
+        LEFT JOIN comm_samp_rela csr ON csr.comm_pub_id = cpi.id
+        LEFT JOIN label_lit_info lli ON lli.comm_pub_id = cpi.id
+        LEFT JOIN shop_info_mage sim ON sim.memb_id = cpi.memb_id
+        where cpi.id = #{id,jdbcType=BIGINT} order by cp.sort asc,ca.sort,lsq.remarks asc
+    </select>
+    <!-- 查询每一个商品状态对应的信息 -->
+    <select id="getStateCountMap" parameterType="com.wisea.cultivar.common.po.tp.CommPubInfoPagePo" resultType="java.util.Map">
+        SELECT
+        cpi.comm_state_type,
+        count(cpi.comm_state_type)
+        FROM
+        comm_pub_info cpi
+        WHERE cpi.del_flag = '0'
+        <if test="membId != null">
+            AND cpi.memb_id = #{membId}
+        </if>
+        GROUP BY cpi.comm_state_type
+    </select>
+    <sql id="commonSql">
+        SELECT
+        DISTINCT cpi.id
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN meas_unit_mage mum ON mum.id = cpi.meas_unit_id
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.del_flag= '0'
+        WHERE cpi.del_flag = '0'
+        <if test="search != null and search != ''">
+            AND (
+            cpi.comm_art_num LIKE CONCAT('%', #{search}, '%')
+            OR cpi.comm_name LIKE CONCAT('%', #{search}, '%')
+            OR cpi.comm_num LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="commStateType != null and commStateType != ''">
+            AND cpi.comm_state_type = #{commStateType}
+        </if>
+        <if test="brandId != null and brandId != ''">
+            AND cpi.brand_id = #{brandId}
+        </if>
+        <if test="membId != null and membId != ''">
+            AND cpi.memb_id = #{membId}
+        </if>
+        <if test="commPubType != null and commPubType != ''">
+            AND cpi.comm_pub_type = #{commPubType}
+        </if>
+        <if test="supplyModeType != null and supplyModeType != ''">
+            AND cpi.supply_mode_type = #{supplyModeType}
+        </if>
+        <if test="sfzcmjztType != null and sfzcmjztType != ''">
+            AND cpi.sfzcmjzt_type = #{sfzcmjztType}
+        </if>
+        <if test="payMethodType != null and payMethodType != ''">
+            AND FIND_IN_SET(#{payMethodType},cpi.pay_method_type)
+        </if>
+        <if test="commId != null and commId != ''">
+            AND cpi.comm_id = #{commId}
+        </if>
+        <if test="startDate != null">
+            AND cpi.list_validity >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND cpi.list_validity &lt;= #{endDate}
+        </if>
+        <choose>
+            <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+                ORDER BY #{pageInfo.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY cpi.comm_state_type asc,cpi.create_date DESC
+            </otherwise>
+        </choose>
+    </sql>
+    <select id="findListSubQueryCount" resultType="java.lang.String">
+        <include refid="commonSql"></include>
+    </select>
+    <!-- 查询商品列表 -->
+    <select id="findListSubQuery" resultMap="ListResultMap" parameterType="com.wisea.cultivar.common.po.tp.CommPubInfoPagePo">
+        SELECT
+        b.*
+        FROM (
+        <include refid="commonSql"></include>
+        LIMIT ${page.limit}) a,
+        (SELECT
+        DISTINCT (cpi.id),
+        cpi.memb_id, cpi.comm_id, cpi.comm_num, cpi.comm_name, cpi.brand_id, cpi.comm_spec, cpi.meas_unit_id,
+        cpi.pack_desc,cpi.comm_pub_type,cpi.supply_mode_type,cpi.list_validity_type,cpi.list_validity,
+        ifNull(cpi.stock,cpi.list_count) as 'stock', cpi.time_of_warr, cpi.start_ord_count, cpi.original_price, cpi.original_agent_price, cpi.whole_price,
+        cpi.whole_price_section, cpi.agent_state_type, cpi.agent_whole_price,cpi.list_count,
+        (case agent_state_type
+        WHEN '2' THEN ''
+        WHEN '1' THEN cpi.agent_whole_price_section
+        WHEN '0' THEN ''
+        END)AS agent_whole_price_section,
+        cpi.agent_whole_price_mode, cpi.agent_whole_price_pf_mode, cpi.comm_art_num, cpi.comm_local_prov,
+        cpi.comm_local_city, cpi.comm_local_cou, cpi.manufacturer_id, cpi.prdct_date, cpi.prdct_batch,
+        cpi.prdct_license,
+        cpi.video_url, cpi.comm_key_word, cpi.delive_time_desc, cpi.comm_state_type, cpi.sales_count,
+        cpi.freight_formwork_id,
+        cpi.create_by, cpi.create_date, cpi.update_by, cpi.update_date, cpi.remarks, cpi.del_flag,
+        mum.meas_unit_name,
+        cp.url,
+        cp.sort
+        FROM
+        comm_pub_info cpi
+        LEFT JOIN meas_unit_mage mum ON mum.id = cpi.meas_unit_id
+        LEFT JOIN comm_picture cp ON cp.comm_id = cpi.id AND cp.del_flag= '0'
+        WHERE cpi.del_flag = '0'
+        <if test="search != null and search != ''">
+            AND (
+            cpi.comm_art_num LIKE CONCAT('%', #{search}, '%')
+            OR cpi.comm_name LIKE CONCAT('%', #{search}, '%')
+            OR cpi.comm_num LIKE CONCAT('%', #{search}, '%')
+            )
+        </if>
+        <if test="commStateType != null and commStateType != ''">
+            AND cpi.comm_state_type = #{commStateType}
+        </if>
+        <if test="membId != null and membId != ''">
+            AND cpi.memb_id = #{membId}
+        </if>
+        <if test="commPubType != null and commPubType != ''">
+            AND cpi.comm_pub_type = #{commPubType}
+        </if>
+        <if test="supplyModeType != null and supplyModeType != ''">
+            AND cpi.supply_mode_type = #{supplyModeType}
+        </if>
+        <if test="sfzcmjztType != null and sfzcmjztType != ''">
+            AND cpi.sfzcmjzt_type = #{sfzcmjztType}
+        </if>
+        <if test="payMethodType != null and payMethodType != ''">
+            AND FIND_IN_SET(#{payMethodType},cpi.pay_method_type)
+        </if>
+        <if test="commId != null and commId != ''">
+            AND cpi.comm_id = #{commId}
+        </if>
+        <if test="startDate != null">
+            AND cpi.list_validity >= #{startDate}
+        </if>
+        <if test="endDate != null">
+            AND cpi.list_validity &lt;= #{endDate}
+        </if>
+        <choose>
+            <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+                ORDER BY #{pageInfo.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY cpi.comm_state_type asc,cpi.create_date DESC
+            </otherwise>
+        </choose>
+        ) b
+        where a.id = b.id
+        ORDER BY b.comm_state_type asc,b.create_date DESC
+    </select>
+
+    <!-- 根据商品编号获取商品信息 -->
+    <select id="findByCommNum" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comm_pub_info
+        where comm_num = #{id,jdbcType=VARCHAR}
+    </select>
+
+    <!-- 查询商品详细信息（扫码追溯使用） -->
+    <select id="findInfoToRetro" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.vo.tp.retro.RetroCommInfoVo" resultMap="infoToRetroResultMap">
+      select
+        cpi.id,
+        cpi.comm_name commName,
+        edi.comp_name compName,
+        max(CASE WHEN sa.`code` = cpi.comm_local_prov THEN sa.`name` END)commLocalProv,
+        max(CASE WHEN sa.`code` = cpi.comm_local_city THEN sa.`name` END)commLocalCity,
+        max(CASE WHEN sa.`code` = cpi.comm_local_cou THEN sa.`name` END)commLocalCou,
+        cpi.prdct_batch prdctBatch,
+        cpi.prdct_license prdctLicense,
+        cpi.comm_desc commDesc,
+        edi.comp_intro compIntro,
+        edi.id edi_id
+      from
+        comm_pub_info cpi
+        LEFT JOIN entp_data_info edi ON edi.memb_id = cpi.memb_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+        LEFT JOIN sys_area sa ON sa.`code` = cpi.comm_local_prov OR sa.`code` = cpi.comm_local_city OR sa.`code` = cpi.comm_local_cou
+      where
+        cpi.id = #{id,jdbcType=BIGINT}
+    </select>
+    <resultMap id="infoToRetroResultMap" type="com.wisea.cultivar.common.vo.tp.retro.RetroCommInfoVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <!-- 商品图片列表 -->
+        <collection property="commPictures" column="id" select="selectCommPictures"/>
+        <!-- 商品属性 -->
+        <collection property="commAttris" column="id" select="selectCommAttris"/>
+        <!-- 样品图片列表 -->
+        <collection property="sampPictures" column="id" select="selectSampPictures"/>
+        <!-- 商品点亮标签列表 -->
+        <collection property="labelLits" column="id" select="selectLabelLits"/>
+        <!-- 企业图片列表 -->
+        <collection property="entpPictures" column="edi_id" select="selectEntpPictures"/>
+    </resultMap>
+    <!-- 级联查询商品图片列表 -->
+    <select id="selectCommPictures" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.vo.tp.CommPictureListVo">
+      select cp.url, cp.sort from comm_picture cp where cp.comm_id = #{id} and cp.del_flag = '0' order by cp.sort
+    </select>
+    <!-- 级联查询商品属性列表 -->
+    <select id="selectCommAttris" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.CommAttriListVo">
+      select
+        ca.comm_attri_name commAttriName,
+        ca.comm_attri_column commAttriColumn,
+        ca.comm_attri_type commAttriType,
+        ca.comm_attri_val commAttriVal,
+        ca.dict_val dictVal,
+        ca.sort sort
+      from
+        comm_attri ca
+      where
+        ca.comm_pub_id = #{id}
+        and ca.del_flag = '0'
+      order by
+        ca.sort
+    </select>
+    <!-- 级联查询样品图片列表 -->
+    <select id="selectSampPictures" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.vo.tp.SampPictureListVo">
+      select
+        sp.url,
+        sp.picture_type pictureType,
+        sp.sort
+      from
+        comm_samp_rela scr
+        left join samp_picture sp on sp.samp_id = scr.samp_id
+      where
+        scr.comm_pub_id = #{id} and sp.del_flag = '0' and (sp.picture_type = '1' or sp.picture_type = '2')
+      order By sp.sort
+    </select>
+    <!-- 级联查询商品点亮标签列表 -->
+    <select id="selectLabelLits" parameterType="java.lang.Long" resultType="java.lang.String">
+      select
+        mll.alredy_act_url
+      from
+        label_lit_info lli
+        inner join memb_label_list mll on mll.id = lli.memb_label_id
+      where
+        lli.comm_pub_id = #{id}
+        and  lli.have_been_lit_flag = '0'
+      order by mll.sort
+    </select>
+    <!-- 级联查询企业图片列表 -->
+    <select id="selectEntpPictures" parameterType="java.lang.Long" resultType="java.lang.String">
+        select ep.url from entp_picture ep where ep.entp_data_id = #{id} and ep.del_flag = '0'
+    </select>
+    <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comm_pub_info
+        where id = #{id,jdbcType=BIGINT}
+        and del_flag = '0'
+    </select>
+
+  <!-- 【统计】后台商品/用户总览 -->
+  <select id="commPubMembOverview" parameterType="java.util.Map" resultType="com.wisea.cultivar.common.vo.tp.statistics.AdminCommPubMembOverviewVo">
+    SELECT
+      MAX(t_.on_shelves_count) onShelvesCount,
+      MAX(t_.out_shelves_count) outShelvesCount,
+      MAX(t_.comm_pub_count) commPubCount,
+      MAX(t_.today_add_member_count) todayAddMemberCount,
+      MAX(t_.month_add_member_count) monthAddMemberCount ,
+      MAX(t_.member_count) memberCount
+    FROM (
+      SELECT
+        SUM(CASE WHEN cpi.comm_state_type = '0' THEN 1 END) on_shelves_count,
+        SUM(CASE WHEN cpi.comm_state_type = '2' THEN 1 END) out_shelves_count,
+        COUNT(1) comm_pub_count,
+        0 today_add_member_count,
+        0 month_add_member_count,
+        0 member_count
+      FROM
+        comm_pub_info cpi
+      UNION ALL
+      SELECT
+        0 on_shelves_count,
+        0 out_shelves_count,
+        0 comm_pub_count,
+        IFNULL(SUM(CASE WHEN mi.create_date >= #{todayStartDate, jdbcType=TIMESTAMP} AND mi.create_date <![CDATA[<=]]> #{todayEndDate, jdbcType=TIMESTAMP} THEN 1 END), 0) today_add_member_count,
+        IFNULL(SUM(CASE WHEN mi.create_date > #{monthStartDate, jdbcType=TIMESTAMP} AND mi.create_date <![CDATA[<=]]> #{todayEndDate, jdbcType=TIMESTAMP} THEN 1 END), 0) month_add_member_count,
+        COUNT(1) member_count
+      FROM
+        memb_info mi
+    ) t_
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from comm_pub_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" >
+        insert into comm_pub_info (id, memb_id, comm_id,
+        comm_variet_id, comm_pub_type,
+        comm_num, comm_name, comm_key_word,
+        comm_art_num, brand_id, origin_place_type,
+        abroad_id, comm_local_prov, comm_local_city,
+        comm_local_cou, time_of_warr, supply_mode_type,
+        delivery_time_type, advance_sale_start_date,
+        advance_sale_end_date, advance_sale_text,
+        advance_sale_time_type, list_validity_type,
+        list_validity, meas_unit_id, comm_spec,
+        list_count,avai_supply_count, start_ord_count, original_price,
+        whole_price_section, recommend_name_expre,
+        recommend_count_expre, pack_desc, pay_method_type,
+        logistics_ser_type, stock, stock_place_prov,
+        stock_place_city, stock_place_cou, stock_place_address,
+        video_url, sales_count, comm_state_type,
+        sfzcmjzt_type, freight_formwork_type, freight_formwork_id,
+        create_by, create_date, update_by,
+        update_date, remarks, del_flag,
+        original_agent_price, agent_state_type, agent_whole_price,
+        agent_whole_price_section, agent_whole_price_mode,
+        agent_whole_price_pf_mode, manufacturer_id, prdct_date,
+        prdct_batch,prdct_license, quot_method_type,deposit_bl,ysbz_bds,dxhy_bds,hp_type,hpzjsdy_count, whole_price,
+        delive_time_desc, comm_desc)
+        values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT},
+        #{commVarietId,jdbcType=BIGINT}, #{commPubType,jdbcType=VARCHAR},
+        #{commNum,jdbcType=VARCHAR}, #{commName,jdbcType=VARCHAR}, #{commKeyWord,jdbcType=VARCHAR},
+        #{commArtNum,jdbcType=VARCHAR}, #{brandId,jdbcType=BIGINT}, #{originPlaceType,jdbcType=VARCHAR},
+        #{abroadId,jdbcType=BIGINT}, #{commLocalProv,jdbcType=VARCHAR}, #{commLocalCity,jdbcType=VARCHAR},
+        #{commLocalCou,jdbcType=VARCHAR}, #{timeOfWarr,jdbcType=VARCHAR}, #{supplyModeType,jdbcType=VARCHAR},
+        #{deliveryTimeType,jdbcType=VARCHAR}, #{advanceSaleStartDate,jdbcType=TIMESTAMP},
+        #{advanceSaleEndDate,jdbcType=TIMESTAMP}, #{advanceSaleText,jdbcType=VARCHAR},
+        #{advanceSaleTimeType,jdbcType=VARCHAR}, #{listValidityType,jdbcType=VARCHAR},
+        #{listValidity,jdbcType=TIMESTAMP}, #{measUnitId,jdbcType=BIGINT}, #{commSpec,jdbcType=DOUBLE},
+        #{listCount,jdbcType=DOUBLE},#{avaiSupplyCount,jdbcType=DOUBLE}, #{startOrdCount,jdbcType=INTEGER}, #{originalPrice,jdbcType=VARCHAR},
+        #{wholePriceSection,jdbcType=VARCHAR}, #{recommendNameExpre,jdbcType=VARCHAR},
+        #{recommendCountExpre,jdbcType=VARCHAR}, #{packDesc,jdbcType=VARCHAR}, #{payMethodType,jdbcType=VARCHAR},
+        #{logisticsSerType,jdbcType=VARCHAR}, #{stock,jdbcType=INTEGER}, #{stockPlaceProv,jdbcType=VARCHAR},
+        #{stockPlaceCity,jdbcType=VARCHAR}, #{stockPlaceCou,jdbcType=VARCHAR}, #{stockPlaceAddress,jdbcType=VARCHAR},
+        #{videoUrl,jdbcType=VARCHAR}, #{salesCount,jdbcType=INTEGER}, #{commStateType,jdbcType=VARCHAR},
+        #{sfzcmjztType,jdbcType=VARCHAR}, #{freightFormworkType,jdbcType=VARCHAR}, #{freightFormworkId,jdbcType=BIGINT},
+        #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+        #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+        #{originalAgentPrice,jdbcType=VARCHAR}, #{agentStateType,jdbcType=VARCHAR}, #{agentWholePrice,jdbcType=VARCHAR},
+        #{agentWholePriceSection,jdbcType=VARCHAR}, #{agentWholePriceMode,jdbcType=VARCHAR},
+        #{agentWholePricePfMode,jdbcType=VARCHAR}, #{manufacturerId,jdbcType=BIGINT}, #{prdctDate,jdbcType=TIMESTAMP},#{prdctBatch,jdbcType=VARCHAR},#{prdctLicense,jdbcType=VARCHAR},
+        #{quotMethodType,jdbcType=VARCHAR},#{depositBl,jdbcType=DOUBLE},#{ysbzBds,jdbcType=VARCHAR},#{dxhyBds,jdbcType=VARCHAR},
+        #{hpType,jdbcType=VARCHAR},#{hpzjsdyCount,jdbcType=DOUBLE},
+        #{wholePrice,jdbcType=VARCHAR},#{deliveTimeDesc,jdbcType=VARCHAR}, #{commDesc,jdbcType=LONGVARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" >
+        insert into comm_pub_info
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                id,
+            </if>
+            <if test="membId != null" >
+                memb_id,
+            </if>
+            <if test="commId != null" >
+                comm_id,
+            </if>
+            <if test="commVarietId != null" >
+                comm_variet_id,
+            </if>
+            <if test="commPubType != null" >
+                comm_pub_type,
+            </if>
+            <if test="commNum != null" >
+                comm_num,
+            </if>
+            <if test="commName != null" >
+                comm_name,
+            </if>
+            <if test="commKeyWord != null" >
+                comm_key_word,
+            </if>
+            <if test="commArtNum != null" >
+                comm_art_num,
+            </if>
+            <if test="brandId != null" >
+                brand_id,
+            </if>
+            <if test="originPlaceType != null" >
+                origin_place_type,
+            </if>
+            <if test="abroadId != null" >
+                abroad_id,
+            </if>
+            <if test="commLocalProv != null" >
+                comm_local_prov,
+            </if>
+            <if test="commLocalCity != null" >
+                comm_local_city,
+            </if>
+            <if test="commLocalCou != null" >
+                comm_local_cou,
+            </if>
+            <if test="timeOfWarr != null" >
+                time_of_warr,
+            </if>
+            <if test="supplyModeType != null" >
+                supply_mode_type,
+            </if>
+            <if test="deliveryTimeType != null" >
+                delivery_time_type,
+            </if>
+            <if test="advanceSaleStartDate != null" >
+                advance_sale_start_date,
+            </if>
+            <if test="advanceSaleEndDate != null" >
+                advance_sale_end_date,
+            </if>
+            <if test="advanceSaleText != null" >
+                advance_sale_text,
+            </if>
+            <if test="advanceSaleTimeType != null" >
+                advance_sale_time_type,
+            </if>
+            <if test="listValidityType != null" >
+                list_validity_type,
+            </if>
+            <if test="listValidity != null" >
+                list_validity,
+            </if>
+            <if test="measUnitId != null" >
+                meas_unit_id,
+            </if>
+            <if test="commSpec != null" >
+                comm_spec,
+            </if>
+            <if test="listCount != null" >
+                list_count,
+            </if>
+            <if test="avaiSupplyCount != null" >
+                 avai_supply_count,
+            </if>
+            <if test="startOrdCount != null" >
+                start_ord_count,
+            </if>
+            <if test="originalPrice != null" >
+                original_price,
+            </if>
+            <if test="wholePriceSection != null" >
+                whole_price_section,
+            </if>
+            <if test="recommendNameExpre != null" >
+                recommend_name_expre,
+            </if>
+            <if test="recommendCountExpre != null" >
+                recommend_count_expre,
+            </if>
+            <if test="packDesc != null" >
+                pack_desc,
+            </if>
+            <if test="payMethodType != null" >
+                pay_method_type,
+            </if>
+            <if test="logisticsSerType != null" >
+                logistics_ser_type,
+            </if>
+            <if test="stock != null" >
+                stock,
+            </if>
+            <if test="stockPlaceProv != null" >
+                stock_place_prov,
+            </if>
+            <if test="stockPlaceCity != null" >
+                stock_place_city,
+            </if>
+            <if test="stockPlaceCou != null" >
+                stock_place_cou,
+            </if>
+            <if test="stockPlaceAddress != null" >
+                stock_place_address,
+            </if>
+            <if test="videoUrl != null" >
+                video_url,
+            </if>
+            <if test="salesCount != null" >
+                sales_count,
+            </if>
+            <if test="commStateType != null" >
+                comm_state_type,
+            </if>
+            <if test="sfzcmjztType != null" >
+                sfzcmjzt_type,
+            </if>
+            <if test="freightFormworkType != null" >
+                freight_formwork_type,
+            </if>
+            <if test="freightFormworkId != null" >
+                freight_formwork_id,
+            </if>
+            <if test="createBy != null" >
+                create_by,
+            </if>
+            <if test="createDate != null" >
+                create_date,
+            </if>
+            <if test="updateBy != null" >
+                update_by,
+            </if>
+            <if test="updateDate != null" >
+                update_date,
+            </if>
+            <if test="remarks != null" >
+                remarks,
+            </if>
+            <if test="delFlag != null" >
+                del_flag,
+            </if>
+            <if test="originalAgentPrice != null" >
+                original_agent_price,
+            </if>
+            <if test="agentStateType != null" >
+                agent_state_type,
+            </if>
+            <if test="agentWholePrice != null" >
+                agent_whole_price,
+            </if>
+            <if test="agentWholePriceSection != null" >
+                agent_whole_price_section,
+            </if>
+            <if test="agentWholePriceMode != null" >
+                agent_whole_price_mode,
+            </if>
+            <if test="agentWholePricePfMode != null" >
+                agent_whole_price_pf_mode,
+            </if>
+            <if test="manufacturerId != null" >
+                manufacturer_id,
+            </if>
+            <if test="prdctDate != null" >
+                prdct_date,
+            </if>
+            <if test="prdctBatch != null" >
+                prdct_batch,
+            </if>
+            <if test="prdctLicense != null" >
+                prdct_license,
+            </if>
+            <if test="quotMethodType != null" >
+                quot_method_type,
+            </if>
+            <if test="depositBl != null" >
+                deposit_bl,
+            </if>
+            <if test="ysbzBds != null" >
+                ysbz_bds,
+            </if>
+            <if test="dxhyBds != null" >
+                dxhy_bds,
+            </if>
+            <if test="hpType != null" >
+                hp_type,
+            </if>
+            <if test="hpzjsdyCount != null" >
+                hpzjsdy_count,
+            </if>
+            <if test="wholePrice != null" >
+                whole_price,
+            </if>
+            <if test="deliveTimeDesc != null" >
+                delive_time_desc,
+            </if>
+            <if test="commDesc != null" >
+                comm_desc,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="id != null" >
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null" >
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null" >
+                #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="commVarietId != null" >
+                #{commVarietId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubType != null" >
+                #{commPubType,jdbcType=VARCHAR},
+            </if>
+            <if test="commNum != null" >
+                #{commNum,jdbcType=VARCHAR},
+            </if>
+            <if test="commName != null" >
+                #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="commKeyWord != null" >
+                #{commKeyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="commArtNum != null" >
+                #{commArtNum,jdbcType=VARCHAR},
+            </if>
+            <if test="brandId != null" >
+                #{brandId,jdbcType=BIGINT},
+            </if>
+            <if test="originPlaceType != null" >
+                #{originPlaceType,jdbcType=VARCHAR},
+            </if>
+            <if test="abroadId != null" >
+                #{abroadId,jdbcType=BIGINT},
+            </if>
+            <if test="commLocalProv != null" >
+                #{commLocalProv,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCity != null" >
+                #{commLocalCity,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCou != null" >
+                #{commLocalCou,jdbcType=VARCHAR},
+            </if>
+            <if test="timeOfWarr != null" >
+                #{timeOfWarr,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyModeType != null" >
+                #{supplyModeType,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTimeType != null" >
+                #{deliveryTimeType,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceSaleStartDate != null" >
+                #{advanceSaleStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceSaleEndDate != null" >
+                #{advanceSaleEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceSaleText != null" >
+                #{advanceSaleText,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceSaleTimeType != null" >
+                #{advanceSaleTimeType,jdbcType=VARCHAR},
+            </if>
+            <if test="listValidityType != null" >
+                #{listValidityType,jdbcType=VARCHAR},
+            </if>
+            <if test="listValidity != null" >
+                #{listValidity,jdbcType=TIMESTAMP},
+            </if>
+            <if test="measUnitId != null" >
+                #{measUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="commSpec != null" >
+                #{commSpec,jdbcType=DOUBLE},
+            </if>
+            <if test="listCount != null" >
+                #{listCount,jdbcType=DOUBLE},
+            </if>
+            <if test="avaiSupplyCount != null" >
+                #{avaiSupplyCount,jdbcType=DOUBLE},
+            </if>
+            <if test="startOrdCount != null" >
+                #{startOrdCount,jdbcType=INTEGER},
+            </if>
+            <if test="originalPrice != null" >
+                #{originalPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="wholePriceSection != null" >
+                #{wholePriceSection,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendNameExpre != null" >
+                #{recommendNameExpre,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendCountExpre != null" >
+                #{recommendCountExpre,jdbcType=VARCHAR},
+            </if>
+            <if test="packDesc != null" >
+                #{packDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="payMethodType != null" >
+                #{payMethodType,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsSerType != null" >
+                #{logisticsSerType,jdbcType=VARCHAR},
+            </if>
+            <if test="stock != null" >
+                #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="stockPlaceProv != null" >
+                #{stockPlaceProv,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceCity != null" >
+                #{stockPlaceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceCou != null" >
+                #{stockPlaceCou,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceAddress != null" >
+                #{stockPlaceAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null" >
+                #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="salesCount != null" >
+                #{salesCount,jdbcType=INTEGER},
+            </if>
+            <if test="commStateType != null" >
+                #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzcmjztType != null" >
+                #{sfzcmjztType,jdbcType=VARCHAR},
+            </if>
+            <if test="freightFormworkType != null" >
+                #{freightFormworkType,jdbcType=VARCHAR},
+            </if>
+            <if test="freightFormworkId != null" >
+                #{freightFormworkId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null" >
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="originalAgentPrice != null" >
+                #{originalAgentPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="agentStateType != null" >
+                #{agentStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePrice != null" >
+                #{agentWholePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePriceSection != null" >
+                #{agentWholePriceSection,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePriceMode != null" >
+                #{agentWholePriceMode,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePricePfMode != null" >
+                #{agentWholePricePfMode,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacturerId != null" >
+                #{manufacturerId,jdbcType=BIGINT},
+            </if>
+            <if test="prdctDate != null" >
+                #{prdctDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prdctBatch != null" >
+                #{prdctBatch,jdbcType=VARCHAR},
+            </if>
+            <if test="prdctLicense != null" >
+                #{prdctLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="prdctLicense != null" >
+                #{prdctLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="quotMethodType != null" >
+                #{quotMethodType,jdbcType=VARCHAR},
+            </if>
+            <if test="depositBl != null" >
+                #{depositBl,jdbcType=DOUBLE},
+            </if>
+            <if test="ysbzBds != null" >
+                #{ysbzBds,jdbcType=VARCHAR},
+            </if>
+            <if test="dxhyBds != null" >
+                #{dxhyBds,jdbcType=VARCHAR},
+            </if>
+            <if test="hpType != null" >
+                #{hpType,jdbcType=VARCHAR},
+            </if>
+            <if test="hpzjsdyCount != null" >
+                #{hpzjsdyCount,jdbcType=DOUBLE},
+            </if>
+            <if test="wholePrice != null" >
+                #{wholePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveTimeDesc != null" >
+                #{deliveTimeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="commDesc != null" >
+                #{commDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" >
+        update comm_pub_info
+        <set >
+            <if test="membId != null" >
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null" >
+                comm_id = #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="commVarietId != null" >
+                comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubType != null" >
+                comm_pub_type = #{commPubType,jdbcType=VARCHAR},
+            </if>
+            <if test="commNum != null" >
+                comm_num = #{commNum,jdbcType=VARCHAR},
+            </if>
+            <if test="commName != null" >
+                comm_name = #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="commKeyWord != null" >
+                comm_key_word = #{commKeyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="commArtNum != null" >
+                comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+            </if>
+            <if test="brandId != null" >
+                brand_id = #{brandId,jdbcType=BIGINT},
+            </if>
+            <if test="originPlaceType != null" >
+                origin_place_type = #{originPlaceType,jdbcType=VARCHAR},
+            </if>
+            <if test="abroadId != null" >
+                abroad_id = #{abroadId,jdbcType=BIGINT},
+            </if>
+            <if test="commLocalProv != null" >
+                comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCity != null" >
+                comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCou != null" >
+                comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+            </if>
+            <if test="timeOfWarr != null" >
+                time_of_warr = #{timeOfWarr,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyModeType != null" >
+                supply_mode_type = #{supplyModeType,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTimeType != null" >
+                delivery_time_type = #{deliveryTimeType,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceSaleStartDate != null" >
+                advance_sale_start_date = #{advanceSaleStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceSaleEndDate != null" >
+                advance_sale_end_date = #{advanceSaleEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceSaleText != null" >
+                advance_sale_text = #{advanceSaleText,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceSaleTimeType != null" >
+                advance_sale_time_type = #{advanceSaleTimeType,jdbcType=VARCHAR},
+            </if>
+            <if test="listValidityType != null" >
+                list_validity_type = #{listValidityType,jdbcType=VARCHAR},
+            </if>
+            <if test="listValidity != null" >
+                list_validity = #{listValidity,jdbcType=TIMESTAMP},
+            </if>
+            <if test="measUnitId != null" >
+                meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="commSpec != null" >
+                comm_spec = #{commSpec,jdbcType=DOUBLE},
+            </if>
+            <if test="listCount != null" >
+                list_count = #{listCount,jdbcType=DOUBLE},
+            </if>
+            <if test="avaiSupplyCount != null" >
+                avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+            </if>
+            <if test="startOrdCount != null" >
+                start_ord_count = #{startOrdCount,jdbcType=INTEGER},
+            </if>
+            <if test="originalPrice != null" >
+                original_price = #{originalPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="wholePriceSection != null" >
+                whole_price_section = #{wholePriceSection,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendNameExpre != null" >
+                recommend_name_expre = #{recommendNameExpre,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendCountExpre != null" >
+                recommend_count_expre = #{recommendCountExpre,jdbcType=VARCHAR},
+            </if>
+            <if test="packDesc != null" >
+                pack_desc = #{packDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="payMethodType != null" >
+                pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsSerType != null" >
+                logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+            </if>
+            <if test="stock != null" >
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="stockPlaceProv != null" >
+                stock_place_prov = #{stockPlaceProv,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceCity != null" >
+                stock_place_city = #{stockPlaceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceCou != null" >
+                stock_place_cou = #{stockPlaceCou,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceAddress != null" >
+                stock_place_address = #{stockPlaceAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null" >
+                video_url = #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="salesCount != null" >
+                sales_count = #{salesCount,jdbcType=INTEGER},
+            </if>
+            <if test="commStateType != null" >
+                comm_state_type = #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzcmjztType != null" >
+                sfzcmjzt_type = #{sfzcmjztType,jdbcType=VARCHAR},
+            </if>
+            <if test="freightFormworkType != null" >
+                freight_formwork_type = #{freightFormworkType,jdbcType=VARCHAR},
+            </if>
+            <if test="freightFormworkId != null" >
+                freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="originalAgentPrice != null" >
+                original_agent_price = #{originalAgentPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="agentStateType != null" >
+                agent_state_type = #{agentStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePrice != null" >
+                agent_whole_price = #{agentWholePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePriceSection != null" >
+                agent_whole_price_section = #{agentWholePriceSection,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePriceMode != null" >
+                agent_whole_price_mode = #{agentWholePriceMode,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePricePfMode != null" >
+                agent_whole_price_pf_mode = #{agentWholePricePfMode,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacturerId != null" >
+                manufacturer_id = #{manufacturerId,jdbcType=BIGINT},
+            </if>
+            <if test="prdctDate != null" >
+                prdct_date = #{prdctDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prdctBatch != null" >
+                prdct_batch = #{prdctBatch,jdbcType=VARCHAR},
+            </if>
+            <if test="prdctLicense != null" >
+                prdct_license = #{prdctLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="quotMethodType != null" >
+                quot_method_type = #{quotMethodType,jdbcType=VARCHAR},
+            </if>
+            <if test="depositBl != null" >
+                deposit_bl = #{depositBl,jdbcType=DOUBLE},
+            </if>
+            <if test="ysbzBds != null" >
+                ysbz_bds = #{ysbzBds,jdbcType=VARCHAR},
+            </if>
+            <if test="dxhyBds != null" >
+                dxhy_bds = #{dxhyBds,jdbcType=VARCHAR},
+            </if>
+            <if test="hpType != null" >
+                hp_type = #{hpType,jdbcType=VARCHAR},
+            </if>
+            <if test="hpzjsdyCount != null" >
+                hpzjsdy_count =#{hpzjsdyCount,jdbcType=DOUBLE},
+            </if>
+            <if test="wholePrice != null" >
+                whole_price = #{wholePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveTimeDesc != null" >
+                delive_time_desc = #{deliveTimeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="commDesc != null" >
+                comm_desc = #{commDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="editByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" >
+        update comm_pub_info
+        <set >
+            <if test="membId != null" >
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="commId != null" >
+                comm_id = #{commId,jdbcType=BIGINT},
+            </if>
+            <if test="commVarietId != null" >
+                comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubType != null" >
+                comm_pub_type = #{commPubType,jdbcType=VARCHAR},
+            </if>
+            <if test="commNum != null" >
+                comm_num = #{commNum,jdbcType=VARCHAR},
+            </if>
+            <if test="commName != null" >
+                comm_name = #{commName,jdbcType=VARCHAR},
+            </if>
+            <if test="commKeyWord != null" >
+                comm_key_word = #{commKeyWord,jdbcType=VARCHAR},
+            </if>
+            <if test="commArtNum != null" >
+                comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+            </if>
+            <if test="brandId != null" >
+                brand_id = #{brandId,jdbcType=BIGINT},
+            </if>
+            <if test="originPlaceType != null" >
+                origin_place_type = #{originPlaceType,jdbcType=VARCHAR},
+            </if>
+            <if test="abroadId != null" >
+                abroad_id = #{abroadId,jdbcType=BIGINT},
+            </if>
+            <if test="commLocalProv != null" >
+                comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCity != null" >
+                comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+            </if>
+            <if test="commLocalCou != null" >
+                comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+            </if>
+            <if test="timeOfWarr != null" >
+                time_of_warr = #{timeOfWarr,jdbcType=VARCHAR},
+            </if>
+            <if test="supplyModeType != null" >
+                supply_mode_type = #{supplyModeType,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveryTimeType != null" >
+                delivery_time_type = #{deliveryTimeType,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceSaleStartDate != null" >
+                advance_sale_start_date = #{advanceSaleStartDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceSaleEndDate != null" >
+                advance_sale_end_date = #{advanceSaleEndDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="advanceSaleText != null" >
+                advance_sale_text = #{advanceSaleText,jdbcType=VARCHAR},
+            </if>
+            <if test="advanceSaleTimeType != null" >
+                advance_sale_time_type = #{advanceSaleTimeType,jdbcType=VARCHAR},
+            </if>
+            <if test="measUnitId != null" >
+                meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+            </if>
+            <if test="listValidityType != null" >
+                list_validity_type = #{listValidityType,jdbcType=VARCHAR},
+            </if>
+                list_validity = #{listValidity,jdbcType=TIMESTAMP},
+                comm_spec = #{commSpec,jdbcType=DOUBLE},
+                list_count = #{listCount,jdbcType=DOUBLE},
+            <if test="avaiSupplyCount != null" >
+                avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+            </if>
+            <if test="startOrdCount != null" >
+                start_ord_count = #{startOrdCount,jdbcType=INTEGER},
+            </if>
+            <if test="originalPrice != null" >
+                original_price = #{originalPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="wholePriceSection != null" >
+                whole_price_section = #{wholePriceSection,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendNameExpre != null" >
+                recommend_name_expre = #{recommendNameExpre,jdbcType=VARCHAR},
+            </if>
+            <if test="recommendCountExpre != null" >
+                recommend_count_expre = #{recommendCountExpre,jdbcType=VARCHAR},
+            </if>
+            <if test="packDesc != null" >
+                pack_desc = #{packDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="payMethodType != null" >
+                pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+            </if>
+            <if test="logisticsSerType != null" >
+                logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+            </if>
+            <if test="stock != null" >
+                stock = #{stock,jdbcType=INTEGER},
+            </if>
+            <if test="stockPlaceProv != null" >
+                stock_place_prov = #{stockPlaceProv,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceCity != null" >
+                stock_place_city = #{stockPlaceCity,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceCou != null" >
+                stock_place_cou = #{stockPlaceCou,jdbcType=VARCHAR},
+            </if>
+            <if test="stockPlaceAddress != null" >
+                stock_place_address = #{stockPlaceAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="videoUrl != null" >
+                video_url = #{videoUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="salesCount != null" >
+                sales_count = #{salesCount,jdbcType=INTEGER},
+            </if>
+            <if test="commStateType != null" >
+                comm_state_type = #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="sfzcmjztType != null" >
+                sfzcmjzt_type = #{sfzcmjztType,jdbcType=VARCHAR},
+            </if>
+            <if test="freightFormworkType != null" >
+                freight_formwork_type = #{freightFormworkType,jdbcType=VARCHAR},
+            </if>
+            <if test="freightFormworkId != null" >
+                freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null" >
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null" >
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null" >
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null" >
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="originalAgentPrice != null" >
+                original_agent_price = #{originalAgentPrice,jdbcType=VARCHAR},
+            </if>
+            <if test="agentStateType != null" >
+                agent_state_type = #{agentStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePrice != null" >
+                agent_whole_price = #{agentWholePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePriceSection != null" >
+                agent_whole_price_section = #{agentWholePriceSection,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePriceMode != null" >
+                agent_whole_price_mode = #{agentWholePriceMode,jdbcType=VARCHAR},
+            </if>
+            <if test="agentWholePricePfMode != null" >
+                agent_whole_price_pf_mode = #{agentWholePricePfMode,jdbcType=VARCHAR},
+            </if>
+            <if test="manufacturerId != null" >
+                manufacturer_id = #{manufacturerId,jdbcType=BIGINT},
+            </if>
+            <if test="prdctDate != null" >
+                prdct_date = #{prdctDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prdctBatch != null" >
+                prdct_batch = #{prdctBatch,jdbcType=VARCHAR},
+            </if>
+            <if test="prdctLicense != null" >
+                prdct_license = #{prdctLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="quotMethodType != null" >
+                quot_method_type = #{quotMethodType,jdbcType=VARCHAR},
+            </if>
+            <if test="depositBl != null" >
+                deposit_bl = #{depositBl,jdbcType=DOUBLE},
+            </if>
+            <if test="ysbzBds != null" >
+                ysbz_bds = #{ysbzBds,jdbcType=VARCHAR},
+            </if>
+            <if test="dxhyBds != null" >
+                dxhy_bds = #{dxhyBds,jdbcType=VARCHAR},
+            </if>
+            <if test="hpType != null" >
+                hp_type = #{hpType,jdbcType=VARCHAR},
+            </if>
+            <if test="hpzjsdyCount != null" >
+                hpzjsdy_count =#{hpzjsdyCount,jdbcType=DOUBLE},
+            </if>
+            <if test="wholePrice != null" >
+                whole_price = #{wholePrice,jdbcType=VARCHAR},
+            </if>
+            <if test="deliveTimeDesc != null" >
+                delive_time_desc = #{deliveTimeDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="commDesc != null" >
+                comm_desc = #{commDesc,jdbcType=LONGVARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" >
+        update comm_pub_info
+        set memb_id = #{membId,jdbcType=BIGINT},
+        comm_id = #{commId,jdbcType=BIGINT},
+        comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+        comm_pub_type = #{commPubType,jdbcType=VARCHAR},
+        comm_num = #{commNum,jdbcType=VARCHAR},
+        comm_name = #{commName,jdbcType=VARCHAR},
+        comm_key_word = #{commKeyWord,jdbcType=VARCHAR},
+        comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+        brand_id = #{brandId,jdbcType=BIGINT},
+        origin_place_type = #{originPlaceType,jdbcType=VARCHAR},
+        abroad_id = #{abroadId,jdbcType=BIGINT},
+        comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+        comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+        comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+        time_of_warr = #{timeOfWarr,jdbcType=VARCHAR},
+        supply_mode_type = #{supplyModeType,jdbcType=VARCHAR},
+        delivery_time_type = #{deliveryTimeType,jdbcType=VARCHAR},
+        advance_sale_start_date = #{advanceSaleStartDate,jdbcType=TIMESTAMP},
+        advance_sale_end_date = #{advanceSaleEndDate,jdbcType=TIMESTAMP},
+        advance_sale_text = #{advanceSaleText,jdbcType=VARCHAR},
+        advance_sale_time_type = #{advanceSaleTimeType,jdbcType=VARCHAR},
+        list_validity_type = #{listValidityType,jdbcType=VARCHAR},
+        list_validity = #{listValidity,jdbcType=TIMESTAMP},
+        meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+        comm_spec = #{commSpec,jdbcType=DOUBLE},
+        list_count = #{listCount,jdbcType=DOUBLE},
+        avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+        start_ord_count = #{startOrdCount,jdbcType=INTEGER},
+        original_price = #{originalPrice,jdbcType=VARCHAR},
+        whole_price_section = #{wholePriceSection,jdbcType=VARCHAR},
+        recommend_name_expre = #{recommendNameExpre,jdbcType=VARCHAR},
+        recommend_count_expre = #{recommendCountExpre,jdbcType=VARCHAR},
+        pack_desc = #{packDesc,jdbcType=VARCHAR},
+        pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+        logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+        stock = #{stock,jdbcType=INTEGER},
+        stock_place_prov = #{stockPlaceProv,jdbcType=VARCHAR},
+        stock_place_city = #{stockPlaceCity,jdbcType=VARCHAR},
+        stock_place_cou = #{stockPlaceCou,jdbcType=VARCHAR},
+        stock_place_address = #{stockPlaceAddress,jdbcType=VARCHAR},
+        video_url = #{videoUrl,jdbcType=VARCHAR},
+        sales_count = #{salesCount,jdbcType=INTEGER},
+        comm_state_type = #{commStateType,jdbcType=VARCHAR},
+        sfzcmjzt_type = #{sfzcmjztType,jdbcType=VARCHAR},
+        freight_formwork_type = #{freightFormworkType,jdbcType=VARCHAR},
+        freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT},
+        create_by = #{createBy,jdbcType=VARCHAR},
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+        update_by = #{updateBy,jdbcType=VARCHAR},
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+        remarks = #{remarks,jdbcType=VARCHAR},
+        del_flag = #{delFlag,jdbcType=CHAR},
+        original_agent_price = #{originalAgentPrice,jdbcType=VARCHAR},
+        agent_state_type = #{agentStateType,jdbcType=VARCHAR},
+        agent_whole_price = #{agentWholePrice,jdbcType=VARCHAR},
+        agent_whole_price_section = #{agentWholePriceSection,jdbcType=VARCHAR},
+        agent_whole_price_mode = #{agentWholePriceMode,jdbcType=VARCHAR},
+        agent_whole_price_pf_mode = #{agentWholePricePfMode,jdbcType=VARCHAR},
+        manufacturer_id = #{manufacturerId,jdbcType=BIGINT},
+        prdct_date = #{prdctDate,jdbcType=TIMESTAMP},
+        prdct_batch = #{prdctBatch,jdbcType=VARCHAR},
+        prdct_license = #{prdctLicense,jdbcType=VARCHAR},
+        quot_method_type = #{quotMethodType,jdbcType=VARCHAR},
+        deposit_bl = #{depositBl,jdbcType=DOUBLE},
+        ysbz_bds = #{ysbzBds,jdbcType=VARCHAR},
+        dxhy_bds = #{dxhyBds,jdbcType=VARCHAR},
+        hp_type = #{hpType,jdbcType=VARCHAR},
+        hpzjsdy_count =#{hpzjsdyCount,jdbcType=DOUBLE},
+        whole_price = #{wholePrice,jdbcType=VARCHAR},
+        delive_time_desc = #{deliveTimeDesc,jdbcType=VARCHAR},
+        comm_desc = #{commDesc,jdbcType=LONGVARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo" >
+    update comm_pub_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      comm_pub_type = #{commPubType,jdbcType=VARCHAR},
+      comm_num = #{commNum,jdbcType=VARCHAR},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      comm_key_word = #{commKeyWord,jdbcType=VARCHAR},
+      comm_art_num = #{commArtNum,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=BIGINT},
+      origin_place_type = #{originPlaceType,jdbcType=VARCHAR},
+      abroad_id = #{abroadId,jdbcType=BIGINT},
+      comm_local_prov = #{commLocalProv,jdbcType=VARCHAR},
+      comm_local_city = #{commLocalCity,jdbcType=VARCHAR},
+      comm_local_cou = #{commLocalCou,jdbcType=VARCHAR},
+      time_of_warr = #{timeOfWarr,jdbcType=VARCHAR},
+      supply_mode_type = #{supplyModeType,jdbcType=VARCHAR},
+      delivery_time_type = #{deliveryTimeType,jdbcType=VARCHAR},
+      advance_sale_start_date = #{advanceSaleStartDate,jdbcType=TIMESTAMP},
+      advance_sale_end_date = #{advanceSaleEndDate,jdbcType=TIMESTAMP},
+      advance_sale_text = #{advanceSaleText,jdbcType=VARCHAR},
+      advance_sale_time_type = #{advanceSaleTimeType,jdbcType=VARCHAR},
+      list_validity_type = #{listValidityType,jdbcType=VARCHAR},
+      list_validity = #{listValidity,jdbcType=TIMESTAMP},
+      meas_unit_id = #{measUnitId,jdbcType=BIGINT},
+      comm_spec = #{commSpec,jdbcType=DOUBLE},
+      list_count = #{listCount,jdbcType=DOUBLE},
+      avai_supply_count = #{avaiSupplyCount,jdbcType=DOUBLE},
+      start_ord_count = #{startOrdCount,jdbcType=INTEGER},
+      original_price = #{originalPrice,jdbcType=VARCHAR},
+      whole_price_section = #{wholePriceSection,jdbcType=VARCHAR},
+      recommend_name_expre = #{recommendNameExpre,jdbcType=VARCHAR},
+      recommend_count_expre = #{recommendCountExpre,jdbcType=VARCHAR},
+      pack_desc = #{packDesc,jdbcType=VARCHAR},
+      pay_method_type = #{payMethodType,jdbcType=VARCHAR},
+      logistics_ser_type = #{logisticsSerType,jdbcType=VARCHAR},
+      stock = #{stock,jdbcType=INTEGER},
+      stock_place_prov = #{stockPlaceProv,jdbcType=VARCHAR},
+      stock_place_city = #{stockPlaceCity,jdbcType=VARCHAR},
+      stock_place_cou = #{stockPlaceCou,jdbcType=VARCHAR},
+      stock_place_address = #{stockPlaceAddress,jdbcType=VARCHAR},
+      video_url = #{videoUrl,jdbcType=VARCHAR},
+      sales_count = #{salesCount,jdbcType=INTEGER},
+      comm_state_type = #{commStateType,jdbcType=VARCHAR},
+      sfzcmjzt_type = #{sfzcmjztType,jdbcType=VARCHAR},
+      freight_formwork_type = #{freightFormworkType,jdbcType=VARCHAR},
+      freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      original_agent_price = #{originalAgentPrice,jdbcType=VARCHAR},
+      agent_state_type = #{agentStateType,jdbcType=VARCHAR},
+      agent_whole_price = #{agentWholePrice,jdbcType=VARCHAR},
+      agent_whole_price_section = #{agentWholePriceSection,jdbcType=VARCHAR},
+      agent_whole_price_mode = #{agentWholePriceMode,jdbcType=VARCHAR},
+      agent_whole_price_pf_mode = #{agentWholePricePfMode,jdbcType=VARCHAR},
+      manufacturer_id = #{manufacturerId,jdbcType=BIGINT},
+      prdct_date = #{prdctDate,jdbcType=TIMESTAMP},
+      prdct_batch = #{prdctBatch,jdbcType=VARCHAR},
+      prdct_license = #{prdctLicense,jdbcType=VARCHAR},
+      quot_method_type = #{quotMethodType,jdbcType=VARCHAR},
+      deposit_bl = #{depositBl,jdbcType=DOUBLE},
+      ysbz_bds = #{ysbzBds,jdbcType=VARCHAR},
+      dxhy_bds = #{dxhyBds,jdbcType=VARCHAR},
+      hp_type = #{hpType,jdbcType=VARCHAR},
+      hpzjsdy_count =#{hpzjsdyCount,jdbcType=DOUBLE},
+      whole_price = #{wholePrice,jdbcType=VARCHAR},
+      delive_time_desc = #{deliveTimeDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.CommPubInfoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.CommPubInfoPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comm_pub_info
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.CommPubInfoListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.CommPubInfoListPo">
+        select
+        <include refid="Base_Column_List"/>
+        ,
+        <include refid="Blob_Column_List"/>
+        from comm_pub_info
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+    update comm_pub_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--查询商品信息-->
+    <select id="commList" parameterType="com.wisea.cultivar.common.po.tp.CommDataListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.CommDataListVo">
+        SELECT
+        t1.id AS id,#商品ID
+        t1.comm_num AS commNum,#商品编号
+        t1.comm_art_num AS commArtNum,#商品货号
+        t1.comm_name AS commName,#商品名称
+        t2.brand_name AS brandName,#品牌名称
+        t5.comp_name AS sellerName,#商家企业名称
+        t3.meas_unit_name AS measUnitName,#计量单位
+        t1.whole_price_section AS platformWholePriceSection,#平台结算价区间
+        t1.agent_whole_price_section AS platformAgentWholePriceSection,#平台代理结算价区间
+        t1.comm_state_type AS commStateType, #商品状态
+        t1.agent_state_type AS agentStateType, #代理状态
+        t1.original_price AS originalPrice, #商品原始结算价
+        t1.original_agent_price AS originalAgentPrice, #商品原始代理结算价
+        t1.comm_pub_type AS commPubType, # 挂牌方式
+        t1.supply_mode_type AS supplyModeType, # 供货方式
+        t1.comm_id AS commId, # 商品分类
+        IFNULL(t1.update_date,t1.create_date) AS updateDate # 更新时间
+        FROM
+        comm_pub_info AS t1
+        LEFT JOIN brand_mage AS t2 ON t2.id = t1.brand_id
+        LEFT JOIN meas_unit_mage AS t3 ON t3.id = t1.meas_unit_id
+        LEFT JOIN memb_info AS t4 ON t1.memb_id = t4.id
+        LEFT JOIN entp_data_info AS t5 ON t5.memb_id = t4.id
+        <where>
+            <if test="likeName != null and likeName != '' ">
+                AND (instr(t1.comm_num,#{likeName}) != 0 OR
+                instr(t1.comm_art_num,#{likeName}) != 0 OR
+                instr(t1.comm_name,#{likeName}) != 0 OR
+                instr(t5.comp_name,#{likeName}) != 0)
+            </if>
+            <if test="membId != null and membId != '' ">
+                AND INSTR(t1.memb_id,#{membId}) != 0
+            </if>
+            <if test="brandName != null and brandName != '' ">
+                AND INSTR(t2.brand_name,#{brandName}) != 0
+            </if>
+            <if test="commId != null and commId != '' ">
+                AND INSTR(t1.comm_id,#{commId}) != 0
+            </if>
+            <if test="commStateType != null and commStateType != '' ">
+                AND INSTR(t1.comm_state_type,#{commStateType}) != 0
+            </if>
+            <if test="commPubType != null and commPubType != '' ">
+                AND INSTR(t1.comm_pub_type,#{commPubType})
+            </if>
+            <if test="supplyModeType != null and supplyModeType != '' ">
+                AND INSTR(t1.supply_mode_type,#{supplyModeType})
+            </if>
+            <if test="agentStateType != null and agentStateType != '' ">
+                AND INSTR(t1.agent_state_type,#{agentStateType}) != 0
+            </if>
+            AND t1.del_flag != '1' AND t4.del_flag != '1' AND t5.del_flag != '1'
+            ORDER BY t1.update_date DESC
+        </where>
+    </select>
+    <!--设置商品代理价-->
+    <select id="editAgentPrice" parameterType="com.wisea.cultivar.common.po.tp.CommPubInfoGetPo"
+            resultType="com.wisea.cultivar.common.vo.tp.CommDataListVo">
+      SELECT
+            t1.id AS id,#商品的ID
+            t2.url AS url, #图片的URL
+            t1.comm_name AS commName, #商品名称
+            t4.comp_name AS sellerName, #供应商(商家企业名称)
+            t1.comm_art_num AS commArtNum, #商品货号
+            t1.comm_num AS commNum, #商品编号
+            t1.whole_price AS wholePrice, #结算价表达式
+            t1.original_price AS originalPrice, #原始商品结算价表达式
+            t1.agent_whole_price_mode AS agentSettType, #代理结算价指定方式表达式
+            t1.agent_whole_price_pf_mode AS agentPrice #代理结算价比例/固定值表达式
+      FROM
+	        comm_pub_info AS t1
+      LEFT JOIN comm_picture AS t2 ON t2.comm_id = t1.id
+      LEFT JOIN memb_info AS t3 ON t3.id = t1.memb_id
+      LEFT JOIN entp_data_info AS t4 ON t4.memb_id = t3.id
+      WHERE t1.id = #{id} AND t2.sort = 0 AND t4.del_flag != '1'
+    </select>
+    <!--设置商品代理价-->
+    <update id="modifyAgentPrice" parameterType="com.wisea.cultivar.common.po.tp.modifyCommAgentPricePo">
+        UPDATE comm_pub_info
+        SET agent_whole_price = #{agentWholePrice}, agent_whole_price_section = #{agentWholePriceSection},
+            agent_whole_price_mode = #{agentSettType}, agent_whole_price_pf_mode = #{agentPrice},
+            agent_state_type = '1',original_agent_price = #{originalAgentPrice}
+        WHERE id = #{id}
+    </update>
+    <!---->
+    <select id="beforeDelSelectMeas" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.vo.tp.CommPubInfoGetVo">
+        SELECT id
+        FROM comm_pub_info
+        WHERE meas_unit_id = #{id}
+        AND del_flag = '0'
+    </select>
+
+    <!-- 通过商品ids 以及  运费模板查询 商品信息List -->
+    <select id="selectCommPubMsgList" resultType="com.wisea.cultivar.common.entity.tp.CommPubInfo"
+            parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        select
+        cpi.comm_spec as commSpec,
+        cpi.freight_formwork_id as freightFormworkId,
+        ib.count as count
+        from  comm_pub_info cpi
+        LEFT JOIN import_bill ib on ib.comm_pub_id = cpi.id
+        where cpi.id in (${commPubInfoIds})
+        AND cpi.freight_formwork_id = #{freightFormworkId,jdbcType=BIGINT}
+        AND ib.memb_id = #{buyId}
+        AND cpi.del_flag = '0'
+        AND ib.del_flag = '0'
+    </select>
+
+    <!-- 通过商品ids 查询 运费模板ids -->
+    <select id="selectFreightFormworkIds" resultType="java.lang.String" parameterType="java.lang.String">
+        select GROUP_CONCAT(DISTINCT freight_formwork_id)
+        from  comm_pub_info
+        where id in (${_parameter})
+        AND del_flag = '0'
+        and freight_formwork_type = '1'
+    </select>
+
+    <!-- 通过商品ids 查询 运费模板idList -->
+    <select id="selectFreightFormworkIdList" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List"/>
+        from comm_pub_info
+        where id in (${_parameter})
+        AND del_flag = '0'
+    </select>
+
+    <!--页面右上角 悬浮 显示  先加入的 进货单 商品的列表 显示前三个  -->
+    <select id="commInfoList" resultType="com.wisea.cultivar.common.vo.tp.trade.BuyerCommInfoListVo"
+            parameterType="java.lang.Long">
+		SELECT
+		cpi.id as commPubId,
+		ib.id as importBillId,
+		cpi.comm_name as commName,
+		cpi.whole_price as wholePrice,
+		cpi.agent_whole_price as agentWholePrice,
+		ib.count as count,
+		ib.price,
+		ib.comm_spec as commSpec,
+		mum.meas_unit_name as measUnitName,
+		cpi.agent_state_type as agentStateType
+		FROM comm_pub_info cpi
+		LEFT JOIN import_bill ib on cpi.id = ib.comm_pub_id
+		LEFT JOIN meas_unit_mage mum on mum.id = cpi.meas_unit_id
+		WHERE
+			ib.memb_id = #{membId}
+			AND ib.del_flag = '0'
+			AND cpi.del_flag = '0'
+			AND cpi.comm_state_type = '0'
+			order by ib.join_time desc
+			limit 5
+    </select>
+
+    <!--进货单商品的列表信息  -->
+    <select id="commInfoListFromImportBill" resultMap="CommInfoListFromImportBill"
+            parameterType="com.wisea.cultivar.common.po.tp.trade.BuyerPitchOnPo">
+        SELECT
+        DISTINCT cpi.memb_id ,cpi.id as 'importBillCommMsgList.id',
+        ib.id as "importBillCommMsgList.importBillId",
+        ib.comm_spec  as   inportCommSpec,
+        ib.comm_level_type,
+        ib.price,
+        cpi.comm_name as 'importBillCommMsgList.comm_name',
+        cpi.comm_spec as 'importBillCommMsgList.comm_spec',
+        cpi.whole_price as 'importBillCommMsgList.whole_price',
+        cpi.deposit_bl,
+        cpi.agent_whole_price as 'importBillCommMsgList.agent_whole_price',
+        ib.count as 'importBillCommMsgList.count',
+        cpi.stock as 'importBillCommMsgList.stock',
+        cpi.comm_state_type as 'importBillCommMsgList.comm_state_type',
+        cpi.sfzcmjzt_type  as  'importBillCommMsgList.sfzcmjzt_type',
+        cpi.logistics_ser_type  as  'importBillCommMsgList.logistics_ser_type',
+        cpi.freight_formwork_type,
+        cpi.freight_formwork_id,
+        cpi.pay_method_type,
+        cpi.hp_type,
+        cpi.hpzjsdy_count,
+        cpi.quot_method_type,
+        cpi.ysbz_bds,
+        mum.meas_unit_name as 'importBillCommMsgList.meas_unit_name',
+        cpi.start_ord_count as 'importBillCommMsgList.start_ord_count',
+        cpi.agent_state_type as 'importBillCommMsgList.agent_state_type'
+        FROM comm_pub_info cpi
+        LEFT JOIN import_bill ib on cpi.id = ib.comm_pub_id
+        LEFT JOIN meas_unit_mage mum on mum.id = cpi.meas_unit_id
+        WHERE
+        ib.memb_id = #{membId}
+        AND ib.del_flag = '0'
+        AND cpi.del_flag = '0'
+        <if test="importBillIds != null and importBillIds != ''">
+            AND ib.id in (${importBillIds})
+        </if>
+         order by ib.join_time desc
+    </select>
+    <select id="selectAgentWhole" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        SELECT id,
+               original_price AS originalPrice,
+               whole_price AS wholePrice,
+               agent_whole_price_mode AS agentWholePriceMode,
+               agent_whole_price_pf_mode AS agentWholePricePfMode
+        FROM comm_pub_info
+        WHERE id = #{id}
+    </select>
+    <select id="findCommPubInfoMaxNum" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT comm_num FROM comm_pub_info WHERE comm_num LIKE CONCAT(#{commNum}, '%')
+    </select>
+
+    <!-- 批量修改发布商品销量 -->
+    <update id="updateSalesCount" parameterType="java.util.Map">
+        UPDATE
+        comm_pub_info
+        SET
+        sales_count =
+        CASE
+        <foreach collection="ordCommCountMap" item="value" index="key" separator=" ">
+            WHEN id = ${key} THEN IFNULL(sales_count, 0) + #{value}
+        </foreach>
+        ELSE NULL END
+        WHERE id IN
+        <foreach collection="ordCommCountMap" item="value" index="key" separator="," open="(" close=")">
+            ${key}
+        </foreach>
+    </update>
+    <update id="updateBeforeCommOriginalPrice" parameterType="com.wisea.cultivar.common.entity.tp.CommPubInfo">
+        UPDATE comm_pub_info
+        <set>
+            original_agent_price = #{originalAgentPrice},
+            agent_whole_price = #{agentWholePrice},
+            agent_whole_price_section = #{agentWholePriceSection}
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <select id="commInfoListFromImportBillT" resultMap="CommInfoListFromImportBill"
+            parameterType="com.wisea.cultivar.common.po.tp.trade.BuyerPitchOnPo">
+        SELECT
+        DISTINCT cpi.memb_id ,cpi.id as 'importBillCommMsgList.id',
+        cpi.comm_name as 'importBillCommMsgList.comm_name',
+        cpi.comm_spec as 'importBillCommMsgList.comm_spec',
+        cpi.whole_price as 'importBillCommMsgList.whole_price',
+        cpi.agent_whole_price as 'importBillCommMsgList.agent_whole_price',
+        cpi.stock as 'importBillCommMsgList.stock',
+        cpi.comm_state_type as 'importBillCommMsgList.comm_state_type',
+        cpi.sfzcmjzt_type  as  'importBillCommMsgList.sfzcmjzt_type',
+        cpi.logistics_ser_type  as  'importBillCommMsgList.logistics_ser_type',
+        cpi.freight_formwork_type,
+        cpi.freight_formwork_id,
+        cpi.pay_method_type,
+        cpi.deposit_bl,
+        cpi.quot_method_type,
+        cpi.hp_type,
+        cpi.hpzjsdy_count,
+        cpi.ysbz_bds,
+        mum.meas_unit_name as 'importBillCommMsgList.meas_unit_name',
+        cpi.start_ord_count as 'importBillCommMsgList.start_ord_count',
+        cpi.agent_state_type as 'importBillCommMsgList.agent_state_type'
+        FROM comm_pub_info cpi
+        LEFT JOIN meas_unit_mage mum on mum.id = cpi.meas_unit_id
+        WHERE
+         cpi.del_flag = '0'
+        <if test="importBillIds != null and importBillIds != ''">
+            AND cpi.id in (${importBillIds})
+        </if>
+    </select>
+</mapper>

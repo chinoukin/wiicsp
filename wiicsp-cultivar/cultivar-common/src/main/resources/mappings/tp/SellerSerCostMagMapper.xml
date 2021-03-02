@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.SellerSerCostMagMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.SellerSerCostMag" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="ser_cost" property="serCost" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, seller_id, ser_cost, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from seller_ser_cost_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from seller_ser_cost_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.SellerSerCostMag" >
+    insert into seller_ser_cost_mage (id, seller_id, ser_cost,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{serCost,jdbcType=DOUBLE},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.SellerSerCostMag" >
+    insert into seller_ser_cost_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="serCost != null" >
+        ser_cost,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="serCost != null" >
+        #{serCost,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.SellerSerCostMag" >
+    update seller_ser_cost_mage
+    <set >
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="serCost != null" >
+        ser_cost = #{serCost,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.SellerSerCostMag" >
+    update seller_ser_cost_mage
+    set seller_id = #{sellerId,jdbcType=BIGINT},
+      ser_cost = #{serCost,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.system.SellerSerCostMageListVo"
+          parameterType="com.wisea.cultivar.common.po.tp.system.SellerSerCostMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from seller_ser_cost_mage
+    where del_flag = '0'
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.system.SellerSerCostMageListVo"
+          parameterType="com.wisea.cultivar.common.po.tp.system.SellerSerCostMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from seller_ser_cost_mage
+    where del_flag = '0'
+  </select>
+
+  <select id="findForPage" resultType="com.wisea.cultivar.common.vo.tp.system.SellerSerCostMageListVo"
+          parameterType="com.wisea.cultivar.common.po.tp.system.SellerSerCostMagePagePo" >
+    select
+    <include refid="Column_List_With_T1" />,
+    t2.comp_name
+    from seller_ser_cost_mage t1
+    left join entp_data_info t2 on t1.seller_id = t2.memb_id
+    where t1.del_flag = '0'
+    and t2.del_flag = '0'
+    <if test="compName !=null and compName != ''" >
+      and INSTR(t2.comp_name,#{compName})!=0
+    </if>
+  </select>
+
+  <select id="findById" resultType="com.wisea.cultivar.common.vo.tp.system.SellerSerCostMageListVo"
+          parameterType="java.lang.Long" >
+    select
+    <include refid="Column_List_With_T1" />,
+    t2.comp_name
+    from seller_ser_cost_mage t1
+    left join entp_data_info t2 on t1.seller_id = t2.memb_id
+    where t1.id = #{id}
+  </select>
+  <select id="findBySellerId" resultType="com.wisea.cultivar.common.vo.tp.system.SellerSerCostMageGetVo"
+          parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List"/>
+    from seller_ser_cost_mage
+    where seller_id = #{sellerId}
+    and del_flag = '0'
+  </select>
+
+  <sql id="Column_List_With_T1" >
+    t1.id, t1.seller_id, t1.ser_cost, t1.remarks,
+    t1.del_flag
+  </sql>
+
+  <update id="deleteLogicByPrimaryKey" parameterType="java.lang.Long" >
+    update seller_ser_cost_mage
+    set del_flag = '1'
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 根据卖家ID逻辑删除 -->
+  <update id="deleteLogicBySellerId" parameterType="java.lang.Long" >
+    update seller_ser_cost_mage
+    set del_flag = '1'
+    where seller_id = #{sellerId,jdbcType=BIGINT}
+  </update>
+</mapper>

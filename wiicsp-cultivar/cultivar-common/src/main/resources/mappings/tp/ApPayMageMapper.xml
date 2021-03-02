@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ApPayMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ApPayMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="buyer_id" property="buyerId" jdbcType="BIGINT" />
+    <result column="purchaser_acct" property="purchaserAcct" jdbcType="VARCHAR" />
+    <result column="purchaser_acct_name" property="purchaserAcctName" jdbcType="VARCHAR" />
+    <result column="settle_cycle_type" property="settleCycleType" jdbcType="VARCHAR" />
+    <result column="bill_date_type" property="billDateType" jdbcType="VARCHAR" />
+    <result column="acct_credit_line" property="acctCreditLine" jdbcType="DOUBLE" />
+    <result column="available_credit" property="availableCredit" jdbcType="DOUBLE" />
+    <result column="pay_dead_date" property="payDeadDate" jdbcType="INTEGER" />
+    <result column="credit_type" property="creditType" jdbcType="VARCHAR" />
+    <result column="ser_cost_bl" property="serCostBl" jdbcType="DOUBLE" />
+    <result column="sf_late_fee_flag" property="sfLateFeeFlag" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, buyer_id, purchaser_acct, purchaser_acct_name, settle_cycle_type, bill_date_type,
+    acct_credit_line, available_credit, pay_dead_date, credit_type, ser_cost_bl, sf_late_fee_flag, create_by, create_date,
+    update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 分页查询账期支付设置列表 -->
+  <select id="findPageList" parameterType="com.wisea.cultivar.common.po.tp.trade.ApPayMageListPo" resultType="com.wisea.cultivar.common.vo.tp.trade.ApPayMageListVo">
+    select
+      apm.id,
+      apm.buyer_id buyerId,
+      mi.user_name purchaserAcct,
+      case when edi.comp_name is not null then edi.comp_name else pa.name end purchaserAcctName,
+      apm.settle_cycle_type settleCycleType,
+      apm.bill_date_type billDateType,
+      apm.acct_credit_line acctCreditLine,
+      case when apm.available_credit <![CDATA[ < ]]> 0 then 0 else apm.available_credit end availableCredit,
+      apm.pay_dead_date payDeadDate,
+      apm.credit_type creditType,
+      apm.ser_cost_bl serCostBl,
+      apm.sf_late_fee_flag sfLateFeeFlag
+    from
+      ap_pay_mage apm
+      left join memb_info mi on mi.id = apm.buyer_id
+      left join person_auth pa on pa.memb_id = apm.buyer_id
+      left join entp_data_info edi on edi.memb_id = apm.buyer_id and edi.auth_exam_state = '1' and edi.del_flag != '1'
+    where
+      apm.memb_id = #{membId}
+      and apm.del_flag = '0'
+      <if test="creditType != null and creditType != ''">
+        and apm.credit_type = #{creditType}
+      </if>
+      <if test="query != null and query != ''">
+        and (
+          mi.user_name like CONCAT('%', #{query}, '%')
+          or edi.comp_name like CONCAT('%', #{query}, '%')
+          or pa.name like CONCAT('%', #{query}, '%')
+        )
+      </if>
+    order by
+      apm.create_date desc
+  </select>
+
+  <!-- 根据卖方ID、买方ID查询账期支付设置管理 -->
+  <select id="findBySellerIdAndBuyerId" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from
+      ap_pay_mage
+    where
+      del_flag != '1'
+      and memb_id = #{sellerId,jdbcType=BIGINT}
+      and buyer_id = #{buyerId,jdbcType=BIGINT}
+  </select>
+
+  <!-- 查询支付账期设置列表 -->
+  <select id="findList" parameterType="com.wisea.cultivar.common.entity.tp.ApPayMage" resultMap="BaseResultMap">
+    select
+      <include refid="Base_Column_List" />
+    from
+      ap_pay_mage apm
+    where apm.del_flag != '1'
+    <if test="creditType != null and creditType != ''">
+      and apm.credit_type = #{creditType}
+    </if>
+    order by
+      apm.memb_id
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ap_pay_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ap_pay_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ApPayMage" >
+    insert into ap_pay_mage (id, memb_id, buyer_id,
+      purchaser_acct, purchaser_acct_name, settle_cycle_type,
+      bill_date_type, acct_credit_line, available_credit,
+      pay_dead_date, credit_type, ser_cost_bl, sf_late_fee_flag,
+      create_by, create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{buyerId,jdbcType=BIGINT},
+      #{purchaserAcct,jdbcType=VARCHAR}, #{purchaserAcctName,jdbcType=VARCHAR}, #{settleCycleType,jdbcType=VARCHAR},
+      #{billDateType,jdbcType=VARCHAR}, #{acctCreditLine,jdbcType=DOUBLE}, #{availableCredit,jdbcType=DOUBLE},
+      #{payDeadDate,jdbcType=INTEGER}, #{creditType,jdbcType=VARCHAR}, #{serCostBl,jdbcType=DOUBLE}, #{sfLateFeeFlag,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ApPayMage" >
+    insert into ap_pay_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="buyerId != null" >
+        buyer_id,
+      </if>
+      <if test="purchaserAcct != null" >
+        purchaser_acct,
+      </if>
+      <if test="purchaserAcctName != null" >
+        purchaser_acct_name,
+      </if>
+      <if test="settleCycleType != null" >
+        settle_cycle_type,
+      </if>
+      <if test="billDateType != null" >
+        bill_date_type,
+      </if>
+      <if test="acctCreditLine != null" >
+        acct_credit_line,
+      </if>
+      <if test="availableCredit != null" >
+        available_credit,
+      </if>
+      <if test="payDeadDate != null" >
+        pay_dead_date,
+      </if>
+      <if test="creditType != null" >
+        credit_type,
+      </if>
+      <if test="serCostBl != null" >
+        ser_cost_bl,
+      </if>
+      <if test="sfLateFeeFlag != null" >
+        sf_late_fee_flag,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaserAcct != null" >
+        #{purchaserAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaserAcctName != null" >
+        #{purchaserAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="settleCycleType != null" >
+        #{settleCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="billDateType != null" >
+        #{billDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="acctCreditLine != null" >
+        #{acctCreditLine,jdbcType=DOUBLE},
+      </if>
+      <if test="availableCredit != null" >
+        #{availableCredit,jdbcType=DOUBLE},
+      </if>
+      <if test="payDeadDate != null" >
+        #{payDeadDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creditType != null" >
+        #{creditType,jdbcType=VARCHAR},
+      </if>
+      <if test="serCostBl != null" >
+        #{serCostBl,jdbcType=DOUBLE},
+      </if>
+      <if test="sfLateFeeFlag != null" >
+        #{serCostBl,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ApPayMage" >
+    update ap_pay_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="buyerId != null" >
+        buyer_id = #{buyerId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaserAcct != null" >
+        purchaser_acct = #{purchaserAcct,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaserAcctName != null" >
+        purchaser_acct_name = #{purchaserAcctName,jdbcType=VARCHAR},
+      </if>
+      <if test="settleCycleType != null" >
+        settle_cycle_type = #{settleCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="billDateType != null" >
+        bill_date_type = #{billDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="acctCreditLine != null" >
+        acct_credit_line = #{acctCreditLine,jdbcType=DOUBLE},
+      </if>
+      <if test="availableCredit != null" >
+        available_credit = #{availableCredit,jdbcType=DOUBLE},
+      </if>
+      <if test="payDeadDate != null" >
+        pay_dead_date = #{payDeadDate,jdbcType=INTEGER},
+      </if>
+      <if test="creditType != null" >
+        credit_type = #{creditType,jdbcType=VARCHAR},
+      </if>
+      <if test="serCostBl != null" >
+        ser_cost_bl = #{serCostBl,jdbcType=DOUBLE},
+      </if>
+      <if test="sfLateFeeFlag != null" >
+        sf_late_fee_flag = #{sfLateFeeFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ApPayMage" >
+    update ap_pay_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      buyer_id = #{buyerId,jdbcType=BIGINT},
+      purchaser_acct = #{purchaserAcct,jdbcType=VARCHAR},
+      purchaser_acct_name = #{purchaserAcctName,jdbcType=VARCHAR},
+      settle_cycle_type = #{settleCycleType,jdbcType=VARCHAR},
+      bill_date_type = #{billDateType,jdbcType=VARCHAR},
+      acct_credit_line = #{acctCreditLine,jdbcType=DOUBLE},
+      available_credit = #{availableCredit,jdbcType=DOUBLE},
+      pay_dead_date = #{payDeadDate,jdbcType=INTEGER},
+      credit_type = #{creditType,jdbcType=VARCHAR},
+      ser_cost_bl = #{serCostBl,jdbcType=DOUBLE},
+      sf_late_fee_flag = #{serCostBl,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 买家端分页查询账期授权信息 -->
+  <select id="buyerApList" parameterType="com.wisea.cultivar.common.po.tp.trade.ApPayMageListPo" resultType="com.wisea.cultivar.common.vo.tp.trade.ApPayMageListVo">
+  	SELECT
+	  t1.id,
+	  t1.memb_id,
+	  t1.buyer_id,
+	  t1.purchaser_acct,
+	  t1.purchaser_acct_name,
+	  t1.settle_cycle_type,
+	  t1.bill_date_type,
+	  t1.acct_credit_line,
+	  t1.available_credit,
+	  t1.pay_dead_date,
+	  t1.sf_late_fee_flag,
+	  t1.credit_type,
+	  t1.create_date,
+	  t1.ser_cost_bl,
+	  t2.comp_name           AS sellerName
+	FROM ap_pay_mage t1
+	  LEFT JOIN entp_data_info t2
+	    ON t2.memb_id = t1.memb_id
+	WHERE t1.del_flag != '1'
+      and t1.buyer_id = #{membId,jdbcType=BIGINT}
+      <if test="query != null and query != ''">
+      	and t2.comp_name = #{query,jdbcType=BIGINT}
+      </if>
+  </select>
+</mapper>

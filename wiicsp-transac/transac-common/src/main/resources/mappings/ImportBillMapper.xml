@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.ImportBillMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.ImportBill" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="purchase_staff_id" property="purchaseStaffId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="comm_spec" property="commSpec" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="VARCHAR" />
+    <result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
+    <result column="level_spec_quote_id" property="levelSpecQuoteId" jdbcType="BIGINT" />
+    <result column="level_spec_quote_version_num" property="levelSpecQuoteVersionNum" jdbcType="VARCHAR" />
+    <result column="comm_version_num" property="commVersionNum" jdbcType="VARCHAR" />
+    <result column="meas_unit" property="measUnit" jdbcType="VARCHAR" />
+    <result column="net_weight" property="netWeight" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="trans_type" property="transType" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <!-- 查询进货单列表 -->
+   <resultMap id="ImportListMap" type="com.wisea.transac.common.vo.trade.ImportStallsListVo" >
+    <id column="stallsMageId" property="stallsMageId" jdbcType="BIGINT"/>
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT"/>
+    <result column="stalls_name" property="stallsName" jdbcType="VARCHAR" />
+    <result column="stalls_house_num" property="stallsHouseNum" jdbcType="VARCHAR" />
+    <result column="whole_sale_market_id" property="wholeSaleMarketId" jdbcType="BIGINT"/>
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="cont_tel" property="contTel" jdbcType="VARCHAR" />
+    <result column="business_date" property="businessDate" jdbcType="VARCHAR" />
+    <result column="business_time" property="businessTime" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="prov" property="prov" jdbcType="VARCHAR" />
+    <result column="cou" property="cou" jdbcType="VARCHAR" />
+    <result column="city" property="city" jdbcType="VARCHAR" />
+    <result column="base_name" property="baseName" jdbcType="VARCHAR" />
+    <result column="base_type" property="baseType" jdbcType="VARCHAR" />
+    <result column="stallsMageId" property="stallsMageId" jdbcType="BIGINT"/>
+    <result column="place_origin_name" property="placeOriginName" jdbcType="VARCHAR" />
+    <collection property="importCommList" ofType="com.wisea.transac.common.vo.trade.ImportCommListVo">
+	    <id column="id" property="id" jdbcType="BIGINT" />
+	    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+	    <result column="purchase_staff_id" property="purchaseStaffId" jdbcType="BIGINT" />
+	    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+	    <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+        <result column="ser_type_expres" property="serTypeExpres" jdbcType="VARCHAR" />
+        <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+	    <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR" />
+	    <result column="count" property="count" jdbcType="INTEGER" />
+	    <result column="comm_title" property="commTitle" jdbcType="VARCHAR" />
+	    <result column="comm_spec" property="commSpec" jdbcType="VARCHAR" />
+	    <result column="price" property="price" jdbcType="VARCHAR" />
+	    <result column="price_expres" property="priceExpres" jdbcType="VARCHAR" />
+	    <result column="join_time" property="joinTime" jdbcType="TIMESTAMP" />
+	    <result column="level_spec_quote_id" property="levelSpecQuoteId" jdbcType="BIGINT" />
+	    <result column="level_spec_quote_version_num" property="levelSpecQuoteVersionNum" jdbcType="VARCHAR" />
+	    <result column="comm_version_num" property="commVersionNum" jdbcType="VARCHAR" />
+	    <result column="meas_unit" property="measUnit" jdbcType="VARCHAR" />
+	    <result column="net_weight" property="netWeight" jdbcType="DOUBLE" />
+	    <result column="levelVersion" property="levelVersion" jdbcType="VARCHAR" />
+	    <result column="commVersion" property="commVersion" jdbcType="VARCHAR" />
+	</collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, purchase_staff_id, seller_id, comm_pub_id, count, comm_spec, price,
+    join_time, level_spec_quote_id, level_spec_quote_version_num, comm_version_num, net_weight,meas_unit, create_by,
+    create_date, update_by, update_date, remarks, del_flag, trans_type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from import_bill
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from import_bill
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.ImportBill" >
+    insert into import_bill (id, memb_id, purchase_staff_id,
+      seller_id, comm_pub_id, count,
+      comm_spec, price, join_time,
+      level_spec_quote_id, level_spec_quote_version_num,
+      comm_version_num, net_weight,meas_unit,create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag, trans_type)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{purchaseStaffId,jdbcType=BIGINT},
+      #{sellerId,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT}, #{count,jdbcType=INTEGER},
+      #{commSpec,jdbcType=VARCHAR}, #{price,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP},
+      #{levelSpecQuoteId,jdbcType=BIGINT}, #{levelSpecQuoteVersionNum,jdbcType=VARCHAR},
+      #{commVersionNum,jdbcType=VARCHAR},#{netWeight,jdbcType=DOUBLE},#{measUnit,jdbcType=VARCHAR},
+       #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR}, #{transType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.ImportBill" >
+    insert into import_bill
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="purchaseStaffId != null" >
+        purchase_staff_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="commSpec != null" >
+        comm_spec,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="joinTime != null" >
+        join_time,
+      </if>
+      <if test="levelSpecQuoteId != null" >
+        level_spec_quote_id,
+      </if>
+      <if test="levelSpecQuoteVersionNum != null" >
+        level_spec_quote_version_num,
+      </if>
+      <if test="commVersionNum != null" >
+        comm_version_num,
+      </if>
+      <if test="netWeight != null" >
+        net_weight,
+      </if>
+      <if test="measUnit != null" >
+        meas_unit,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="transType != null" >
+        trans_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseStaffId != null" >
+        #{purchaseStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="commSpec != null" >
+        #{commSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="joinTime != null" >
+        #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="levelSpecQuoteId != null" >
+        #{levelSpecQuoteId,jdbcType=BIGINT},
+      </if>
+      <if test="levelSpecQuoteVersionNum != null" >
+        #{levelSpecQuoteVersionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commVersionNum != null" >
+        #{commVersionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="netWeight != null" >
+        #{netWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnit != null" >
+        #{measUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="transType != null" >
+        #{transType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.ImportBill" >
+    update import_bill
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="purchaseStaffId != null" >
+        purchase_staff_id = #{purchaseStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="commPubId != null" >
+        comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="commSpec != null" >
+        comm_spec = #{commSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=VARCHAR},
+      </if>
+      <if test="joinTime != null" >
+        join_time = #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="levelSpecQuoteId != null" >
+        level_spec_quote_id = #{levelSpecQuoteId,jdbcType=BIGINT},
+      </if>
+      <if test="levelSpecQuoteVersionNum != null" >
+        level_spec_quote_version_num = #{levelSpecQuoteVersionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="commVersionNum != null" >
+        comm_version_num = #{commVersionNum,jdbcType=VARCHAR},
+      </if>
+      <if test="netWeight != null" >
+        net_weight = #{netWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnit != null" >
+        meas_unit = #{measUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="transType != null" >
+        trans_type = #{transType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.ImportBill" >
+    update import_bill
+    set memb_id = #{membId,jdbcType=BIGINT},
+      purchase_staff_id = #{purchaseStaffId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      comm_spec = #{commSpec,jdbcType=VARCHAR},
+      price = #{price,jdbcType=VARCHAR},
+      join_time = #{joinTime,jdbcType=TIMESTAMP},
+      level_spec_quote_id = #{levelSpecQuoteId,jdbcType=BIGINT},
+      level_spec_quote_version_num = #{levelSpecQuoteVersionNum,jdbcType=VARCHAR},
+      comm_version_num = #{commVersionNum,jdbcType=VARCHAR},
+      net_weight = #{netWeight,jdbcType=DOUBLE},
+      meas_unit = #{measUnit,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      trans_type = #{transType,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.ImportBillPageListVo" parameterType="com.wisea.transac.common.po.ImportBillPageListPo" >
+    select
+	  id id,
+	  memb_id membId,
+	  purchase_staff_id purchaseStaffId,
+	  seller_id sellerId,
+	  comm_pub_id commPubId,
+	  count count,
+	  comm_spec commSpec,
+	  price price,
+	  join_time joinTime,
+	  level_spec_quote_id levelSpecQuoteId,
+	  level_spec_quote_version_num levelSpecQuoteVersionNum,
+	  comm_version_num commVersionNum
+	from
+	  import_bill
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.ImportBillInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  purchase_staff_id purchaseStaffId,
+	  seller_id sellerId,
+	  comm_pub_id commPubId,
+	  count count,
+	  comm_spec commSpec,
+	  price price,
+	  join_time joinTime,
+	  level_spec_quote_id levelSpecQuoteId,
+	  level_spec_quote_version_num levelSpecQuoteVersionNum,
+	  comm_version_num commVersionNum
+	from
+	  import_bill
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+
+  <!-- 根据等级规格ID 以及 买家的ID 查询  是否已经添加此商品 -->
+  <select id="isHaveImportBillInfo" resultMap="BaseResultMap" parameterType="com.wisea.transac.common.entity.ImportBill">
+    select
+    <include refid="Base_Column_List" />
+    from import_bill
+    where level_spec_quote_id = #{levelSpecQuoteId,jdbcType=BIGINT}
+    AND memb_id = #{membId,jdbcType=BIGINT}
+    AND purchase_staff_id = #{purchaseStaffId,jdbcType=BIGINT}
+    AND del_flag = '0'
+  </select>
+
+    <!-- 查询进货单列表 -->
+  <select id="findImportList" resultMap="ImportListMap" parameterType="com.wisea.transac.common.po.trade.ImportListPo">
+     SELECT
+      t1.id,
+      t1.seller_id,
+      t1.memb_id,
+      t1.purchase_staff_id,
+      t1.count,
+      t1.comm_spec,
+      t1.comm_pub_id,
+      t1.price,
+      t1.join_time,
+      t1.level_spec_quote_version_num,
+      t1.comm_version_num,
+      t1.net_weight,
+      t1.meas_unit,
+      t1.level_spec_quote_id,
+      t2.version_num                  as levelVersion,
+      t2.price_expres,
+      t2.start_ord_expres,
+      t2.avai_supply_count,
+      t3.comm_title,
+      t3.comm_state_type,
+      t3.version_num                  as commVersion,
+      t3.ser_type_expres,
+      t4.id                           AS stallsMageId,
+      t4.stalls_name,
+      t4.stalls_house_num,
+      t4.whole_sale_market_id,
+      t4.contacts,
+      t4.cont_tel,
+      t4.business_date,
+      t4.business_time,
+      t4.address,
+      s1.name                         as prov,
+      s2.name                         as cou,
+      s3.name                         as city
+    from import_bill t1
+      left join level_spec_quote t2
+        on t1.level_spec_quote_id = t2.id
+      left join comm_pub_info t3
+        on t3.id = t2.comm_pub_id
+      left join stalls_mage t4
+        on t4.id = t3.stalls_mage_id
+      left join sys_area s1
+        on s1.code = t4.area_prov
+      left join sys_area s2
+        on s2.code = t4.area_cou
+      left join sys_area s3
+        on s3.code = t4.area_city
+        where t1.memb_id = #{membId,jdbcType=BIGINT}
+        and t1.purchase_staff_id = #{purchaseStaffId,jdbcType=BIGINT}
+        and t1.del_flag = '0'
+        <if test="transType != null">
+	        and t1.trans_type != '1'
+        </if>
+        <if test="importIds != null and importIds != ''">
+            and t1.id in (${importIds})
+        </if>
+      ORDER BY t1.join_time DESC
+  </select>
+
+  <!-- 查询基地进货单列表 -->
+  <select id="findLocalImportList" resultMap="ImportListMap" parameterType="com.wisea.transac.common.po.trade.ImportListPo">
+    SELECT
+	  t1.id,
+	  t1.seller_id,
+	  t1.memb_id,
+	  t1.purchase_staff_id,
+	  t1.count,
+	  t1.comm_spec,
+	  t1.comm_pub_id,
+	  t1.price,
+	  t1.join_time,
+	  t1.level_spec_quote_version_num,
+	  t1.comm_version_num,
+	  t1.net_weight,
+	  t1.meas_unit,
+	  t1.level_spec_quote_id,
+	  t2.version_num                  AS levelVersion,
+	  t2.price_expres,
+	  t2.start_ord_expres,
+	  t2.avai_supply_count,
+	  t3.comm_title,
+	  t3.comm_state_type,
+	  t3.version_num                  AS commVersion,
+	  t3.origin_place_type,
+	  t4.id                           AS stallsMageId,
+	  t4.base_name,
+	  t4.address,
+	  t4.base_type,
+	  t5.place_origin_name,
+	  t6.cont_tel                     AS cont_tel,
+	  t6.conter                       AS contacts,
+	  s1.name                         AS prov,
+	  s2.name                         AS cou,
+	  s3.name                         AS city
+	FROM import_bill t1
+	  LEFT JOIN level_spec_quote t2
+	    ON t1.level_spec_quote_id = t2.id
+	  LEFT JOIN comm_pub_info t3
+	    ON t3.id = t2.comm_pub_id
+	  LEFT JOIN base_info t4
+	    ON t4.id = t3.base_id
+	  LEFT JOIN place_origin_mage t5
+	    ON t5.id = t4.abroad_id
+	  LEFT JOIN entp_auth t6
+	    ON t6.memb_id = t3.memb_id
+	      AND t6.del_flag = '0'
+	      AND t6.auth_state_type = '3'
+	  LEFT JOIN sys_area s1
+	    ON s1.code = t4.area_prov
+	  LEFT JOIN sys_area s2
+	    ON s2.code = t4.area_cou
+	  LEFT JOIN sys_area s3
+	    ON s3.code = t4.area_city
+	WHERE t1.memb_id = #{membId,jdbcType=BIGINT}
+        and t1.purchase_staff_id = #{purchaseStaffId,jdbcType=BIGINT}
+        and t1.del_flag = '0'
+        and t1.trans_type = '1'
+        <if test="importIds != null and importIds != ''">
+            and t1.id in (${importIds})
+        </if>
+      ORDER BY t1.join_time DESC
+  </select>
+
+  <!-- 进货单商品数量角标 -->
+  <select id="commInfoListNum" resultType="java.lang.String" parameterType="com.wisea.transac.common.po.trade.ImportListPo">
+    SELECT
+	  COUNT(*)
+	FROM import_bill t1
+	WHERE t1.memb_id =#{membId,jdbcType=BIGINT}
+    AND t1.purchase_staff_id =#{purchaseStaffId,jdbcType=BIGINT}
+    AND t1.del_flag = '0'
+  </select>
+
+  <!-- 批量更新 -->
+  <update id="batchUpdate" parameterType="java.util.List">
+    <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+        update import_bill
+        <set >
+            <if test="item.price != null" >
+               price = #{item.price},
+            </if>
+        </set>
+        where id = #{item.id,jdbcType=BIGINT}
+    </foreach>
+  </update>
+</mapper>

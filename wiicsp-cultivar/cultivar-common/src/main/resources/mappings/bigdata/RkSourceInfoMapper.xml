@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.RkSourceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.RkSourceInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="source_type" property="sourceType" jdbcType="VARCHAR" />
+    <result column="sub_entp_name" property="subEntpName" jdbcType="VARCHAR" />
+    <result column="varit_name" property="varitName" jdbcType="VARCHAR" />
+    <result column="zrk" property="zrk" jdbcType="VARCHAR" />
+    <result column="dqkc" property="dqkc" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, source_type, sub_entp_name, varit_name, zrk, dqkc, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into rk_source_info (id, source_type, sub_entp_name,
+    varit_name, zrk, dqkc,
+    create_by, create_date, update_by,
+    update_date, remarks, del_flag
+    )
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.sourceType,jdbcType=VARCHAR}, #{item.subEntpName,jdbcType=VARCHAR},
+      #{item.varitName,jdbcType=VARCHAR}, #{item.zrk,jdbcType=VARCHAR}, #{item.dqkc,jdbcType=VARCHAR},
+      #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+      #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+      )
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from rk_source_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from rk_source_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.RkSourceInfo" >
+    insert into rk_source_info (id, source_type, sub_entp_name,
+      varit_name, zrk, dqkc,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{sourceType,jdbcType=VARCHAR}, #{subEntpName,jdbcType=VARCHAR},
+      #{varitName,jdbcType=VARCHAR}, #{zrk,jdbcType=VARCHAR}, #{dqkc,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.RkSourceInfo" >
+    insert into rk_source_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sourceType != null" >
+        source_type,
+      </if>
+      <if test="subEntpName != null" >
+        sub_entp_name,
+      </if>
+      <if test="varitName != null" >
+        varit_name,
+      </if>
+      <if test="zrk != null" >
+        zrk,
+      </if>
+      <if test="dqkc != null" >
+        dqkc,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="sourceType != null" >
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="subEntpName != null" >
+        #{subEntpName,jdbcType=VARCHAR},
+      </if>
+      <if test="varitName != null" >
+        #{varitName,jdbcType=VARCHAR},
+      </if>
+      <if test="zrk != null" >
+        #{zrk,jdbcType=VARCHAR},
+      </if>
+      <if test="dqkc != null" >
+        #{dqkc,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.RkSourceInfo" >
+    update rk_source_info
+    <set >
+      <if test="sourceType != null" >
+        source_type = #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="subEntpName != null" >
+        sub_entp_name = #{subEntpName,jdbcType=VARCHAR},
+      </if>
+      <if test="varitName != null" >
+        varit_name = #{varitName,jdbcType=VARCHAR},
+      </if>
+      <if test="zrk != null" >
+        zrk = #{zrk,jdbcType=VARCHAR},
+      </if>
+      <if test="dqkc != null" >
+        dqkc = #{dqkc,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.RkSourceInfo" >
+    update rk_source_info
+    set source_type = #{sourceType,jdbcType=VARCHAR},
+      sub_entp_name = #{subEntpName,jdbcType=VARCHAR},
+      varit_name = #{varitName,jdbcType=VARCHAR},
+      zrk = #{zrk,jdbcType=VARCHAR},
+      dqkc = #{dqkc,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.RkSourceInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.RkSourceInfoPagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from
+      rk_source_info
+    where
+      del_flag = '0'
+      <if test="sourceType != null and sourceType != ''">
+        and source_type = #{sourceType}
+      </if>
+      <if test="varitName != null and varitName != ''">
+        and varit_name like CONCAT('%', #{varitName}, '%')
+      </if>
+      <if test="subEntpName != null and subEntpName != ''">
+        and sub_entp_name like CONCAT('%', #{subEntpName}, '%')
+      </if>
+    order by
+      update_date desc
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.RkSourceInfoListVo" parameterType="com.wisea.cultivar.common.po.bigdata.RkSourceInfoListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from rk_source_info
+    where del_flag = '0'
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.RkSourceInfo" >
+    update rk_source_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

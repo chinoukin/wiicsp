@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.VarietiesMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="varieties_num" property="varietiesNum" jdbcType="VARCHAR" />
+    <result column="varieties_name" property="varietiesName" jdbcType="VARCHAR" />
+    <result column="category_id" property="categoryId" jdbcType="BIGINT" />
+    <result column="spec" property="spec" jdbcType="VARCHAR" />
+    <result column="model_num" property="modelNum" jdbcType="VARCHAR" />
+    <result column="main_unit" property="mainUnit" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, varieties_num, varieties_name, category_id, spec, model_num, main_unit, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from varieties_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="check" resultMap="BaseResultMap" parameterType="com.wisea.cultivar.common.po.bigdata.VarietiesMageInsertPo" >
+    select
+    <include refid="Base_Column_List" />
+    from varieties_mage
+    where del_flag = '0'
+    <if test="varietiesNum != null and varietiesNum != ''">
+     AND varieties_num = #{varietiesNum}
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from varieties_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" >
+    insert into varieties_mage (id, varieties_num, varieties_name,
+      category_id, spec, model_num,
+      main_unit, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{varietiesNum,jdbcType=VARCHAR}, #{varietiesName,jdbcType=VARCHAR},
+      #{categoryId,jdbcType=BIGINT}, #{spec,jdbcType=VARCHAR}, #{modelNum,jdbcType=VARCHAR},
+      #{mainUnit,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" >
+    insert into varieties_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="varietiesNum != null" >
+        varieties_num,
+      </if>
+      <if test="varietiesName != null" >
+        varieties_name,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="spec != null" >
+        spec,
+      </if>
+      <if test="modelNum != null" >
+        model_num,
+      </if>
+      <if test="mainUnit != null" >
+        main_unit,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="varietiesNum != null" >
+        #{varietiesNum,jdbcType=VARCHAR},
+      </if>
+      <if test="varietiesName != null" >
+        #{varietiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="spec != null" >
+        #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="modelNum != null" >
+        #{modelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mainUnit != null" >
+        #{mainUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" >
+    update varieties_mage
+    <set >
+      <if test="varietiesNum != null" >
+        varieties_num = #{varietiesNum,jdbcType=VARCHAR},
+      </if>
+      <if test="varietiesName != null" >
+        varieties_name = #{varietiesName,jdbcType=VARCHAR},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=BIGINT},
+      </if>
+      <if test="spec != null" >
+        spec = #{spec,jdbcType=VARCHAR},
+      </if>
+      <if test="modelNum != null" >
+        model_num = #{modelNum,jdbcType=VARCHAR},
+      </if>
+      <if test="mainUnit != null" >
+        main_unit = #{mainUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" >
+    update varieties_mage
+    set varieties_num = #{varietiesNum,jdbcType=VARCHAR},
+      varieties_name = #{varietiesName,jdbcType=VARCHAR},
+      category_id = #{categoryId,jdbcType=BIGINT},
+      spec = #{spec,jdbcType=VARCHAR},
+      model_num = #{modelNum,jdbcType=VARCHAR},
+      main_unit = #{mainUnit,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.VarietiesMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.VarietiesMagePagePo" >
+    select
+     vm.*,cm.category_name categoryName
+    from varieties_mage vm
+    left join category_mage cm on vm.category_id = cm.id
+    where vm.del_flag = '0'
+    <if test="varietiesName != null and varietiesName != ''">
+     AND vm.varieties_name LIKE CONCAT('%', #{varietiesName}, '%')
+    </if>
+    <if test="categoryId != null and categoryId != ''">
+     AND vm.category_id = #{categoryId}
+    </if>
+     ORDER BY vm.update_date DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.VarietiesMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.VarietiesMageListPo" >
+    select
+     vm.*,cm.category_name categoryName
+    from varieties_mage vm
+    left join category_mage cm on vm.category_id = cm.id
+    where vm.del_flag = '0'
+    <if test="varietiesName != null and varietiesName != ''">
+     AND vm.varieties_name LIKE CONCAT('%', #{varietiesName}, '%')
+    </if>
+    <if test="categoryId != null and categoryId != ''">
+     AND vm.category_id = #{categoryId}
+    </if>
+     ORDER BY vm.update_date DESC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" >
+    update varieties_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="cheakRepetition" resultType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage" parameterType="com.wisea.cultivar.common.entity.bigdata.VarietiesMage">
+    select
+    <include refid="Base_Column_List" />
+    from varieties_mage
+    where del_flag = '0'
+    <if test="varietiesName != null and varietiesName != ''">
+      and  varieties_name = #{varietiesName}
+    </if>
+    <if test="categoryId != null and categoryId != ''">
+      AND category_id != #{categoryId}
+    </if>
+    <if test="id != null and id != ''">
+      and id != #{id}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.explorer.mapper.IndustryLayerAreaMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.explorer.entity.IndustryLayerArea">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="industry_layer_id" jdbcType="BIGINT" property="industryLayerId" />
+    <result column="area_name" jdbcType="VARCHAR" property="areaName" />
+    <result column="location" jdbcType="VARCHAR" property="location" />
+    <result column="area_acre" jdbcType="DOUBLE" property="areaAcre" />
+    <result column="area_introduce" jdbcType="VARCHAR" property="areaIntroduce" />
+    <result column="coord_point_expres" jdbcType="VARCHAR" property="coordPointExpres" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, industry_layer_id, area_name, location, area_acre, area_introduce, coord_point_expres,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from industry_layer_area
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from industry_layer_area
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerArea">
+    insert into industry_layer_area (id, industry_layer_id, area_name,
+      location, area_acre, area_introduce,
+      coord_point_expres, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{industryLayerId,jdbcType=BIGINT}, #{areaName,jdbcType=VARCHAR},
+      #{location,jdbcType=VARCHAR}, #{areaAcre,jdbcType=DOUBLE}, #{areaIntroduce,jdbcType=VARCHAR},
+      #{coordPointExpres,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerArea">
+    insert into industry_layer_area
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="industryLayerId != null">
+        industry_layer_id,
+      </if>
+      <if test="areaName != null">
+        area_name,
+      </if>
+      <if test="location != null">
+        location,
+      </if>
+      <if test="areaAcre != null">
+        area_acre,
+      </if>
+      <if test="areaIntroduce != null">
+        area_introduce,
+      </if>
+      <if test="coordPointExpres != null">
+        coord_point_expres,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="industryLayerId != null">
+        #{industryLayerId,jdbcType=BIGINT},
+      </if>
+      <if test="areaName != null">
+        #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="areaAcre != null">
+        #{areaAcre,jdbcType=DOUBLE},
+      </if>
+      <if test="areaIntroduce != null">
+        #{areaIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="coordPointExpres != null">
+        #{coordPointExpres,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerArea">
+    update industry_layer_area
+    <set>
+      <if test="industryLayerId != null">
+        industry_layer_id = #{industryLayerId,jdbcType=BIGINT},
+      </if>
+      <if test="areaName != null">
+        area_name = #{areaName,jdbcType=VARCHAR},
+      </if>
+      <if test="location != null">
+        location = #{location,jdbcType=VARCHAR},
+      </if>
+      <if test="areaAcre != null">
+        area_acre = #{areaAcre,jdbcType=DOUBLE},
+      </if>
+      <if test="areaIntroduce != null">
+        area_introduce = #{areaIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="coordPointExpres != null">
+        coord_point_expres = #{coordPointExpres,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerArea">
+    update industry_layer_area
+    set industry_layer_id = #{industryLayerId,jdbcType=BIGINT},
+      area_name = #{areaName,jdbcType=VARCHAR},
+      location = #{location,jdbcType=VARCHAR},
+      area_acre = #{areaAcre,jdbcType=DOUBLE},
+      area_introduce = #{areaIntroduce,jdbcType=VARCHAR},
+      coord_point_expres = #{coordPointExpres,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.explorer.po.IndustryLayerAreaPagePo" resultType="com.wisea.cultivar.explorer.vo.IndustryLayerAreaListVo">
+    select
+    <include refid="Base_Column_List" />
+    from industry_layer_area
+    where del_flag = '0'
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.explorer.po.IndustryLayerAreaListPo" resultType="com.wisea.cultivar.explorer.vo.IndustryLayerAreaListVo">
+    select
+    <include refid="Base_Column_List" />
+    from industry_layer_area
+    where del_flag = '0'
+    <include refid="query_where"/>
+    order by create_date
+  </select>
+
+  <sql id="query_where">
+    <if test="industryLayerId != null">
+      and industry_layer_id = #{industryLayerId,jdbcType=BIGINT}
+    </if>
+    <if test="areaName != null and areaName != ''">
+      and area_name = #{areaName,jdbcType=VARCHAR}
+    </if>
+  </sql>
+
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.explorer.entity.IndustryLayerArea">
+    update industry_layer_area
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

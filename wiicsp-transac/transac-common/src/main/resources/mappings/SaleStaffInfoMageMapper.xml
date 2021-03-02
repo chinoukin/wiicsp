@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.SaleStaffInfoMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.SaleStaffInfoMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="sale_staff_id" property="saleStaffId" jdbcType="BIGINT" />
+    <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+    <result column="purchase_team_state" property="purchaseTeamState" jdbcType="VARCHAR" />
+    <result column="signature" property="signature" jdbcType="VARCHAR" />
+    <result column="sf_admin_flag" property="sfAdminFlag" jdbcType="CHAR" />
+    <result column="staff_name" property="staffName" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="VARCHAR" />
+    <result column="sex_type" property="sexType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, sale_staff_id, effe_inval_state, purchase_team_state, signature, sf_admin_flag,
+    staff_name, position, sex_type, create_by, create_date, update_by, update_date, remarks,
+    del_flag
+  </sql>
+
+  <!-- 根据销售员ID查询销售员工信息 -->
+  <select id="findBySaleStaffId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from sale_staff_info_mage ssim where ssim.sale_staff_id = #{saleStaffId} and ssim.effe_inval_state = '0'
+  </select>
+
+  <select id="findInfoBySaleStaffId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from sale_staff_info_mage ssim where ssim.sale_staff_id = #{saleStaffId} and ssim.del_flag = '0' and ssim.purchase_team_state = '1'
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sale_staff_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sale_staff_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.SaleStaffInfoMage" >
+    insert into sale_staff_info_mage (id, memb_id, sale_staff_id,
+      effe_inval_state, purchase_team_state, signature,
+      sf_admin_flag, staff_name, position,
+      sex_type, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{saleStaffId,jdbcType=BIGINT},
+      #{effeInvalState,jdbcType=VARCHAR}, #{purchaseTeamState,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR},
+      #{sfAdminFlag,jdbcType=CHAR}, #{staffName,jdbcType=VARCHAR}, #{position,jdbcType=VARCHAR},
+      #{sexType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.SaleStaffInfoMage" >
+    insert into sale_staff_info_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="saleStaffId != null" >
+        sale_staff_id,
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state,
+      </if>
+      <if test="purchaseTeamState != null" >
+        purchase_team_state,
+      </if>
+      <if test="signature != null" >
+        signature,
+      </if>
+      <if test="sfAdminFlag != null" >
+        sf_admin_flag,
+      </if>
+      <if test="staffName != null" >
+        staff_name,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="sexType != null" >
+        sex_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="saleStaffId != null" >
+        #{saleStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="effeInvalState != null" >
+        #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTeamState != null" >
+        #{purchaseTeamState,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="sfAdminFlag != null" >
+        #{sfAdminFlag,jdbcType=CHAR},
+      </if>
+      <if test="staffName != null" >
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.SaleStaffInfoMage" >
+    update sale_staff_info_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="saleStaffId != null" >
+        sale_staff_id = #{saleStaffId,jdbcType=BIGINT},
+      </if>
+      <if test="effeInvalState != null" >
+        effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      </if>
+      <if test="purchaseTeamState != null" >
+        purchase_team_state = #{purchaseTeamState,jdbcType=VARCHAR},
+      </if>
+      <if test="signature != null" >
+        signature = #{signature,jdbcType=VARCHAR},
+      </if>
+      <if test="sfAdminFlag != null" >
+        sf_admin_flag = #{sfAdminFlag,jdbcType=CHAR},
+      </if>
+      <if test="staffName != null" >
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="sexType != null" >
+        sex_type = #{sexType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.SaleStaffInfoMage" >
+    update sale_staff_info_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      sale_staff_id = #{saleStaffId,jdbcType=BIGINT},
+      effe_inval_state = #{effeInvalState,jdbcType=VARCHAR},
+      purchase_team_state = #{purchaseTeamState,jdbcType=VARCHAR},
+      signature = #{signature,jdbcType=VARCHAR},
+      sf_admin_flag = #{sfAdminFlag,jdbcType=CHAR},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      sex_type = #{sexType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.seller.SaleStaffInfoMagePageListVo" parameterType="com.wisea.transac.common.po.SaleStaffInfoMagePageListPo" >
+    select
+    ssim.id id,
+    ssim.memb_id membId,
+    ssim.sale_staff_id saleStaffId,
+    ssim.effe_inval_state effeInvalState,
+    ssim.purchase_team_state purchaseTeamState,
+    ssim.signature signature,
+    ssim.sf_admin_flag sfAdminFlag,
+    ssim.staff_name staffName,
+    ssim.position position,
+    ssim.sex_type sexType,
+    mi.regist_tel registTel
+	from
+	  sale_staff_info_mage ssim
+	left join memb_info mi on mi.id = ssim.sale_staff_id
+	where
+    ssim.del_flag = '0'
+	  and ssim.memb_id = #{membId}
+      <if test="sfAdminFlag != null and sfAdminFlag != ''">
+        and  ssim.sf_admin_flag =  #{sfAdminFlag}
+      </if>
+      <if test="effeInvalState != null and effeInvalState != ''">
+        and  ssim.effe_inval_state =  #{effeInvalState}
+      </if>
+      <if test="val != null and val != ''">
+        AND (ssim.staff_name LIKE CONCAT('%', #{val}, '%')
+        OR mi.regist_tel LIKE CONCAT('%', #{val}, '%'))
+      </if>
+	  order by ssim.update_date desc
+  </select>
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.seller.SaleStaffInfoMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  memb_id membId,
+	  sale_staff_id saleStaffId,
+	  effe_inval_state effeInvalState,
+	  purchase_team_state purchaseTeamState,
+	  signature signature,
+	  sf_admin_flag sfAdminFlag,
+	  staff_name staffName,
+	  position position,
+	  sex_type sexType
+	from
+	  sale_staff_info_mage
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <select id="findInfoByStallsMageId" resultType="com.wisea.transac.common.vo.seller.SaleStaffInfoMageInfoVo" parameterType="com.wisea.transac.common.po.seller.FindInfoByStallsMageIdPo" >
+    SELECT
+    ssim.*,si.merchant_id merchantId
+    FROM
+    stalls_staff_rela_mage ssrm
+    INNER JOIN sale_staff_info_mage ssim ON ssim.id = ssrm.staff_info_mage_id AND ssim.del_flag = '0'
+    INNER JOIN stalls_mage sm ON sm.id = ssrm.stalls_mage_id AND sm.del_flag='0'
+    INNER JOIN shop_info si ON si.id = sm.shop_id
+    AND ssim.effe_inval_state = '0'
+    AND ssim.purchase_team_state = '1'
+    <if test="sfAdminFlag != null and sfAdminFlag != ''">
+      AND ssim.sf_admin_flag = #{sfAdminFlag}
+    </if>
+    WHERE
+    ssrm.del_flag = '0'
+    AND ssrm.effe_inval_state = '0'
+    AND ssrm.rela_state_type = '0'
+    AND ssrm.stalls_mage_id in
+    (SELECT id from stalls_mage where
+    del_flag='0' and
+    shop_id in (SELECT shop_id from stalls_mage WHERE del_flag='0' AND id in
+    <foreach collection="staffMageIds" index="index" item="item" open="("
+             separator="," close=")">
+      #{item}
+    </foreach>
+    ))
+  </select>
+
+  <select id="findListByMembId" resultType="com.wisea.transac.common.vo.seller.SaleStaffInfoMageInfoVo" parameterType="com.wisea.transac.common.po.seller.FindInfoByStallsMageIdPo" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM sale_staff_info_mage
+    where del_flag = '0'
+    <if test="sfAdminFlag != null and sfAdminFlag != ''">
+      AND sf_admin_flag = #{sfAdminFlag}
+    </if>
+    and memb_id = #{membId,jdbcType=BIGINT}
+  </select>
+  <select id="checkInfoExist" resultType="com.wisea.transac.common.entity.SaleStaffInfoMage" parameterType="com.wisea.transac.common.entity.SaleStaffInfoMage">
+    select
+	 *
+	from
+	  sale_staff_info_mage
+	where
+	  del_flag = '0'
+	  and memb_id = #{membId}
+      and sale_staff_id = #{saleStaffId}
+	  and purchase_team_state = '1'
+  </select>
+</mapper>

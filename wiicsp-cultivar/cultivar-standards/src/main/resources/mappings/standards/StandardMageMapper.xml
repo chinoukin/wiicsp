@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.standards.mapper.StandardMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.standards.entity.StandardMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="plant_reco_process_type" jdbcType="VARCHAR" property="plantRecoProcessType" />
+    <result column="plant_standard_name" jdbcType="VARCHAR" property="plantStandardName" />
+    <result column="prudt_url" jdbcType="VARCHAR" property="prudtUrl" />
+    <result column="plant_type" jdbcType="VARCHAR" property="plantType" />
+    <result column="outline" jdbcType="VARCHAR" property="outline" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, plant_reco_process_type, plant_standard_name, prudt_url, plant_type, outline,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from standard_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from standard_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.standards.entity.StandardMage">
+    insert into standard_mage (id, plant_reco_process_type, plant_standard_name,
+      prudt_url, plant_type, outline,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{plantRecoProcessType,jdbcType=VARCHAR}, #{plantStandardName,jdbcType=VARCHAR},
+      #{prudtUrl,jdbcType=VARCHAR}, #{plantType,jdbcType=VARCHAR}, #{outline,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.standards.entity.StandardMage">
+    insert into standard_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="plantRecoProcessType != null">
+        plant_reco_process_type,
+      </if>
+      <if test="plantStandardName != null">
+        plant_standard_name,
+      </if>
+      <if test="prudtUrl != null">
+        prudt_url,
+      </if>
+      <if test="plantType != null">
+        plant_type,
+      </if>
+      <if test="outline != null">
+        outline,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="plantRecoProcessType != null">
+        #{plantRecoProcessType,jdbcType=VARCHAR},
+      </if>
+      <if test="plantStandardName != null">
+        #{plantStandardName,jdbcType=VARCHAR},
+      </if>
+      <if test="prudtUrl != null">
+        #{prudtUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="plantType != null">
+        #{plantType,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null">
+        #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.standards.entity.StandardMage">
+    update standard_mage
+    <set>
+      <if test="plantRecoProcessType != null">
+        plant_reco_process_type = #{plantRecoProcessType,jdbcType=VARCHAR},
+      </if>
+      <if test="plantStandardName != null">
+        plant_standard_name = #{plantStandardName,jdbcType=VARCHAR},
+      </if>
+      <if test="prudtUrl != null">
+        prudt_url = #{prudtUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="plantType != null">
+        plant_type = #{plantType,jdbcType=VARCHAR},
+      </if>
+      <if test="outline != null">
+        outline = #{outline,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.standards.entity.StandardMage">
+    update standard_mage
+    set plant_reco_process_type = #{plantRecoProcessType,jdbcType=VARCHAR},
+      plant_standard_name = #{plantStandardName,jdbcType=VARCHAR},
+      prudt_url = #{prudtUrl,jdbcType=VARCHAR},
+      plant_type = #{plantType,jdbcType=VARCHAR},
+      outline = #{outline,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.standards.po.StandardMagePagePo" resultType="com.wisea.cultivar.standards.vo.StandardMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from standard_mage
+    where del_flag = '0'
+    <if test="plantRecoProcessType!=null">
+      and plant_reco_process_type = #{plantRecoProcessType}
+    </if>
+    <if test="plantStandardName!=null">
+      and plant_standard_name like '%${plantStandardName}%'
+    </if>
+    <if test="plantType!=null and plantType!=''">
+      and plant_type = #{plantType}
+    </if>
+    <if test="startTime!=null and endTime!=null">
+      and update_date between #{startTime} and #{endTime}
+    </if>
+    order by update_date desc
+  </select>
+  <select id="findList" parameterType="com.wisea.cultivar.standards.po.StandardMageListPo" resultType="com.wisea.cultivar.standards.vo.StandardMageListVo">
+    select
+    <include refid="Base_Column_List" />
+    from standard_mage
+    where del_flag = '0'
+    <if test="plantRecoProcessType!=null and plantRecoProcessType!=''">
+      and plant_reco_process_type = #{plantRecoProcessType}
+    </if>
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.standards.entity.StandardMage">
+    update standard_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

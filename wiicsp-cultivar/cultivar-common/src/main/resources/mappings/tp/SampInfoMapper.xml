@@ -1,0 +1,839 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.SampInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.SampInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="samp_name" property="sampName" jdbcType="VARCHAR"/>
+        <result column="samp_num" property="sampNum" jdbcType="BIGINT"/>
+        <result column="samp_catg_type" property="sampCatgType" jdbcType="VARCHAR"/>
+        <result column="sampling_count" property="samplingCount" jdbcType="INTEGER"/>
+        <result column="sampling_base" property="samplingBase" jdbcType="INTEGER"/>
+        <result column="spec_model" property="specModel" jdbcType="VARCHAR"/>
+        <result column="samp_bat_num" property="sampBatNum" jdbcType="VARCHAR"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="samp_grade_type" property="sampGradeType" jdbcType="VARCHAR"/>
+        <result column="prdct_date" property="prdctDate" jdbcType="TIMESTAMP"/>
+        <result column="prdct_unit" property="prdctUnit" jdbcType="VARCHAR"/>
+        <result column="samp_state_type" property="sampStateType" jdbcType="VARCHAR"/>
+        <result column="comp_id" property="compId" jdbcType="BIGINT"/>
+        <result column="judge_meet_id" property="judgeMeetId" jdbcType="BIGINT"/>
+        <result column="detection_mech_id" property="detectionMechId" jdbcType="BIGINT"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="samp_taker_id" property="sampTaker" jdbcType="VARCHAR"/>
+        <result column="samp_date" property="sampDate" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="samp_prov" property="sampProv" jdbcType="VARCHAR"/>
+        <result column="samp_city" property="sampCity" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, samp_name, samp_num, samp_catg_type, sampling_count, sampling_base, spec_model,
+    samp_bat_num, brand_name, samp_grade_type, prdct_date, prdct_unit, samp_state_type,
+    comp_id, judge_meet_id, detection_mech_id, longitude, latitude, samp_taker_id, samp_date,
+    create_by, create_date, update_by, update_date, remarks, del_flag,samp_city,samp_prov
+  </sql>
+    <!-- 分页查询品鉴报告 -->
+    <select id="findSampInfoList" resultType="com.wisea.cultivar.common.vo.tp.SampInfoListForSynVo"
+            parameterType="com.wisea.cultivar.common.po.tp.SampInfoPagePo">
+        select
+        si.id,si.samp_num,si.samp_name,si.samp_catg_type,si.samp_bat_num,
+        <if test="commPubInfoId != null and commPubInfoId != ''">
+            csr.id AS 'commSampRelaId',
+        </if>
+        si.sampling_count,si.sampling_base,si.samp_state_type,si.samp_date,mi.user_name AS 'sampTaker'
+        from samp_info si
+        <if test="commPubInfoId != null and commPubInfoId != ''">
+            LEFT JOIN comm_samp_rela csr ON (csr.samp_id = si.id
+            AND csr.rela_type = '1'
+            AND csr.comm_pub_id = #{commPubInfoId})
+        </if>
+        LEFT JOIN memb_info mi ON mi.id = si.samp_taker_id
+        where si.del_flag = '0'
+        AND si.judge_meet_id IS NOT NULL
+        AND si.comp_id = #{compId,jdbcType=BIGINT}
+        AND si.samp_state_type = '3'
+        <if test="sampName != null and sampName != ''">
+            AND si.samp_name = #{sampName}
+        </if>
+        <if test="sampStateType != null and sampStateType != ''">
+            AND si.samp_state_type = #{sampStateType}
+        </if>
+        <if test="staDate != null">
+            AND si.samp_date  <![CDATA[ >= ]]> #{staDate}
+        </if>
+        <if test="endDate != null">
+            AND si.samp_date  <![CDATA[ <= ]]> #{endDate}
+        </if>
+        <choose>
+            <when test="pageInfo != null and pageInfo.orderBy != null and pageInfo.orderBy != ''">
+                ORDER BY #{pageInfo.orderBy}
+            </when>
+            <otherwise>
+                ORDER BY si.create_date DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <!--    分页查询检测信息列表 web -->
+    <select id="findSampInfoListWebLabel" resultType="com.wisea.cultivar.common.entity.tp.SampListWebVo"
+            parameterType="com.wisea.cultivar.common.entity.tp.SampListWebPo">
+        SELECT
+        T1.id,
+        T1.samp_num,
+        T1.samp_name,
+        T1.samp_catg_type,
+        T1.sampling_count,
+        T1.sampling_base,
+        T1.prdct_date,
+        T1.samp_state_type,
+        T3.comp_name companyName,
+        T4.user_name membName,
+        T1.update_date
+        <if test="commPubInfoId != null and commPubInfoId != ''">
+            ,csr.id AS 'commSampRelaId'
+        </if>
+        FROM
+        samp_info T1
+        <if test="commPubInfoId != null and commPubInfoId != ''">
+            LEFT JOIN comm_samp_rela csr ON (csr.samp_id = T1.id
+            AND csr.rela_type = '0'
+            AND csr.comm_pub_id = #{commPubInfoId})
+        </if>
+        LEFT JOIN memb_info T5 ON T1.comp_id = T5.id
+        LEFT JOIN entp_data_info T3 ON T5.id = T3.memb_id
+        LEFT JOIN memb_info T4 ON T1.samp_taker_id = T4.id
+        WHERE
+        T1.del_flag = '0' AND T1.comp_id = #{compId,jdbcType=BIGINT} AND T1.samp_state_type = '3'
+        <if test="value != null and value != ''">
+            <if test="key == '0'.toString()">
+                AND T1.samp_name LIKE CONCAT('%', #{value}, '%')
+            </if>
+            <if test="key == '1'.toString()">
+                AND T3.comp_name LIKE CONCAT('%', #{value}, '%')
+            </if>
+        </if>
+        <if test="sampStateType != null and sampStateType != ''">
+            AND T1.samp_state_type=#{sampStateType}
+        </if>
+        <if test="staDate != null">
+            AND T1.update_date  <![CDATA[ >= ]]>
+            #{staDate}
+        </if>
+        <if test="endDate != null">
+            AND T1.update_date  <![CDATA[ <= ]]>
+            #{endDate}
+        </if>
+        <choose>
+            <when test="judgeMeetId != null and judgeMeetId != ''">
+                AND T1.judge_meet_id = #{judgeMeetId}
+            </when>
+            <otherwise>
+                AND T1.judge_meet_id is NULL
+            </otherwise>
+        </choose>
+        ORDER BY
+        T1.update_date DESC
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from samp_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from samp_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.SampInfo">
+    insert into samp_info (id, samp_name, samp_num,
+      samp_catg_type, sampling_count, sampling_base,
+      spec_model, samp_bat_num, brand_name,
+      samp_grade_type, prdct_date, prdct_unit,
+      samp_state_type, comp_id, judge_meet_id,
+      detection_mech_id, longitude, latitude,
+      samp_taker, samp_date, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag,samp_prov,samp_city)
+    values (#{id,jdbcType=BIGINT}, #{sampName,jdbcType=VARCHAR}, #{sampNum,jdbcType=BIGINT},
+      #{sampCatgType,jdbcType=VARCHAR}, #{samplingCount,jdbcType=INTEGER}, #{samplingBase,jdbcType=INTEGER},
+      #{specModel,jdbcType=VARCHAR}, #{sampBatNum,jdbcType=VARCHAR}, #{brandName,jdbcType=VARCHAR},
+      #{sampGradeType,jdbcType=VARCHAR}, #{prdctDate,jdbcType=TIMESTAMP}, #{prdctUnit,jdbcType=VARCHAR},
+      #{sampStateType,jdbcType=VARCHAR}, #{compId,jdbcType=BIGINT}, #{judgeMeetId,jdbcType=BIGINT},
+      #{detectionMechId,jdbcType=BIGINT}, #{longitude,jdbcType=VARCHAR}, #{latitude,jdbcType=VARCHAR},
+      #{sampTaker,jdbcType=VARCHAR}, #{sampDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},#{sampProv,jdbcType=VARCHAR},#{sampCity,jdbcType=VARCHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.SampInfo">
+        insert into samp_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="sampName != null">
+                samp_name,
+            </if>
+            <if test="sampNum != null">
+                samp_num,
+            </if>
+            <if test="sampCatgType != null">
+                samp_catg_type,
+            </if>
+            <if test="samplingCount != null">
+                sampling_count,
+            </if>
+            <if test="samplingBase != null">
+                sampling_base,
+            </if>
+            <if test="specModel != null">
+                spec_model,
+            </if>
+            <if test="sampBatNum != null">
+                samp_bat_num,
+            </if>
+            <if test="brandName != null">
+                brand_name,
+            </if>
+            <if test="sampGradeType != null">
+                samp_grade_type,
+            </if>
+            <if test="prdctDate != null">
+                prdct_date,
+            </if>
+            <if test="prdctUnit != null">
+                prdct_unit,
+            </if>
+            <if test="sampStateType != null">
+                samp_state_type,
+            </if>
+            <if test="compId != null">
+                comp_id,
+            </if>
+            <if test="judgeMeetId != null">
+                judge_meet_id,
+            </if>
+            <if test="detectionMechId != null">
+                detection_mech_id,
+            </if>
+            <if test="longitude != null">
+                longitude,
+            </if>
+            <if test="latitude != null">
+                latitude,
+            </if>
+            <if test="sampTaker != null">
+                samp_taker,
+            </if>
+            <if test="sampDate != null">
+                samp_date,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="sampProv != null">
+                samp_prov,
+            </if>
+            <if test="sampCity != null">
+                samp_city,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="sampName != null">
+                #{sampName,jdbcType=VARCHAR},
+            </if>
+            <if test="sampNum != null">
+                #{sampNum,jdbcType=BIGINT},
+            </if>
+            <if test="sampCatgType != null">
+                #{sampCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="samplingCount != null">
+                #{samplingCount,jdbcType=INTEGER},
+            </if>
+            <if test="samplingBase != null">
+                #{samplingBase,jdbcType=INTEGER},
+            </if>
+            <if test="specModel != null">
+                #{specModel,jdbcType=VARCHAR},
+            </if>
+            <if test="sampBatNum != null">
+                #{sampBatNum,jdbcType=VARCHAR},
+            </if>
+            <if test="brandName != null">
+                #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="sampGradeType != null">
+                #{sampGradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="prdctDate != null">
+                #{prdctDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prdctUnit != null">
+                #{prdctUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="sampStateType != null">
+                #{sampStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="compId != null">
+                #{compId,jdbcType=BIGINT},
+            </if>
+            <if test="judgeMeetId != null">
+                #{judgeMeetId,jdbcType=BIGINT},
+            </if>
+            <if test="detectionMechId != null">
+                #{detectionMechId,jdbcType=BIGINT},
+            </if>
+            <if test="longitude != null">
+                #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="sampTaker != null">
+                #{sampTaker,jdbcType=VARCHAR},
+            </if>
+            <if test="sampDate != null">
+                #{sampDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="sampProv != null">
+                #{sampProv,jdbcType=VARCHAR},
+            </if>
+            <if test="sampCity != null">
+                #{sampCity,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.SampInfo">
+        update samp_info
+        <set>
+            <if test="sampName != null">
+                samp_name = #{sampName,jdbcType=VARCHAR},
+            </if>
+            <if test="sampNum != null">
+                samp_num = #{sampNum,jdbcType=BIGINT},
+            </if>
+            <if test="sampCatgType != null">
+                samp_catg_type = #{sampCatgType,jdbcType=VARCHAR},
+            </if>
+            <if test="samplingCount != null">
+                sampling_count = #{samplingCount,jdbcType=INTEGER},
+            </if>
+            <if test="samplingBase != null">
+                sampling_base = #{samplingBase,jdbcType=INTEGER},
+            </if>
+            <if test="specModel != null">
+                spec_model = #{specModel,jdbcType=VARCHAR},
+            </if>
+            <if test="sampBatNum != null">
+                samp_bat_num = #{sampBatNum,jdbcType=VARCHAR},
+            </if>
+            <if test="brandName != null">
+                brand_name = #{brandName,jdbcType=VARCHAR},
+            </if>
+            <if test="sampGradeType != null">
+                samp_grade_type = #{sampGradeType,jdbcType=VARCHAR},
+            </if>
+            <if test="prdctDate != null">
+                prdct_date = #{prdctDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="prdctUnit != null">
+                prdct_unit = #{prdctUnit,jdbcType=VARCHAR},
+            </if>
+            <if test="sampStateType != null">
+                samp_state_type = #{sampStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="compId != null">
+                comp_id = #{compId,jdbcType=BIGINT},
+            </if>
+            <if test="judgeMeetId != null">
+                judge_meet_id = #{judgeMeetId,jdbcType=BIGINT},
+            </if>
+            <if test="detectionMechId != null">
+                detection_mech_id = #{detectionMechId,jdbcType=BIGINT},
+            </if>
+            <if test="longitude != null">
+                longitude = #{longitude,jdbcType=VARCHAR},
+            </if>
+            <if test="latitude != null">
+                latitude = #{latitude,jdbcType=VARCHAR},
+            </if>
+            <if test="sampTaker != null">
+                samp_taker = #{sampTaker,jdbcType=VARCHAR},
+            </if>
+            <if test="sampDate != null">
+                samp_date = #{sampDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="sampProv != null">
+                samp_prov= #{sampProv,jdbcType=VARCHAR},
+            </if>
+            <if test="sampCity != null">
+                samp_city= #{sampCity,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.SampInfo">
+    update samp_info
+    set samp_name = #{sampName,jdbcType=VARCHAR},
+      samp_num = #{sampNum,jdbcType=BIGINT},
+      samp_catg_type = #{sampCatgType,jdbcType=VARCHAR},
+      sampling_count = #{samplingCount,jdbcType=INTEGER},
+      sampling_base = #{samplingBase,jdbcType=INTEGER},
+      spec_model = #{specModel,jdbcType=VARCHAR},
+      samp_bat_num = #{sampBatNum,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      samp_grade_type = #{sampGradeType,jdbcType=VARCHAR},
+      prdct_date = #{prdctDate,jdbcType=TIMESTAMP},
+      prdct_unit = #{prdctUnit,jdbcType=VARCHAR},
+      samp_state_type = #{sampStateType,jdbcType=VARCHAR},
+      comp_id = #{compId,jdbcType=BIGINT},
+      judge_meet_id = #{judgeMeetId,jdbcType=BIGINT},
+      detection_mech_id = #{detectionMechId,jdbcType=BIGINT},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      samp_taker = #{sampTaker,jdbcType=VARCHAR},
+      samp_date = #{sampDate,jdbcType=TIMESTAMP},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      samp_prov= #{sampProv,jdbcType=VARCHAR},
+      samp_city= #{sampCity,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.SampInfo">
+    update samp_info
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <!-- 查询样品信息详情 -->
+    <resultMap id="SampInfoXQMap" type="com.wisea.cultivar.common.vo.tp.SampInfoListForSynVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="samp_name" property="sampName" jdbcType="VARCHAR"/>
+        <result column="samp_num" property="sampNum" jdbcType="BIGINT"/>
+        <result column="samp_catg_type" property="sampCatgType" jdbcType="VARCHAR"/>
+        <result column="sampling_count" property="samplingCount" jdbcType="INTEGER"/>
+        <result column="sampling_base" property="samplingBase" jdbcType="INTEGER"/>
+        <result column="spec_model" property="specModel" jdbcType="VARCHAR"/>
+        <result column="samp_bat_num" property="sampBatNum" jdbcType="VARCHAR"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="samp_grade_type" property="sampGradeType" jdbcType="VARCHAR"/>
+        <result column="prdct_date" property="prdctDate" jdbcType="TIMESTAMP"/>
+        <result column="prdct_unit" property="prdctUnit" jdbcType="VARCHAR"/>
+        <result column="samp_state_type" property="sampStateType" jdbcType="VARCHAR"/>
+        <result column="comp_id" property="compId" jdbcType="BIGINT"/>
+        <result column="judge_meet_id" property="judgeMeetId" jdbcType="BIGINT"/>
+        <result column="detection_mech_id" property="detectionMechId" jdbcType="BIGINT"/>
+        <result column="detectionMechName" jdbcType="VARCHAR" property="detectionMechName"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="samp_taker_id" property="sampTaker" jdbcType="VARCHAR"/>
+        <result column="samp_date" property="sampDate" jdbcType="TIMESTAMP"/>
+        <result column="result_type" property="resultType" jdbcType="VARCHAR"/>
+        <result column="gp_level" property="gpLevel" jdbcType="VARCHAR"/>
+        <result column="detec_date" property="detecDate" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="samp_prov" jdbcType="VARCHAR" property="sampProv"/>
+        <result column="samp_city" jdbcType="VARCHAR" property="sampCity"/>
+        <result column="samp_cou" jdbcType="VARCHAR" property="sampCou"/>
+        <result column="samp_town" jdbcType="VARCHAR" property="sampTown"/>
+        <result column="samp_village" jdbcType="VARCHAR" property="sampVillage"/>
+        <result column="samp_area_code" jdbcType="VARCHAR" property="sampAreaCode"/>
+        <collection property="imgList" column="id" select="findImgList"/>
+        <collection property="xcImgList" column="id" select="findXcImgList"/>
+    </resultMap>
+    <select id="findSampList" resultMap="SampInfoXQMap" parameterType="com.wisea.cultivar.common.po.tp.SampListForSynPo">
+        SELECT
+        T1.id, T1.samp_name, T1.samp_num, T1.samp_catg_type, T1.sampling_count, T1.sampling_base, T1.spec_model,
+        T1.samp_bat_num, T1.brand_name, sd.label samp_grade_type, T1.prdct_date, T1.prdct_unit,
+        if(T1.samp_state_type='3','0','1') samp_state_type,
+        T1.comp_id, T1.judge_meet_id, T1.detection_mech_id, T1.longitude, T1.latitude, T1.samp_taker_id,
+        T1.samp_date,T1.gp_level,
+        T1.create_by, T1.create_date, T1.update_by, T1.update_date, T1.remarks,T4.org_name
+        detectionMechName,T1.result_type,T1.detec_date
+        ,T1.samp_prov,T1.samp_city,T1.samp_cou,T1.samp_town,T1.samp_village,T1.samp_area_code
+        from samp_info T1
+        LEFT JOIN detection_mech_mage T4 ON T1.detection_mech_id=T4.id
+        LEFT JOIN sys_dict sd on t1.samp_grade_type = sd.id and sd.type='samp_grade_type'
+        where T1.del_flag = '0' AND T1.samp_state_type != '0'
+        <if test="compId != null">
+            and T1.comp_id = #{compId}
+        </if>
+        <if test="maxDate != null">
+            and T1.create_date > #{maxDate}
+        </if>
+    </select>
+    <select id="findImgList" resultType="com.wisea.cultivar.common.vo.tp.SampImgListForSynVo"
+            parameterType="java.lang.Long">
+		SELECT
+			samp_id,url,sort,create_date jcDate
+		FROM
+			samp_picture T2
+		WHERE
+			T2.picture_type != '0'
+		AND t2.del_flag = '0'
+	    AND t2.samp_id= #{id,jdbcType=BIGINT}
+		ORDER BY
+			T2.sort
+   </select>
+    <select id="findXcImgList" resultType="com.wisea.cultivar.common.vo.tp.SampImgListForSynVo"
+            parameterType="java.lang.Long">
+		SELECT
+			samp_id,url,sort,create_date jcDate
+		FROM
+			samp_picture T2
+		WHERE
+			T2.picture_type = '0'
+		AND t2.del_flag = '0'
+	    AND t2.samp_id= #{id,jdbcType=BIGINT}
+		ORDER BY
+			T2.sort
+   </select>
+    <!-- 查询样品信息详情 -->
+    <resultMap id="SampInfoXQMap1" type="com.wisea.cultivar.common.vo.tp.SampInfoListForSynVo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="samp_name" property="sampName" jdbcType="VARCHAR"/>
+        <result column="samp_num" property="sampNum" jdbcType="BIGINT"/>
+        <result column="samp_catg_type" property="sampCatgType" jdbcType="VARCHAR"/>
+        <result column="sampling_count" property="samplingCount" jdbcType="INTEGER"/>
+        <result column="sampling_base" property="samplingBase" jdbcType="INTEGER"/>
+        <result column="spec_model" property="specModel" jdbcType="VARCHAR"/>
+        <result column="samp_bat_num" property="sampBatNum" jdbcType="VARCHAR"/>
+        <result column="brand_name" property="brandName" jdbcType="VARCHAR"/>
+        <result column="samp_grade_type" property="sampGradeType" jdbcType="VARCHAR"/>
+        <result column="prdct_date" property="prdctDate" jdbcType="TIMESTAMP"/>
+        <result column="prdct_unit" property="prdctUnit" jdbcType="VARCHAR"/>
+        <result column="samp_state_type" property="sampStateType" jdbcType="VARCHAR"/>
+        <result column="comp_id" property="compId" jdbcType="BIGINT"/>
+        <result column="judge_meet_id" property="judgeMeetId" jdbcType="BIGINT"/>
+        <result column="detection_mech_id" property="detectionMechId" jdbcType="BIGINT"/>
+        <result column="detectionMechName" jdbcType="VARCHAR" property="detectionMechName"/>
+        <result column="longitude" property="longitude" jdbcType="VARCHAR"/>
+        <result column="latitude" property="latitude" jdbcType="VARCHAR"/>
+        <result column="samp_taker_id" property="sampTaker" jdbcType="VARCHAR"/>
+        <result column="samp_date" property="sampDate" jdbcType="TIMESTAMP"/>
+        <result column="result_type" property="resultType" jdbcType="VARCHAR"/>
+        <result column="gp_level" property="gpLevel" jdbcType="VARCHAR"/>
+        <result column="detec_date" property="detecDate" jdbcType="TIMESTAMP"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="samp_prov" jdbcType="VARCHAR" property="sampProv"/>
+        <result column="samp_city" jdbcType="VARCHAR" property="sampCity"/>
+        <result column="samp_cou" jdbcType="VARCHAR" property="sampCou"/>
+        <result column="samp_town" jdbcType="VARCHAR" property="sampTown"/>
+        <result column="samp_village" jdbcType="VARCHAR" property="sampVillage"/>
+        <result column="samp_area_code" jdbcType="VARCHAR" property="sampAreaCode"/>
+        <collection property="imgList" column="id" select="findImgList1"></collection>
+    </resultMap>
+    <select id="findYJCSampList" resultMap="SampInfoXQMap1" parameterType="java.lang.String">
+	    SELECT
+			T1.id,
+			T1.samp_name,
+			T1.samp_num,
+			T1.samp_catg_type,
+			T1.sampling_count,
+			T1.sampling_base,
+			T1.spec_model,
+			T1.samp_bat_num,
+			T1.brand_name,
+			sd.label samp_grade_type,
+			T1.prdct_date,
+			T1.prdct_unit,
+			if(T1.samp_state_type='3','0','1') samp_state_type,
+			T1.comp_id,
+			T1.judge_meet_id,
+			T1.detection_mech_id,
+			T1.longitude,
+			T1.latitude,
+			T1.samp_taker_id,
+			T1.samp_date,
+			T1.create_by,
+			T1.create_date,
+			T1.update_by,
+			T1.update_date,
+			T1.remarks,
+			T4.org_name detectionMechName,
+			T1.result_type,
+			T1.detec_date,
+			T1.gp_level
+			,T1.samp_prov,T1.samp_city,T1.samp_cou,T1.samp_town,T1.samp_village,T1.samp_area_code
+		FROM
+			samp_picture sp
+		LEFT JOIN samp_info T1 ON T1.id = sp.samp_id
+		LEFT JOIN detection_mech_mage T4 ON T1.detection_mech_id = T1.id
+		LEFT JOIN sys_dict sd on t1.samp_grade_type = sd.id and sd.type='samp_grade_type'
+		WHERE
+			sp.del_flag = '0'
+		AND sp.samp_id IN (#{id})
+		GROUP BY
+			sp.samp_id
+   </select>
+    <select id="findImgList1" resultType="com.wisea.cultivar.common.vo.tp.SampImgListForSynVo"
+            parameterType="java.lang.Long">
+		SELECT
+			samp_id,url,sort,create_date jcDate
+		FROM
+			samp_picture T2
+		WHERE
+			T2.picture_type != '0'
+		AND t2.del_flag = '0'
+	    AND t2.samp_id= #{id,jdbcType=BIGINT}
+		ORDER BY
+			T2.sort
+   </select>
+    <!--获取湖南省抽检数和比率-->
+    <select id="getCountAndRate" resultType="com.wisea.cultivar.common.vo.bigdata.SampInfoCountVo" parameterType="com.wisea.cultivar.common.po.bigdata.SampInfoPo">
+        select count(1) totalStatistics,
+        count(case  when  result_type='1' then 1  end) qualifiedQuantity,
+        count(case  when  result_type='0' then 1  end) unqualifiedQuantity,
+        concat(round(count(case  when  result_type='1' then 1  end)/count(1)*100),'%') passRate,
+        concat(round(count(case  when  result_type='0' then 1  end) /  count(1)*100),'%') unqualifiedRate
+        FROM
+        samp_info
+        WHERE
+        del_flag = '0'
+        and samp_prov = '湖南省' and result_type in('0','1')
+        <if test="status!= null and status!='' and status=='0'.toString()" >
+            and samp_date>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        </if>
+        <if test="status!= null and status!='' and status=='1'.toString()" >
+            and samp_date >DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        </if>
+        <if test="startTime!= null  ">
+            and date_format(samp_date,'%Y-%m-%d') >=#{startTime}
+        </if>
+        <if test="endTime!= null ">
+            and  #{endTime}>=date_format(samp_date,'%Y-%m-%d')
+        </if>
+    </select>
+    <!--查询湖南省各个市抽样监测信息-->
+    <select id="getSampInformationVo" resultType="com.wisea.cultivar.common.vo.bigdata.SampInformationVo" parameterType="com.wisea.cultivar.common.po.bigdata.SampInfoPo">
+		SELECT
+		id ,samp_name	 sampName, result_type resultType, samp_city sampCity,  samp_date sampDate
+		FROM
+			samp_info
+		WHERE
+		 del_flag = '0'
+		 and samp_prov = '湖南省' and result_type in('0','1')
+        <if test="status!= null and status!='' and status=='0'.toString()" >
+            and samp_date>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        </if>
+        <if test="status!= null and status!='' and status=='1'.toString()" >
+            and samp_date >DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        </if>
+        <if test="startTime!= null  ">
+            and date_format(samp_date,'%Y-%m-%d') >=#{startTime}
+        </if>
+        <if test="endTime!= null ">
+            and  #{endTime}>=date_format(samp_date,'%Y-%m-%d')
+        </if>
+        order by samp_date desc
+   </select>
+    <!--查询湖南省各个市抽样监测信息样品数-->
+    <select id="getCityAndQuantity" resultType="com.wisea.cultivar.common.vo.bigdata.CityAndQuantity" parameterType="com.wisea.cultivar.common.po.bigdata.SampInfoPo">
+        select sa.name cityName,sc.quantity quantity ,concat(ROUND(sc.pass/sc.quantity *100),'%') passRate from sys_area sa left join (
+        SELECT
+        samp_city	 cityName,count(1)  quantity,count(case when  result_type = '1' then 1 end) pass
+        FROM
+        samp_info
+        WHERE
+        del_flag = '0' and result_type in('0','1')
+        <if test="status!= null and status!='' and status=='0'.toString()" >
+            and samp_date>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        </if>
+        <if test="status!= null and status!='' and status=='1'.toString()" >
+            and samp_date >DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        </if>
+        <if test="startTime!= null  ">
+            and date_format(samp_date,'%Y-%m-%d') >=#{startTime}
+        </if>
+        <if test="endTime!= null ">
+            and  #{endTime}>=date_format(samp_date,'%Y-%m-%d')
+        </if>
+        group by samp_city
+		) sc on  sa.name= sc.cityName
+        where sa.parent_id = #{parentId} order by sc.pass/sc.quantity desc
+
+   </select>
+   <select id="sampJcCount" parameterType="com.wisea.cultivar.common.po.bigdata.SampJcCountPo"
+   			resultType="com.wisea.cultivar.common.vo.bigdata.SampJcCountVo">
+   	SELECT T2.`name` AS 'sampCounty',IFNULL(T1.gross,0) AS 'gross',IFNULL(t1.passCount,0) AS 'passCount',
+			 IFNULL(ROUND(IFNULL(t1.passCount,0)/IFNULL(T1.gross,0),2),0) AS 'passPercent',T2.`code` AS 'sampAreaCode'
+	FROM sys_area T2
+	INNER JOIN sys_area T3 ON T3.id = T2.parent_id
+	LEFT JOIN(
+		SELECT sainfo.samp_cou,COUNT(sainfo.samp_cou) AS 'gross',
+					 COUNT(CASE WHEN sainfo.result_type = '0' THEN 1 END) AS 'passCount',
+					 COUNT(CASE WHEN sainfo.result_type = '1' THEN 1 END) AS 'passCount1'
+		FROM samp_info sainfo
+		WHERE sainfo.del_flag = '0' AND sainfo.samp_state_type = '3'
+			<if test="startDate != null" >
+		    	AND sainfo.samp_date <![CDATA[>=]]> #{startDate,jdbcType=TIMESTAMP}
+		    </if>
+		    <if test="endDate != null" >
+		        AND sainfo.samp_date <![CDATA[<=]]> #{endDate,jdbcType=TIMESTAMP}
+		    </if>
+		GROUP BY sainfo.samp_cou
+	) T1 ON T1.samp_cou = T2.`name`
+	WHERE T3.`code` = #{parentCode} AND T2.name <![CDATA[!=]]> '市辖区'
+	ORDER BY T2.`code`
+   </select>
+   <select id="findSampPage" parameterType="com.wisea.cultivar.common.po.bigdata.SampJcCountPagePo" resultType="com.wisea.cultivar.common.vo.bigdata.SampBaseInfoForBigDataVo">
+   	SELECT sainfo.id,sainfo.samp_name,sainfo.samp_date,sainfo.result_type,sainfo.samp_prov,sainfo.samp_city,sainfo.samp_cou
+	FROM samp_info sainfo
+	INNER JOIN sys_area T1 ON T1.`name` = sainfo.samp_cou
+	INNER JOIN sys_area T2 ON T2.id = T1.parent_id
+	WHERE sainfo.del_flag = '0'
+		  AND sainfo.samp_state_type = '3'
+		  <if test="startDate != null" >
+		    	AND sainfo.samp_date <![CDATA[>=]]> #{startDate,jdbcType=TIMESTAMP}
+	      </if>
+	      <if test="endDate != null" >
+	        AND sainfo.samp_date <![CDATA[<=]]> #{endDate,jdbcType=TIMESTAMP}
+	      </if>
+	      AND T2.`code` = #{parentCode}
+
+   </select>
+
+    <!--获取抽检数和比率-->
+    <select id="getQDCountAndRate" resultType="com.wisea.cultivar.common.vo.bigdata.SampInfoCountVo" parameterType="com.wisea.cultivar.common.po.bigdata.SampInfoPo">
+        select count(1) totalStatistics,
+        count(case  when  result_type='1' then 1  end) qualifiedQuantity,
+        count(case  when  result_type='0' then 1  end) unqualifiedQuantity,
+        concat(round(count(case  when  result_type='1' then 1  end)/count(1)*100),'%') passRate,
+        concat(round(count(case  when  result_type='0' then 1  end) /  count(1)*100),'%') unqualifiedRate
+        FROM
+        samp_info
+        WHERE
+        del_flag = '0'
+        and samp_cou= '册亨县' and result_type in('0','1')
+        <if test="status!= null and status!='' and status=='0'.toString()" >
+            and samp_date>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        </if>
+        <if test="status!= null and status!='' and status=='1'.toString()" >
+            and samp_date >DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        </if>
+        <if test="startTime!= null  ">
+            and date_format(samp_date,'%Y-%m-%d') >=#{startTime}
+        </if>
+        <if test="endTime!= null ">
+            and  #{endTime}>=date_format(samp_date,'%Y-%m-%d')
+        </if>
+    </select>
+
+    <!--查询各个镇抽样监测信息-->
+    <select id="getQDSampInformationVo" resultType="com.wisea.cultivar.common.vo.bigdata.SampInformationVo" parameterType="com.wisea.cultivar.common.po.bigdata.SampInfoPo">
+        SELECT
+        id,samp_name	 sampName, result_type resultType, samp_town sampCity,  samp_date sampDate
+        FROM
+        samp_info
+        WHERE
+        del_flag = '0'
+        and samp_cou = '册亨县' and result_type in('0','1')
+        <if test="status!= null and status!='' and status=='0'.toString()" >
+            and samp_date>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        </if>
+        <if test="status!= null and status!='' and status=='1'.toString()" >
+            and samp_date >DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        </if>
+        <if test="startTime!= null  ">
+            and date_format(samp_date,'%Y-%m-%d') >=#{startTime}
+        </if>
+        <if test="endTime!= null ">
+            and  #{endTime}>=date_format(samp_date,'%Y-%m-%d')
+        </if>
+        order by samp_date desc
+    </select>
+
+    <!--查询各个镇抽样监测信息样品数-->
+    <select id="getQDCityAndQuantity" resultType="com.wisea.cultivar.common.vo.bigdata.CityAndQuantity" parameterType="com.wisea.cultivar.common.po.bigdata.SampInfoPo">
+        SELECT
+        samp_town	 cityName,count(1)  quantity,concat(ROUND( count(case when  result_type = '1' then 1 end)/count(1) *100),'%') passRate
+        FROM
+        samp_info
+        WHERE
+        del_flag = '0' and result_type in('0','1') and samp_cou= '册亨县'
+        <if test="status!= null and status!='' and status=='0'.toString()" >
+            and samp_date>DATE_SUB(CURDATE(), INTERVAL 1 YEAR)
+        </if>
+        <if test="status!= null and status!='' and status=='1'.toString()" >
+            and samp_date >DATE_SUB(CURDATE(), INTERVAL 1 MONTH)
+        </if>
+        <if test="startTime!= null  ">
+            and date_format(samp_date,'%Y-%m-%d') >=#{startTime}
+        </if>
+        <if test="endTime!= null ">
+            and  #{endTime}>=date_format(samp_date,'%Y-%m-%d')
+        </if>
+        group by samp_town
+        order by passRate desc
+
+    </select>
+</mapper>

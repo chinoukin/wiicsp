@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.OrdCommRefundRelaMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.OrdCommRefundRela" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="ord_comm_rela_id" property="ordCommRelaId" jdbcType="BIGINT" />
+    <result column="refund_appl_id" property="refundApplId" jdbcType="BIGINT" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="comm_spec" property="commSpec" jdbcType="VARCHAR" />
+    <result column="refund_weight" property="refundWeight" jdbcType="DOUBLE" />
+    <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, ord_comm_rela_id, refund_appl_id, count, price, comm_spec, refund_weight, meas_unit_name,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 批量插入 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into ord_comm_refund_rela (id, ord_comm_rela_id, refund_appl_id,
+      count, price, comm_spec,
+      refund_weight, meas_unit_name, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values
+    <foreach collection="list" item="item" index="index" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.ordCommRelaId,jdbcType=BIGINT}, #{item.refundApplId,jdbcType=BIGINT},
+      #{item.count,jdbcType=INTEGER}, #{item.price,jdbcType=DOUBLE}, #{item.commSpec,jdbcType=VARCHAR},
+      #{item.refundWeight,jdbcType=DOUBLE}, #{item.measUnitName,jdbcType=VARCHAR}, #{item.createBy,jdbcType=VARCHAR},
+      #{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP},
+      #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ord_comm_refund_rela
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ord_comm_refund_rela
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.OrdCommRefundRela" >
+    insert into ord_comm_refund_rela (id, ord_comm_rela_id, refund_appl_id,
+      count, price, comm_spec,
+      refund_weight, meas_unit_name, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{ordCommRelaId,jdbcType=BIGINT}, #{refundApplId,jdbcType=BIGINT},
+      #{count,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, #{commSpec,jdbcType=VARCHAR},
+      #{refundWeight,jdbcType=DOUBLE}, #{measUnitName,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.OrdCommRefundRela" >
+    insert into ord_comm_refund_rela
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="ordCommRelaId != null" >
+        ord_comm_rela_id,
+      </if>
+      <if test="refundApplId != null" >
+        refund_appl_id,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="commSpec != null" >
+        comm_spec,
+      </if>
+      <if test="refundWeight != null" >
+        refund_weight,
+      </if>
+      <if test="measUnitName != null" >
+        meas_unit_name,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="ordCommRelaId != null" >
+        #{ordCommRelaId,jdbcType=BIGINT},
+      </if>
+      <if test="refundApplId != null" >
+        #{refundApplId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="commSpec != null" >
+        #{commSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="refundWeight != null" >
+        #{refundWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnitName != null" >
+        #{measUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.OrdCommRefundRela" >
+    update ord_comm_refund_rela
+    <set >
+      <if test="ordCommRelaId != null" >
+        ord_comm_rela_id = #{ordCommRelaId,jdbcType=BIGINT},
+      </if>
+      <if test="refundApplId != null" >
+        refund_appl_id = #{refundApplId,jdbcType=BIGINT},
+      </if>
+      <if test="count != null" >
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="commSpec != null" >
+        comm_spec = #{commSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="refundWeight != null" >
+        refund_weight = #{refundWeight,jdbcType=DOUBLE},
+      </if>
+      <if test="measUnitName != null" >
+        meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.OrdCommRefundRela" >
+    update ord_comm_refund_rela
+    set ord_comm_rela_id = #{ordCommRelaId,jdbcType=BIGINT},
+      refund_appl_id = #{refundApplId,jdbcType=BIGINT},
+      count = #{count,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      comm_spec = #{commSpec,jdbcType=VARCHAR},
+      refund_weight = #{refundWeight,jdbcType=DOUBLE},
+      meas_unit_name = #{measUnitName,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

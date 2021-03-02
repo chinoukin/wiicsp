@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.equipment.dao.EquMeteorologyMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.equipment.entity.EquMeteorology" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="equ_id" property="equId" jdbcType="BIGINT" />
+    <result column="equ_date_type" property="equDateType" jdbcType="VARCHAR" />
+    <result column="temperature" property="temperature" jdbcType="DOUBLE" />
+    <result column="humidity" property="humidity" jdbcType="DOUBLE" />
+    <result column="pressure" property="pressure" jdbcType="DOUBLE" />
+    <result column="illumination" property="illumination" jdbcType="DOUBLE" />
+    <result column="rainfall" property="rainfall" jdbcType="DOUBLE" />
+    <result column="wind_speed" property="wind_speed" jdbcType="DOUBLE" />
+    <result column="wind_direction" property="wind_direction" jdbcType="DOUBLE" />
+    <result column="battery" property="battery" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+    <result column="height" property="height" jdbcType="INTEGER" />
+    <result column="width" property="width" jdbcType="INTEGER" />
+    <result column="image_width" property="image_width" jdbcType="INTEGER" />
+    <result column="image_height" property="image_height" jdbcType="INTEGER" />
+    <result column="video" property="video" jdbcType="VARCHAR" />
+    <result column="video_width" property="video_width" jdbcType="INTEGER" />
+    <result column="video_height" property="video_height" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, equ_id, equ_date_type, temperature, humidity, pressure, illumination, rainfall, wind_speed, wind_direction, battery,
+    image, height, width, image_width, image_height, video, video_width, video_height, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 根据设备ID、数据类型查询最大时间 -->
+  <select id="selectMaxDateByEquId" resultType="java.time.OffsetDateTime">
+    select max(exd.create_date) from equ_meteorology exd where exd.equ_id = #{equInfoId,jdbcType=BIGINT} and exd.equ_date_type = #{equDateType,jdbcType=VARCHAR}
+  </select>
+
+  <!-- 批量插入数据点 -->
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into equ_meteorology (
+      id, equ_id, equ_date_type,
+      temperature, humidity, pressure,
+      illumination, rainfall, wind_speed,
+      wind_direction, battery, image,
+      height, width, image_width,
+      image_height, video, video_width,
+      video_height, create_by, create_date,
+      update_by, update_date, remarks, del_flag)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.id,jdbcType=BIGINT}, #{item.equId,jdbcType=BIGINT}, #{item.equDateType,jdbcType=VARCHAR},
+      #{item.temperature,jdbcType=DOUBLE}, #{item.humidity,jdbcType=DOUBLE}, #{item.pressure,jdbcType=DOUBLE},
+      #{item.illumination,jdbcType=DOUBLE}, #{item.rainfall,jdbcType=DOUBLE}, #{item.wind_speed,jdbcType=DOUBLE},
+      #{item.wind_direction,jdbcType=DOUBLE}, #{item.battery,jdbcType=INTEGER}, #{item.image,jdbcType=VARCHAR},
+      #{item.height,jdbcType=INTEGER}, #{item.width,jdbcType=INTEGER}, #{item.image_width,jdbcType=INTEGER},
+      #{item.image_height,jdbcType=INTEGER}, #{item.video,jdbcType=VARCHAR}, #{item.video_width,jdbcType=INTEGER},
+      #{item.video_height,jdbcType=INTEGER}, #{item.createBy,jdbcType=VARCHAR}, #{item.createDate,jdbcType=TIMESTAMP},
+      #{item.updateBy,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR},
+      #{item.delFlag,jdbcType=CHAR})
+    </foreach>
+  </insert>
+</mapper>

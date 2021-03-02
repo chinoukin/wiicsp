@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.CollFolderMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.CollFolder">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT"/>
+        <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, memb_id, comm_pub_id, comm_state_type, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from coll_folder
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from coll_folder
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.CollFolder">
+    insert into coll_folder (id, memb_id, comm_pub_id,
+      comm_state_type, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{commPubId,jdbcType=BIGINT},
+      #{commStateType,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.CollFolder">
+        insert into coll_folder
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="commPubId != null">
+                comm_pub_id,
+            </if>
+            <if test="commStateType != null">
+                comm_state_type,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubId != null">
+                #{commPubId,jdbcType=BIGINT},
+            </if>
+            <if test="commStateType != null">
+                #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.CollFolder">
+        update coll_folder
+        <set>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="commPubId != null">
+                comm_pub_id = #{commPubId,jdbcType=BIGINT},
+            </if>
+            <if test="commStateType != null">
+                comm_state_type = #{commStateType,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.CollFolder">
+    update coll_folder
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_pub_id = #{commPubId,jdbcType=BIGINT},
+      comm_state_type = #{commStateType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.CollFolderListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.CollFolderPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from coll_folder
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.CollFolderListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.CollFolderListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from coll_folder
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.CollFolder">
+    update coll_folder
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--查看茶是否存在于收藏夹中-->
+    <select id="selectTeasIsCollFolder" parameterType="com.wisea.cultivar.common.entity.tp.CollFolder"
+            resultType="com.wisea.cultivar.common.entity.tp.CollFolder">
+        SELECT id
+        FROM coll_folder
+        WHERE comm_pub_id = #{commPubId} AND memb_id = #{membId} AND del_flag != '1'
+    </select>
+    <!--添加到收藏夹-->
+    <insert id="collectTea" parameterType="java.util.List">
+        INSERT INTO coll_folder (id, memb_id, comm_pub_id, create_by,create_date, del_flag)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.id},#{item.membId},#{item.commPubId},
+            #{item.createBy},#{item.createDate},#{item.delFlag})
+        </foreach>
+    </insert>
+    <!--根据商品名称和商品编号进行查询-->
+    <select id="selectCollComm" parameterType="com.wisea.cultivar.common.po.tp.CollFolderPagePo"
+            resultType="com.wisea.cultivar.common.vo.tp.CollFolderListVo">
+        SELECT
+        t1.id,t2.id AS commPubId,t2.comm_name AS commName,t2.comm_num AS commNum,t2.whole_price_section AS
+        wholePriceSection,
+        t2.agent_whole_price_section AS agentWholePriceSection,IFNULL(t2.sales_count,0) AS salesCount,
+        t2.comm_state_type
+        AS
+        commStateType,t3.url AS pictureUrl
+        FROM
+        coll_folder AS t1
+        LEFT JOIN comm_pub_info AS t2 ON t1.comm_pub_id = t2.id
+        LEFT JOIN comm_picture AS t3 ON t3.comm_id = t1.comm_pub_id
+        <where>
+            <if test="blurWord!=null and blurWord!='' ">
+                AND instr(CONCAT(t2.comm_num,t2.comm_name),#{blurWord}) != 0
+            </if>
+            AND t1.memb_id = #{membId} AND t3.sort = '0'
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.EntpBankInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.EntpBankInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="entp_data_id" property="entpDataId" jdbcType="BIGINT" />
+    <result column="entp_bank_num" property="entpBankNum" jdbcType="VARCHAR" />
+    <result column="open_bank" property="openBank" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, entp_data_id,entp_bank_num, open_bank, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from entp_bank_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from entp_bank_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <update id="deleteLogicByPrimaryKey" parameterType="java.lang.Long">
+  	update entp_bank_info set del_flag = '1'
+  	where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="deleteLogicByEntpId" parameterType="java.lang.Long">
+  	update entp_bank_info set del_flag = '1'
+  	where entp_data_id = #{entpId,jdbcType=BIGINT}
+  </update>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.EntpBankInfo" >
+    insert into entp_bank_info (id,entp_data_id,entp_bank_num, open_bank,
+    	create_by, create_date, update_by, update_date, remarks, del_flag)
+    values(#{id,jdbcType=BIGINT}, #{entpDataId,jdbcType=BIGINT},#{entpBankNum,jdbcType=VARCHAR},
+      #{openBank,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.EntpBankInfo" >
+    insert into entp_bank_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="entpDataId != null" >
+        entp_data_id,
+      </if>
+      <if test="entpBankNum != null" >
+        entp_bank_num,
+      </if>
+      <if test="openBank != null" >
+        open_bank,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="khxkzNum != null" >
+        khxkz_num,
+      </if>
+      <if test="khxkzUrl != null" >
+        khxkz_url,
+      </if>
+      <if test="khName != null" >
+        kh_name,
+      </if>
+      <if test="khProv != null" >
+        kh_prov,
+      </if>
+      <if test="khCity != null" >
+        kh_city,
+      </if>
+      <if test="openBankType != null" >
+        open_bank_type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entpDataId != null" >
+        #{entpDataId,jdbcType=BIGINT},
+      </if>
+      <if test="entpBankNum != null" >
+        #{entpBankNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openBank != null" >
+        #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="khxkzNum != null" >
+         #{khxkzNum,jdbcType=VARCHAR},
+      </if>
+      <if test="khxkzUrl != null" >
+         #{khxkzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="khName != null" >
+         #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="khProv != null" >
+         #{khProv,jdbcType=VARCHAR},
+      </if>
+      <if test="khCity != null" >
+         #{khCity,jdbcType=VARCHAR},
+      </if>
+      <if test="openBankType != null" >
+        #{openBankType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <!-- 根据商家Id查询银行卡信息 -->
+  <select id="getBankInfoByEntpId" resultType="com.wisea.cultivar.common.entity.tp.EntpBankInfo" parameterType="com.wisea.cultivar.common.po.tp.EntpBankInfoListPo">
+  	SELECT * from entp_bank_info
+	WHERE del_flag = '0' and entp_data_id = #{entpDataId,jdbcType=BIGINT}
+  </select>
+  <select id="getEntpBankInfo" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.vo.tp.EntpBankInfoVo">
+  	SELECT T1.id,T1.entp_bank_num AS 'bankNum',T1.open_bank,T2.comp_name,T2.legal_person from entp_bank_info T1
+	INNER JOIN entp_data_info T2 ON T1.entp_data_id = T2.id
+	WHERE T1.id = #{id,jdbcType=BIGINT}
+  </select>
+  <update id="updByEntpDataId" parameterType="com.wisea.cultivar.common.po.tp.EmtpBankInfoUpdPo">
+  	UPDATE entp_bank_info SET entp_data_id = #{newEntpDataId,jdbcType=BIGINT}
+	WHERE entp_data_id = #{oldEntpDataId,jdbcType=BIGINT}
+  </update>
+  <select id="findListForEntpAuth" resultType="com.wisea.cultivar.common.vo.tp.EntpBankInfoListVo" parameterType="com.wisea.cultivar.common.po.tp.EntpBankInfoListPo">
+  	SELECT * from entp_bank_info
+	WHERE entp_data_id = #{entpDataId,jdbcType=BIGINT}
+  </select>
+  <!-- 批量插入关联数据 -->
+  <insert id="insertBatchEntpBank" parameterType="com.wisea.cultivar.common.entity.tp.EntpBankInfo">
+   insert into entp_bank_info (id, entp_data_id, entp_bank_num,open_bank,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+      values
+    <foreach collection="list" item="list" index= "index" separator =",">
+      (#{list.id,jdbcType=BIGINT}, #{list.entpDataId,jdbcType=BIGINT}, #{list.entpBankNum,jdbcType=VARCHAR},#{list.openBank,jdbcType=VARCHAR},
+      #{list.createBy,jdbcType=VARCHAR}, #{list.createDate,jdbcType=TIMESTAMP}, #{list.updateBy,jdbcType=VARCHAR},
+      #{list.updateDate,jdbcType=TIMESTAMP}, #{list.remarks,jdbcType=VARCHAR}, #{list.delFlag,jdbcType=CHAR}
+      )
+    </foreach>
+  </insert>
+  <delete id="bachtDelByEntpDataId"  parameterType="java.lang.Long">
+  	delete from entp_bank_info
+    where entp_data_id = #{entpDataId,jdbcType=BIGINT}
+  </delete>
+  <!-- 验证银行卡号不能重复 -->
+  <select id="checkBankNum" parameterType="com.wisea.cultivar.common.entity.tp.EntpBankInfo" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM entp_bank_info
+	WHERE del_flag = '0'
+	AND entp_bank_num = #{entpBankNum,jdbcType=VARCHAR}
+	AND entp_data_id = #{entpDataId,jdbcType=VARCHAR}
+  </select>
+</mapper>

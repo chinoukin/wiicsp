@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.SerListInformationMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.SerListInformation" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="ser_list_id" property="serListId" jdbcType="BIGINT" />
+    <result column="ser_list_state_type" property="serListStateType" jdbcType="VARCHAR" />
+    <result column="information_date" property="informationDate" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="if_show" property="ifShow" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, ser_list_id, ser_list_state_type, information_date, content, if_show,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ser_list_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ser_list_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.SerListInformation" >
+    insert into ser_list_information (id, memb_id, ser_list_id,
+      ser_list_state_type, information_date, content,
+      if_show, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{serListId,jdbcType=BIGINT},
+      #{serListStateType,jdbcType=VARCHAR}, #{informationDate,jdbcType=TIMESTAMP}, #{content,jdbcType=VARCHAR},
+      #{ifShow,jdbcType=VARCHAR}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.SerListInformation" >
+    insert into ser_list_information
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="serListId != null" >
+        ser_list_id,
+      </if>
+      <if test="serListStateType != null" >
+        ser_list_state_type,
+      </if>
+      <if test="informationDate != null" >
+        information_date,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="ifShow != null" >
+        if_show,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="serListId != null" >
+        #{serListId,jdbcType=BIGINT},
+      </if>
+      <if test="serListStateType != null" >
+        #{serListStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="informationDate != null" >
+        #{informationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.SerListInformation" >
+    update ser_list_information
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="serListId != null" >
+        ser_list_id = #{serListId,jdbcType=BIGINT},
+      </if>
+      <if test="serListStateType != null" >
+        ser_list_state_type = #{serListStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="informationDate != null" >
+        information_date = #{informationDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="ifShow != null" >
+        if_show = #{ifShow,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.SerListInformation" >
+    update ser_list_information
+    set memb_id = #{membId,jdbcType=BIGINT},
+      ser_list_id = #{serListId,jdbcType=BIGINT},
+      ser_list_state_type = #{serListStateType,jdbcType=VARCHAR},
+      information_date = #{informationDate,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=VARCHAR},
+      if_show = #{ifShow,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.SerListInformationPageListVo" parameterType="com.wisea.cultivar.plant.po.SerListInformationPageListPo" >
+    select
+      id id,
+	  memb_id membId,
+	  ser_list_id serListId,
+	  ser_list_state_type serListStateType,
+	  information_date informationDate,
+	  content content,
+	  if_show ifShow
+	from
+	  ser_list_information
+	where
+	  del_flag = '0'
+	  and memb_id=#{membId}
+	order by create_date desc
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.plant.vo.SerListInformationInfoVo" parameterType="java.lang.Long" >
+    select
+	  memb_id membId,
+	  ser_list_id serListId,
+	  ser_list_state_type serListStateType,
+	  information_date informationDate,
+	  content content,
+	  if_show ifShow
+	from
+	  ser_list_information
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+  <!--统计未读总数-->
+  <select id="countInformation" resultType="java.lang.Integer" parameterType="java.lang.Long" >
+    select
+	count(*)
+	from
+	  ser_list_information
+	where
+	  del_flag = '0'
+	  and memb_id = #{id}
+	  and if_show = '1'
+  </select>
+
+  <update id="toRead" parameterType="java.lang.Long" >
+    update ser_list_information
+    set if_show='0'
+    where memb_id = #{id}
+    and  del_flag = '0'
+    and if_show = '1'
+  </update>
+
+
+  <update id="updateState"  parameterType="com.wisea.cloud.model.po.LongIdPo">
+    update ser_list_information
+    set if_show='0'
+    where id = #{id}
+    and  del_flag = '0'
+    and if_show = '1'
+  </update>
+</mapper>

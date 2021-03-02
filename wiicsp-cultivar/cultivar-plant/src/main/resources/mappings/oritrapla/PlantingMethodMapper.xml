@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.PlantingMethodMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.PlantingMethod">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="plant_standard_mage_id" jdbcType="BIGINT" property="plantStandardMageId" />
+    <result column="comm_id" jdbcType="BIGINT" property="commId" />
+    <result column="plant_type" jdbcType="VARCHAR" property="plantType" />
+    <result column="massif_type" jdbcType="VARCHAR" property="massifType" />
+    <result column="source_type" jdbcType="VARCHAR" property="sourceType" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, plant_standard_mage_id, comm_id, plant_type, massif_type, source_type, create_by,
+    create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from planting_method
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from planting_method
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlantingMethod">
+    insert into planting_method (id, plant_standard_mage_id, comm_id,
+      plant_type, massif_type, source_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{plantStandardMageId,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT},
+      #{plantType,jdbcType=VARCHAR}, #{massifType,jdbcType=VARCHAR}, #{sourceType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlantingMethod">
+    insert into planting_method
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="plantStandardMageId != null">
+        plant_standard_mage_id,
+      </if>
+      <if test="commId != null">
+        comm_id,
+      </if>
+      <if test="plantType != null">
+        plant_type,
+      </if>
+      <if test="massifType != null">
+        massif_type,
+      </if>
+      <if test="sourceType != null">
+        source_type,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="plantStandardMageId != null">
+        #{plantStandardMageId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null">
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="plantType != null">
+        #{plantType,jdbcType=VARCHAR},
+      </if>
+      <if test="massifType != null">
+        #{massifType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlantingMethod">
+    update planting_method
+    <set>
+      <if test="plantStandardMageId != null">
+        plant_standard_mage_id = #{plantStandardMageId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null">
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="plantType != null">
+        plant_type = #{plantType,jdbcType=VARCHAR},
+      </if>
+      <if test="massifType != null">
+        massif_type = #{massifType,jdbcType=VARCHAR},
+      </if>
+      <if test="sourceType != null">
+        source_type = #{sourceType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlantingMethod">
+    update planting_method
+    set plant_standard_mage_id = #{plantStandardMageId,jdbcType=BIGINT},
+      comm_id = #{commId,jdbcType=BIGINT},
+      plant_type = #{plantType,jdbcType=VARCHAR},
+      massif_type = #{massifType,jdbcType=VARCHAR},
+      source_type = #{sourceType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.plant.vo.oritrapla.PlantingMethodListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.PlantingMethodPagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from planting_method
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.plant.vo.oritrapla.PlantingMethodListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.PlantingMethodListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from planting_method
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PlantingMethod">
+    update planting_method
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="plantMethodList" parameterType="com.wisea.cultivar.plant.po.oritrapla.PlantingMethodPagePo"
+            resultType="com.wisea.cultivar.plant.vo.oritrapla.PlantingMethodListVo">
+        SELECT
+        pm.id,
+        pm.comm_id AS commId,
+        plant_type AS plantType,
+        (
+        CASE
+        massif_type
+        WHEN '0' THEN
+        '大田'
+        WHEN '1' THEN
+        '果树'
+        WHEN '2' THEN
+        '春秋棚'
+        WHEN '3' THEN
+        '日光温室'
+        WHEN '4' THEN
+        '温室'
+        WHEN '5' THEN
+        '连栋温室'
+        WHEN '6' THEN
+        '水面' ELSE 'NULL'
+        END
+        ) AS massifType,
+        pm.source_type AS sourceType,
+        pm.create_date AS createDate
+        FROM
+        planting_method AS pm
+        <where>
+            <if test="commId != null and commId!=''">
+                AND pm.comm_id = #{commId}
+            </if>
+            <if test="plantType != null and plantType!=''">
+                AND pm.plant_type = #{plantType}
+            </if>
+            <if test="massifType != null and massifType!=''">
+                AND pm.massif_type = #{massifType}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND pm.create_date BETWEEN #{startTime} AND #{endTime}
+            </if>
+            <if test="standardSpecificationId != null and standardSpecificationId != '' ">
+                AND standard_specification_id = #{standardSpecificationId}
+            </if>
+            AND pm.del_flag = '0'
+        </where>
+    </select>
+</mapper>

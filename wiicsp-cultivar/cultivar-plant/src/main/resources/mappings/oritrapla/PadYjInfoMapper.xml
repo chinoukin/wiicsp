@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.oritrapla.PadYjInfoMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.oritrapla.PadYjInfo">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="arch_id" property="archId" jdbcType="BIGINT"/>
+        <result column="pad_id" property="padId" jdbcType="BIGINT"/>
+        <result column="equ_id" property="equId" jdbcType="BIGINT"/>
+        <result column="cxsj_time" property="cxsjTime" jdbcType="DOUBLE"/>
+        <result column="report_time" property="reportTime" jdbcType="TIMESTAMP"/>
+        <result column="pad_name" property="padName" jdbcType="VARCHAR"/>
+        <result column="content" property="content" jdbcType="VARCHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        id, arch_id, pad_id,equ_id,cxsj_time, report_time, pad_name, content, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+    </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from pad_yj_info
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete
+        from pad_yj_info
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadYjInfo">
+        insert into pad_yj_info (id, arch_id, pad_id,
+                                 equ_id, cxsj_time,
+                                 report_time, pad_name, content,
+                                 create_by, create_date, update_by,
+                                 update_date, remarks, del_flag)
+        values (#{id,jdbcType=BIGINT}, #{archId,jdbcType=BIGINT}, #{padId,jdbcType=BIGINT},
+                #{equId,jdbcType=BIGINT}, #{cxsjTime,jdbcType=DOUBLE},
+                #{reportTime,jdbcType=TIMESTAMP}, #{padName,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR},
+                #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+                #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadYjInfo">
+        insert into pad_yj_info
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="archId != null">
+                arch_id,
+            </if>
+            <if test="padId != null">
+                pad_id,
+            </if>
+            <if test="equId != null">
+                equ_id,
+            </if>
+            <if test="cxsjTime != null">
+                cxsj_time,
+            </if>
+
+            <if test="reportTime != null">
+                report_time,
+            </if>
+            <if test="padName != null">
+                pad_name,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="archId != null">
+                #{archId,jdbcType=BIGINT},
+            </if>
+            <if test="padId != null">
+                #{padId,jdbcType=BIGINT},
+            </if>
+            <if test="equId != null">
+                #{equId,jdbcType=BIGINT},
+            </if>
+            <if test="cxsjTime != null">
+                #{cxsjTime,jdbcType=DOUBLE},
+            </if>
+            <if test="reportTime != null">
+                #{reportTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="padName != null">
+                #{padName,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadYjInfo">
+        update pad_yj_info
+        <set>
+            <if test="archId != null">
+                arch_id = #{archId,jdbcType=BIGINT},
+            </if>
+            <if test="padId != null">
+                pad_id = #{padId,jdbcType=BIGINT},
+            </if>
+            <if test="equId != null">
+                equ_id = #{equId,jdbcType=BIGINT},
+            </if>
+            <if test="cxsjTime != null">
+                cxsj_time = #{cxsjTime,jdbcType=DOUBLE},
+            </if>
+            <if test="reportTime != null">
+                report_time = #{reportTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="padName != null">
+                pad_name = #{padName,jdbcType=VARCHAR},
+            </if>
+            <if test="content != null">
+                content = #{content,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadYjInfo">
+        update pad_yj_info
+        set arch_id     = #{archId,jdbcType=BIGINT},
+            pad_id      = #{padId,jdbcType=BIGINT},
+            equ_id      = #{equId,jdbcType=BIGINT},
+            cxsj_time   = #{cxsjTime,jdbcType=DOUBLE},
+            report_time = #{reportTime,jdbcType=TIMESTAMP},
+            pad_name    = #{padName,jdbcType=VARCHAR},
+            content     = #{content,jdbcType=VARCHAR},
+            create_by   = #{createBy,jdbcType=VARCHAR},
+            create_date = #{createDate,jdbcType=TIMESTAMP},
+            update_by   = #{updateBy,jdbcType=VARCHAR},
+            update_date = #{updateDate,jdbcType=TIMESTAMP},
+            remarks     = #{remarks,jdbcType=VARCHAR},
+            del_flag    = #{delFlag,jdbcType=CHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <select id="findList" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadYjInfoListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.PadYjInfoListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from pad_yj_info
+        where del_flag = '0'
+        and equ_id = #{equId}
+        and arch_id = #{archId}
+        order by create_date desc
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.plant.entity.oritrapla.PadYjInfo">
+        update pad_yj_info
+        set del_flag    = '1',
+            update_by   = #{updateBy,jdbcType=VARCHAR},
+            update_date = #{updateDate,jdbcType=TIMESTAMP}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findPage" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadYjInfoListVo"
+            parameterType="com.wisea.cultivar.plant.po.oritrapla.PadYjInfoPagePo" flushCache="true">
+        SELECT
+        pyj.*,
+        ei.equ_name,
+        mi.org_name AS archName,
+        mm.massif_name
+        FROM
+        pad_yj_info pyj
+        LEFT JOIN arch_basic_info abi ON abi.id = pyj.arch_id
+        left join zhfw_memb_info mi on abi.memb_id = mi.id
+        LEFT JOIN equ_info ei ON ei.id = pyj.equ_id
+        LEFT JOIN massif_equ_rela mer ON mer.equ_id = ei.id
+        LEFT JOIN massif_mage mm ON mm.id = mer.massif_id
+        WHERE
+        pyj.del_flag = '0'
+        and mi.del_flag = '0'
+        <if test="equId!=null and equId!=''">
+            and pyj.equ_id = #{equId}
+        </if>
+        <if test="search!=null and search!=''">
+            and (
+                ei.equ_name like #{search}
+                    or mm.massif_name like #{search}
+                    or pyj.content like #{search}
+                    or pyj.pad_name like #{search}
+                )
+        </if>
+        order by pyj.report_time desc
+    </select>
+    <select id="find2ByArchId" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadYjInfoListVo">
+        SELECT
+            pyj.*,
+            eim.equ_name,
+            mi.org_name AS archName,
+            mm.massif_name
+        FROM
+            pad_yj_info pyj
+            LEFT JOIN arch_basic_info abi ON abi.id = pyj.arch_id
+            LEFT JOIN zhfw_memb_info mi ON abi.memb_id = mi.id
+            LEFT JOIN equ_info_mage	eim ON eim.id = pyj.equ_id
+            LEFT JOIN massif_equ_rela mer ON mer.equ_id = eim.id
+            LEFT JOIN massif_mage mm ON mm.id = mer.massif_id
+        WHERE
+            pyj.del_flag = '0'
+            AND mi.del_flag = '0'
+        ORDER BY
+            create_date DESC
+        LIMIT 2
+    </select>
+
+    <!-- 查询病虫害列表（前20条） -->
+    <select id="findPestWarning" resultType="com.wisea.cultivar.plant.vo.oritrapla.PadYjInfoListVo">
+        SELECT
+          pyj.*,
+          eim.equ_name,
+          mi.org_name AS archName,
+          mm.massif_name
+        FROM
+          pad_yj_info pyj
+          LEFT JOIN arch_basic_info abi ON abi.id = pyj.arch_id
+          LEFT JOIN zhfw_memb_info mi ON abi.memb_id = mi.id
+          LEFT JOIN equ_info_mage	eim ON eim.id = pyj.equ_id
+          LEFT JOIN massif_equ_rela mer ON mer.equ_id = eim.id
+          LEFT JOIN massif_mage mm ON mm.id = mer.massif_id
+        WHERE
+          pyj.del_flag = '0'
+          AND mi.del_flag = '0'
+        ORDER BY
+          create_date DESC
+          LIMIT 20
+    </select>
+</mapper>

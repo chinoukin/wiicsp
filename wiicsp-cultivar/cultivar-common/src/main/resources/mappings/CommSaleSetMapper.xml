@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.CommSaleSetMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.CommSaleSet" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="comm_sale_catg_id" property="commSaleCatgId" jdbcType="BIGINT" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+
+    <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+    <resultMap id="BaseResult" type="com.wisea.cultivar.common.vo.product.CommSalesSetVo" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="comm_sale_catg_id" property="commSaleCatgId" jdbcType="BIGINT" />
+        <result column="comm_id" property="commId" jdbcType="BIGINT" />
+        <result column="comm_name" property="commName" jdbcType="VARCHAR" />
+        <result column="sort" property="sort" jdbcType="INTEGER" />
+        <association property="commSaleCatgInfo" javaType="com.wisea.cultivar.common.vo.CommSaleCatgInfoVo">
+            <result column="catg_name" property="catgName" jdbcType="VARCHAR"/>
+        </association>
+        <collection property="commVarietMageInfoVo" ofType="com.wisea.cultivar.common.vo.CommVarietMageInfoVo">
+            <result column="commVarietId" property="id" jdbcType="BIGINT" />
+            <result column="comm_variet_name" property="commVarietName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+  <sql id="Base_Column_List" >
+    id, comm_sale_catg_id, comm_id, comm_name, sort, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+
+    <!-- 模糊查询品类信息   -->
+    <select id="likeQuerySalesSet" parameterType="com.wisea.cultivar.common.po.product.CommMageTreePo" resultMap="BaseResult">
+        select
+            css.id,css.comm_sale_catg_id, css.comm_id, css.comm_name, css.sort,
+            csc.catg_name,cvm.comm_variet_name,cvm.id as 'commVarietId'
+        FROM
+        comm_sale_set  css
+        LEFT JOIN comm_sale_catg csc ON csc.id = css.comm_sale_catg_id
+        LEFT JOIN comm_variet_mage cvm ON cvm.comm_id = css.comm_id
+        WHERE css.del_flag = '0'
+        <if test="query != null and query != ''">
+            AND css.comm_name LIKE CONCAT('%', #{query}, '%')
+        </if>
+        order by  css.sort asc
+    </select>
+    <!-- 根据销售分类配置的id 查询是否关联的了商品发布（已关联商品发布，不能删除） -->
+    <select id="selectCommPubCount" parameterType="java.lang.Long" resultType="java.lang.Integer">
+    select count(distinct cpi.id)from comm_pub_info cpi where cpi.comm_state_type != '6' and cpi.del_flag = '0' and cpi.comm_sale_set_id = #{id}
+    </select>
+    <!-- 查询是否关联了分类配置   -->
+    <select id="findSalesClassReleaseById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select * from comm_sale_set where comm_sale_catg_id = #{id,jdbcType=BIGINT}
+    </select>
+    <!-- 查询是否关联了销售分类配置,根据标准品类id   -->
+    <select id="findSalesClassReleaseByCommId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select * from comm_sale_set where comm_id = #{id,jdbcType=BIGINT}
+    </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from comm_sale_set
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from comm_sale_set
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.CommSaleSet" >
+    insert into comm_sale_set (id, comm_sale_catg_id, comm_id,
+      comm_name, sort, create_by,
+      create_date, update_by, update_date,
+      remarks, del_flag)
+    values (#{id,jdbcType=BIGINT}, #{commSaleCatgId,jdbcType=BIGINT}, #{commId,jdbcType=BIGINT},
+      #{commName,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{createBy,jdbcType=VARCHAR},
+      #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP},
+      #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.CommSaleSet" >
+    insert into comm_sale_set
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="commSaleCatgId != null" >
+        comm_sale_catg_id,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commName != null" >
+        comm_name,
+      </if>
+      <if test="sort != null" >
+        sort,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="commSaleCatgId != null" >
+        #{commSaleCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commName != null" >
+        #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.CommSaleSet" >
+    update comm_sale_set
+    <set >
+      <if test="commSaleCatgId != null" >
+        comm_sale_catg_id = #{commSaleCatgId,jdbcType=BIGINT},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commName != null" >
+        comm_name = #{commName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null" >
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.CommSaleSet" >
+    update comm_sale_set
+    set comm_sale_catg_id = #{commSaleCatgId,jdbcType=BIGINT},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_name = #{commName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.common.vo.CommSaleSetPageListVo" parameterType="com.wisea.cultivar.common.po.CommSaleSetPageListPo" >
+    select
+	  id id,
+	  comm_sale_catg_id commSaleCatgId,
+	  comm_id commId,
+	  comm_name commName,
+	  sort sort
+	from
+	  comm_sale_set
+	where
+	  del_flag = '0'
+  </select>
+  <select id="findInfo" resultType="com.wisea.cultivar.common.vo.CommSaleSetInfoVo" parameterType="java.lang.Long" >
+    select
+	  id id,
+	  comm_sale_catg_id commSaleCatgId,
+	  comm_id commId,
+	  comm_name commName,
+	  sort sort
+	from
+	  comm_sale_set
+	where
+	  del_flag = '0'
+	  and id = #{id}
+  </select>
+     <!-- 查询销售品类配置列表   -->
+    <select id="findSalesClassReleaseList" resultType="com.wisea.cultivar.common.vo.product.CammSalesReleaseMageListVo" parameterType="com.wisea.cultivar.common.po.product.CommSalesReleasePagePo">
+        SELECT
+        css.id, comm_id as 'commId', comm_name as 'cammName', css.sort,css.comm_sale_catg_id as 'commSalesCatgId',
+        csc.catg_name as 'salesCatgName',cm.key_word as 'keyWord'
+        from comm_sale_set css
+        LEFT JOIN comm_sale_catg AS csc ON csc.id = css.comm_sale_catg_id
+        LEFT JOIN comm_mage AS cm ON cm.id = css.comm_id
+        where css.del_flag = '0'
+        <if test="query != null and query != ''">
+            and (css.comm_name like CONCAT('%', #{query}, '%'))
+        </if>
+        <if test="commSalesCatgId != null and commSalesCatgId != ''">
+            and (css.comm_sale_catg_id like CONCAT('%', #{commSalesCatgId}, '%'))
+        </if>
+        order by css.sort asc
+    </select>
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        insert into comm_sale_set (id, comm_sale_catg_id, comm_id, comm_name, sort, create_by, create_date, update_by,
+        update_date, remarks, del_flag)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.id,jdbcType=BIGINT},#{item.commSaleCatgId,jdbcType=BIGINT},
+            #{item.commId,jdbcType=BIGINT},#{item.commName,jdbcType=VARCHAR},#{item.sort,jdbcType=INTEGER},
+            #{item.createBy,jdbcType=VARCHAR},#{item.createDate,jdbcType=TIMESTAMP}, #{item.updateBy,jdbcType=VARCHAR},
+            #{item.updateDate,jdbcType=TIMESTAMP}, #{item.remarks,jdbcType=VARCHAR}, #{item.delFlag,jdbcType=CHAR}
+            )
+        </foreach>
+    </insert>
+    <!-- 根据销售品类id 删除 对应的配置关系 -->
+    <delete id="delBySalesClassId" parameterType="java.lang.Long">
+        DELETE FROM comm_sale_set WHERE comm_sale_catg_id = #{id}
+    </delete>
+</mapper>

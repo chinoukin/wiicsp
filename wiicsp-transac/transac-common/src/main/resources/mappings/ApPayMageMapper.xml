@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.transac.common.dao.ApPayMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.transac.common.entity.ApPayMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="seller_id" property="sellerId" jdbcType="BIGINT" />
+    <result column="acct_credit_line" property="acctCreditLine" jdbcType="DOUBLE" />
+    <result column="available_credit" property="availableCredit" jdbcType="DOUBLE" />
+    <result column="settle_cycle_type" property="settleCycleType" jdbcType="VARCHAR" />
+    <result column="bill_date_type" property="billDateType" jdbcType="VARCHAR" />
+    <result column="pay_dead_date" property="payDeadDate" jdbcType="INTEGER" />
+    <result column="ser_cost_bl" property="serCostBl" jdbcType="DOUBLE" />
+    <result column="sf_late_fee_flag" property="sfLateFeeFlag" jdbcType="CHAR" />
+    <result column="overdue_late_fee_prop" property="overdueLateFeeProp" jdbcType="DOUBLE" />
+    <result column="credit_type" property="creditType" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, seller_id, acct_credit_line, available_credit, settle_cycle_type, bill_date_type,
+    pay_dead_date, ser_cost_bl, sf_late_fee_flag, overdue_late_fee_prop, credit_type,
+    create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+
+  <!-- 分页查询账期设置列表 -->
+  <select id="findPageList" resultType="com.wisea.transac.common.vo.trade.ApPayMagePageListVo" parameterType="com.wisea.transac.common.po.trade.ApPayMagePageListPo" >
+    SELECT
+      apm.id id,
+      mmm.memb_id membId,
+      mmm.merchant_id sellerId,
+      apm.acct_credit_line acctCreditLine,
+      apm.available_credit availableCredit,
+      apm.settle_cycle_type settleCycleType,
+      apm.bill_date_type billDateType,
+      apm.credit_type creditType,
+      mi.login_name loginName,
+      mi.logo_url logoUrl,
+      mi.regist_tel registTel,
+      mi.entp_name authName,
+      mi.memb_type authType
+    FROM
+      merchant_memb_mage mmm
+      LEFT JOIN ap_pay_mage apm ON apm.seller_id = mmm.merchant_id AND apm.memb_id = mmm.memb_id
+      LEFT JOIN memb_info mi ON mi.id = mmm.memb_id
+    WHERE
+      mmm.merchant_id = #{sellerId}
+      <if test="queryFlag == '0'.toString()">
+        AND apm.id IS NOT NULL
+        AND apm.credit_type = '0'
+      </if>
+      <if test="queryFlag == '1'.toString()">
+        AND apm.id IS NOT NULL
+        AND apm.credit_type = '1'
+      </if>
+      <if test="queryFlag == '2'.toString()">
+        AND apm.id IS NULL
+      </if>
+      <if test="query != null and query != ''">
+        AND (
+          mi.regist_tel LIKE CONCAT('%', #{query}, '%')
+          OR mi.entp_name LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+  </select>
+  <!-- 查询角标数量 -->
+  <select id="findApPayMageCount" parameterType="com.wisea.transac.common.po.trade.ApPayMagePageListPo" resultType="com.wisea.transac.common.vo.trade.ApPayMageCountVo">
+    SELECT
+      SUM(CASE WHEN apm.id IS NOT NULL AND apm.credit_type = '0' THEN 1 ELSE 0 END) hasBeenSetCount,
+      SUM(CASE WHEN apm.id IS NOT NULL AND apm.credit_type = '1' THEN 1 ELSE 0 END) freezeCount,
+      SUM(CASE WHEN apm.id IS NULL THEN 1 ELSE 0 END) notSetCount
+    FROM
+      merchant_memb_mage mmm
+      LEFT JOIN ap_pay_mage apm ON apm.seller_id = mmm.merchant_id AND apm.memb_id = mmm.memb_id
+      LEFT JOIN memb_info mi ON mi.id = mmm.memb_id
+    WHERE
+      mmm.merchant_id = #{sellerId}
+      <if test="query != null and query != ''">
+        AND (
+          mi.regist_tel LIKE CONCAT('%', #{query}, '%')
+          OR mi.entp_name LIKE CONCAT('%', #{query}, '%')
+        )
+      </if>
+  </select>
+  <!-- 查询账期设置详细信息 -->
+  <select id="findInfo" resultType="com.wisea.transac.common.vo.trade.ApPayMageInfoVo" parameterType="java.lang.Long" >
+    select
+	  apm.id id,
+	  apm.memb_id membId,
+	  apm.seller_id sellerId,
+	  apm.acct_credit_line acctCreditLine,
+	  apm.available_credit availableCredit,
+	  apm.settle_cycle_type settleCycleType,
+	  apm.bill_date_type billDateType,
+	  apm.pay_dead_date payDeadDate,
+	  apm.ser_cost_bl serCostBl,
+	  apm.overdue_late_fee_prop overdueLateFeeProp,
+	  apm.credit_type creditType,
+    mi.login_name loginName,
+    mi.logo_url logoUrl,
+    mi.regist_tel registTel,
+    mi.entp_name authName,
+    mi.memb_type authType
+	from
+	  ap_pay_mage apm
+    LEFT JOIN memb_info mi ON mi.id = apm.memb_id
+	where
+	  apm.del_flag = '0'
+	  and apm.id = #{id}
+  </select>
+  <!-- 根据买卖家ID查询账期设置 -->
+  <select id="findByIds" resultMap="BaseResultMap">
+    select * from ap_pay_mage apm where apm.seller_id = #{sellerId} and apm.memb_id = #{buyerId}
+  </select>
+  <!-- 查询所有账期支付设置 -->
+  <select id="findList" parameterType="com.wisea.transac.common.entity.ApPayMage" resultMap="BaseResultMap">
+    select * from ap_pay_mage apm where apm.del_flag = '0'
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from ap_pay_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ap_pay_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.transac.common.entity.ApPayMage" >
+    insert into ap_pay_mage (id, memb_id, seller_id,
+      acct_credit_line, available_credit, settle_cycle_type,
+      bill_date_type, pay_dead_date, ser_cost_bl,
+      sf_late_fee_flag, overdue_late_fee_prop, credit_type,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT},
+      #{acctCreditLine,jdbcType=DOUBLE}, #{availableCredit,jdbcType=DOUBLE}, #{settleCycleType,jdbcType=VARCHAR},
+      #{billDateType,jdbcType=VARCHAR}, #{payDeadDate,jdbcType=INTEGER}, #{serCostBl,jdbcType=DOUBLE},
+      #{sfLateFeeFlag,jdbcType=CHAR}, #{overdueLateFeeProp,jdbcType=DOUBLE}, #{creditType,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.transac.common.entity.ApPayMage" >
+    insert into ap_pay_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="acctCreditLine != null" >
+        acct_credit_line,
+      </if>
+      <if test="availableCredit != null" >
+        available_credit,
+      </if>
+      <if test="settleCycleType != null" >
+        settle_cycle_type,
+      </if>
+      <if test="billDateType != null" >
+        bill_date_type,
+      </if>
+      <if test="payDeadDate != null" >
+        pay_dead_date,
+      </if>
+      <if test="serCostBl != null" >
+        ser_cost_bl,
+      </if>
+      <if test="sfLateFeeFlag != null" >
+        sf_late_fee_flag,
+      </if>
+      <if test="overdueLateFeeProp != null" >
+        overdue_late_fee_prop,
+      </if>
+      <if test="creditType != null" >
+        credit_type,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="acctCreditLine != null" >
+        #{acctCreditLine,jdbcType=DOUBLE},
+      </if>
+      <if test="availableCredit != null" >
+        #{availableCredit,jdbcType=DOUBLE},
+      </if>
+      <if test="settleCycleType != null" >
+        #{settleCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="billDateType != null" >
+        #{billDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="payDeadDate != null" >
+        #{payDeadDate,jdbcType=INTEGER},
+      </if>
+      <if test="serCostBl != null" >
+        #{serCostBl,jdbcType=DOUBLE},
+      </if>
+      <if test="sfLateFeeFlag != null" >
+        #{sfLateFeeFlag,jdbcType=CHAR},
+      </if>
+      <if test="overdueLateFeeProp != null" >
+        #{overdueLateFeeProp,jdbcType=DOUBLE},
+      </if>
+      <if test="creditType != null" >
+        #{creditType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.transac.common.entity.ApPayMage" >
+    update ap_pay_mage
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="acctCreditLine != null" >
+        acct_credit_line = #{acctCreditLine,jdbcType=DOUBLE},
+      </if>
+      <if test="availableCredit != null" >
+        available_credit = #{availableCredit,jdbcType=DOUBLE},
+      </if>
+      <if test="settleCycleType != null" >
+        settle_cycle_type = #{settleCycleType,jdbcType=VARCHAR},
+      </if>
+      <if test="billDateType != null" >
+        bill_date_type = #{billDateType,jdbcType=VARCHAR},
+      </if>
+      <if test="payDeadDate != null" >
+        pay_dead_date = #{payDeadDate,jdbcType=INTEGER},
+      </if>
+      <if test="serCostBl != null" >
+        ser_cost_bl = #{serCostBl,jdbcType=DOUBLE},
+      </if>
+      <if test="sfLateFeeFlag != null" >
+        sf_late_fee_flag = #{sfLateFeeFlag,jdbcType=CHAR},
+      </if>
+      <if test="overdueLateFeeProp != null" >
+        overdue_late_fee_prop = #{overdueLateFeeProp,jdbcType=DOUBLE},
+      </if>
+      <if test="creditType != null" >
+        credit_type = #{creditType,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.transac.common.entity.ApPayMage" >
+    update ap_pay_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      acct_credit_line = #{acctCreditLine,jdbcType=DOUBLE},
+      available_credit = #{availableCredit,jdbcType=DOUBLE},
+      settle_cycle_type = #{settleCycleType,jdbcType=VARCHAR},
+      bill_date_type = #{billDateType,jdbcType=VARCHAR},
+      pay_dead_date = #{payDeadDate,jdbcType=INTEGER},
+      ser_cost_bl = #{serCostBl,jdbcType=DOUBLE},
+      sf_late_fee_flag = #{sfLateFeeFlag,jdbcType=CHAR},
+      overdue_late_fee_prop = #{overdueLateFeeProp,jdbcType=DOUBLE},
+      credit_type = #{creditType,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 查询授信列表 -->
+  <select id="buyerSelApPayList" parameterType="com.wisea.transac.common.po.trade.BuyerApPayListPo"
+            resultType="com.wisea.transac.common.vo.trade.BuyerApPayMageListVo">
+    SELECT
+	  t1.id,
+	  t1.memb_id,
+	  t1.seller_id,
+	  t1.acct_credit_line,
+	  t1.available_credit,
+	  t1.settle_cycle_type,
+	  t1.bill_date_type,
+	  t1.pay_dead_date,
+	  t1.ser_cost_bl,
+	  t1.sf_late_fee_flag,
+	  t1.overdue_late_fee_prop,
+	  t1.credit_type,
+	  t2.entp_name
+	from ap_pay_mage t1
+	  LEFT JOIN entp_auth t2
+	    ON t2.memb_id = t1.seller_id
+	      and t2.auth_state_type = '3'
+	      and t2.del_flag != '1'
+	where 1=1
+       and t1.memb_id = #{membId,jdbcType=BIGINT}
+     <if test="searchKey != null and searchKey != ''">
+       and t2.entp_name like concat('%',#{searchKey},'%')
+     </if>
+     order by t1.create_date desc
+  </select>
+</mapper>

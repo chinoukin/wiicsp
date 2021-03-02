@@ -1,0 +1,450 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wisea.cultivar.explorer.mapper.EntpInfoMageMapper">
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.explorer.entity.EntpInfoMage">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="entp_main_business_type" jdbcType="VARCHAR" property="entpMainBusinessType" />
+    <result column="entp_name" jdbcType="VARCHAR" property="entpName" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="area_prov" jdbcType="VARCHAR" property="areaProv" />
+    <result column="area_city" jdbcType="VARCHAR" property="areaCity" />
+    <result column="area_cou" jdbcType="VARCHAR" property="areaCou" />
+    <result column="entp_type" jdbcType="VARCHAR" property="entpType" />
+    <result column="plant_measure" jdbcType="DOUBLE" property="plantMeasure" />
+    <result column="ctscc" jdbcType="VARCHAR" property="ctscc" />
+    <result column="estab_date" jdbcType="TIMESTAMP" property="estabDate" />
+    <result column="legal_person_name" jdbcType="VARCHAR" property="legalPersonName" />
+    <result column="entp_address" jdbcType="VARCHAR" property="entpAddress" />
+    <result column="entp_introduce" jdbcType="VARCHAR" property="entpIntroduce" />
+    <result column="main_busine_variet" jdbcType="VARCHAR" property="mainBusineVariet" />
+    <result column="prdut_germ_chit_num" jdbcType="DOUBLE" property="prdutGermChitNum" />
+    <result column="conter" jdbcType="VARCHAR" property="conter" />
+    <result column="cont_tel" jdbcType="VARCHAR" property="contTel" />
+    <result column="jd" jdbcType="DOUBLE" property="jd" />
+    <result column="wd" jdbcType="DOUBLE" property="wd" />
+    <result column="create_by" jdbcType="VARCHAR" property="createBy" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_by" jdbcType="VARCHAR" property="updateBy" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="del_flag" jdbcType="CHAR" property="delFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, entp_main_business_type, entp_name, area_code,area_prov,area_city,area_cou, entp_type, plant_measure, ctscc,
+    estab_date, legal_person_name, entp_address, entp_introduce, main_busine_variet,
+    prdut_germ_chit_num, conter, cont_tel, jd, wd, create_by, create_date, update_by,
+    update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from entp_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from entp_info_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.explorer.entity.EntpInfoMage">
+    insert into entp_info_mage (id, entp_main_business_type, entp_name,
+      area_code, area_prov,area_city,area_cou, entp_type, plant_measure,
+      ctscc, estab_date, legal_person_name,
+      entp_address, entp_introduce, main_busine_variet,
+      prdut_germ_chit_num, conter, cont_tel,
+      jd, wd, create_by, create_date,
+      update_by, update_date, remarks,
+      del_flag)
+    values (#{id,jdbcType=BIGINT}, #{entpMainBusinessType,jdbcType=VARCHAR}, #{entpName,jdbcType=VARCHAR},
+      #{areaCode,jdbcType=VARCHAR}, #{areaProv,jdbcType=VARCHAR}, #{areaCity,jdbcType=VARCHAR}, #{areaCou,jdbcType=VARCHAR},
+       #{entpType,jdbcType=VARCHAR}, #{plantMeasure,jdbcType=DOUBLE},
+      #{ctscc,jdbcType=VARCHAR}, #{estabDate,jdbcType=TIMESTAMP}, #{legalPersonName,jdbcType=VARCHAR},
+      #{entpAddress,jdbcType=VARCHAR}, #{entpIntroduce,jdbcType=VARCHAR}, #{mainBusineVariet,jdbcType=VARCHAR},
+      #{prdutGermChitNum,jdbcType=DOUBLE}, #{conter,jdbcType=VARCHAR}, #{contTel,jdbcType=VARCHAR},
+      #{jd,jdbcType=DOUBLE}, #{wd,jdbcType=DOUBLE}, #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+      #{updateBy,jdbcType=VARCHAR}, #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR},
+      0)
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.explorer.entity.EntpInfoMage">
+    insert into entp_info_mage
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="entpMainBusinessType != null">
+        entp_main_business_type,
+      </if>
+      <if test="entpName != null">
+        entp_name,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+        <if test="areaProv != null">
+            area_prov,
+        </if>
+        <if test="areaCity != null">
+            area_city,
+        </if>
+        <if test="areaCou != null">
+            area_cou,
+        </if>
+      <if test="entpType != null">
+        entp_type,
+      </if>
+      <if test="plantMeasure != null">
+        plant_measure,
+      </if>
+      <if test="ctscc != null">
+        ctscc,
+      </if>
+      <if test="estabDate != null">
+        estab_date,
+      </if>
+      <if test="legalPersonName != null">
+        legal_person_name,
+      </if>
+      <if test="entpAddress != null">
+        entp_address,
+      </if>
+      <if test="entpIntroduce != null">
+        entp_introduce,
+      </if>
+      <if test="mainBusineVariet != null">
+        main_busine_variet,
+      </if>
+      <if test="prdutGermChitNum != null">
+        prdut_germ_chit_num,
+      </if>
+      <if test="conter != null">
+        conter,
+      </if>
+      <if test="contTel != null">
+        cont_tel,
+      </if>
+      <if test="jd != null">
+        jd,
+      </if>
+      <if test="wd != null">
+        wd,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateBy != null">
+        update_by,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="entpMainBusinessType != null">
+        #{entpMainBusinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="entpName != null">
+        #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaProv != null">
+            #{areaProv,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCity != null">
+            #{areaCity,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCou != null">
+            #{areaCou,jdbcType=VARCHAR},
+        </if>
+      <if test="entpType != null">
+        #{entpType,jdbcType=VARCHAR},
+      </if>
+      <if test="plantMeasure != null">
+        #{plantMeasure,jdbcType=DOUBLE},
+      </if>
+      <if test="ctscc != null">
+        #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="estabDate != null">
+        #{estabDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="legalPersonName != null">
+        #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="entpAddress != null">
+        #{entpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="entpIntroduce != null">
+        #{entpIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="mainBusineVariet != null">
+        #{mainBusineVariet,jdbcType=VARCHAR},
+      </if>
+      <if test="prdutGermChitNum != null">
+        #{prdutGermChitNum,jdbcType=DOUBLE},
+      </if>
+      <if test="conter != null">
+        #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null">
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null">
+        #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.explorer.entity.EntpInfoMage">
+    update entp_info_mage
+    <set>
+      <if test="entpMainBusinessType != null">
+        entp_main_business_type = #{entpMainBusinessType,jdbcType=VARCHAR},
+      </if>
+      <if test="entpName != null">
+        entp_name = #{entpName,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+        <if test="areaProv != null">
+            area_prov =  #{areaProv,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCity != null">
+            area_city =   #{areaCity,jdbcType=VARCHAR},
+        </if>
+        <if test="areaCou != null">
+            area_cou =   #{areaCou,jdbcType=VARCHAR},
+        </if>
+      <if test="entpType != null">
+        entp_type = #{entpType,jdbcType=VARCHAR},
+      </if>
+      <if test="plantMeasure != null">
+        plant_measure = #{plantMeasure,jdbcType=DOUBLE},
+      </if>
+      <if test="ctscc != null">
+        ctscc = #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="estabDate != null">
+        estab_date = #{estabDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="legalPersonName != null">
+        legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      </if>
+      <if test="entpAddress != null">
+        entp_address = #{entpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="entpIntroduce != null">
+        entp_introduce = #{entpIntroduce,jdbcType=VARCHAR},
+      </if>
+      <if test="mainBusineVariet != null">
+        main_busine_variet = #{mainBusineVariet,jdbcType=VARCHAR},
+      </if>
+      <if test="prdutGermChitNum != null">
+        prdut_germ_chit_num = #{prdutGermChitNum,jdbcType=DOUBLE},
+      </if>
+      <if test="conter != null">
+        conter = #{conter,jdbcType=VARCHAR},
+      </if>
+      <if test="contTel != null">
+        cont_tel = #{contTel,jdbcType=VARCHAR},
+      </if>
+      <if test="jd != null">
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null">
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null">
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.explorer.entity.EntpInfoMage">
+    update entp_info_mage
+    set entp_main_business_type = #{entpMainBusinessType,jdbcType=VARCHAR},
+      entp_name = #{entpName,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+          area_prov =  #{areaProv,jdbcType=VARCHAR},
+          area_city =   #{areaCity,jdbcType=VARCHAR},
+          area_cou =   #{areaCou,jdbcType=VARCHAR},
+      entp_type = #{entpType,jdbcType=VARCHAR},
+      plant_measure = #{plantMeasure,jdbcType=DOUBLE},
+      ctscc = #{ctscc,jdbcType=VARCHAR},
+      estab_date = #{estabDate,jdbcType=TIMESTAMP},
+      legal_person_name = #{legalPersonName,jdbcType=VARCHAR},
+      entp_address = #{entpAddress,jdbcType=VARCHAR},
+      entp_introduce = #{entpIntroduce,jdbcType=VARCHAR},
+      main_busine_variet = #{mainBusineVariet,jdbcType=VARCHAR},
+      prdut_germ_chit_num = #{prdutGermChitNum,jdbcType=DOUBLE},
+      conter = #{conter,jdbcType=VARCHAR},
+      cont_tel = #{contTel,jdbcType=VARCHAR},
+      jd = #{jd,jdbcType=DOUBLE},
+      wd = #{wd,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" parameterType="com.wisea.cultivar.explorer.po.EntpInfoMagePagePo" resultType="com.wisea.cultivar.explorer.vo.EntpInfoMageListVo">
+      SELECT T.*,
+          (SELECT
+          COUNT(entp_info_mage_id)
+          FROM main_business_massif T1
+          WHERE T.id = T1.entp_info_mage_id AND T1.del_flag = '0'
+          ) num,
+      T2.`name` AS 'areaProv', T3.`name` AS 'areaCity',T4.`name` AS  'areaCou' FROM entp_info_mage T
+      LEFT JOIN sys_area T2 ON T.area_prov = T2.`code`
+      LEFT JOIN sys_area T3 ON T.area_city = T3.`code`
+      LEFT JOIN sys_area T4 ON T.area_cou = T4.`code`
+      WHERE T.del_flag = '0'
+    <include refid="query_where"/>
+    ORDER BY T.update_date DESC
+  </select>
+
+  <sql id="query_where">
+    <if test="entpName != null and entpName != ''">
+      and  T.entp_name LIKE concat('%',#{entpName,jdbcType=VARCHAR},'%')
+    </if>
+    <if test="entpMainBusinessType != null and entpMainBusinessType != ''">
+      and T.entp_main_business_type = #{entpMainBusinessType,jdbcType=VARCHAR}
+    </if>
+    <if test="coordinatesFlag != null and coordinatesFlag != ''">
+        <if test="coordinatesFlag == 1">
+          and T.jd is not null and T.wd is not null
+        </if>
+        <if test="coordinatesFlag == 2">
+          and T.jd is null and T.wd is null
+        </if>
+    </if>
+      <if test="entpType != null and entpType != ''">
+          and T.entp_type = #{entpType,jdbcType=VARCHAR}
+      </if>
+    <if test="mainBusineVariet != null and mainBusineVariet != ''">
+      and T.main_busine_variet LIKE concat('%',#{mainBusineVariet,jdbcType=VARCHAR},'%')
+    </if>
+  </sql>
+
+    <sql id="import_query_where">
+        <if test="entpName != null and entpName != ''">
+            and  T1.entp_name LIKE concat('%',#{entpName,jdbcType=VARCHAR},'%')
+        </if>
+        <if test="entpMainBusinessType != null and entpMainBusinessType != ''">
+            and T1.entp_main_business_type = #{entpMainBusinessType,jdbcType=VARCHAR}
+        </if>
+        <if test="coordinatesFlag != null and coordinatesFlag != ''">
+            <if test="coordinatesFlag == 1">
+                and T1.jd is not null and wd is not null
+            </if>
+            <if test="coordinatesFlag == 2">
+                and T1.jd is null and wd is null
+            </if>
+        </if>
+        <if test="addressFlag != null and addressFlag != ''">
+            <if test="addressFlag == 1">
+                and T1.entp_address is not null
+            </if>
+            <if test="addressFlag == 2">
+                and T1.entp_address is null
+            </if>
+        </if>
+        <if test="entpType != null and entpType != ''">
+            and T1.entp_type = #{entpType,jdbcType=VARCHAR}
+        </if>
+        <if test="mainBusineVariet != null and mainBusineVariet != ''">
+            and T1.main_busine_variet LIKE concat('%',#{mainBusineVariet,jdbcType=VARCHAR},'%')
+        </if>
+        <if test=" exportList != null and exportList.size > 0">
+            and T1.id in
+            <foreach item="item" collection="exportList" separator="," open="(" close=")" index="index">
+                #{item}
+            </foreach>
+        </if>
+    </sql>
+
+  <select id="findList" parameterType="com.wisea.cultivar.explorer.po.EntpInfoMageListPo" resultType="com.wisea.cultivar.explorer.vo.EntpInfoMageListVo">
+      SELECT T1.*,T2.`name` AS 'areaProv', T3.`name` AS 'areaCity',T4.`name` AS  'areaCou' FROM entp_info_mage T1
+      LEFT JOIN sys_area T2 ON T1.area_prov = T2.`code`
+      LEFT JOIN sys_area T3 ON T1.area_city = T3.`code`
+      LEFT JOIN sys_area T4 ON T1.area_cou = T4.`code`
+      WHERE T1.del_flag = '0'
+    <include refid="import_query_where"/>
+    ORDER BY T1.update_date DESC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.explorer.entity.EntpInfoMage">
+    update entp_info_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!-- 油茶种植面积分析 -->
+  <select id="plantAreaAnalysis" resultType="com.wisea.cultivar.explorer.vo.PlantAreaAnalysisVo">
+    SELECT
+      COUNT(CASE WHEN eim.plant_measure <![CDATA[ < ]]> 100 THEN eim.id END ) level0,
+      COUNT(CASE WHEN eim.plant_measure >= 100 AND eim.plant_measure <![CDATA[ < ]]> 150 THEN eim.id END ) level1,
+      COUNT(CASE WHEN eim.plant_measure >= 150 AND eim.plant_measure <![CDATA[ < ]]> 200 THEN eim.id END ) level2,
+      COUNT(CASE WHEN eim.plant_measure >= 200 AND eim.plant_measure <![CDATA[ < ]]> 250 THEN eim.id END ) level3,
+      COUNT(CASE WHEN eim.plant_measure >= 250 AND eim.plant_measure <![CDATA[ < ]]> 300 THEN eim.id END ) level4,
+      COUNT(CASE WHEN eim.plant_measure >= 300 AND eim.plant_measure <![CDATA[ < ]]> 500 THEN eim.id END ) level5,
+      COUNT(CASE WHEN eim.plant_measure >= 500 THEN eim.id END ) level6
+    FROM
+      entp_info_mage eim
+    WHERE
+      eim.del_flag = '0'
+      AND eim.plant_measure IS NOT NULL
+    GROUP BY
+      eim.del_flag
+  </select>
+
+</mapper>

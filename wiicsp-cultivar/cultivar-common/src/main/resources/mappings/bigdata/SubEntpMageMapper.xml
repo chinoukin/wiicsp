@@ -1,0 +1,869 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.bigdata.SubEntpMageMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.bigdata.SubEntpMage" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="sub_entp_name" property="subEntpName" jdbcType="VARCHAR" />
+    <result column="sub_entp_address" property="subEntpAddress" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="sub_entp_js" property="subEntpJs" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="jd" property="jd" jdbcType="DOUBLE" />
+    <result column="wd" property="wd" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sub_entp_name, sub_entp_address, contact, sub_entp_js, create_by, create_date,
+    update_by, update_date, remarks, del_flag,jd,wd
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mage
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from sub_entp_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMage" >
+    insert into sub_entp_mage (id, sub_entp_name, sub_entp_address,
+      contact, sub_entp_js,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,jd,wd
+      )
+    values (#{id,jdbcType=BIGINT}, #{subEntpName,jdbcType=VARCHAR}, #{subEntpAddress,jdbcType=VARCHAR},
+      #{contact,jdbcType=VARCHAR}, #{subEntpJs,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{jd,jdbcType=DOUBLE}, #{wd,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMage" >
+    insert into sub_entp_mage
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subEntpName != null" >
+        sub_entp_name,
+      </if>
+      <if test="subEntpAddress != null" >
+        sub_entp_address,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="subEntpJs != null" >
+        sub_entp_js,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="jd != null" >
+        jd,
+	  </if>
+	  <if test="wd != null" >
+	    wd,
+	  </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subEntpName != null" >
+        #{subEntpName,jdbcType=VARCHAR},
+      </if>
+      <if test="subEntpAddress != null" >
+        #{subEntpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="subEntpJs != null" >
+        #{subEntpJs,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="jd != null" >
+        #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMage" >
+    update sub_entp_mage
+    <set >
+      <if test="subEntpName != null" >
+        sub_entp_name = #{subEntpName,jdbcType=VARCHAR},
+      </if>
+      <if test="subEntpAddress != null" >
+        sub_entp_address = #{subEntpAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="subEntpJs != null" >
+        sub_entp_js = #{subEntpJs,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="jd != null" >
+        jd = #{jd,jdbcType=DOUBLE},
+      </if>
+      <if test="wd != null" >
+        wd = #{wd,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMage" >
+    update sub_entp_mage
+    set sub_entp_name = #{subEntpName,jdbcType=VARCHAR},
+      sub_entp_address = #{subEntpAddress,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      sub_entp_js = #{subEntpJs,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      jd = #{jd,jdbcType=DOUBLE},
+      wd = #{wd,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultType="com.wisea.cultivar.common.vo.bigdata.SubEntpMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.SubEntpMagePagePo" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mage
+    where del_flag = '0'
+    <if test="subEntpName != null and subEntpName != ''">
+     AND sub_entp_name LIKE CONCAT('%', #{subEntpName}, '%')
+    </if>
+    <if test="contact != null and contact != ''">
+     AND contact LIKE CONCAT('%', #{contact}, '%')
+    </if>
+    <if test="id != null and id != ''">
+     AND id = #{id}
+    </if>
+    ORDER BY update_date DESC
+  </select>
+  <select id="findList" resultType="com.wisea.cultivar.common.vo.bigdata.SubEntpMageListVo" parameterType="com.wisea.cultivar.common.po.bigdata.SubEntpMageListPo" >
+    select
+    <include refid="Base_Column_List" />
+    from sub_entp_mage
+    where del_flag = '0'
+    <if test="subEntpName != null and subEntpName != ''">
+     AND sub_entp_name LIKE CONCAT('%', #{subEntpName}, '%')
+    </if>
+    <if test="contact != null and contact != ''">
+     AND contact LIKE CONCAT('%', #{contact}, '%')
+    </if>
+    <if test="id != null and id != ''">
+     AND id = #{id}
+    </if>
+    ORDER BY update_date DESC
+  </select>
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.bigdata.SubEntpMage" >
+    update sub_entp_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="getTotal" resultType="com.wisea.cultivar.common.vo.bigdata.QueryTotalVo" parameterType="com.wisea.cultivar.common.po.bigdata.QueryTotalPo">
+   SELECT IFNULL((SELECT (dcl+dbz+psz+yqs) from delivery_info_wh
+           WHERE del_flag ='0'
+            <if test="subEntpId != null and subEntpId != ''">
+		    AND sub_entp_id = #{subEntpId}
+		    </if>
+           ),0) AS 'ordTotal',
+           (SELECT COUNT(*) from qt_xs_yj_info
+           WHERE del_flag ='0'
+            <if test="subEntpId != null and subEntpId != ''">
+		    AND sub_entp_id = #{subEntpId}
+		    </if>
+           ) AS 'qtxsyjTotal',
+           (SELECT COUNT(*) from ps_car_jc_info
+            WHERE del_flag ='0'
+             <if test="subEntpId != null and subEntpId != ''">
+		     AND sub_entp_id = #{subEntpId}
+		     </if>
+            ) AS 'pscarjcTotal',
+           (SELECT COUNT(*) from ps_car_jc_info
+           WHERE del_flag ='0'
+             <if test="subEntpId != null and subEntpId != ''">
+		     AND sub_entp_id = #{subEntpId}
+		     </if>
+           ) AS 'ztclTotal',
+           (SELECT COUNT(*) from ps_car_jc_info
+           WHERE del_flag ='0' AND car_jc_state ='1'
+             <if test="subEntpId != null and subEntpId != ''">
+		     AND sub_entp_id = #{subEntpId}
+		     </if>
+           ) AS 'yjTotal'
+  </select>
+  <select id="getXsRank" resultType="com.wisea.cultivar.common.vo.bigdata.BuyerSalesRankVo" parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+		SELECT
+			ROUND(SUM(ys_je),2) ysJe,cgs_name
+		FROM
+			jy_ord_mage
+		WHERE del_flag='0'
+	    AND entp_id = #{subEntpId}
+	    <if test="flag =='0'.toString()">
+	     AND DATE_FORMAT(dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+	    </if>
+	    <if test="flag =='1'.toString()">
+		 AND DATE_FORMAT(dj_date, '%Y-%m') = DATE_FORMAT(#{val} , '%Y-%m')
+		</if>
+		GROUP BY cgs_name
+		order by ys_je DESC
+  </select>
+
+  <select id="getXsAnalysisMonth" resultType="com.wisea.cultivar.common.vo.bigdata.XsAnalysisVo" parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+        SELECT yearMonth,ROUND(ysJe,2) ysJe,IFNULL(ROUND(latYsJe,2),0) latYsJe
+		FROM (
+		   SELECT t3.yearMonth,t3.ysJe,t4.ysJe latYsJe
+		     FROM
+		    (
+					  	SELECT
+							DATE_FORMAT(t.dj_date,'%Y-%m-%d') AS yearMonth,sum(t.ys_je) ysJe
+							FROM jy_ord_mage t
+							WHERE t.del_flag='0'
+							AND entp_id = #{subEntpId}
+							AND   DATE_FORMAT(t.dj_date,'%Y-%m') =  DATE_FORMAT(#{val},'%Y-%m')
+		                   <!--  AND   DATE_FORMAT(t.dj_date,'%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(#{val},'%Y-%m-%d')
+		                    AND   DATE_FORMAT(t.dj_date,'%Y-%m-%d') <![CDATA[ > ]]> DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 MONTH),'%Y-%m-%d') -->
+							GROUP BY DATE_FORMAT(t.dj_date , '%Y-%m-%d')
+
+		     ) t3
+		       LEFT JOIN
+		    (
+					    SELECT  DATE_FORMAT(DATE_ADD(t.dj_date,INTERVAL 1 MONTH),'%Y-%m-%d') AS lastYearMonth,sum(t.ys_je) ysJe
+					       FROM `jy_ord_mage` t
+					       WHERE t.del_flag='0'
+					       AND entp_id = #{subEntpId}
+					       AND  DATE_FORMAT(t.dj_date,'%Y-%m') =  DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 MONTH),'%Y-%m')
+					      <!--  AND   DATE_FORMAT(t.dj_date,'%Y-%m-%d') <![CDATA[ <= ]]> DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 YEAR),'%Y-%m-%d')
+					       AND   DATE_FORMAT(t.dj_date,'%Y-%m-%d') <![CDATA[ > ]]> DATE_FORMAT(DATE_SUB(DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 YEAR),'%Y-%m-%d'),INTERVAL 1 MONTH),'%Y-%m-%d') -->
+					       GROUP BY DATE_FORMAT(t.dj_date , '%Y-%m-%d')
+		    ) t4
+		    ON t3.yearMonth = t4.lastYearMonth
+		) t5
+  </select>
+  <select id="getXsAnalysisYear" resultType="com.wisea.cultivar.common.vo.bigdata.XsAnalysisVo" parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+        SELECT yearMonth,ROUND(ysJe,2) ysJe,IFNULL(ROUND(latYsJe,2),0) latYsJe
+		FROM (
+		   SELECT t3.yearMonth,t3.ysJe,t4.ysJe latYsJe
+		     FROM
+		    (
+					  	SELECT
+							DATE_FORMAT(t.dj_date,'%Y-%m') AS yearMonth,sum(t.ys_je) ysJe
+							FROM jy_ord_mage t
+							WHERE t.del_flag='0'
+							AND entp_id = #{subEntpId}
+							AND   DATE_FORMAT(t.dj_date,'%Y') =  DATE_FORMAT(#{val},'%Y')
+		                    <!-- AND   DATE_FORMAT(t.dj_date,'%Y-%m') <![CDATA[ <= ]]> DATE_FORMAT(#{val},'%Y-%m')
+		                    AND   DATE_FORMAT(t.dj_date,'%Y-%m') <![CDATA[ > ]]> DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 YEAR),'%Y-%m') -->
+							GROUP BY DATE_FORMAT(t.dj_date , '%Y-%m')
+
+		     ) t3
+		       LEFT JOIN
+		    (
+					    SELECT  DATE_FORMAT(DATE_ADD(t.dj_date,INTERVAL 1 YEAR),'%Y-%m') AS lastYearMonth,sum(t.ys_je) ysJe
+					       FROM `jy_ord_mage` t
+					       WHERE t.del_flag='0'
+					       AND entp_id = #{subEntpId}
+					       AND   DATE_FORMAT(t.dj_date,'%Y') =  DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 YEAR),'%Y')
+					      <!--  AND   DATE_FORMAT(t.dj_date,'%Y-%m') <![CDATA[ <= ]]> DATE_FORMAT(DATE_SUB(#{val},INTERVAL 1 YEAR),'%Y-%m')
+					       AND   DATE_FORMAT(t.dj_date,'%Y-%m') <![CDATA[ > ]]> DATE_FORMAT(DATE_SUB(#{val},INTERVAL 2 YEAR),'%Y-%m') -->
+					       GROUP BY DATE_FORMAT(t.dj_date , '%Y-%m')
+		    ) t4
+		    ON t3.yearMonth = t4.lastYearMonth
+		) t5
+  </select>
+
+  <select id="getJxRank" resultType="com.wisea.cultivar.common.vo.bigdata.GetJxRankVo" parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+	SELECT entp_id subEntpId,category_name categoryName,rank,ROUND(ysje,2) ysje
+    FROM(
+	  SELECT IF(@pa=category_id,@ra:=@ra+1,@ra:=1) AS rank,@pa:=category_id AS category_id,entp_id,category_name, ysje
+		FROM
+		(
+			SELECT entp_id,category_name,SUM(ys_je) ysje,category_id
+			FROM jy_ord_mage
+			WHERE del_flag='0'
+			AND entp_id is not null
+			<if test="flag =='0'.toString()">
+		     AND DATE_FORMAT(dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+		    </if>
+		    <if test="flag =='1'.toString()">
+			 AND DATE_FORMAT(dj_date, '%Y-%m') = DATE_FORMAT(#{val} , '%Y-%m')
+			</if>
+			GROUP BY category_id,entp_id
+		  ORDER BY category_id ,ysje DESC
+		)s,(SELECT  @pa := NULL , @ra := 0) AS rn
+	)z
+   WHERE entp_id = #{subEntpId}
+   ORDER BY ysje DESC
+  </select>
+  <select id="getAreaReportYear" resultType="com.wisea.cultivar.common.vo.bigdata.AreaReportVo" parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+   SELECT
+      sem.id subEntpId,
+	  sem.sub_entp_name subEntpName,
+	  sem.jd lng,
+	  sem.wd lat,
+	  sem.sub_entp_address subEntpAddress,
+	  ROUND(sum(jom.ys_je),2) ysJe,
+	  semim.n_mbsj nMbsj,
+	  ROUND(sum(jom.ys_je)/semim.n_mbsj,2) wcd
+	FROM
+		sub_entp_mage sem
+	LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+	<if test="val != null">
+	    AND DATE_FORMAT(jom.dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+	 </if>
+	LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id AND semim.del_flag='0' AND semim.del_flag='0'
+    <if test="val != null">
+    	AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+	</if>
+	where  sem.del_flag='0'
+	 <if test="subEntpId != null and subEntpId != ''">
+	    AND sem.id = #{subEntpId}
+	 </if>
+	GROUP BY sem.id
+  </select>
+
+  <select id="getAreaReportMonth" resultType="com.wisea.cultivar.common.vo.bigdata.AreaReportVo" parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+   SELECT
+      sem.id subEntpId,
+      sem.jd lng,
+	  sem.wd lat,
+	  sem.sub_entp_name subEntpName,
+	  sem.sub_entp_address subEntpAddress,
+	  <if test="month == '1'.toString()">
+	     semim.one_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.one_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '2'.toString()">
+	     semim.two_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.two_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '3'.toString()">
+	     semim.three_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.three_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '4'.toString()">
+	     semim.four_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.four_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '5'.toString()">
+	     semim.five_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.five_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '6'.toString()">
+	     semim.six_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.six_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '7'.toString()">
+	     semim.seven_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.seven_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '8'.toString()">
+	     semim.eight_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.eight_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '9'.toString()">
+	     semim.nine_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.nine_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '10'.toString()">
+	     semim.ten_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.ten_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '11'.toString()">
+	     semim.eleven_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.eleven_mbsj,2) wcd,
+	  </if>
+	  <if test="month == '12'.toString()">
+	     semim.twelve_mbsj nMbsj,
+	     ROUND(sum(jom.ys_je)/semim.twelve_mbsj,2) wcd,
+	  </if>
+	   ROUND(sum(jom.ys_je),2) ysJe
+	FROM
+			sub_entp_mage sem
+	LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+	<if test="val != null">
+	    AND DATE_FORMAT(jom.dj_date, '%Y-%m') = DATE_FORMAT(#{val} , '%Y-%m')
+	 </if>
+	LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id AND semim.del_flag='0' AND semim.del_flag='0'
+	<if test="val != null">
+	    AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+	 </if>
+	where  sem.del_flag='0'
+	 <if test="subEntpId != null and subEntpId != ''">
+	    AND sem.id = #{subEntpId}
+	 </if>
+	GROUP BY sem.id
+  </select>
+  <select id="getXlRankYear"
+		  resultType="com.wisea.cultivar.common.vo.bigdata.XlRankVo"
+		  parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+		 SELECT
+				t1.entp_id subEntpId,
+				t1.sub_entp_name,
+				t1.val,
+				t1.nMbsj,
+				ROUND(t1.ysJe,2) ysJe,
+				ROUND(t1.wcd,2) wcd,
+				t1.lng,
+				t1.lat,
+	            IF(t1.rank<![CDATA[ < ]]>t3.srank,'0',IF(t1.rank<![CDATA[ > ]]> t3.srank,'1','2')) rank
+			FROM
+		       (SELECT
+					  	t.*,@rowNo := @rowNo + 1 AS rank
+					   FROM
+						 (
+						    <if test="analysis == '0'.toString()">
+						        	SELECT
+									sem.id entp_id,
+                                    sem.sub_entp_name,
+									ROUND(SUM(jom.ys_je)/semim.n_mbsj,2)  val,
+									semim.n_mbsj nMbsj,
+									SUM(jom.ys_je) ysJe,
+									ROUND(SUM(jom.ys_je)/semim.n_mbsj,2) wcd,
+								    sem.jd lng,
+	                                sem.wd lat
+								FROM
+								sub_entp_mage sem
+								LEFT JOIN jy_ord_mage jom ON sem.id = jom.entp_id AND jom.del_flag = '0'
+								AND DATE_FORMAT(jom.dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+                                LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+								WHERE
+									sem.del_flag = '0'
+								GROUP BY
+									sem.id
+								ORDER BY
+									 val DESC,sem.id
+						    </if>
+							<if test="analysis == '1'.toString()">
+								SELECT
+									sem.id entp_id,
+                                    sem.sub_entp_name,
+									ROUND(SUM(jom.ys_je),2) val,
+									semim.n_mbsj nMbsj,
+									SUM(jom.ys_je) ysJe,
+									ROUND(SUM(jom.ys_je)/semim.n_mbsj,2) wcd,
+								    sem.jd lng,
+	                                sem.wd lat
+								FROM
+									sub_entp_mage sem
+								LEFT JOIN jy_ord_mage jom ON sem.id = jom.entp_id AND jom.del_flag = '0'
+								AND DATE_FORMAT(jom.dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+								LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+								WHERE
+									sem.del_flag = '0'
+								GROUP BY
+									sem.id
+								ORDER BY
+									val DESC,sem.id
+					        </if>
+			   ) t,(SELECT @rowNo := 0) q
+		      ) t1
+		 LEFT JOIN (
+				SELECT
+				 id  sentp_id,
+				 sub_entp_name ssale_org,
+				 val sys_je,
+                @rowNo1 := @rowNo1 + 1 AS srank
+		     FROM
+				(
+				           <if test="analysis == '0'.toString()">
+							   SELECT
+									sem.id,
+                                    sem.sub_entp_name,
+									ROUND(SUM(jom.ys_je)/semim.n_mbsj,2)  val
+								FROM
+								sub_entp_mage sem
+								LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+								AND jom.ord_pc_num <![CDATA[ < ]]> (
+									SELECT
+										MAX(ord_pc_num)
+									FROM
+										jy_ord_mage
+								    WHERE del_flag = '0'
+								)
+							    AND DATE_FORMAT(jom.dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+								LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id  AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+								WHERE
+									sem.del_flag = '0'
+								GROUP BY
+									sem.id
+								ORDER BY
+									 val DESC,sem.id
+						    </if>
+							<if test="analysis == '1'.toString()">
+							SELECT
+								sem.id,
+                                sem.sub_entp_name,
+								SUM(ys_je)  val
+							FROM
+								sub_entp_mage sem
+								LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+								AND jom.ord_pc_num <![CDATA[ < ]]> (
+									SELECT
+										MAX(ord_pc_num)
+									FROM
+										jy_ord_mage
+								    WHERE del_flag = '0'
+								)
+							    AND DATE_FORMAT(dj_date, '%Y') = DATE_FORMAT(#{val} , '%Y')
+							WHERE
+								sem.del_flag = '0'
+							GROUP BY
+								sem.id
+							ORDER BY
+								val DESC,sem.id
+				            </if>
+				) t2 ,
+						(SELECT @rowNo1 := 0) q
+		) t3 ON t1.entp_id = t3.sentp_id
+  </select>
+  <select id="getXlRankMonth"
+		  resultType="com.wisea.cultivar.common.vo.bigdata.XlRankVo"
+		  parameterType="com.wisea.cultivar.common.po.bigdata.BuyerSalesRankPo">
+	       SELECT
+				t1.entp_id subEntpId,
+				t1.sub_entp_name,
+				t1.val,
+				t1.nMbsj,
+				ROUND(t1.ysJe,2) ysJe,
+				ROUND(t1.wcd,2) wcd,
+				t1.lng,
+				t1.lat,
+	            IF(t1.rank<![CDATA[ < ]]>t3.srank,'0',IF(t1.rank<![CDATA[ > ]]> t3.srank,'1','2')) rank
+			FROM
+		       (SELECT
+					  	t.*,@rowNo := @rowNo + 1 AS rank
+					   FROM
+						 (
+						          <if test="analysis == '0'.toString()">
+						            SELECT
+									<if test="month == '1'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.one_mbsj,2) val,
+									     semim.one_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.one_mbsj,2) wcd,
+									</if>
+									<if test="month == '2'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.two_mbsj,2) val,
+									     semim.two_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.two_mbsj,2) wcd,
+									</if>
+									<if test="month == '3'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.three_mbsj,2) val,
+									     semim.three_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.three_mbsj,2) wcd,
+									</if>
+									<if test="month == '4'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.four_mbsj,2) val,
+									     semim.four_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.four_mbsj,2) wcd,
+									</if>
+									<if test="month == '5'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.five_mbsj,2) val,
+									     semim.five_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.five_mbsj,2) wcd,
+									</if>
+									<if test="month == '6'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.six_mbsj,2) val,
+									     semim.six_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.six_mbsj,2) wcd,
+									</if>
+									<if test="month == '7'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.seven_mbsj,2) val,
+									     semim.seven_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.seven_mbsj,2) wcd,
+									</if>
+									<if test="month == '8'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.eight_mbsj,2) val,
+									     semim.eight_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.eight_mbsj,2) wcd,
+									</if>
+									<if test="month == '9'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.nine_mbsj,2) val,
+									     semim.nine_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.nine_mbsj,2) wcd,
+									</if>
+									<if test="month == '10'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.ten_mbsj,2) val,
+									     semim.ten_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.ten_mbsj,2) wcd,
+									</if>
+									<if test="month == '11'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.eleven_mbsj,2) val,
+									     semim.eleven_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.eleven_mbsj,2) wcd,
+									</if>
+									<if test="month == '12'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.twelve_mbsj,2) val,
+									     semim.twelve_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.twelve_mbsj,2) wcd,
+									</if>
+									sem.id entp_id,
+                                    sem.sub_entp_name,
+                                    sem.jd lng,
+		                            sem.wd lat
+								FROM
+								sub_entp_mage sem
+								LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+								AND  DATE_FORMAT(jom.dj_date,'%Y-%m') = DATE_FORMAT(#{val},'%Y-%m')
+							    LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id
+                                AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+								WHERE
+									sem.del_flag = '0'
+								GROUP BY
+									sem.id
+								ORDER BY
+									val DESC,sem.id
+						    </if>
+							<if test="analysis == '1'.toString()">
+								SELECT
+									sem.id entp_id,
+                                    sem.sub_entp_name,
+									ROUND(SUM(jom.ys_je),2) val,
+									<if test="month == '1'.toString()">
+									     semim.one_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.one_mbsj,2) wcd,
+									</if>
+									<if test="month == '2'.toString()">
+									     semim.two_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.two_mbsj,2) wcd,
+									</if>
+									<if test="month == '3'.toString()">
+									     semim.three_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.three_mbsj,2) wcd,
+									</if>
+									<if test="month == '4'.toString()">
+									     semim.four_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.four_mbsj,2) wcd,
+									</if>
+									<if test="month == '5'.toString()">
+									     semim.five_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.five_mbsj,2) wcd,
+									</if>
+									<if test="month == '6'.toString()">
+									     semim.six_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.six_mbsj,2) wcd,
+									</if>
+									<if test="month == '7'.toString()">
+									     semim.seven_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.seven_mbsj,2) wcd,
+									</if>
+									<if test="month == '8'.toString()">
+									     semim.eight_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.eight_mbsj,2) wcd,
+									</if>
+									<if test="month == '9'.toString()">
+									     semim.nine_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.nine_mbsj,2) wcd,
+									</if>
+									<if test="month == '10'.toString()">
+									     semim.ten_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.ten_mbsj,2) wcd,
+									</if>
+									<if test="month == '11'.toString()">
+									     semim.eleven_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.eleven_mbsj,2) wcd,
+									</if>
+									<if test="month == '12'.toString()">
+									     semim.twelve_mbsj nMbsj,
+										 SUM(jom.ys_je) ysJe,
+										 ROUND(SUM(jom.ys_je)/semim.twelve_mbsj,2) wcd,
+									</if>
+                                    sem.jd lng,
+		                            sem.wd lat
+								FROM
+								 sub_entp_mage sem
+								LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+								AND  DATE_FORMAT(jom.dj_date,'%Y-%m') = DATE_FORMAT(#{val},'%Y-%m')
+								LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id
+                                AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+								WHERE
+									sem.del_flag = '0'
+								GROUP BY
+									sem.id
+								ORDER BY
+									val DESC,sem.id
+							</if>
+			   ) t,(SELECT @rowNo := 0) q
+		      ) t1
+		 LEFT JOIN (
+				SELECT
+				id  sentp_id,
+				sub_entp_name ssale_org,
+				val sys_je,
+                @rowNo1 := @rowNo1 + 1 AS srank
+		     FROM
+				(
+							    <if test="analysis == '0'.toString()">
+								    SELECT
+								<if test="month == '1'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.one_mbsj,2) val,
+									</if>
+									<if test="month == '2'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.two_mbsj,2) val,
+									</if>
+									<if test="month == '3'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.three_mbsj,2) val,
+									</if>
+									<if test="month == '4'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.four_mbsj,2) val,
+									</if>
+									<if test="month == '5'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.five_mbsj,2) val,
+									</if>
+									<if test="month == '6'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.six_mbsj,2) val,
+									</if>
+									<if test="month == '7'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.seven_mbsj,2) val,
+									</if>
+									<if test="month == '8'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.eight_mbsj,2) val,
+									</if>
+									<if test="month == '9'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.nine_mbsj,2) val,
+									</if>
+									<if test="month == '10'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.ten_mbsj,2) val,
+									</if>
+									<if test="month == '11'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.eleven_mbsj,2) val,
+									</if>
+									<if test="month == '12'.toString()">
+									     ROUND(SUM(jom.ys_je)/semim.twelve_mbsj,2) val,
+									</if>
+									sem.id,
+	                                sem.sub_entp_name
+							FROM
+							   sub_entp_mage sem
+						    LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+						    AND jom.ord_pc_num <![CDATA[ < ]]> (
+								SELECT
+									MAX(ord_pc_num)
+								FROM
+									jy_ord_mage
+							    WHERE del_flag = '0'
+							)
+							AND  DATE_FORMAT(jom.dj_date,'%Y-%m') = DATE_FORMAT(#{val},'%Y-%m')
+					        LEFT JOIN sub_entp_mb_info_mage semim ON semim.sub_entp_id = sem.id
+                            AND semim.year_type = DATE_FORMAT(#{val} , '%Y')
+							WHERE
+								sem.del_flag = '0'
+							GROUP BY
+								sem.id
+							ORDER BY
+								val DESC,sem.id
+				    </if>
+					<if test="analysis == '1'.toString()">
+						SELECT
+							sem.id,
+                            sem.sub_entp_name,
+							SUM(jom.ys_je) val
+						FROM
+							sub_entp_mage sem
+						LEFT JOIN jy_ord_mage jom ON  sem.id = jom.entp_id AND jom.del_flag = '0'
+					    AND jom.ord_pc_num <![CDATA[ < ]]> (
+							SELECT
+								MAX(ord_pc_num)
+							FROM
+								jy_ord_mage
+						   WHERE del_flag = '0'
+						)
+						AND  DATE_FORMAT(jom.dj_date,'%Y-%m') = DATE_FORMAT(#{val},'%Y-%m')
+						WHERE
+							sem.del_flag = '0'
+						GROUP BY
+							sem.id
+						ORDER BY
+							val DESC,sem.id
+					</if>
+				) t2 ,(SELECT @rowNo1 := 0) q
+		) t3 ON t1.entp_id = t3.sentp_id
+  </select>
+
+</mapper>

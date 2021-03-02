@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.EntpDataInfoCopyMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="comp_name" property="compName" jdbcType="VARCHAR" />
+    <result column="regist_address_prov" property="registAddressProv" jdbcType="VARCHAR" />
+    <result column="regist_address_city" property="registAddressCity" jdbcType="VARCHAR" />
+    <result column="regist_address_cou" property="registAddressCou" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="regist_capital" property="registCapital" jdbcType="DOUBLE" />
+    <result column="esta_date" property="estaDate" jdbcType="TIMESTAMP" />
+    <result column="ctscc" property="ctscc" jdbcType="VARCHAR" />
+    <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
+    <result column="regist_auth" property="registAuth" jdbcType="VARCHAR" />
+    <result column="comp_type" property="compType" jdbcType="VARCHAR" />
+    <result column="business_term_type" property="businessTermType" jdbcType="VARCHAR" />
+    <result column="business_start_date" property="businessStartDate" jdbcType="TIMESTAMP" />
+    <result column="business_end_date" property="businessEndDate" jdbcType="TIMESTAMP" />
+    <result column="operate_range" property="operateRange" jdbcType="VARCHAR" />
+    <result column="comp_email" property="compEmail" jdbcType="VARCHAR" />
+    <result column="contacts" property="contacts" jdbcType="VARCHAR" />
+    <result column="comp_tel" property="compTel" jdbcType="VARCHAR" />
+    <result column="comp_micro_blog" property="compMicroBlog" jdbcType="VARCHAR" />
+    <result column="comp_intro" property="compIntro" jdbcType="VARCHAR" />
+    <result column="auth_exam_state" property="authExamState" jdbcType="VARCHAR" />
+    <result column="exam_fail_reason" property="examFailReason" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+    <result column="comp_short_name" property="compShortName" jdbcType="VARCHAR" />
+    <result column="legal_person_num" property="legalPersonNum" jdbcType="VARCHAR" />
+    <result column="bd_tel" property="bdTel" jdbcType="VARCHAR" />
+    <result column="contacts_email" property="contactsEmail" jdbcType="VARCHAR" />
+    <result column="yyzz_url" property="yyzzUrl" jdbcType="VARCHAR" />
+    <result column="sfz_zm_url" property="sfzZmUrl" jdbcType="VARCHAR" />
+    <result column="sfz_fm_url" property="sfzFmUrl" jdbcType="VARCHAR" />
+<!--     <result column="khxkz_num" property="khxkzNum" jdbcType="VARCHAR" /> -->
+<!--     <result column="khxkz_url" property="khxkzUrl" jdbcType="VARCHAR" /> -->
+<!--     <result column="bank.entp_bank_num" property="entpBankNum" jdbcType="VARCHAR" /> -->
+<!--     <result column="kh_name" property="khName" jdbcType="VARCHAR" /> -->
+<!--     <result column="open_bank_type" property="openBankType" jdbcType="VARCHAR" /> -->
+<!--     <result column="kh_prov" property="khProv" jdbcType="VARCHAR" /> -->
+<!--     <result column="kh_city" property="khCity" jdbcType="VARCHAR" /> -->
+<!--     <result column="bank.open_bank" property="openBank" jdbcType="VARCHAR" /> -->
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, comp_name, regist_address_prov, regist_address_city, regist_address_cou,
+    address, regist_capital, esta_date, ctscc, entp_bank_num, open_bank, legal_person,
+    regist_auth, comp_type, business_term_type, business_start_date, business_end_date,
+    operate_range, comp_email, contacts, comp_tel, comp_micro_blog, comp_intro, auth_exam_state,
+    exam_fail_reason, create_by, create_date, update_by, update_date, remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT T1.*,T2.khxkz_num ,T2.khxkz_url,T2.entp_bank_num AS 'bank.entp_bank_num',T2.kh_name,T2.kh_prov,T2.kh_city,T2.open_bank_type,T2.open_bank AS 'bank.open_bank'
+  	FROM entp_data_info_copy T1
+	LEFT JOIN entp_bank_info T2 ON T1.id = T2.entp_data_id
+    where T1.id = #{id,jdbcType=BIGINT} and T1.del_flag = '0'
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from entp_data_info_copy
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    insert into entp_data_info_copy (id, memb_id, comp_name,
+      regist_address_prov, regist_address_city, regist_address_cou,
+      address, regist_capital, esta_date,
+      ctscc, entp_bank_num, open_bank,
+      legal_person, regist_auth, comp_type,
+      business_term_type, business_start_date,
+      business_end_date, operate_range, comp_email,
+      contacts, comp_tel, comp_micro_blog,
+      comp_intro, auth_exam_state, exam_fail_reason,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,
+      comp_short_name, legal_person_num, bd_tel,
+      contacts_email, yyzz_url, sfz_zm_url,
+      sfz_fm_url, prop_contacts, merchant_no
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{compName,jdbcType=VARCHAR},
+      #{registAddressProv,jdbcType=VARCHAR}, #{registAddressCity,jdbcType=VARCHAR}, #{registAddressCou,jdbcType=VARCHAR},
+      #{address,jdbcType=VARCHAR}, #{registCapital,jdbcType=DOUBLE}, #{estaDate,jdbcType=TIMESTAMP},
+      #{ctscc,jdbcType=VARCHAR}, #{entpBankNum,jdbcType=VARCHAR}, #{openBank,jdbcType=VARCHAR},
+      #{legalPerson,jdbcType=VARCHAR}, #{registAuth,jdbcType=VARCHAR}, #{compType,jdbcType=VARCHAR},
+      #{businessTermType,jdbcType=VARCHAR}, #{businessStartDate,jdbcType=TIMESTAMP},
+      #{businessEndDate,jdbcType=TIMESTAMP}, #{operateRange,jdbcType=VARCHAR}, #{compEmail,jdbcType=VARCHAR},
+      #{contacts,jdbcType=VARCHAR}, #{compTel,jdbcType=VARCHAR}, #{compMicroBlog,jdbcType=VARCHAR},
+      #{compIntro,jdbcType=VARCHAR}, #{authExamState,jdbcType=VARCHAR}, #{examFailReason,jdbcType=VARCHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},
+      #{compShortName,jdbcType=VARCHAR}, #{legalPersonNum,jdbcType=VARCHAR}, #{bdTel,jdbcType=VARCHAR},
+      #{contactsEmail,jdbcType=VARCHAR}, #{yyzzUrl,jdbcType=VARCHAR}, #{sfzZmUrl,jdbcType=VARCHAR},
+      #{sfzFmUrl,jdbcType=VARCHAR}, #{propContacts,jdbcType=VARCHAR}, #{merchantNo,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    insert into entp_data_info_copy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="compName != null" >
+        comp_name,
+      </if>
+      <if test="registAddressProv != null" >
+        regist_address_prov,
+      </if>
+      <if test="registAddressCity != null" >
+        regist_address_city,
+      </if>
+      <if test="registAddressCou != null" >
+        regist_address_cou,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="registCapital != null" >
+        regist_capital,
+      </if>
+      <if test="estaDate != null" >
+        esta_date,
+      </if>
+      <if test="ctscc != null" >
+        ctscc,
+      </if>
+      <if test="entpBankNum != null" >
+        entp_bank_num,
+      </if>
+      <if test="openBank != null" >
+        open_bank,
+      </if>
+      <if test="legalPerson != null" >
+        legal_person,
+      </if>
+      <if test="registAuth != null" >
+        regist_auth,
+      </if>
+      <if test="compType != null" >
+        comp_type,
+      </if>
+      <if test="businessTermType != null" >
+        business_term_type,
+      </if>
+      <if test="businessStartDate != null" >
+        business_start_date,
+      </if>
+      <if test="businessEndDate != null" >
+        business_end_date,
+      </if>
+      <if test="operateRange != null" >
+        operate_range,
+      </if>
+      <if test="compEmail != null" >
+        comp_email,
+      </if>
+      <if test="contacts != null" >
+        contacts,
+      </if>
+      <if test="compTel != null" >
+        comp_tel,
+      </if>
+      <if test="compMicroBlog != null" >
+        comp_micro_blog,
+      </if>
+      <if test="compIntro != null" >
+        comp_intro,
+      </if>
+      <if test="propContacts != null" >
+        prop_contacts,
+      </if>
+      <if test="authExamState != null" >
+        auth_exam_state,
+      </if>
+      <if test="examFailReason != null" >
+        exam_fail_reason,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+      <if test="compShortName != null" >
+        comp_short_name,
+      </if>
+      <if test="legalPersonNum != null" >
+        legal_person_num,
+      </if>
+      <if test="bdTel != null" >
+        bd_tel,
+      </if>
+      <if test="contactsEmail != null" >
+        contacts_email,
+      </if>
+      <if test="yyzzUrl != null" >
+        yyzz_url,
+      </if>
+      <if test="sfzZmUrl != null" >
+        sfz_zm_url,
+      </if>
+      <if test="sfzFmUrl != null" >
+        sfz_fm_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="compName != null" >
+        #{compName,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddressProv != null" >
+        #{registAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddressCity != null" >
+        #{registAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddressCou != null" >
+        #{registAddressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="registCapital != null" >
+        #{registCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="estaDate != null" >
+        #{estaDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctscc != null" >
+        #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="entpBankNum != null" >
+        #{entpBankNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openBank != null" >
+        #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="registAuth != null" >
+        #{registAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="compType != null" >
+        #{compType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTermType != null" >
+        #{businessTermType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStartDate != null" >
+        #{businessStartDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="businessEndDate != null" >
+        #{businessEndDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operateRange != null" >
+        #{operateRange,jdbcType=VARCHAR},
+      </if>
+      <if test="compEmail != null" >
+        #{compEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="compTel != null" >
+        #{compTel,jdbcType=VARCHAR},
+      </if>
+      <if test="compMicroBlog != null" >
+        #{compMicroBlog,jdbcType=VARCHAR},
+      </if>
+      <if test="compIntro != null" >
+        #{compIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="propContacts != null" >
+         #{propContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="authExamState != null" >
+        #{authExamState,jdbcType=VARCHAR},
+      </if>
+      <if test="examFailReason != null" >
+        #{examFailReason,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="compShortName != null" >
+        #{compShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonNum != null" >
+        #{legalPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bdTel != null" >
+       #{bdTel,jdbcType=CHAR},
+      </if>
+      <if test="contactsEmail != null" >
+        #{contactsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzzUrl != null" >
+        #{yyzzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzZmUrl != null" >
+        #{sfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzFmUrl != null" >
+        #{sfzFmUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    update entp_data_info_copy
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="compName != null" >
+        comp_name = #{compName,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddressProv != null" >
+        regist_address_prov = #{registAddressProv,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddressCity != null" >
+        regist_address_city = #{registAddressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="registAddressCou != null" >
+        regist_address_cou = #{registAddressCou,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="registCapital != null" >
+        regist_capital = #{registCapital,jdbcType=DOUBLE},
+      </if>
+      <if test="estaDate != null" >
+        esta_date = #{estaDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ctscc != null" >
+        ctscc = #{ctscc,jdbcType=VARCHAR},
+      </if>
+      <if test="entpBankNum != null" >
+        entp_bank_num = #{entpBankNum,jdbcType=VARCHAR},
+      </if>
+      <if test="openBank != null" >
+        open_bank = #{openBank,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPerson != null" >
+        legal_person = #{legalPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="registAuth != null" >
+        regist_auth = #{registAuth,jdbcType=VARCHAR},
+      </if>
+      <if test="compType != null" >
+        comp_type = #{compType,jdbcType=VARCHAR},
+      </if>
+      <if test="businessTermType != null" >
+        business_term_type = #{businessTermType,jdbcType=VARCHAR},
+      </if>
+      business_start_date = #{businessStartDate,jdbcType=TIMESTAMP},
+      business_end_date = #{businessEndDate,jdbcType=TIMESTAMP},
+      <if test="operateRange != null" >
+        operate_range = #{operateRange,jdbcType=VARCHAR},
+      </if>
+      <if test="compEmail != null" >
+        comp_email = #{compEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="contacts != null" >
+        contacts = #{contacts,jdbcType=VARCHAR},
+      </if>
+      <if test="compTel != null" >
+        comp_tel = #{compTel,jdbcType=VARCHAR},
+      </if>
+      <if test="compMicroBlog != null" >
+        comp_micro_blog = #{compMicroBlog,jdbcType=VARCHAR},
+      </if>
+      <if test="compIntro != null" >
+        comp_intro = #{compIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="propContacts != null" >
+        prop_contacts = #{propContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="authExamState != null" >
+        auth_exam_state = #{authExamState,jdbcType=VARCHAR},
+      </if>
+     	exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+      <if test="merchantNo != null" >
+        merchant_no = #{merchantNo,jdbcType=VARCHAR},
+      </if>
+      <if test="compShortName != null" >
+        comp_short_name= #{compShortName,jdbcType=VARCHAR},
+      </if>
+      <if test="legalPersonNum != null" >
+        legal_person_num = #{legalPersonNum,jdbcType=VARCHAR},
+      </if>
+      <if test="bdTel != null" >
+       	bd_tel = #{bdTel,jdbcType=CHAR},
+      </if>
+      <if test="contactsEmail != null" >
+        contacts_email = #{contactsEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="yyzzUrl != null" >
+        yyzz_url = #{yyzzUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzZmUrl != null" >
+        sfz_zm_url = #{sfzZmUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sfzFmUrl != null" >
+        sfz_fm_url = #{sfzFmUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 跟新企业不审核的部分数据 -->
+  <update id="updatePartDateById" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    update entp_data_info_copy
+    <set >
+      <if test="compEmail != null" >
+        comp_email = #{compEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="propContacts != null" >
+        prop_contacts = #{propContacts,jdbcType=VARCHAR},
+      </if>
+      <if test="compTel != null" >
+        comp_tel = #{compTel,jdbcType=VARCHAR},
+      </if>
+      <if test="compMicroBlog != null" >
+        comp_micro_blog = #{compMicroBlog,jdbcType=VARCHAR},
+      </if>
+      <if test="compIntro != null" >
+        comp_intro = #{compIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    update entp_data_info_copy
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comp_name = #{compName,jdbcType=VARCHAR},
+      regist_address_prov = #{registAddressProv,jdbcType=VARCHAR},
+      regist_address_city = #{registAddressCity,jdbcType=VARCHAR},
+      regist_address_cou = #{registAddressCou,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      regist_capital = #{registCapital,jdbcType=DOUBLE},
+      esta_date = #{estaDate,jdbcType=TIMESTAMP},
+      ctscc = #{ctscc,jdbcType=VARCHAR},
+      entp_bank_num = #{entpBankNum,jdbcType=VARCHAR},
+      open_bank = #{openBank,jdbcType=VARCHAR},
+      legal_person = #{legalPerson,jdbcType=VARCHAR},
+      regist_auth = #{registAuth,jdbcType=VARCHAR},
+      comp_type = #{compType,jdbcType=VARCHAR},
+      business_term_type = #{businessTermType,jdbcType=VARCHAR},
+      business_start_date = #{businessStartDate,jdbcType=TIMESTAMP},
+      business_end_date = #{businessEndDate,jdbcType=TIMESTAMP},
+      operate_range = #{operateRange,jdbcType=VARCHAR},
+      comp_email = #{compEmail,jdbcType=VARCHAR},
+      contacts = #{contacts,jdbcType=VARCHAR},
+      comp_tel = #{compTel,jdbcType=VARCHAR},
+      comp_micro_blog = #{compMicroBlog,jdbcType=VARCHAR},
+      comp_intro = #{compIntro,jdbcType=VARCHAR},
+      auth_exam_state = #{authExamState,jdbcType=VARCHAR},
+      exam_fail_reason = #{examFailReason,jdbcType=VARCHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 根据MembId查询最新的一条企业信息 -->
+  <select id="getEnptInfoByMembId" parameterType="java.lang.Long" resultType="com.wisea.cultivar.common.entity.tp.EntpDataInfo">
+  	select * from entp_data_info_copy
+	    where del_flag = '0' and memb_id = #{membId,jdbcType=BIGINT}
+		ORDER BY update_date DESC LIMIT 1
+  </select>
+  <!-- 逻辑删除历史表中的数据 -->
+  <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    update entp_data_info_copy
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <!-- 逻辑删除历史表中的数据 后台审核删除的时候调用-->
+  <update id="deleteLogicForAdmin" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" >
+    update entp_data_info_copy
+    set del_flag = '2',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="checkCompNameExist" parameterType="com.wisea.cultivar.common.entity.tp.EntpDataInfo" resultType="java.lang.Integer">
+  	SELECT COUNT(*) FROM entp_data_info_copy
+	WHERE del_flag = '0'
+		  AND comp_name = #{compName}
+		  <if test="id != null and id != ''" >
+		  AND id NOT IN (#{id})
+		  </if>
+  </select>
+</mapper>

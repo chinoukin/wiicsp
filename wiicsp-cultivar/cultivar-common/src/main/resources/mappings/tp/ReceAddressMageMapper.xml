@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.common.dao.tp.ReceAddressMageMapper">
+    <resultMap id="BaseResultMap" type="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="memb_id" property="membId" jdbcType="BIGINT"/>
+        <result column="rece_name" property="receName" jdbcType="VARCHAR"/>
+        <result column="tel" property="tel" jdbcType="VARCHAR"/>
+        <result column="rece_address_prov" property="receAddressProv" jdbcType="VARCHAR"/>
+        <result column="rece_address_city" property="receAddressCity" jdbcType="VARCHAR"/>
+        <result column="rece_address_cou" property="receAddressCou" jdbcType="VARCHAR"/>
+        <result column="rece_address_street" property="receAddressStreet" jdbcType="VARCHAR"/>
+        <result column="rece_address_detail" property="receAddressDetail" jdbcType="VARCHAR"/>
+        <result column="zip_code" property="zipCode" jdbcType="VARCHAR"/>
+        <result column="fixed_tel" property="fixedTel" jdbcType="VARCHAR"/>
+        <result column="address_label" property="addressLabel" jdbcType="VARCHAR"/>
+        <result column="default_flag" property="defaultFlag" jdbcType="CHAR"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP"/>
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="del_flag" property="delFlag" jdbcType="CHAR"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    id, memb_id, rece_name, tel, rece_address_prov, rece_address_city, rece_address_cou,
+    rece_address_street, rece_address_detail, zip_code, fixed_tel, default_flag, create_by,
+    create_date, update_by, update_date, remarks, del_flag,address_label
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from rece_address_mage
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from rece_address_mage
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <insert id="insert" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+    insert into rece_address_mage (id, memb_id, rece_name,
+      tel, rece_address_prov, rece_address_city,
+      rece_address_cou, rece_address_street, rece_address_detail,
+      zip_code, fixed_tel, default_flag,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag,address_label
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{receName,jdbcType=VARCHAR},
+      #{tel,jdbcType=VARCHAR}, #{receAddressProv,jdbcType=VARCHAR}, #{receAddressCity,jdbcType=VARCHAR},
+      #{receAddressCou,jdbcType=VARCHAR}, #{receAddressStreet,jdbcType=VARCHAR}, #{receAddressDetail,jdbcType=VARCHAR},
+      #{zipCode,jdbcType=VARCHAR}, #{fixedTel,jdbcType=VARCHAR}, #{defaultFlag,jdbcType=CHAR},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR},#{addressLabel,jdbcType=VARCHAR}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+        insert into rece_address_mage
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="membId != null">
+                memb_id,
+            </if>
+            <if test="receName != null">
+                rece_name,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="receAddressProv != null">
+                rece_address_prov,
+            </if>
+            <if test="receAddressCity != null">
+                rece_address_city,
+            </if>
+            <if test="receAddressCou != null">
+                rece_address_cou,
+            </if>
+            <if test="receAddressStreet != null">
+                rece_address_street,
+            </if>
+            <if test="receAddressDetail != null">
+                rece_address_detail,
+            </if>
+            <if test="zipCode != null">
+                zip_code,
+            </if>
+            <if test="fixedTel != null">
+                fixed_tel,
+            </if>
+            <if test="defaultFlag != null">
+                default_flag,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createDate != null">
+                create_date,
+            </if>
+            <if test="updateBy != null">
+                update_by,
+            </if>
+            <if test="updateDate != null">
+                update_date,
+            </if>
+            <if test="remarks != null">
+                remarks,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="addressLabel != null">
+                address_label
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="membId != null">
+                #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="receName != null">
+                #{receName,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressProv != null">
+                #{receAddressProv,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressCity != null">
+                #{receAddressCity,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressCou != null">
+                #{receAddressCou,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressStreet != null">
+                #{receAddressStreet,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressDetail != null">
+                #{receAddressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedTel != null">
+                #{fixedTel,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultFlag != null">
+                #{defaultFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="addressLabel != null">
+                #{addressLabel,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+        update rece_address_mage
+        <set>
+            <if test="membId != null">
+                memb_id = #{membId,jdbcType=BIGINT},
+            </if>
+            <if test="receName != null">
+                rece_name = #{receName,jdbcType=VARCHAR},
+            </if>
+            <if test="tel != null">
+                tel = #{tel,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressProv != null">
+                rece_address_prov = #{receAddressProv,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressCity != null">
+                rece_address_city = #{receAddressCity,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressCou != null">
+                rece_address_cou = #{receAddressCou,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressStreet != null">
+                rece_address_street = #{receAddressStreet,jdbcType=VARCHAR},
+            </if>
+            <if test="receAddressDetail != null">
+                rece_address_detail = #{receAddressDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="zipCode != null">
+                zip_code = #{zipCode,jdbcType=VARCHAR},
+            </if>
+            <if test="fixedTel != null">
+                fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+            </if>
+            <if test="defaultFlag != null">
+                default_flag = #{defaultFlag,jdbcType=CHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null">
+                create_date = #{createDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="updateDate != null">
+                update_date = #{updateDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="remarks != null">
+                remarks = #{remarks,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=CHAR},
+            </if>
+            <if test="addressLabel != null">
+                address_label = #{addressLabel,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+    update rece_address_mage
+    set memb_id = #{membId,jdbcType=BIGINT},
+      rece_name = #{receName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      rece_address_prov = #{receAddressProv,jdbcType=VARCHAR},
+      rece_address_city = #{receAddressCity,jdbcType=VARCHAR},
+      rece_address_cou = #{receAddressCou,jdbcType=VARCHAR},
+      rece_address_street = #{receAddressStreet,jdbcType=VARCHAR},
+      rece_address_detail = #{receAddressDetail,jdbcType=VARCHAR},
+      zip_code = #{zipCode,jdbcType=VARCHAR},
+      fixed_tel = #{fixedTel,jdbcType=VARCHAR},
+      default_flag = #{defaultFlag,jdbcType=CHAR},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR},
+      address_label = #{addressLabel,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="findPage" resultType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.ReceAddressMagePagePo">
+        select
+        <include refid="Base_Column_List"/>
+        from rece_address_mage
+        where del_flag = '0'
+    </select>
+    <select id="findList" resultType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo"
+            parameterType="com.wisea.cultivar.common.po.tp.ReceAddressMageListPo">
+        select
+        <include refid="Base_Column_List"/>
+        from rece_address_mage
+        where del_flag = '0'
+    </select>
+    <update id="deleteLogic" parameterType="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+    update rece_address_mage
+    set del_flag = '1',update_by = #{updateBy,jdbcType=VARCHAR},update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <!--通过用户ID调出用户的地址-->
+    <select id="getAddressList" parameterType="com.wisea.cultivar.common.po.tp.ReceAddressMageListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo">
+      SELECT id, memb_id, rece_name, tel, rece_address_prov, rece_address_city, rece_address_cou,address_label,
+             rece_address_street, rece_address_detail, zip_code, fixed_tel, default_flag,del_flag,address_label
+      FROM rece_address_mage
+      WHERE memb_id = #{membId} AND del_flag != '1' ORDER BY create_date DESC
+    </select>
+    <!--通过用户ID查询是否存在默认的地址-->
+    <select id="selectDefaultBoolean" parameterType="com.wisea.cultivar.common.po.tp.ReceAddressMageListPo"
+            resultType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM rece_address_mage
+        WHERE memb_id = #{membId} AND default_flag = '0' AND del_flag != '1'
+    </select>
+    <!--通过查询出来的地址ID去修改默认地址的标识-->
+    <update id="updateDefaultAddr" parameterType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo">
+        UPDATE rece_address_mage
+        <set>
+            default_flag = '1'
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+    <!-- 修改其他地址为1 -->
+    <update id="updateDefaultToNo" parameterType="java.lang.Long">
+        UPDATE rece_address_mage
+        set
+            default_flag = '1'
+        where memb_id = #{membId}
+    </update>
+    <!--将ID相等的数据设置成默认地址-->
+    <update id="saveDefaultAddr" parameterType="com.wisea.cultivar.common.po.tp.ReceAddressMageListPo">
+        UPDATE rece_address_mage
+        <set>
+            default_flag = '0'
+        </set>
+        <where>
+            id = #{id}
+        </where>
+    </update>
+
+    <select id="findForPages" parameterType="com.wisea.cultivar.common.po.tp.ReceAddressMagePagePo"
+            resultType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo">
+        SELECT id, memb_id, rece_name, tel, rece_address_prov, rece_address_city, rece_address_cou,
+        rece_address_street, rece_address_detail, zip_code, fixed_tel, default_flag,del_flag,address_label
+        FROM rece_address_mage
+        WHERE memb_id = #{membId}
+        AND del_flag = '0'
+        <if test="receName!=null and receAddressDetail!=null and addressLabel!=null">
+            AND ( INSTR(rece_name,#{receName})!=0
+            OR INSTR(rece_address_detail,#{receAddressDetail})!=0
+            OR INSTR(address_label,#{addressLabel})!=0)
+        </if>
+    </select>
+
+    <select id="findById" resultType="com.wisea.cultivar.common.vo.tp.ReceAddressMageListVo"
+            parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from rece_address_mage
+        where id = #{id,jdbcType=BIGINT}
+        and del_flag != "1"
+    </select>
+
+    <select id="countByMembId" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select count(id)
+        from rece_address_mage
+        where memb_id = #{membId}
+        and del_flag !="1"
+    </select>
+    <select id="countByMembIdAndDefault0" parameterType="java.lang.Long" resultType="java.lang.Long">
+        select count(id)
+        from rece_address_mage
+        where memb_id = #{membId}
+        and del_flag !="1"
+        and default_flag = "0"
+    </select>
+    <update id="updateAllDefaultFlagByMembId"
+            parameterType="com.wisea.cultivar.common.entity.tp.ReceAddressMage">
+        update rece_address_mage
+        set default_flag = "1",
+            update_by = #{updateBy},
+            update_date = #{updateDate}
+        where memb_id = #{membId}
+        and del_flag != "1"
+        and default_flag = "0"
+    </update>
+
+    <!--根据会员的ID查询默认收货地址 -->
+    <select id="selectDefaultAddrByMembId" parameterType="java.lang.Long"
+            resultType="com.wisea.cultivar.common.vo.tp.trade.DefaultAddressVo">
+       select ram.id, ram.rece_name as receName, ram.tel, sa.name as receAddressProv,
+       sar.name as receAddressCity, sae.name as receAddressCou,
+       saa.name as receAddressStreet, ram.rece_address_detail as receAddressDetail, ram.default_flag as defaultFlag
+       from rece_address_mage ram
+       LEFT JOIN sys_area sa on sa.code = ram.rece_address_prov
+       LEFT JOIN sys_area sar on sar.code = ram.rece_address_city
+       LEFT JOIN sys_area sae on sae.code = ram.rece_address_cou
+       LEFT JOIN sys_area saa on saa.code = ram.rece_address_street
+       where ram.memb_id = #{membId}
+       AND ram.default_flag = '0' AND ram.del_flag = '0'
+    </select>
+</mapper>

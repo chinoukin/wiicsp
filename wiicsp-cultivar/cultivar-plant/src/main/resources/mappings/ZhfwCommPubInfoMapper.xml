@@ -1,0 +1,569 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisea.cultivar.plant.mapper.ZhfwCommPubInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.wisea.cultivar.plant.entity.ZhfwCommPubInfo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="comm_title" property="commTitle" jdbcType="VARCHAR" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="comm_send_prov" property="commSendProv" jdbcType="VARCHAR" />
+    <result column="comm_send_city" property="commSendCity" jdbcType="VARCHAR" />
+    <result column="comm_send_cou" property="commSendCou" jdbcType="VARCHAR" />
+    <result column="comm_send_address" property="commSendAddress" jdbcType="VARCHAR" />
+    <result column="comm_signature" property="commSignature" jdbcType="VARCHAR" />
+    <result column="notes_to_buy" property="notesToBuy" jdbcType="VARCHAR" />
+    <result column="zhfw_comm_state_type" property="commStateType" jdbcType="VARCHAR" />
+    <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR" />
+    <result column="exam_id" property="examId" jdbcType="BIGINT" />
+    <result column="sales_volume" property="salesVolume" jdbcType="DOUBLE" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="remarks" property="remarks" jdbcType="VARCHAR" />
+    <result column="del_flag" property="delFlag" jdbcType="CHAR" />
+  </resultMap>
+
+  <resultMap id="ResultCommPubInfo" type="com.wisea.cultivar.plant.vo.ZhfwCommPubInfoInfoVo" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="memb_id" property="membId" jdbcType="BIGINT" />
+    <result column="comm_title" property="commTitle" jdbcType="VARCHAR" />
+    <result column="comm_id" property="commId" jdbcType="BIGINT" />
+    <result column="comm_variet_id" property="commVarietId" jdbcType="BIGINT" />
+    <result column="comm_send_prov" property="commSendProv" jdbcType="VARCHAR" />
+    <result column="comm_send_city" property="commSendCity" jdbcType="VARCHAR" />
+    <result column="comm_send_cou" property="commSendCou" jdbcType="VARCHAR" />
+    <result column="comm_send_address" property="commSendAddress" jdbcType="VARCHAR" />
+    <result column="comm_signature" property="commSignature" jdbcType="VARCHAR" />
+    <result column="notes_to_buy" property="notesToBuy" jdbcType="VARCHAR" />
+    <result column="comm_state_type" property="commStateType" jdbcType="VARCHAR" />
+    <result column="reject_reason" property="rejectReason" jdbcType="VARCHAR" />
+    <result column="exam_id" property="examId" jdbcType="BIGINT" />
+    <result column="sales_volume" property="salesVolume" jdbcType="DOUBLE" />
+    <result column="comm_currency_content" property="commCurrencyContent" jdbcType="VARCHAR" />
+    <result column="comm_catg_name" property="commCatgName" jdbcType="VARCHAR" />
+    <result column="shopId" property="shopId" jdbcType="VARCHAR" />
+    <result column="shopName" property="shopName" jdbcType="VARCHAR" />
+    <result column="membCollectionId" property="membCollectionId" jdbcType="VARCHAR" />
+
+    <association property="zhfwLevelSpecQuoteInfoVo" javaType="com.wisea.cultivar.plant.vo.ZhfwLevelSpecQuoteInfoVo">
+      <id column="id" property="commPubId"/>
+      <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+      <result column="avai_supply_count" property="avaiSupplyCount" jdbcType="DOUBLE" />
+      <result column="meas_unit_id" property="measUnitId" jdbcType="BIGINT" />
+      <result column="spec" property="spec" jdbcType="VARCHAR" />
+      <result column="net_weight" property="netWeight" jdbcType="DOUBLE" />
+      <result column="start_ord_expres" property="startOrdExpres" jdbcType="VARCHAR" />
+      <result column="price_expres" property="priceExpres" jdbcType="VARCHAR" />
+      <result column="version_num" property="versionNum" jdbcType="VARCHAR" />
+      <result column="transaction_amount" property="transactionAmount" jdbcType="DOUBLE" />
+      <result column="sales_volume" property="salesVolume" jdbcType="DOUBLE" />
+    </association>
+    <association property="zhfwMeasUnitMageInfoVo" javaType="com.wisea.cultivar.plant.vo.ZhfwMeasUnitMageInfoVo">
+      <id column="id" property="id" jdbcType="BIGINT" />
+      <result column="unit_num" property="unitNum" jdbcType="VARCHAR" />
+      <result column="meas_unit_name" property="measUnitName" jdbcType="VARCHAR" />
+      <result column="sort" property="sort" jdbcType="INTEGER" />
+      <result column="effe_inval_state" property="effeInvalState" jdbcType="VARCHAR" />
+      <result column="dimensions_type" property="dimensionsType" jdbcType="VARCHAR" />
+    </association>
+    <collection property="zhfwCommPictureInfoVoList" javaType="list" ofType="com.wisea.cultivar.plant.vo.ZhfwCommPictureInfoVo">
+      <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+      <result column="sort" property="sort" jdbcType="INTEGER" />
+      <result column="url" property="url" jdbcType="VARCHAR" />
+      <result column="comm_picture_type" property="commPictureType" jdbcType="VARCHAR" />
+      <result column="main_picture_type" property="mainPictureType" jdbcType="VARCHAR" />
+    </collection>
+    <collection property="zhfwCommAttriInfoVoList" javaType="list" ofType="com.wisea.cultivar.plant.vo.ZhfwCommAttriInfoVo">
+      <result column="comm_pub_id" property="commPubId" jdbcType="BIGINT" />
+      <result column="comm_attri_id" property="commAttriId" jdbcType="BIGINT" />
+      <result column="comm_attri_name" property="commAttriName" jdbcType="VARCHAR" />
+      <result column="comm_attri_column" property="commAttriColumn" jdbcType="VARCHAR" />
+      <result column="comm_attri_type" property="commAttriType" jdbcType="VARCHAR" />
+      <result column="comm_attri_val" property="commAttriVal" jdbcType="VARCHAR" />
+      <result column="length" property="length" jdbcType="INTEGER" />
+      <result column="if_requ" property="ifRequ" jdbcType="CHAR" />
+      <result column="sort" property="sort" jdbcType="INTEGER" />
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, memb_id, comm_title, comm_id, comm_variet_id, comm_send_prov, comm_send_city,
+    comm_send_cou, comm_send_address, comm_signature, notes_to_buy, zhfw_comm_state_type,
+    reject_reason, exam_id, sales_volume, create_by, create_date, update_by, update_date,
+    remarks, del_flag
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select
+    <include refid="Base_Column_List" />
+    from zhfw_comm_pub_info
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from zhfw_comm_pub_info
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.wisea.cultivar.plant.entity.ZhfwCommPubInfo" >
+    insert into zhfw_comm_pub_info (id, memb_id, comm_title,
+      comm_id, comm_variet_id, comm_send_prov,
+      comm_send_city, comm_send_cou, comm_send_address,
+      comm_signature, notes_to_buy, zhfw_comm_state_type,
+      reject_reason, exam_id, sales_volume,
+      create_by, create_date, update_by,
+      update_date, remarks, del_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{membId,jdbcType=BIGINT}, #{commTitle,jdbcType=VARCHAR},
+      #{commId,jdbcType=BIGINT}, #{commVarietId,jdbcType=BIGINT}, #{commSendProv,jdbcType=VARCHAR},
+      #{commSendCity,jdbcType=VARCHAR}, #{commSendCou,jdbcType=VARCHAR}, #{commSendAddress,jdbcType=VARCHAR},
+      #{commSignature,jdbcType=VARCHAR}, #{notesToBuy,jdbcType=VARCHAR}, #{commStateType,jdbcType=VARCHAR},
+      #{rejectReason,jdbcType=VARCHAR}, #{examId,jdbcType=BIGINT}, #{salesVolume,jdbcType=DOUBLE},
+      #{createBy,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{updateBy,jdbcType=VARCHAR},
+      #{updateDate,jdbcType=TIMESTAMP}, #{remarks,jdbcType=VARCHAR}, #{delFlag,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.wisea.cultivar.plant.entity.ZhfwCommPubInfo" >
+    insert into zhfw_comm_pub_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="membId != null" >
+        memb_id,
+      </if>
+      <if test="commTitle != null" >
+        comm_title,
+      </if>
+      <if test="commId != null" >
+        comm_id,
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id,
+      </if>
+      <if test="commSendProv != null" >
+        comm_send_prov,
+      </if>
+      <if test="commSendCity != null" >
+        comm_send_city,
+      </if>
+      <if test="commSendCou != null" >
+        comm_send_cou,
+      </if>
+      <if test="commSendAddress != null" >
+        comm_send_address,
+      </if>
+      <if test="commSignature != null" >
+        comm_signature,
+      </if>
+      <if test="notesToBuy != null" >
+        notes_to_buy,
+      </if>
+      <if test="commStateType != null" >
+        zhfw_comm_state_type,
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason,
+      </if>
+      <if test="examId != null" >
+        exam_id,
+      </if>
+      <if test="salesVolume != null" >
+        sales_volume,
+      </if>
+      <if test="createBy != null" >
+        create_by,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateBy != null" >
+        update_by,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="delFlag != null" >
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="membId != null" >
+        #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commTitle != null" >
+        #{commTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="commSendProv != null" >
+        #{commSendProv,jdbcType=VARCHAR},
+      </if>
+      <if test="commSendCity != null" >
+        #{commSendCity,jdbcType=VARCHAR},
+      </if>
+      <if test="commSendCou != null" >
+        #{commSendCou,jdbcType=VARCHAR},
+      </if>
+      <if test="commSendAddress != null" >
+        #{commSendAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="commSignature != null" >
+        #{commSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="notesToBuy != null" >
+        #{notesToBuy,jdbcType=VARCHAR},
+      </if>
+      <if test="commStateType != null" >
+        #{commStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null" >
+        #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="examId != null" >
+        #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="salesVolume != null" >
+        #{salesVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        #{delFlag,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.wisea.cultivar.plant.entity.ZhfwCommPubInfo" >
+    update zhfw_comm_pub_info
+    <set >
+      <if test="membId != null" >
+        memb_id = #{membId,jdbcType=BIGINT},
+      </if>
+      <if test="commTitle != null" >
+        comm_title = #{commTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="commId != null" >
+        comm_id = #{commId,jdbcType=BIGINT},
+      </if>
+      <if test="commVarietId != null" >
+        comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      </if>
+      <if test="commSendProv != null" >
+        comm_send_prov = #{commSendProv,jdbcType=VARCHAR},
+      </if>
+      <if test="commSendCity != null" >
+        comm_send_city = #{commSendCity,jdbcType=VARCHAR},
+      </if>
+      <if test="commSendCou != null" >
+        comm_send_cou = #{commSendCou,jdbcType=VARCHAR},
+      </if>
+      <if test="commSendAddress != null" >
+        comm_send_address = #{commSendAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="commSignature != null" >
+        comm_signature = #{commSignature,jdbcType=VARCHAR},
+      </if>
+      <if test="notesToBuy != null" >
+        notes_to_buy = #{notesToBuy,jdbcType=VARCHAR},
+      </if>
+      <if test="commStateType != null" >
+        zhfw_comm_state_type = #{commStateType,jdbcType=VARCHAR},
+      </if>
+      <if test="rejectReason != null" >
+        reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      </if>
+      <if test="examId != null" >
+        exam_id = #{examId,jdbcType=BIGINT},
+      </if>
+      <if test="salesVolume != null" >
+        sales_volume = #{salesVolume,jdbcType=DOUBLE},
+      </if>
+      <if test="createBy != null" >
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateBy != null" >
+        update_by = #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null" >
+        del_flag = #{delFlag,jdbcType=CHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.wisea.cultivar.plant.entity.ZhfwCommPubInfo" >
+    update zhfw_comm_pub_info
+    set memb_id = #{membId,jdbcType=BIGINT},
+      comm_title = #{commTitle,jdbcType=VARCHAR},
+      comm_id = #{commId,jdbcType=BIGINT},
+      comm_variet_id = #{commVarietId,jdbcType=BIGINT},
+      comm_send_prov = #{commSendProv,jdbcType=VARCHAR},
+      comm_send_city = #{commSendCity,jdbcType=VARCHAR},
+      comm_send_cou = #{commSendCou,jdbcType=VARCHAR},
+      comm_send_address = #{commSendAddress,jdbcType=VARCHAR},
+      comm_signature = #{commSignature,jdbcType=VARCHAR},
+      notes_to_buy = #{notesToBuy,jdbcType=VARCHAR},
+      zhfw_comm_state_type = #{commStateType,jdbcType=VARCHAR},
+      reject_reason = #{rejectReason,jdbcType=VARCHAR},
+      exam_id = #{examId,jdbcType=BIGINT},
+      sales_volume = #{salesVolume,jdbcType=DOUBLE},
+      create_by = #{createBy,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_by = #{updateBy,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      del_flag = #{delFlag,jdbcType=CHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPageList" resultType="com.wisea.cultivar.plant.vo.ZhfwCommPubInfoPageListVo"
+          parameterType="com.wisea.cultivar.plant.po.ZhfwCommPubInfoPageListPo">
+    select
+    zcpi.id id,
+    zcpi.memb_id membId,
+    zcpi.comm_title commTitle,
+    zcpi.comm_id commId,
+    zcpi.comm_variet_id commVarietId,
+    zcpi.comm_send_prov commSendProv,
+    zcpi.comm_send_city commSendCity,
+    zcpi.comm_send_cou commSendCou,
+    zcpi.comm_send_address commSendAddress,
+    zcpi.comm_signature commSignature,
+    zcpi.notes_to_buy notesToBuy,
+    zcpi.zhfw_comm_state_type commStateType,
+    zcpi.reject_reason rejectReason,
+    zcpi.update_date updateDate,
+    zcpi.exam_id examId,
+    zcpi.sales_volume salesVolume,
+    zmi.entp_name entpName,
+    si.shop_name shopName,
+    p.url url,
+    cmm.max priceMax,
+    cmm.min priceMin
+    from
+    zhfw_comm_pub_info zcpi
+    left join zhfw_comm_mage zcm on zcpi.comm_id=zcm.id
+    left join zhfw_memb_info zmi on zcpi.memb_id=zmi.id
+    left join shop_info si on zcpi.memb_id=si.memb_id
+    left join (select * from zhfw_comm_picture where main_picture_type='0'  and sort='0' and  comm_picture_type='0' and  del_flag='0' order by sort asc ) p on p.comm_pub_id = zcpi.id
+    left join (SELECT
+    a.comm_pub_id,
+    min(substring_index(
+    substring_index(
+    a.price_expres,
+    ',',
+    b.help_topic_id + 1
+    ),
+    ',' ,- 1
+    )+0) AS min,
+    max(substring_index(
+    substring_index(
+    a.price_expres,
+    ',',
+    b.help_topic_id + 1
+    ),
+    ',' ,- 1
+    )+0) AS max
+    FROM
+    zhfw_level_spec_quote a
+    JOIN     mysql.help_topic b ON b.help_topic_id <![CDATA[ < ]]>(
+    length(a.price_expres) - length(
+    REPLACE (a.price_expres, ',', '')
+    ) + 1
+    )
+    where a.del_flag='0'
+    group by  a.comm_pub_id
+    order by price_expres)  cmm on cmm.comm_pub_id=zcpi.id
+    where
+    zcpi.del_flag = '0'
+    and zcpi.zhfw_comm_state_type='0'
+    <if test="membId !=null and membId != ''">
+      and zcpi.memb_id=#{membId}
+    </if>
+    <if test="commTitle !=null and commTitle != ''">
+      and zcpi.comm_title like CONCAT('%',#{commTitle},'%')
+    </if>
+    <if test="commId !=null and commId !=''">
+      and (zcm.pid=#{commId} or zcm.id=#{commId})
+    </if>
+    <if test="sort !=null and sort !=''">
+        <choose>
+          <when test="sort==0">
+            order by zcpi.create_date desc
+          </when>
+          <when test="sort==1">
+            order by zcpi.sales_volume desc
+          </when>
+          <when test="sort==2">
+            order by cmm.min asc
+          </when>
+          <when test="sort==3">
+            order by cmm.max desc
+          </when>
+          <when test="sort==4">
+            order by zcpi.update_date desc
+          </when>
+        </choose>
+    </if>
+  </select>
+  <select id="findInfo" resultMap="ResultCommPubInfo" parameterType="com.wisea.cultivar.plant.vo.CommVo" >
+    select
+      zcpi.id id,
+	  zcpi.memb_id memb_id,
+	  zcpi.comm_title comm_title,
+	  zcpi.comm_id comm_id,
+	  zcpi.comm_variet_id comm_variet_id,
+	  zcpi.comm_send_address comm_send_address,
+	  zcpi.comm_signature comm_signature,
+	  zcpi.notes_to_buy notes_to_buy,
+	  zcpi.zhfw_comm_state_type comm_state_type,
+	  zcpi.reject_reason reject_reason,
+	  zcpi.exam_id exam_id,
+	  zcpi.sales_volume sales_volume,
+	  (select comm_currency_content from zhfw_comm_currency_info  where del_flag='0' and entp_comm_pub_exam_type='0' order by create_date desc limit 1) comm_currency_content,
+      mc.id membCollectionId,
+      si.id shopId,
+      si.shop_name shopName,
+      sa1.name comm_send_prov,
+	  sa2.name comm_send_city,
+	  sa3.name comm_send_cou,
+	  zcm.comm_catg_name  commCatgName,
+	  zcm.p_comm_catg_name pCommCatgName,
+      zlsq.*,
+      zcp.*,
+      zca.*,
+      zmum.*
+	  from
+	  zhfw_comm_pub_info zcpi
+	  left join zhfw_comm_mage zcm on zcm.id=zcpi.comm_id
+	  left join  shop_info si on zcpi.memb_id=si.memb_id
+	  left join zhfw_level_spec_quote zlsq on zcpi.id=zlsq.comm_pub_id
+	  left join zhfw_meas_unit_mage zmum on zlsq.meas_unit_id=zmum.id
+	  left join zhfw_comm_picture zcp on zcpi.id=zcp.comm_pub_id
+	  left join zhfw_comm_attri zca on zcpi.id=zca.comm_pub_id
+	  left join sys_area sa1 on zcpi.comm_send_prov=sa1.code
+	  left join sys_area sa2 on zcpi.comm_send_city=sa2.code
+	  left join sys_area sa3 on zcpi.comm_send_cou=sa3.code
+	  left join (select * from memb_collection where memb_id=#{membId} and del_flag='0' ) mc on zcpi.id=mc.collection_id
+	  	where
+	  zcpi.del_flag = '0'
+	  and zcm.del_flag='0'
+	  and zlsq.del_flag='0'
+	  and zca.del_flag='0'
+	  and zmum.del_flag='0'
+	  and zcp.main_picture_type='0'
+	  and zcp.del_flag='0'
+	  and zcpi.id = #{id}
+	order by zcp.sort,zca.sort asc
+  </select>
+
+  <select id="findPurchasePageList" resultType="com.wisea.cultivar.plant.vo.ZhfwCommPubInfoPageListVo"
+          parameterType="com.wisea.cultivar.plant.po.ZhfwCommPubInfoPageListPo">
+    select
+    distinct
+    zcpi.id id,
+    zcpi.memb_id membId,
+    zcpi.comm_title commTitle,
+    zcpi.comm_id commId,
+    zcpi.comm_variet_id commVarietId,
+    zcpi.comm_send_prov commSendProv,
+    zcpi.comm_send_city commSendCity,
+    zcpi.comm_send_cou commSendCou,
+    zcpi.comm_send_address commSendAddress,
+    zcpi.comm_signature commSignature,
+    zcpi.notes_to_buy notesToBuy,
+    zcpi.zhfw_comm_state_type commStateType,
+    zcpi.reject_reason rejectReason,
+    zcpi.update_date updateDate,
+    zcpi.exam_id examId,
+    zcpi.sales_volume salesVolume,
+    zmi.entp_name entpName,
+    cmm.max priceMax,
+    cmm.min priceMin
+    from
+    sprout_entp se
+    left join zhfw_comm_pub_info zcpi on se.memb_id=zcpi.memb_id
+    left join zhfw_memb_info zmi on zcpi.memb_id=zmi.id
+    left join zhfw_comm_mage zcm on zcpi.comm_id=zcm.id
+    left join (select * from zhfw_comm_mage where comm_catg_name='种苗服务') zmzcm on zcm.pid=zmzcm.id
+    left join (SELECT
+    a.comm_pub_id,
+    min(substring_index(
+    substring_index(
+    a.price_expres,
+    ',',
+    b.help_topic_id + 1
+    ),
+    ',' ,- 1
+    )+0) AS min,
+    max(substring_index(
+    substring_index(
+    a.price_expres,
+    ',',
+    b.help_topic_id + 1
+    ),
+    ',' ,- 1
+    )+0) AS max
+    FROM
+    zhfw_level_spec_quote a
+    JOIN     mysql.help_topic b ON b.help_topic_id <![CDATA[ < ]]>(
+    length(a.price_expres) - length(
+    REPLACE (a.price_expres, ',', '')
+    ) + 1
+    )
+    where a.del_flag='0'
+    group by  a.comm_pub_id
+    order by price_expres)  cmm on cmm.comm_pub_id=zcpi.id
+    where
+    zcpi.del_flag = '0'
+    and zcm.pid=zmzcm.id
+    and zcpi.zhfw_comm_state_type='0'
+    <if test="commTitle !=null and commTitle != ''">
+      and zcpi.comm_title like CONCAT('%',#{commTitle},'%')
+    </if>
+    <if test="sort !=null and sort !=''">
+      <choose>
+        <when test="sort==0">
+          order by zcpi.create_date desc
+        </when>
+        <when test="sort==1">
+          order by zcpi.sales_volume desc
+        </when>
+        <when test="sort==2">
+          order by cmm.min asc
+        </when>
+        <when test="sort==3">
+          order by cmm.max desc
+        </when>
+      </choose>
+    </if>
+  </select>
+</mapper>

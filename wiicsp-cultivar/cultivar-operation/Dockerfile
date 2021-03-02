@@ -16,15 +16,15 @@ COPY --from=192.168.20.17:5000/wbf-cloud/wbf-cloud-system-lib:v0.0.4 /env/wisea-
 COPY --from=192.168.20.17:5000/wbf-cloud/wbf-cloud-tencentim-lib:v0.0.4 /env/wisea-cloud-lib/* /env/wisea-cloud-lib/
 COPY --from=192.168.20.17:5000/wbf-cloud/wbf-cloud-quartz-lib:v0.0.4 /env/wisea-cloud-lib/* /env/wisea-cloud-lib/
 
+COPY --from=builder /workspace/app/wisea-cloud-lib/* /env/wisea-cloud-lib/
+COPY --from=builder /workspace/app/config/* /usr/local/wiseapp/config/
+
 ARG SVC="cultivar-operation" 
 ARG CONF="dktest"
 ENV ENV_SERVICE=${SVC} ENV_CONF=${CONF}
 
 # Add the service itself
 COPY ./target/${ENV_SERVICE}-0.0.1-SNAPSHOT.jar /usr/local/wiseapp/${ENV_SERVICE}-latest.jar
-
-COPY --from=builder /workspace/app/wisea-cloud-lib/* /env/wisea-cloud-lib/
-COPY --from=builder /workspace/app/config/* /usr/local/wiseapp/config/
 
 #ENTRYPOINT startbootapp -a ${ENV_SERVICE} -v latest -p ${ENV_CONF}
 ENTRYPOINT cd /usr/local/wiseapp && java -Xmx256m -Dloader.path=/env/wisea-cloud-lib/ -jar ${ENV_SERVICE}-latest.jar --spring.profiles.active=${ENV_CONF}
